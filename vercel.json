@@ -7,6 +7,8 @@
     { "src": "api/self_sign.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "api/parent_sign.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "api/feedback.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/admin_beta_list.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/admin_resend_email.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
@@ -15,6 +17,8 @@
     { "src": "/api/self_sign", "dest": "/api/self_sign.py" },
     { "src": "/api/parent_sign", "dest": "/api/parent_sign.py" },
     { "src": "/api/feedback", "dest": "/api/feedback.py" },
+    { "src": "/api/admin_beta_list", "dest": "/api/admin_beta_list.py" },
+    { "src": "/api/admin_resend_email", "dest": "/api/admin_resend_email.py" },
     { "src": "/api/(.*)", "dest": "/api/cna.py" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
