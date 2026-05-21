@@ -41,4 +41,304 @@ td{padding:12px 10px;border-bottom:1px solid #eee;vertical-align:top}
 tr:hover{background:#fafafa}
 
 .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
-.badge-pending{background:#f0eee9;color:#5a4a3
+.badge-pending{background:#f0eee9;color:#5a4a35}
+.badge-self_signed{background:#dbeafe;color:#1e40af}
+.badge-parent_email_sent{background:#fff8e1;color:#92400e}
+.badge-fully_consented{background:#dcfce7;color:#14532d}
+.badge-minor{background:#fff5f5;color:#C9444F;margin-left:4px;font-size:10px}
+.badge-adult{background:#e0f2fe;color:#075985;margin-left:4px;font-size:10px}
+
+.action-btn{padding:5px 10px;background:#fff;color:#C9444F;border:1.5px solid #C9444F;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:4px}
+.action-btn:hover{background:#C9444F;color:#fff}
+.action-btn:disabled{opacity:0.4;cursor:not-allowed}
+
+.empty{padding:60px 20px;text-align:center;color:#888}
+.loading{padding:60px 20px;text-align:center;color:#888}
+
+.detail-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.detail-modal.show{display:flex}
+.detail-modal .modal-body{background:#fff;border-radius:16px;padding:28px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto}
+.detail-modal h3{font-size:20px;margin-bottom:16px}
+.detail-row{display:flex;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
+.detail-row .k{flex:0 0 160px;color:#5a4a35;font-weight:700}
+.detail-row .v{flex:1;word-break:break-all}
+.detail-close{margin-top:16px;padding:10px 18px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:700}
+
+.toast{position:fixed;top:20px;right:20px;background:#1a1a1a;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;z-index:2000;display:none;font-weight:600}
+.toast.show{display:block}
+.toast.err{background:#C9444F}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-card">
+  <h2>🔐 Admin 로그인</h2>
+  <input type="password" id="adminPw" placeholder="비번 박기" autofocus>
+  <button id="loginBtn">로그인</button>
+  <div class="err" id="loginErr">비번이 틀렸어</div>
+</div>
+
+<div class="container" id="mainScreen" style="display:none">
+  <div class="head">
+    <div>
+      <h1>📋 베타 신청자 관리</h1>
+      <div class="sub">Decision Catcher Beta · Boston Neuromind LLC</div>
+    </div>
+    <button class="btn-refresh" id="refreshBtn">🔄 새로고침</button>
+  </div>
+
+  <div class="stats" id="statsBox"></div>
+
+  <div class="filters" id="filterBox">
+    <button class="filter-btn active" data-filter="all">전체</button>
+    <button class="filter-btn" data-filter="pending">대기</button>
+    <button class="filter-btn" data-filter="self_signed">본인 서명</button>
+    <button class="filter-btn" data-filter="parent_email_sent">부모 이메일 발송</button>
+    <button class="filter-btn" data-filter="fully_consented">동의 완료</button>
+    <button class="filter-btn" data-filter="minors">미성년만</button>
+    <button class="filter-btn" data-filter="adults">성인만</button>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>신청일</th>
+          <th>이름</th>
+          <th>나이</th>
+          <th>이메일</th>
+          <th>전화</th>
+          <th>상태</th>
+          <th>부모 정보</th>
+          <th>액션</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr><td colspan="8" class="loading">로딩 중...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="detail-modal" id="detailModal">
+  <div class="modal-body">
+    <h3>📄 신청자 상세</h3>
+    <div id="detailContent"></div>
+    <button class="detail-close" onclick="closeDetail()">닫기</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let adminPw = '';
+let allSignups = [];
+let currentFilter = 'all';
+
+const statusLabels = {
+  pending: '대기',
+  self_signed: '본인 서명',
+  parent_email_sent: '부모 이메일 발송',
+  fully_consented: '동의 완료',
+};
+
+document.getElementById('loginBtn').addEventListener('click', tryLogin);
+document.getElementById('adminPw').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') tryLogin();
+});
+
+function tryLogin() {
+  const pw = document.getElementById('adminPw').value;
+  if (pw === 'bnm1#') {
+    adminPw = pw;
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainScreen').style.display = 'block';
+    loadSignups();
+  } else {
+    document.getElementById('loginErr').classList.add('show');
+  }
+}
+
+document.getElementById('refreshBtn').addEventListener('click', loadSignups);
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+async function loadSignups() {
+  document.getElementById('tbody').innerHTML = '<tr><td colspan="8" class="loading">로딩 중...</td></tr>';
+  try {
+    const res = await fetch('/api/admin_beta_list', {
+      headers: { 'X-Admin-Password': adminPw }
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || '조회 실패');
+    allSignups = data.signups || [];
+    renderStats(data.stats || {});
+    renderTable();
+  } catch (err) {
+    document.getElementById('tbody').innerHTML = `<tr><td colspan="8" class="empty">에러: ${err.message}</td></tr>`;
+  }
+}
+
+function renderStats(stats) {
+  const html = `
+    <div class="stat-card total">
+      <div class="label">전체</div>
+      <div class="value">${stats.total || 0}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">대기</div>
+      <div class="value">${stats.pending || 0}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">진행 중</div>
+      <div class="value">${(stats.self_signed || 0) + (stats.parent_email_sent || 0)}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">동의 완료</div>
+      <div class="value">${stats.fully_consented || 0}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">미성년</div>
+      <div class="value">${stats.minors || 0}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">성인</div>
+      <div class="value">${stats.adults || 0}</div>
+    </div>
+  `;
+  document.getElementById('statsBox').innerHTML = html;
+}
+
+function renderTable() {
+  let filtered = allSignups;
+  if (currentFilter === 'minors') {
+    filtered = allSignups.filter(r => r.is_minor);
+  } else if (currentFilter === 'adults') {
+    filtered = allSignups.filter(r => !r.is_minor);
+  } else if (currentFilter !== 'all') {
+    filtered = allSignups.filter(r => r.status === currentFilter);
+  }
+
+  if (filtered.length === 0) {
+    document.getElementById('tbody').innerHTML = '<tr><td colspan="8" class="empty">해당 조건의 신청자가 없어</td></tr>';
+    return;
+  }
+
+  const html = filtered.map(r => {
+    const date = new Date(r.created_at).toLocaleDateString('ko-KR');
+    const time = new Date(r.created_at).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'});
+    const status = r.status || 'pending';
+    const statusLabel = statusLabels[status] || status;
+    const minorBadge = r.is_minor
+      ? '<span class="badge badge-minor">미성년</span>'
+      : '<span class="badge badge-adult">성인</span>';
+
+    const parentInfo = r.is_minor
+      ? `${escapeHtml(r.parent_name || '?')}<br><span style="color:#888;font-size:11px">${escapeHtml(r.parent_email || '이메일 없음')}</span>`
+      : '<span style="color:#ccc">—</span>';
+
+    let actions = `<button class="action-btn" onclick="showDetail('${r.id}')">상세</button>`;
+    if (r.is_minor && r.parent_email && status === 'parent_email_sent') {
+      actions += `<button class="action-btn" onclick="resendEmail('${r.id}', this)">📧 재발송</button>`;
+    }
+
+    return `
+      <tr>
+        <td>${date}<br><span style="color:#888;font-size:11px">${time}</span></td>
+        <td><strong>${escapeHtml(r.full_name || '?')}</strong></td>
+        <td>${r.age || '?'} ${minorBadge}</td>
+        <td>${escapeHtml(r.email || '')}</td>
+        <td>${escapeHtml(r.phone || '')}</td>
+        <td><span class="badge badge-${status}">${statusLabel}</span></td>
+        <td>${parentInfo}</td>
+        <td>${actions}</td>
+      </tr>
+    `;
+  }).join('');
+
+  document.getElementById('tbody').innerHTML = html;
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function showDetail(id) {
+  const r = allSignups.find(x => x.id === id);
+  if (!r) return;
+  const fields = [
+    ['ID', r.id],
+    ['신청일', r.created_at],
+    ['이름', r.full_name],
+    ['이메일', r.email],
+    ['전화', r.phone],
+    ['생년월일', r.birth_date],
+    ['나이', r.age],
+    ['미성년', r.is_minor ? '예' : '아니오'],
+    ['언어', r.language],
+    ['상태', r.status],
+    ['본인 서명일', r.self_signed_at],
+    ['부모 현장 동의', r.parent_present_in_clinic ? '예' : '아니오'],
+    ['부모 이름', r.parent_name],
+    ['부모 이메일', r.parent_email],
+    ['부모 전화', r.parent_phone],
+    ['부모 관계', r.parent_relationship],
+    ['부모 이메일 발송일', r.parent_email_sent_at],
+    ['부모 서명일', r.parent_signed_at],
+  ];
+  const html = fields.map(([k, v]) => `
+    <div class="detail-row">
+      <div class="k">${k}</div>
+      <div class="v">${escapeHtml(v == null ? '—' : String(v))}</div>
+    </div>
+  `).join('');
+  document.getElementById('detailContent').innerHTML = html;
+  document.getElementById('detailModal').classList.add('show');
+}
+
+function closeDetail() {
+  document.getElementById('detailModal').classList.remove('show');
+}
+
+async function resendEmail(id, btn) {
+  if (!confirm('부모 동의 이메일을 다시 발송할까?\n(이전 토큰은 무효화됨)')) return;
+  btn.disabled = true;
+  btn.textContent = '발송 중...';
+  try {
+    const res = await fetch('/api/admin_resend_email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Password': adminPw
+      },
+      body: JSON.stringify({ signup_id: id })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || '발송 실패');
+    showToast(`✅ 발송 완료: ${data.parent_email}`);
+    loadSignups();
+  } catch (err) {
+    showToast('❌ 에러: ' + err.message, true);
+    btn.disabled = false;
+    btn.textContent = '📧 재발송';
+  }
+}
+
+function showToast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('err', !!isErr);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
