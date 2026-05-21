@@ -27,11 +27,11 @@
 </head>
 <body>
 <header class="header">
-  <h1>ðŸ“– Manual (English)</h1>
+  <h1>📖 Manual (English)</h1>
   <nav class="nav">
     <a href="/">Home</a>
-    <a href="/manual.html">â† Manual hub</a>
-    <a href="/clinician-clinician-manual-ko.html">í•œêµ­ì–´</a>
+    <a href="/manual.html">← Manual hub</a>
+    <a href="/manual-ko.html">한국어</a>
     <a href="/clinician.html">New Client</a>
       <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
   </nav>
@@ -40,7 +40,7 @@
   <div class="manual-content">
 <h1 id="cna-v7-user-manual-english">CNA v7 User Manual (English)</h1>
 <p><strong>Catcher Navigator Algorithm v7.0</strong><br />
-<strong>Boston Neuromind LLC Â· 2026</strong></p>
+<strong>Boston Neuromind LLC · 2026</strong></p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <ol>
@@ -55,7 +55,7 @@
 <li><a href="#9-training-protocol-operations">Training Protocol Operations</a></li>
 <li><a href="#10-crisis-response">Crisis Response</a></li>
 <li><a href="#11-4-week-outcome--adaptive-re-routing-v7-new">4-Week Outcome + Adaptive Re-routing (v7 NEW)</a></li>
-<li><a href="#12-advanced--mapping-matrix-adjustment">Advanced â€” Mapping Matrix Adjustment</a></li>
+<li><a href="#12-advanced--mapping-matrix-adjustment">Advanced — Mapping Matrix Adjustment</a></li>
 <li><a href="#13-api-usage-guide">API Usage Guide</a></li>
 <li><a href="#14-troubleshooting">Troubleshooting</a></li>
 </ol>
@@ -64,13 +64,13 @@
 <h3 id="11-what-this-system-does">1.1 What This System Does</h3>
 <p>CNA v7 is a clinical decision support system for 5 beta clients (part-time therapy clients).</p>
 <p><strong>v7 Core Additions (Round 7-10):</strong>
-- <strong>Differential Diagnosis Engine (DDE)</strong>: Client data â†’ Bayesian differential diagnosis (ADHD/GAD/MDD)
+- <strong>Differential Diagnosis Engine (DDE)</strong>: Client data → Bayesian differential diagnosis (ADHD/GAD/MDD)
 - <strong>Comorbidity Decomposition</strong>: Decompose clinical scores by diagnostic source
 - <strong>Cognitive Simulator</strong>: Counterfactual simulation of clinical outcomes when cognitive axes change
 - <strong>Adaptive Re-routing</strong>: Auto-reconstruct diagnosis from 4-week outcome</p>
 <p><strong>Core Functions:</strong></p>
 <ul>
-<li>Fischer Dynamic Skill Theory: cognitive 5-axis â†’ clinical 5-axis prediction</li>
+<li>Fischer Dynamic Skill Theory: cognitive 5-axis → clinical 5-axis prediction</li>
 <li>Auto-analysis of relationships among 5 clinical axes (Attention/Learning/Peak Performance/Anxiety/Depression)</li>
 <li>DSM-5-TR based differential &amp; comorbidity diagnosis (v7)</li>
 <li>Auto-generation of training protocols (4-8 weeks) when client selects area</li>
@@ -93,11 +93,11 @@
 </thead>
 <tbody>
 <tr>
-<td>Working Memory â†’ Learning (r=0.43)</td>
+<td>Working Memory → Learning (r=0.43)</td>
 <td>Meta-analysis, n=7947</td>
 </tr>
 <tr>
-<td>Emotional Intelligence â†’ Academic (r=0.39)</td>
+<td>Emotional Intelligence → Academic (r=0.39)</td>
 <td>EI-AP meta-analysis 2023</td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 <td>Aldao et al. 2010</td>
 </tr>
 <tr>
-<td>Rumination â†’ Depression (bidirectional)</td>
+<td>Rumination → Depression (bidirectional)</td>
 <td>Nolen-Hoeksema response styles</td>
 </tr>
 <tr>
@@ -213,8 +213,8 @@
 <h3 id="24-free-energy-6-component-decision">2.4 Free Energy 6-Component Decision</h3>
 <p>Each card scored on 6 components:</p>
 <ol>
-<li><strong>Accuracy (Symptom)</strong>: Client symptoms â†” card targets matching</li>
-<li><strong>Accuracy (Biomarker)</strong>: Measurements â†” card expected profile</li>
+<li><strong>Accuracy (Symptom)</strong>: Client symptoms ↔ card targets matching</li>
+<li><strong>Accuracy (Biomarker)</strong>: Measurements ↔ card expected profile</li>
 <li><strong>Complexity Penalty</strong>: Fischer level distance (Vygotsky ZPD)</li>
 <li><strong>Preference</strong>: Match with client's selected area</li>
 <li><strong>Epistemic Value</strong>: Information gain potential</li>
@@ -251,37 +251,37 @@ pip install pydantic numpy pyyaml fastapi uvicorn
 # 5. Run integration test
 python tests/test_integration.py
 </code></pre>
-<p>Tests pass: "âœ“ Integration tests passed" message appears.</p>
+<p>Tests pass: "✓ Integration tests passed" message appears.</p>
 <h3 id="33-directory-structure">3.3 Directory Structure</h3>
 <pre><code>cna_v7/
-â”œâ”€â”€ config/                          # User-editable
-â”‚   â”œâ”€â”€ cognitive_clinical_mapping.yaml
-â”‚   â”œâ”€â”€ free_energy_weights.yaml
-â”‚   â””â”€â”€ diagnostic_patterns.yaml     # v7 NEW
-â”œâ”€â”€ cna_core/                        # Core logic
-â”‚   â”œâ”€â”€ types.py
-â”‚   â”œâ”€â”€ cognitive_clinical_mapper.py
-â”‚   â”œâ”€â”€ free_energy_scorer.py
-â”‚   â”œâ”€â”€ biomarker_normalization.py
-â”‚   â”œâ”€â”€ clinical_report.py
-â”‚   â”œâ”€â”€ card_deck.py
-â”‚   â”œâ”€â”€ crisis_detection.py
-â”‚   â”œâ”€â”€ protocol_generator.py
-â”‚   â”œâ”€â”€ variational_update.py
-â”‚   â”œâ”€â”€ differential_diagnosis.py    # v7 NEW
-â”‚   â”œâ”€â”€ comorbidity_decomposition.py # v7 NEW
-â”‚   â”œâ”€â”€ cognitive_simulator.py       # v7 NEW
-â”‚   â”œâ”€â”€ adaptive_rerouting.py        # v7 NEW
-â”‚   â””â”€â”€ orchestrator.py
-â”œâ”€â”€ tests/test_integration.py
-â”œâ”€â”€ cli/run_assessment.py
-â”œâ”€â”€ api/main.py                      # FastAPI server
-â”œâ”€â”€ supabase/schema.sql
-â””â”€â”€ README.md
+├── config/                          # User-editable
+│   ├── cognitive_clinical_mapping.yaml
+│   ├── free_energy_weights.yaml
+│   └── diagnostic_patterns.yaml     # v7 NEW
+├── cna_core/                        # Core logic
+│   ├── types.py
+│   ├── cognitive_clinical_mapper.py
+│   ├── free_energy_scorer.py
+│   ├── biomarker_normalization.py
+│   ├── clinical_report.py
+│   ├── card_deck.py
+│   ├── crisis_detection.py
+│   ├── protocol_generator.py
+│   ├── variational_update.py
+│   ├── differential_diagnosis.py    # v7 NEW
+│   ├── comorbidity_decomposition.py # v7 NEW
+│   ├── cognitive_simulator.py       # v7 NEW
+│   ├── adaptive_rerouting.py        # v7 NEW
+│   └── orchestrator.py
+├── tests/test_integration.py
+├── cli/run_assessment.py
+├── api/main.py                      # FastAPI server
+├── supabase/schema.sql
+└── README.md
 </code></pre>
 <hr />
 <h2 id="4-first-client-workflow">4. First Client Workflow</h2>
-<h3 id="41-session-1-initial-assessment-75-105-min-v7-adds-15-min-for-temporal-interview">4.1 Session 1 (Initial Assessment) â€” 75-105 min (v7 adds ~15 min for temporal interview)</h3>
+<h3 id="41-session-1-initial-assessment-75-105-min-v7-adds-15-min-for-temporal-interview">4.1 Session 1 (Initial Assessment) — 75-105 min (v7 adds ~15 min for temporal interview)</h3>
 <h4 id="step-1-client-registration-5-min">Step 1: Client Registration (5 min)</h4>
 <ul>
 <li>Client initials + ID number (e.g., AK001)</li>
@@ -293,15 +293,15 @@ python tests/test_integration.py
 <h4 id="step-2-entry-protocol-5-measurement-30-min">Step 2: Entry Protocol 5 Measurement (30 min)</h4>
 <p>Use paper measurement sheets. Five measurements:</p>
 <ol>
-<li><strong>Time Estimation</strong> (5 min) â†’ time_awareness</li>
-<li><strong>HRV</strong> (5 min, Polar H10 or Apple Watch) â†’ emotional_regulation</li>
-<li><strong>CPT</strong> (15 min, paper or digital) â†’ sustained_attention</li>
-<li><strong>N-back</strong> (10 min, 2-back 3-back) â†’ working_memory</li>
-<li><strong>VSR</strong> (optional, 5 min) â†’ additional data</li>
+<li><strong>Time Estimation</strong> (5 min) → time_awareness</li>
+<li><strong>HRV</strong> (5 min, Polar H10 or Apple Watch) → emotional_regulation</li>
+<li><strong>CPT</strong> (15 min, paper or digital) → sustained_attention</li>
+<li><strong>N-back</strong> (10 min, 2-back 3-back) → working_memory</li>
+<li><strong>VSR</strong> (optional, 5 min) → additional data</li>
 </ol>
 <h4 id="step-3-symptom-data-collection-15-min">Step 3: Symptom Data Collection (15 min)</h4>
 <ul>
-<li>PHQ-9 (depression screening) â€” includes suicide risk item</li>
+<li>PHQ-9 (depression screening) — includes suicide risk item</li>
 <li>GAD-7 (anxiety screening)</li>
 <li>Subjective symptom scores (0.0-1.0):</li>
 <li>Inattention</li>
@@ -313,17 +313,17 @@ python tests/test_integration.py
 <li>Low Motivation</li>
 <li>Social Withdrawal</li>
 </ul>
-<h4 id="step-4-v7-new-temporal-history-interview-15-min">Step 4 (v7 NEW): Temporal History Interview (15 min) â­</h4>
+<h4 id="step-4-v7-new-temporal-history-interview-15-min">Step 4 (v7 NEW): Temporal History Interview (15 min) ⭐</h4>
 <p><strong>DDE accuracy's foundation.</strong> Detailed guide in Section 6. Core 8 questions:</p>
 <ol>
-<li>"Age symptoms first appeared?" â†’ <code>onset_age</code></li>
-<li>"Childhood/adolescence/adult?" â†’ <code>onset_category</code></li>
-<li>"Chronic or episodic?" â†’ <code>course</code></li>
-<li>"How many months ongoing?" â†’ <code>duration_months</code></li>
-<li>"Consistent across settings or context-specific?" â†’ <code>pervasiveness</code></li>
-<li>"Worsens with stress? Improves with rest?" â†’ <code>stress_triggered</code></li>
-<li>"Family history?" â†’ <code>family_history</code></li>
-<li>"Prior treatment response?" â†’ <code>prior_treatment_response</code></li>
+<li>"Age symptoms first appeared?" → <code>onset_age</code></li>
+<li>"Childhood/adolescence/adult?" → <code>onset_category</code></li>
+<li>"Chronic or episodic?" → <code>course</code></li>
+<li>"How many months ongoing?" → <code>duration_months</code></li>
+<li>"Consistent across settings or context-specific?" → <code>pervasiveness</code></li>
+<li>"Worsens with stress? Improves with rest?" → <code>stress_triggered</code></li>
+<li>"Family history?" → <code>family_history</code></li>
+<li>"Prior treatment response?" → <code>prior_treatment_response</code></li>
 </ol>
 <h4 id="step-5-client-goal-elicitation-10-min">Step 5: Client Goal Elicitation (10 min)</h4>
 <ul>
@@ -384,17 +384,17 @@ python cli/run_assessment.py
   &quot;n_sessions&quot;: 0
 }
 </code></pre>
-<p><strong>temporal_history field (v7 NEW)</strong> â€” Critical for DDE accuracy. See Section 6.</p>
+<p><strong>temporal_history field (v7 NEW)</strong> — Critical for DDE accuracy. See Section 6.</p>
 <h3 id="43-review-results-15-min">4.3 Review Results (15 min)</h3>
 <p>System outputs:
-1. <strong>Clinical 5-Axis Prediction Table</strong> â€” review with client
-2. <strong>5-Axis Relationship Table</strong> â€” collateral effects
-3. <strong>Differential Diagnosis</strong> (v7 NEW) â€” Primary/Secondary + Comorbidity pattern
-4. <strong>Comorbidity Decomposition Table</strong> (v7 NEW) â€” Per-axis source contributions
-5. <strong>Intervention Priority Table</strong> (v7 NEW) â€” Which cognitive axis is most effective?
-6. <strong>Target Level Recommendations</strong> (v7 NEW) â€” Required levels to reach clinical target
-7. <strong>Top 3 System Recommendations</strong> â€” clinician review
-8. <strong>8-Week Protocol Preview</strong> â€” client consent + effect simulation (v7 NEW)</p>
+1. <strong>Clinical 5-Axis Prediction Table</strong> — review with client
+2. <strong>5-Axis Relationship Table</strong> — collateral effects
+3. <strong>Differential Diagnosis</strong> (v7 NEW) — Primary/Secondary + Comorbidity pattern
+4. <strong>Comorbidity Decomposition Table</strong> (v7 NEW) — Per-axis source contributions
+5. <strong>Intervention Priority Table</strong> (v7 NEW) — Which cognitive axis is most effective?
+6. <strong>Target Level Recommendations</strong> (v7 NEW) — Required levels to reach clinical target
+7. <strong>Top 3 System Recommendations</strong> — clinician review
+8. <strong>8-Week Protocol Preview</strong> — client consent + effect simulation (v7 NEW)</p>
 <p>Results auto-save to <code>outputs/{client_id}_{timestamp}.json</code>.</p>
 <hr />
 <h2 id="5-entry-protocol-5-measurement-guide">5. Entry Protocol 5 Measurement Guide</h2>
@@ -403,7 +403,7 @@ python cli/run_assessment.py
 - Instruct: "Raise hand when you think 30 seconds have passed"
 - Repeat 5 times
 - Calculate error % per trial
-- Average error % â†’ time_awareness Level</p>
+- Average error % → time_awareness Level</p>
 <p><strong>Interpretation:</strong>
 | Avg Error | Fischer Level | Clinical Note |
 |-----------|---------------|---------------|
@@ -432,7 +432,7 @@ python cli/run_assessment.py
 - Results: omissions, commissions, RT variability</p>
 <p><strong>Z-score Conversion:</strong>
 - Norm mean = 0, SD = 1
-- Client score â†’ Z-score (positive = better)
+- Client score → Z-score (positive = better)
 - Omissions Z &lt; -1.5 = clinical concern</p>
 <h3 id="54-n-back">5.4 N-back</h3>
 <p><strong>Procedure:</strong>
@@ -449,7 +449,7 @@ python cli/run_assessment.py
 <h3 id="55-vsr-optional">5.5 VSR (Optional)</h3>
 <ul>
 <li>800-cell stem reading</li>
-<li>Acoustic analysis â†’ 4D mapping</li>
+<li>Acoustic analysis → 4D mapping</li>
 <li>Consistency score 0-1</li>
 </ul>
 <hr />
@@ -470,13 +470,13 @@ python cli/run_assessment.py
 </ul>
 <h4 id="2-onset-category-onset_category">2. Onset Category (onset_category)</h4>
 <ul>
-<li><strong>Question</strong>: "When did it start â€” childhood, adolescence, or adulthood?"</li>
+<li><strong>Question</strong>: "When did it start — childhood, adolescence, or adulthood?"</li>
 <li><strong>Options</strong>: <code>"childhood"</code> | <code>"adolescence"</code> | <code>"adult"</code> | <code>"any_age"</code></li>
 <li><strong>Significance</strong>: Childhood = strong ADHD marker</li>
 </ul>
 <h4 id="3-course-course">3. Course (course)</h4>
 <ul>
-<li><strong>Question</strong>: "Has it been chronic, or episodic â€” coming and going?"</li>
+<li><strong>Question</strong>: "Has it been chronic, or episodic — coming and going?"</li>
 <li><strong>Options</strong>: <code>"chronic"</code> | <code>"episodic"</code> | <code>"fluctuating"</code></li>
 <li><strong>Significance</strong>: ADHD chronic, MDD episodic, GAD chronic or episodic</li>
 </ul>
@@ -491,11 +491,11 @@ python cli/run_assessment.py
 </ul>
 <h4 id="5-pervasiveness-pervasiveness">5. Pervasiveness (pervasiveness)</h4>
 <ul>
-<li><strong>Question</strong>: "Consistent across work, home, social â€” or specific to certain situations?"</li>
+<li><strong>Question</strong>: "Consistent across work, home, social — or specific to certain situations?"</li>
 <li><strong>Options</strong>: </li>
-<li><code>"cross_setting"</code> â€” all environments (ADHD signal)</li>
-<li><code>"context_dependent"</code> â€” specific situations only (anxiety signal)</li>
-<li><code>"all_setting"</code> â€” depression presentation</li>
+<li><code>"cross_setting"</code> — all environments (ADHD signal)</li>
+<li><code>"context_dependent"</code> — specific situations only (anxiety signal)</li>
+<li><code>"all_setting"</code> — depression presentation</li>
 <li><strong>Significance</strong>: DSM-5-TR core ADHD criterion</li>
 </ul>
 <h4 id="6-stress-triggered-stress_triggered">6. Stress Triggered (stress_triggered)</h4>
@@ -532,18 +532,18 @@ temporal = TemporalHistory(
 </code></pre>
 <h3 id="64-interview-tips">6.4 Interview Tips</h3>
 <ul>
-<li><strong>Order</strong>: onset age â†’ category â†’ course â†’ duration â†’ pervasiveness â†’ stress â†’ family â†’ treatment</li>
-<li><strong>Unknown items</strong>: null or unknown (don't force) â€” empty data better than inaccurate</li>
-<li><strong>Reliability</strong>: Family history from client report â€” supplement with direct family interview if possible</li>
+<li><strong>Order</strong>: onset age → category → course → duration → pervasiveness → stress → family → treatment</li>
+<li><strong>Unknown items</strong>: null or unknown (don't force) — empty data better than inaccurate</li>
+<li><strong>Reliability</strong>: Family history from client report — supplement with direct family interview if possible</li>
 <li><strong>MDD suspicion</strong>: Ask "Almost every day for past 2 weeks?" (DSM-5-TR criterion)</li>
 </ul>
 <hr />
 <h2 id="7-clinical-report-interpretation">7. Clinical Report Interpretation</h2>
 <h3 id="71-reading-the-5-axis-prediction-table">7.1 Reading the 5-Axis Prediction Table</h3>
-<pre><code>ã€ Clinical 5-Axis Predictions ã€‘
+<pre><code>【 Clinical 5-Axis Predictions 】
   Area              Score   Tier              Priority  Top Contributing
-  Attention         0.39    Caution âš          #1        Sustained Attn (+0.05)
-  Anxiety           0.14    Priority âš âš        #2        Emotional Reg (-0.27)
+  Attention         0.39    Caution ⚠         #1        Sustained Attn (+0.05)
+  Anxiety           0.14    Priority ⚠⚠       #2        Emotional Reg (-0.27)
   ...
 </code></pre>
 <p><strong>Score Interpretation:</strong>
@@ -559,14 +559,14 @@ temporal = TemporalHistory(
 - #4: Weak areas
 - #5: Stable areas</p>
 <h3 id="72-5-axis-relationship-table">7.2 5-Axis Relationship Table</h3>
-<pre><code>ã€ 5-Axis Relationships (by Leverage) ã€‘
+<pre><code>【 5-Axis Relationships (by Leverage) 】
   Axis A         Relation       Axis B         Strength  Leverage
-  Anxiety        â†‘â†‘ Co-vary     Mood Stability 0.65      0.62
+  Anxiety        ↑↑ Co-vary     Mood Stability 0.65      0.62
   ...
 </code></pre>
 <p><strong>Relationship Types:</strong>
-- <strong>Co-vary (â†‘â†‘)</strong>: One improves, other improves
-- <strong>Inverse (â†‘â†“)</strong>: One improves, other worsens (rare)</p>
+- <strong>Co-vary (↑↑)</strong>: One improves, other improves
+- <strong>Inverse (↑↓)</strong>: One improves, other worsens (rare)</p>
 <p><strong>Leverage Score:</strong>
 - 0.5+: Very large collateral effect
 - 0.3-0.5: Medium collateral
@@ -577,7 +577,7 @@ temporal = TemporalHistory(
 <hr />
 <h2 id="8-differential-comorbidity-diagnosis-v7-new">8. Differential &amp; Comorbidity Diagnosis (v7 NEW)</h2>
 <h3 id="81-reading-dde-output">8.1 Reading DDE Output</h3>
-<pre><code>ã€ Differential Diagnosis ã€‘
+<pre><code>【 Differential Diagnosis 】
   Primary: adhd_inattentive
   Secondary: ['mdd', 'gad']
   Comorbidity pattern: adhd_plus_gad
@@ -585,11 +585,11 @@ temporal = TemporalHistory(
   Treatment: ADHD + GAD standard. 30% coverage rate clinical pattern.
 
   Diagnostic Hypothesis Ranking:
-    â˜… Primary: ADHD Inattentive Type (P=57%)
+    ★ Primary: ADHD Inattentive Type (P=57%)
            Symptom match: 0.99, Cognitive: 0.99, Biomarker: 0.98, Temporal: 0.95
-           âœ“ Met: Cross-setting consistency, Onset before age 12
-    â€¢ Secondary: MDD (P=21%)
-    â€¢ Secondary: GAD (P=21%)
+           ✓ Met: Cross-setting consistency, Onset before age 12
+    • Secondary: MDD (P=21%)
+    • Secondary: GAD (P=21%)
 </code></pre>
 <p><strong>Primary Thresholds:</strong>
 - Posterior &gt; 40%: strong signal, primary confirmed
@@ -636,32 +636,32 @@ temporal = TemporalHistory(
 <h3 id="83-differential-markers-metmissed">8.3 Differential Markers Met/Missed</h3>
 <p>DSM-5-TR criteria auto-checked per diagnosis:</p>
 <p><strong>ADHD Inattentive:</strong>
-- âœ“ Cross-setting consistency (pervasiveness == "cross_setting")
-- âœ“ Onset before age 12 (onset_age &lt; 12)
-- âœ“ Not better explained by mood/anxiety (symptom pattern analysis)</p>
+- ✓ Cross-setting consistency (pervasiveness == "cross_setting")
+- ✓ Onset before age 12 (onset_age &lt; 12)
+- ✓ Not better explained by mood/anxiety (symptom pattern analysis)</p>
 <p><strong>GAD:</strong>
-- âœ“ Excessive worry 6+ months (duration &gt;= 6)
-- âœ“ Worry &gt; attention deficit (anxiety &gt; inattention)
-- âœ“ HRV RMSSD &lt; 25ms</p>
+- ✓ Excessive worry 6+ months (duration &gt;= 6)
+- ✓ Worry &gt; attention deficit (anxiety &gt; inattention)
+- ✓ HRV RMSSD &lt; 25ms</p>
 <p><strong>MDD:</strong>
-- âœ“ Anhedonia or low mood 2+ weeks
-- âœ“ Rumination (vs ADHD distractibility)
-- âœ“ Cognitive slowing (vs ADHD inconsistency)</p>
+- ✓ Anhedonia or low mood 2+ weeks
+- ✓ Rumination (vs ADHD distractibility)
+- ✓ Cognitive slowing (vs ADHD inconsistency)</p>
 <h3 id="84-comorbidity-decomposition-interpretation">8.4 Comorbidity Decomposition Interpretation</h3>
-<pre><code>ã€ Comorbidity Decomposition ã€‘
-  â–¶ Attention
+<pre><code>【 Comorbidity Decomposition 】
+  ▶ Attention
      Original score: 0.38 (impairment 0.62)
      Explanatory power: 83%
-     â˜… ADHD Inattentive                Contribution 0.234 (posterior 57%)
-     â€¢ MDD                              Contribution 0.087 (posterior 21%)
-     â€¢ GAD                              Contribution 0.087 (posterior 21%)
+     ★ ADHD Inattentive                Contribution 0.234 (posterior 57%)
+     • MDD                              Contribution 0.087 (posterior 21%)
+     • GAD                              Contribution 0.087 (posterior 21%)
      Residual (unexplained): 0.105
      Treatment target: primary_first
 </code></pre>
 <p><strong>Contribution Interpretation:</strong>
-- ADHD 0.234 â†’ 23.4% of attention impairment from ADHD source
-- MDD 0.087 â†’ 8.7% from depression-induced secondary
-- Residual 0.105 â†’ unexplained (individual variance, other factors)</p>
+- ADHD 0.234 → 23.4% of attention impairment from ADHD source
+- MDD 0.087 → 8.7% from depression-induced secondary
+- Residual 0.105 → unexplained (individual variance, other factors)</p>
 <p><strong>Treatment Target:</strong>
 - <code>primary_first</code>: Primary diagnosis treatment first
 - <code>concurrent</code>: Concurrent treatment (Comorbidity pattern)
@@ -674,9 +674,9 @@ temporal = TemporalHistory(
 - ADHD suspicion but onset age unconfirmed</p>
 <p>When flagged, clinician makes final decision (not system auto-decide).</p>
 <h3 id="86-intervention-priority-counterfactual">8.6 Intervention Priority (Counterfactual)</h3>
-<pre><code>ã€ Intervention Priority ã€‘
-  #1 working_memory      L8.2â†’L9.2 | Total +0.085 | Main effect: learning
-  #2 sustained_attention L7.8â†’L8.8 | Total +0.062 | Main effect: attention
+<pre><code>【 Intervention Priority 】
+  #1 working_memory      L8.2→L9.2 | Total +0.085 | Main effect: learning
+  #2 sustained_attention L7.8→L8.8 | Total +0.062 | Main effect: attention
   ...
 </code></pre>
 <p>Compares effect of +1.0 Level boost per cognitive axis. #1 = most efficient.</p>
@@ -741,7 +741,7 @@ temporal = TemporalHistory(
 <p>When system recommendation is clinically inappropriate:
 - Clinician can select different card
 - Override rationale must be recorded (learning signal)
-- System weighs this Ã—2 in learning</p>
+- System weighs this ×2 in learning</p>
 <hr />
 <h2 id="10-crisis-response">10. Crisis Response</h2>
 <h3 id="101-auto-detection">10.1 Auto-Detection</h3>
@@ -808,23 +808,23 @@ temporal = TemporalHistory(
 </tbody>
 </table>
 <h3 id="102-ma-mandated-reporter">10.2 MA Mandated Reporter</h3>
-<p><strong>Important</strong>: BCN + PhD clinicians = MA M.G.L. c. 119 Â§51A "allied mental health professional" category.</p>
+<p><strong>Important</strong>: BCN + PhD clinicians = MA M.G.L. c. 119 §51A "allied mental health professional" category.</p>
 <p><strong>Obligations:</strong>
 1. <strong>Immediate verbal report</strong>: MA DCF Emergency Line <strong>1-800-792-5200</strong>
 2. <strong>Written report within 48 hours</strong>: 51A form (online portal)
 3. <strong>Penalties</strong>: $1,000 first violation, $5,000 thereafter</p>
 <h3 id="103-phq-9-item-9-integration">10.3 PHQ-9 Item 9 Integration</h3>
 <p>PHQ-9 Item 9 auto-detected:
-- â‰¥1: passive ideation activated
-- â‰¥2: active ideation activated
-- â‰¥3: plan/means possibility</p>
+- ≥1: passive ideation activated
+- ≥2: active ideation activated
+- ≥3: plan/means possibility</p>
 <hr />
 <h2 id="11-4-week-outcome-adaptive-re-routing-v7-new">11. 4-Week Outcome + Adaptive Re-routing (v7 NEW)</h2>
 <h3 id="111-post-protocol-measurements">11.1 Post-Protocol Measurements</h3>
 <p>4-8 weeks after session end:</p>
 <ol>
-<li><strong>Re-measure Entry Protocol 5</strong> â€” all measurements</li>
-<li><strong>Clinical 5-axis scoring</strong> â€” clinician assessment</li>
+<li><strong>Re-measure Entry Protocol 5</strong> — all measurements</li>
+<li><strong>Clinical 5-axis scoring</strong> — clinician assessment</li>
 <li><strong>Self-report</strong>:</li>
 <li>Improvement (0-10)</li>
 <li>Satisfaction (0-10)</li>
@@ -850,51 +850,51 @@ temporal = TemporalHistory(
 4. <strong>Crisis FN/FP tracking</strong></p>
 <p><strong>Adaptive Re-routing (v7 NEW):</strong>
 5. <strong>Expected vs actual response comparison</strong>
-6. <strong>Mismatch â†’ auto DDE re-run</strong> (weakened prior)
+6. <strong>Mismatch → auto DDE re-run</strong> (weakened prior)
 7. <strong>Diagnosis change detection</strong> (no_change | secondary_added | primary_swap | diagnosis_dropped)</p>
 <h3 id="114-re-routing-decision-interpretation">11.4 Re-routing Decision Interpretation</h3>
-<pre><code>ã€ Diagnostic Re-routing Decision ã€‘
-  Primary: adhd_inattentive â†’ gad
-  Secondary: [] â†’ [adhd_inattentive]
+<pre><code>【 Diagnostic Re-routing Decision 】
+  Primary: adhd_inattentive → gad
+  Secondary: [] → [adhd_inattentive]
   Changed: yes
   Change type: primary_swap
   Response pattern: primary_no_response_secondary_improved_anxiety
   Posterior change: 0.35
-  âš  Clinician review needed
+  ⚠ Clinician review needed
 </code></pre>
 <p><strong>Change Types:</strong>
 - <code>no_change</code>: Diagnosis maintained (response fit 0.60+)
 - <code>secondary_added</code>: New comorbid diagnosis
-- <code>primary_swap</code>: Primary diagnosis changed (e.g., ADHD â†’ GAD)
+- <code>primary_swap</code>: Primary diagnosis changed (e.g., ADHD → GAD)
 - <code>diagnosis_dropped</code>: Previous diagnosis excluded</p>
 <p><strong>Response Patterns:</strong>
 - <code>expected_response_strong</code>: Primary target responds well (&gt;+0.15)
 - <code>partial_response</code>: Partial response
-- <code>primary_no_response_secondary_improved_*</code>: Primary unresponsive + only other axis improved â†’ diagnosis doubt
+- <code>primary_no_response_secondary_improved_*</code>: Primary unresponsive + only other axis improved → diagnosis doubt
 - <code>treatment_no_response</code>: No response at all
 - <code>diagnosis_revision_from_response</code>: Response matches different diagnosis pattern</p>
 <h3 id="115-clinical-re-routing-scenarios">11.5 Clinical Re-routing Scenarios</h3>
-<p><strong>Scenario A: ADHD primary â†’ stimulant card â†’ no effect, anxiety worsens</strong>
+<p><strong>Scenario A: ADHD primary → stimulant card → no effect, anxiety worsens</strong>
 - System catches: "Expected ADHD primary but stimulant non-response + anxiety increase"
 - Re-routing: Change primary to GAD, ADHD secondary
 - Clinical meaning: GAD caused ADHD-like symptoms (Eysenck ACT)</p>
-<p><strong>Scenario B: MDD primary â†’ BA card â†’ no mood change, only HRV improves</strong>
+<p><strong>Scenario B: MDD primary → BA card → no mood change, only HRV improves</strong>
 - System catches: "MDD treatment with no depression response"
-- Re-routing: GAD secondary likelihood â†‘
+- Re-routing: GAD secondary likelihood ↑
 - Clinical meaning: Chronic anxiety more primary than depression</p>
-<p><strong>Scenario C: ADHD primary â†’ stimulant card â†’ attention â†‘, learning â†‘</strong>
+<p><strong>Scenario C: ADHD primary → stimulant card → attention ↑, learning ↑</strong>
 - System catches: "Response as expected (response fit 0.85+)"
-- Re-routing: No change, diagnosis confidence â†‘</p>
+- Re-routing: No change, diagnosis confidence ↑</p>
 <h3 id="116-safety">11.6 Safety</h3>
 <ul>
 <li>Auto-rollback if volatility &gt; 0.15</li>
-<li>Protected cells immune to learning (e.g., emotional_regulationâ†’anxiety)</li>
+<li>Protected cells immune to learning (e.g., emotional_regulation→anxiety)</li>
 <li>Auto-pause learning if mean outcome &lt; -0.30</li>
 <li>Re-routing only activates when posterior change &gt; 0.20</li>
 <li>Primary swap auto-flags clinician review</li>
 </ul>
 <hr />
-<h2 id="12-advanced-mapping-matrix-adjustment">12. Advanced â€” Mapping Matrix Adjustment</h2>
+<h2 id="12-advanced-mapping-matrix-adjustment">12. Advanced — Mapping Matrix Adjustment</h2>
 <h3 id="121-when-to-adjust">12.1 When to Adjust</h3>
 <ul>
 <li>After 5 beta clients, analyzing prediction errors</li>
@@ -905,7 +905,7 @@ temporal = TemporalHistory(
 <p><strong>File</strong>: <code>config/cognitive_clinical_mapping.yaml</code></p>
 <pre><code class="language-yaml">positive_loading:
   sustained_attention:
-    attention:        0.45   # â† modify this
+    attention:        0.45   # ← modify this
     learning:         0.20
     peak_performance: 0.20
     anxiety:          0.05
@@ -1040,7 +1040,7 @@ for axis, row in cfg['positive_loading'].items():
     print(f'{axis}: {total:.4f}')
 &quot;
 </code></pre>
-<p>Each row = 1.0 Â± 0.001.</p>
+<p>Each row = 1.0 ± 0.001.</p>
 <h3 id="144-adding-new-cards">14.4 Adding New Cards</h3>
 <p>Add new Card object to <code>cna_core/card_deck.py</code>:</p>
 <pre><code class="language-python">Card(
@@ -1062,7 +1062,7 @@ for axis, row in cfg['positive_loading'].items():
 3. Verify RLS policies
 4. Apply for HIPAA BAA</p>
 <hr />
-<h2 id="appendix-a-clinical-evidence">Appendix A â€” Clinical Evidence</h2>
+<h2 id="appendix-a-clinical-evidence">Appendix A — Clinical Evidence</h2>
 <table>
 <thead>
 <tr>
@@ -1073,12 +1073,12 @@ for axis, row in cfg['positive_loading'].items():
 </thead>
 <tbody>
 <tr>
-<td>Working Memory â†” Learning</td>
+<td>Working Memory ↔ Learning</td>
 <td>r=0.43</td>
 <td>Meta-analysis, n=7947</td>
 </tr>
 <tr>
-<td>Emotional Intelligence â†” Academic</td>
+<td>Emotional Intelligence ↔ Academic</td>
 <td>r=0.39</td>
 <td>EI-AP meta-analysis 2023</td>
 </tr>
@@ -1088,7 +1088,7 @@ for axis, row in cfg['positive_loading'].items():
 <td>Aldao et al. 2010</td>
 </tr>
 <tr>
-<td>Rumination â†” Depression</td>
+<td>Rumination ↔ Depression</td>
 <td>r=0.42</td>
 <td>Nolen-Hoeksema response styles</td>
 </tr>
@@ -1125,7 +1125,7 @@ for axis, row in cfg['positive_loading'].items():
 </tbody>
 </table>
 <hr />
-<h2 id="appendix-b-contact">Appendix B â€” Contact</h2>
+<h2 id="appendix-b-contact">Appendix B — Contact</h2>
 <ul>
 <li><strong>Developer</strong>: Alex Kwon (BCN, PhD)</li>
 <li><strong>Company</strong>: Boston Neuromind LLC</li>
@@ -1141,7 +1141,7 @@ for axis, row in cfg['positive_loading'].items():
   </div>
 </div>
 <footer class="footer">
-  <p>Boston Neuromind LLC Â· CNA v7.0.0</p>
+  <p>Boston Neuromind LLC · CNA v7.0.0</p>
 </footer>
 <script src="/decision.js"></script>
 </body>

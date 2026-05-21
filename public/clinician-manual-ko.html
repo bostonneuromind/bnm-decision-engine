@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>ë§¤ë‰´ì–¼ (í•œêµ­ì–´) - Decision Catcher</title>
+<title>매뉴얼 (한국어) - Decision Catcher</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/style.css">
 <style>
@@ -27,326 +27,326 @@
 </head>
 <body>
 <header class="header">
-  <h1>ðŸ“– ë§¤ë‰´ì–¼ (í•œêµ­ì–´)</h1>
+  <h1>📖 매뉴얼 (한국어)</h1>
   <nav class="nav">
     <a href="/">Home</a>
-    <a href="/manual.html">â† ë§¤ë‰´ì–¼ hub</a>
-    <a href="/clinician-clinician-manual-en.html">English</a>
-    <a href="/clinician.html">ìƒˆ í´ë¼ì´ì–¸íŠ¸</a>
+    <a href="/manual.html">← 매뉴얼 hub</a>
+    <a href="/manual-en.html">English</a>
+    <a href="/clinician.html">새 클라이언트</a>
       <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
   </nav>
 </header>
 <div class="container">
   <div class="manual-content">
-<h1 id="cna-v7">CNA v7 ì‚¬ìš©ìž ë§¤ë‰´ì–¼ (í•œêµ­ì–´)</h1>
+<h1 id="cna-v7">CNA v7 사용자 매뉴얼 (한국어)</h1>
 <p><strong>Catcher Navigator Algorithm v7.0</strong><br />
-<strong>Boston Neuromind LLC Â· 2026</strong></p>
+<strong>Boston Neuromind LLC · 2026</strong></p>
 <hr />
-<h2 id="_1">ëª©ì°¨</h2>
+<h2 id="_1">목차</h2>
 <ol>
-<li><a href="#1-ì‹œìŠ¤í…œ-ì†Œê°œ">ì‹œìŠ¤í…œ ì†Œê°œ</a></li>
-<li><a href="#2-í•µì‹¬-ê°œë…">í•µì‹¬ ê°œë…</a></li>
-<li><a href="#3-ì„¤ì¹˜-ê°€ì´ë“œ">ì„¤ì¹˜ ê°€ì´ë“œ</a></li>
-<li><a href="#4-ì²«-í´ë¼ì´ì–¸íŠ¸-ì‹œìž‘-ì›Œí¬í”Œë¡œ">ì²« í´ë¼ì´ì–¸íŠ¸ ì‹œìž‘ ì›Œí¬í”Œë¡œ</a></li>
-<li><a href="#5-entry-protocol-5-ì¸¡ì •-ê°€ì´ë“œ">Entry Protocol 5 ì¸¡ì • ê°€ì´ë“œ</a></li>
-<li><a href="#6-ì‹œê°„-ì •ë³´-ìˆ˜ì§‘-ê°€ì´ë“œ-v7-new">ì‹œê°„ ì •ë³´ ìˆ˜ì§‘ ê°€ì´ë“œ (v7 NEW)</a></li>
-<li><a href="#7-ìž„ìƒ-ë¦¬í¬íŠ¸-í•´ì„">ìž„ìƒ ë¦¬í¬íŠ¸ í•´ì„</a></li>
-<li><a href="#8-ê°ë³„-ì§„ë‹¨--ê³µì¡´-ì§„ë‹¨-í•´ì„-v7-new">ê°ë³„ ì§„ë‹¨ + ê³µì¡´ ì§„ë‹¨ í•´ì„ (v7 NEW)</a></li>
-<li><a href="#9-í›ˆë ¨-í”„ë¡œí† ì½œ-ìš´ì˜">í›ˆë ¨ í”„ë¡œí† ì½œ ìš´ì˜</a></li>
-<li><a href="#10-ìœ„ê¸°-ëŒ€ì‘">ìœ„ê¸° ëŒ€ì‘</a></li>
-<li><a href="#11-4ì£¼-í›„-outcome--adaptive-re-routing-v7-new">4ì£¼ í›„ Outcome + Adaptive Re-routing (v7 NEW)</a></li>
-<li><a href="#12-ê³ ê¸‰---ë§¤í•‘-í–‰ë ¬-ì¡°ì •">ê³ ê¸‰ - ë§¤í•‘ í–‰ë ¬ ì¡°ì •</a></li>
-<li><a href="#13-api-ì‚¬ìš©-ê°€ì´ë“œ">API ì‚¬ìš© ê°€ì´ë“œ</a></li>
-<li><a href="#14-ë¬¸ì œ-í•´ê²°">ë¬¸ì œ í•´ê²°</a></li>
+<li><a href="#1-시스템-소개">시스템 소개</a></li>
+<li><a href="#2-핵심-개념">핵심 개념</a></li>
+<li><a href="#3-설치-가이드">설치 가이드</a></li>
+<li><a href="#4-첫-클라이언트-시작-워크플로">첫 클라이언트 시작 워크플로</a></li>
+<li><a href="#5-entry-protocol-5-측정-가이드">Entry Protocol 5 측정 가이드</a></li>
+<li><a href="#6-시간-정보-수집-가이드-v7-new">시간 정보 수집 가이드 (v7 NEW)</a></li>
+<li><a href="#7-임상-리포트-해석">임상 리포트 해석</a></li>
+<li><a href="#8-감별-진단--공존-진단-해석-v7-new">감별 진단 + 공존 진단 해석 (v7 NEW)</a></li>
+<li><a href="#9-훈련-프로토콜-운영">훈련 프로토콜 운영</a></li>
+<li><a href="#10-위기-대응">위기 대응</a></li>
+<li><a href="#11-4주-후-outcome--adaptive-re-routing-v7-new">4주 후 Outcome + Adaptive Re-routing (v7 NEW)</a></li>
+<li><a href="#12-고급---매핑-행렬-조정">고급 - 매핑 행렬 조정</a></li>
+<li><a href="#13-api-사용-가이드">API 사용 가이드</a></li>
+<li><a href="#14-문제-해결">문제 해결</a></li>
 </ol>
 <hr />
-<h2 id="1">1. ì‹œìŠ¤í…œ ì†Œê°œ</h2>
-<h3 id="11">1.1 ë¬´ì—‡ì„ í•˜ëŠ” ì‹œìŠ¤í…œì¸ê°€</h3>
-<p>CNA v7ì€ 5ëª… ë² íƒ€ í´ë¼ì´ì–¸íŠ¸ (íŒŒíŠ¸íƒ€ìž„ ì„¸ë¼í”¼ ê³ ê°)ë¥¼ ìœ„í•œ ìž„ìƒ ì˜ì‚¬ê²°ì • ì§€ì› ì‹œìŠ¤í…œìž…ë‹ˆë‹¤.</p>
-<p><strong>v7 í•µì‹¬ ì¶”ê°€ (Round 7-10):</strong>
-- <strong>Differential Diagnosis Engine (DDE)</strong>: í´ë¼ì´ì–¸íŠ¸ ë°ì´í„° â†’ Bayesian ê°ë³„ ì§„ë‹¨ (ADHD/GAD/MDD)
-- <strong>Comorbidity Decomposition</strong>: í•œ ìž„ìƒ ì ìˆ˜ë¥¼ ì§„ë‹¨ sourceë³„ë¡œ ë¶„í•´
-- <strong>Cognitive Simulator</strong>: ì¸ì§€ì¶• ë³€ê²½ ì‹œ ìž„ìƒ ê²°ê³¼ ì‹œë®¬ë ˆì´ì…˜ (counterfactual)
-- <strong>Adaptive Re-routing</strong>: 4ì£¼ outcomeìœ¼ë¡œ ì§„ë‹¨ ìžë™ ìž¬êµ¬ì„±</p>
-<p><strong>í•µì‹¬ ê¸°ëŠ¥:</strong></p>
+<h2 id="1">1. 시스템 소개</h2>
+<h3 id="11">1.1 무엇을 하는 시스템인가</h3>
+<p>CNA v7은 5명 베타 클라이언트 (파트타임 세라피 고객)를 위한 임상 의사결정 지원 시스템입니다.</p>
+<p><strong>v7 핵심 추가 (Round 7-10):</strong>
+- <strong>Differential Diagnosis Engine (DDE)</strong>: 클라이언트 데이터 → Bayesian 감별 진단 (ADHD/GAD/MDD)
+- <strong>Comorbidity Decomposition</strong>: 한 임상 점수를 진단 source별로 분해
+- <strong>Cognitive Simulator</strong>: 인지축 변경 시 임상 결과 시뮬레이션 (counterfactual)
+- <strong>Adaptive Re-routing</strong>: 4주 outcome으로 진단 자동 재구성</p>
+<p><strong>핵심 기능:</strong></p>
 <ul>
-<li>Fischer Dynamic Skill Theory ê¸°ë°˜ ì¸ì§€ 5ì¶• â†’ ìž„ìƒ ê²°ê³¼ 5ì¶• ë³€í™˜</li>
-<li>5ì¶• (ì£¼ì˜ë ¥/í•™ìŠµ/ìˆ˜í–‰/ë¶ˆì•ˆ/ìš°ìš¸) ê°„ ê´€ê³„ ìžë™ ë¶„ì„</li>
-<li>DSM-5-TR ê¸°ë°˜ ê°ë³„ ì§„ë‹¨ + ê³µì¡´ ì§„ë‹¨ ìžë™ catch (v7)</li>
-<li>í´ë¼ì´ì–¸íŠ¸ê°€ ì˜ì—­ ì„ íƒ ì‹œ ìžë™ í›ˆë ¨ í”„ë¡œí† ì½œ ìƒì„± (4-8ì£¼)</li>
-<li>Karl Friston Active Inference framework ê¸°ë°˜ ì˜ì‚¬ê²°ì •</li>
-<li>í´ë¼ì´ì–¸íŠ¸ outcomeìœ¼ë¡œ ì‹œìŠ¤í…œ ìžë™ í•™ìŠµ (Variational Belief Update + Diagnostic Re-routing)</li>
+<li>Fischer Dynamic Skill Theory 기반 인지 5축 → 임상 결과 5축 변환</li>
+<li>5축 (주의력/학습/수행/불안/우울) 간 관계 자동 분석</li>
+<li>DSM-5-TR 기반 감별 진단 + 공존 진단 자동 catch (v7)</li>
+<li>클라이언트가 영역 선택 시 자동 훈련 프로토콜 생성 (4-8주)</li>
+<li>Karl Friston Active Inference framework 기반 의사결정</li>
+<li>클라이언트 outcome으로 시스템 자동 학습 (Variational Belief Update + Diagnostic Re-routing)</li>
 </ul>
-<h3 id="12">1.2 ì‚¬ìš© ëŒ€ìƒ</h3>
+<h3 id="12">1.2 사용 대상</h3>
 <ul>
-<li><strong>ìž„ìƒê°€</strong>: BCN, PhD, LMHC, LMFT, ì •ì‹ ê±´ê°• ìž„ìƒê°€</li>
-<li><strong>í´ë¼ì´ì–¸íŠ¸</strong>: 18ì„¸ ì´ìƒ (ë² íƒ€), Learning + Peak Performance + ê°€ë²¼ìš´ ë¶ˆì•ˆ/ìš°ìš¸ ì˜ì—­</li>
-<li><strong>ì œì™¸</strong>: ê¸‰ì„± ì •ì‹ ì¦, í™œì„± ìžì‚´ ìœ„ê¸°, í†µì œë˜ì§€ ì•Šì€ ì–‘ê·¹ì„± ìž¥ì• </li>
+<li><strong>임상가</strong>: BCN, PhD, LMHC, LMFT, 정신건강 임상가</li>
+<li><strong>클라이언트</strong>: 18세 이상 (베타), Learning + Peak Performance + 가벼운 불안/우울 영역</li>
+<li><strong>제외</strong>: 급성 정신증, 활성 자살 위기, 통제되지 않은 양극성 장애</li>
 </ul>
-<h3 id="13">1.3 ìž„ìƒ ê·¼ê±°</h3>
+<h3 id="13">1.3 임상 근거</h3>
 <table>
 <thead>
 <tr>
-<th>ë§¤í•‘ / ì•Œê³ ë¦¬ì¦˜</th>
-<th>ìž„ìƒ ê·¼ê±°</th>
+<th>매핑 / 알고리즘</th>
+<th>임상 근거</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Working Memory â†’ Learning (r=0.43)</td>
+<td>Working Memory → Learning (r=0.43)</td>
 <td>Meta-analysis, n=7947</td>
 </tr>
 <tr>
-<td>Emotional Intelligence â†’ Academic (r=0.39)</td>
+<td>Emotional Intelligence → Academic (r=0.39)</td>
 <td>EI-AP meta-analysis</td>
 </tr>
 <tr>
-<td>Emotion Regulation íš¨ê³¼ (d=0.605)</td>
+<td>Emotion Regulation 효과 (d=0.605)</td>
 <td>Aldao et al. 2010</td>
 </tr>
 <tr>
-<td>Rumination â†’ Depression (ì–‘ë°©í–¥)</td>
+<td>Rumination → Depression (양방향)</td>
 <td>Nolen-Hoeksema response styles</td>
 </tr>
 <tr>
-<td>Active Inference ìž„ìƒ ì ìš©</td>
+<td>Active Inference 임상 적용</td>
 <td>Friston 2010-2025</td>
 </tr>
 <tr>
-<td>ADHD ê³µì¡´ë¥  50-80% (ì„±ì¸)</td>
+<td>ADHD 공존률 50-80% (성인)</td>
 <td>Frontiers 2025</td>
 </tr>
 <tr>
-<td>ADHD-ë¶ˆì•ˆ 25-50%, ADHD-ìš°ìš¸ ~50%</td>
+<td>ADHD-불안 25-50%, ADHD-우울 ~50%</td>
 <td>Postgraduate Med 2014</td>
 </tr>
 <tr>
-<td>ê°ë³„ì˜ í•µì‹¬ = temporal pattern</td>
-<td>ADHD ë§Œì„±/ê´‘ë²”ìœ„ vs ë¶ˆì•ˆ/ìš°ìš¸ ì—í”¼ì†Œë“œ</td>
+<td>감별의 핵심 = temporal pattern</td>
+<td>ADHD 만성/광범위 vs 불안/우울 에피소드</td>
 </tr>
 <tr>
-<td>ë¯¸ì¸ì§€ ADHDì— SSRI ë‹¨ë… = ì‹¤íŒ¨</td>
+<td>미인지 ADHD에 SSRI 단독 = 실패</td>
 <td>McIntosh et al. 2009</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="2">2. í•µì‹¬ ê°œë…</h2>
-<h3 id="21-fischer-5-layer-a">2.1 Fischer ì¸ì§€ 5ì¶• (Layer A)</h3>
-<p>ì¸¡ì • ê°€ëŠ¥í•œ ì¸ì§€ ëŠ¥ë ¥ ìžë£Œ:</p>
+<h2 id="2">2. 핵심 개념</h2>
+<h3 id="21-fischer-5-layer-a">2.1 Fischer 인지 5축 (Layer A)</h3>
+<p>측정 가능한 인지 능력 자료:</p>
 <table>
 <thead>
 <tr>
-<th>ì¶•</th>
-<th>ì¸¡ì • ë„êµ¬</th>
-<th>ì •ìƒ ë²”ìœ„</th>
+<th>축</th>
+<th>측정 도구</th>
+<th>정상 범위</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>ì§€ì† ì£¼ì˜ë ¥</strong> (Sustained Attention)</td>
+<td><strong>지속 주의력</strong> (Sustained Attention)</td>
 <td>CPT (Continuous Performance Test)</td>
 <td>Omissions Z = -0.5 ~ +0.5</td>
 </tr>
 <tr>
-<td><strong>ìž‘ì—…ê¸°ì–µ</strong> (Working Memory)</td>
+<td><strong>작업기억</strong> (Working Memory)</td>
 <td>N-back (2-back, 3-back)</td>
-<td>ì •í™•ë„ 70-85%</td>
+<td>정확도 70-85%</td>
 </tr>
 <tr>
-<td><strong>ì •ì„œì¡°ì ˆ</strong> (Emotional Regulation)</td>
+<td><strong>정서조절</strong> (Emotional Regulation)</td>
 <td>HRV RMSSD + VSR</td>
 <td>RMSSD 25-50ms</td>
 </tr>
 <tr>
-<td><strong>ì‹œê°„ê°ê°</strong> (Time Awareness)</td>
-<td>ì‹œê°„ì¶”ì • ê³¼ì œ</td>
-<td>ì˜¤ì°¨ 5-15%</td>
+<td><strong>시간감각</strong> (Time Awareness)</td>
+<td>시간추정 과제</td>
+<td>오차 5-15%</td>
 </tr>
 <tr>
-<td><strong>ìžê¸°ì¸ì§€</strong> (Self-Awareness)</td>
+<td><strong>자기인지</strong> (Self-Awareness)</td>
 <td>OMR (Observable Model Refinement)</td>
-<td>ì‘ë‹µ ê¹Šì´ ìžë£Œ</td>
+<td>응답 깊이 자료</td>
 </tr>
 </tbody>
 </table>
-<p>Fischer Level: L7.0 ~ L13.0 (ì„±ì¸ ì¼ë°˜ ë²”ìœ„)</p>
-<h3 id="22-5-layer-b">2.2 ìž„ìƒ ê²°ê³¼ 5ì¶• (Layer B)</h3>
-<p>í´ë¼ì´ì–¸íŠ¸ê°€ ì„ íƒ ê°€ëŠ¥í•œ ì¹˜ë£Œ ì˜ì—­ ìžë£Œ:</p>
+<p>Fischer Level: L7.0 ~ L13.0 (성인 일반 범위)</p>
+<h3 id="22-5-layer-b">2.2 임상 결과 5축 (Layer B)</h3>
+<p>클라이언트가 선택 가능한 치료 영역 자료:</p>
 <table>
 <thead>
 <tr>
-<th>ì˜ì—­</th>
-<th>í•œêµ­ì–´</th>
-<th>ì£¼ìš” ì¸¡ì • ìžë£Œ</th>
+<th>영역</th>
+<th>한국어</th>
+<th>주요 측정 자료</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Attention</td>
-<td>ì£¼ì˜ë ¥</td>
+<td>주의력</td>
 <td>CPT, ASRS</td>
 </tr>
 <tr>
 <td>Learning</td>
-<td>í•™ìŠµ íš¨ìœ¨</td>
-<td>N-back, í•™ìŠµ retention</td>
+<td>학습 효율</td>
+<td>N-back, 학습 retention</td>
 </tr>
 <tr>
 <td>Peak Performance</td>
-<td>ìˆ˜í–‰ ìµœì í™”</td>
-<td>ì‹œê°„ ì¶”ì •, HRV</td>
+<td>수행 최적화</td>
+<td>시간 추정, HRV</td>
 </tr>
 <tr>
 <td>Anxiety</td>
-<td>ë¶ˆì•ˆ ê´€ë¦¬</td>
+<td>불안 관리</td>
 <td>HRV, GAD-7</td>
 </tr>
 <tr>
 <td>Depression</td>
-<td>ê¸°ë¶„ ì•ˆì •</td>
+<td>기분 안정</td>
 <td>PHQ-9, BA count</td>
 </tr>
 </tbody>
 </table>
-<h3 id="23-4-vector">2.3 4-Vector ìž…ë ¥ ìžë£Œ</h3>
-<p>ì‹œìŠ¤í…œì´ ì˜ì‚¬ê²°ì •ì— ì‚¬ìš©í•˜ëŠ” 4ê°€ì§€ ìžë£Œ:</p>
+<h3 id="23-4-vector">2.3 4-Vector 입력 자료</h3>
+<p>시스템이 의사결정에 사용하는 4가지 자료:</p>
 <ul>
-<li><strong>V1 State</strong>: í˜„ìž¬ ì¸¡ì •ê°’ + ì¦ìƒ ì ìˆ˜</li>
-<li><strong>V2 Desire</strong>: í´ë¼ì´ì–¸íŠ¸ê°€ ì›í•˜ëŠ” ê²°ê³¼ + ë™ê¸°</li>
-<li><strong>V3 Skill</strong>: Fischer 5ì¶• Level</li>
-<li><strong>V4 Trajectory</strong>: ê³¼ê±° íšŒê¸° ëˆ„ì  ìžë£Œ</li>
+<li><strong>V1 State</strong>: 현재 측정값 + 증상 점수</li>
+<li><strong>V2 Desire</strong>: 클라이언트가 원하는 결과 + 동기</li>
+<li><strong>V3 Skill</strong>: Fischer 5축 Level</li>
+<li><strong>V4 Trajectory</strong>: 과거 회기 누적 자료</li>
 </ul>
-<h3 id="24-free-energy-6-component">2.4 Free Energy 6-Component ì˜ì‚¬ê²°ì •</h3>
-<p>ê° ì¹´ë“œëŠ” 6ê°œ ìžë£Œë¡œ ì ìˆ˜ ê³„ì‚°:</p>
+<h3 id="24-free-energy-6-component">2.4 Free Energy 6-Component 의사결정</h3>
+<p>각 카드는 6개 자료로 점수 계산:</p>
 <ol>
-<li><strong>Accuracy (Symptom)</strong>: í´ë¼ì´ì–¸íŠ¸ ì¦ìƒ â†” ì¹´ë“œ íƒ€ê²Ÿ ë§¤ì¹­</li>
-<li><strong>Accuracy (Biomarker)</strong>: ì¸¡ì •ê°’ â†” ì¹´ë“œ expected profile</li>
-<li><strong>Complexity Penalty</strong>: Fischer level ê±°ë¦¬ (Vygotsky ZPD)</li>
-<li><strong>Preference</strong>: í´ë¼ì´ì–¸íŠ¸ ì„ íƒ ì˜ì—­ ì •í•©</li>
-<li><strong>Epistemic Value</strong>: ìžë£Œ íƒìƒ‰ ê°€ì¹˜ (information gain)</li>
-<li><strong>Pragmatic Value</strong>: ê·¼ê±° + ì¦‰ì‹œ íš¨ê³¼</li>
+<li><strong>Accuracy (Symptom)</strong>: 클라이언트 증상 ↔ 카드 타겟 매칭</li>
+<li><strong>Accuracy (Biomarker)</strong>: 측정값 ↔ 카드 expected profile</li>
+<li><strong>Complexity Penalty</strong>: Fischer level 거리 (Vygotsky ZPD)</li>
+<li><strong>Preference</strong>: 클라이언트 선택 영역 정합</li>
+<li><strong>Epistemic Value</strong>: 자료 탐색 가치 (information gain)</li>
+<li><strong>Pragmatic Value</strong>: 근거 + 즉시 효과</li>
 </ol>
-<p>ê°€ì¤‘ì¹˜ëŠ” í´ë¼ì´ì–¸íŠ¸ phaseì— ë”°ë¼ ìžë™ ì¡°ì •:
-- <strong>ìƒˆ í´ë¼ì´ì–¸íŠ¸</strong>: epistemic ìš°ì„  (ìžë£Œ ìž¡ê¸°)
-- <strong>ì•ˆì • í´ë¼ì´ì–¸íŠ¸</strong>: pragmatic ìš°ì„  (íš¨ê³¼)
-- <strong>ìœ„ê¸‰ í´ë¼ì´ì–¸íŠ¸</strong> (priority tier): emergency phase ìžë™ í™œì„±, pragmatic ìµœìš°ì„ </p>
+<p>가중치는 클라이언트 phase에 따라 자동 조정:
+- <strong>새 클라이언트</strong>: epistemic 우선 (자료 잡기)
+- <strong>안정 클라이언트</strong>: pragmatic 우선 (효과)
+- <strong>위급 클라이언트</strong> (priority tier): emergency phase 자동 활성, pragmatic 최우선</p>
 <hr />
-<h2 id="3">3. ì„¤ì¹˜ ê°€ì´ë“œ</h2>
-<h3 id="31">3.1 ì‹œìŠ¤í…œ ìš”êµ¬ì‚¬í•­</h3>
+<h2 id="3">3. 설치 가이드</h2>
+<h3 id="31">3.1 시스템 요구사항</h3>
 <ul>
-<li>Python 3.10 ì´ìƒ</li>
-<li>8GB RAM ì´ìƒ</li>
+<li>Python 3.10 이상</li>
+<li>8GB RAM 이상</li>
 <li>macOS / Windows / Linux</li>
 </ul>
-<h3 id="32">3.2 ì„¤ì¹˜ ë‹¨ê³„</h3>
-<pre><code class="language-bash"># 1. ZIP í’€ê¸°
+<h3 id="32">3.2 설치 단계</h3>
+<pre><code class="language-bash"># 1. ZIP 풀기
 unzip cna_v6_complete.zip
 cd cna_v6
 
-# 2. ê°€ìƒí™˜ê²½ ìƒì„± (í•œ ë²ˆë§Œ)
+# 2. 가상환경 생성 (한 번만)
 python -m venv venv
 
-# 3. í™œì„±í™”
+# 3. 활성화
 source venv/bin/activate     # Mac/Linux
-# ë˜ëŠ”
+# 또는
 venv\Scripts\activate         # Windows
 
-# 4. íŒ¨í‚¤ì§€ ì„¤ì¹˜
+# 4. 패키지 설치
 pip install pydantic numpy pyyaml fastapi uvicorn
 
-# 5. í†µí•© í…ŒìŠ¤íŠ¸ (ì‹œìŠ¤í…œ ìž‘ë™ í™•ì¸)
+# 5. 통합 테스트 (시스템 작동 확인)
 python tests/test_integration.py
 </code></pre>
-<p>í…ŒìŠ¤íŠ¸ í†µê³¼ ì‹œ: "âœ“ ì „ì²´ í†µí•© í…ŒìŠ¤íŠ¸ í†µê³¼" ë©”ì‹œì§€ í™•ì¸.</p>
-<h3 id="33">3.3 ë””ë ‰í† ë¦¬ êµ¬ì¡°</h3>
+<p>테스트 통과 시: "✓ 전체 통합 테스트 통과" 메시지 확인.</p>
+<h3 id="33">3.3 디렉토리 구조</h3>
 <pre><code>cna_v6/
-â”œâ”€â”€ config/                          # í• ë¹„ ìˆ˜ì • ê°€ëŠ¥
-â”‚   â”œâ”€â”€ cognitive_clinical_mapping.yaml
-â”‚   â””â”€â”€ free_energy_weights.yaml
-â”œâ”€â”€ cna_core/                        # í•µì‹¬ ë¡œì§ (ìˆ˜ì • ê¸ˆì§€)
-â”‚   â”œâ”€â”€ types.py
-â”‚   â”œâ”€â”€ cognitive_clinical_mapper.py
-â”‚   â”œâ”€â”€ free_energy_scorer.py
-â”‚   â”œâ”€â”€ biomarker_normalization.py
-â”‚   â”œâ”€â”€ clinical_report.py
-â”‚   â”œâ”€â”€ card_deck.py
-â”‚   â”œâ”€â”€ crisis_detection.py
-â”‚   â”œâ”€â”€ protocol_generator.py
-â”‚   â”œâ”€â”€ variational_update.py
-â”‚   â””â”€â”€ orchestrator.py
-â”œâ”€â”€ tests/test_integration.py
-â”œâ”€â”€ cli/run_assessment.py
-â”œâ”€â”€ api/main.py                      # FastAPI ì„œë²„
-â”œâ”€â”€ supabase/schema.sql
-â””â”€â”€ README.md
+├── config/                          # 할비 수정 가능
+│   ├── cognitive_clinical_mapping.yaml
+│   └── free_energy_weights.yaml
+├── cna_core/                        # 핵심 로직 (수정 금지)
+│   ├── types.py
+│   ├── cognitive_clinical_mapper.py
+│   ├── free_energy_scorer.py
+│   ├── biomarker_normalization.py
+│   ├── clinical_report.py
+│   ├── card_deck.py
+│   ├── crisis_detection.py
+│   ├── protocol_generator.py
+│   ├── variational_update.py
+│   └── orchestrator.py
+├── tests/test_integration.py
+├── cli/run_assessment.py
+├── api/main.py                      # FastAPI 서버
+├── supabase/schema.sql
+└── README.md
 </code></pre>
 <hr />
-<h2 id="4">4. ì²« í´ë¼ì´ì–¸íŠ¸ ì‹œìž‘ ì›Œí¬í”Œë¡œ</h2>
-<h3 id="41-1-75-105-v7-15">4.1 íšŒê¸° 1 (ì´ˆê¸° í‰ê°€) â€” 75-105ë¶„ (v7ì€ ì‹œê°„ ì •ë³´ ì¸í„°ë·°ë¡œ ì•½ 15ë¶„ ì¶”ê°€)</h3>
-<h4 id="step-1-5">Step 1: í´ë¼ì´ì–¸íŠ¸ ë“±ë¡ (5ë¶„)</h4>
+<h2 id="4">4. 첫 클라이언트 시작 워크플로</h2>
+<h3 id="41-1-75-105-v7-15">4.1 회기 1 (초기 평가) — 75-105분 (v7은 시간 정보 인터뷰로 약 15분 추가)</h3>
+<h4 id="step-1-5">Step 1: 클라이언트 등록 (5분)</h4>
 <ul>
-<li>í´ë¼ì´ì–¸íŠ¸ ì´ë‹ˆì…œ + ì‹ë³„ ë²ˆí˜¸ (ì˜ˆ: AK001)</li>
-<li>ìƒë…„ì›”ì¼, ì„±ë³„</li>
-<li>ì£¼ìš” í˜¸ì†Œ</li>
-<li>ì•½ë¬¼ ìžë£Œ</li>
-<li>ë³´í˜¸ìž ë™ì˜ (í•„ìš” ì‹œ)</li>
+<li>클라이언트 이니셜 + 식별 번호 (예: AK001)</li>
+<li>생년월일, 성별</li>
+<li>주요 호소</li>
+<li>약물 자료</li>
+<li>보호자 동의 (필요 시)</li>
 </ul>
-<h4 id="step-2-entry-protocol-5-30">Step 2: Entry Protocol 5 ì¸¡ì • (30ë¶„)</h4>
-<p>ì¢…ì´ ì¸¡ì • ì‹œíŠ¸ ì‚¬ìš©. 5ê°€ì§€ ì¸¡ì •:</p>
+<h4 id="step-2-entry-protocol-5-30">Step 2: Entry Protocol 5 측정 (30분)</h4>
+<p>종이 측정 시트 사용. 5가지 측정:</p>
 <ol>
-<li><strong>ì‹œê°„ ì¶”ì •</strong> (5ë¶„) â†’ time_awareness</li>
-<li><strong>HRV</strong> (5ë¶„, Polar H10 ë˜ëŠ” Apple Watch) â†’ emotional_regulation</li>
-<li><strong>CPT</strong> (15ë¶„, ì¢…ì´ ë˜ëŠ” ë””ì§€í„¸) â†’ sustained_attention</li>
-<li><strong>N-back</strong> (10ë¶„, 2-back 3-back) â†’ working_memory</li>
-<li><strong>VSR</strong> (ì„ íƒ, 5ë¶„) â†’ ì¶”ê°€ ì¸¡ì •</li>
+<li><strong>시간 추정</strong> (5분) → time_awareness</li>
+<li><strong>HRV</strong> (5분, Polar H10 또는 Apple Watch) → emotional_regulation</li>
+<li><strong>CPT</strong> (15분, 종이 또는 디지털) → sustained_attention</li>
+<li><strong>N-back</strong> (10분, 2-back 3-back) → working_memory</li>
+<li><strong>VSR</strong> (선택, 5분) → 추가 측정</li>
 </ol>
-<h4 id="step-3-15">Step 3: ì¦ìƒ ìžë£Œ ìˆ˜ì§‘ (15ë¶„)</h4>
+<h4 id="step-3-15">Step 3: 증상 자료 수집 (15분)</h4>
 <ul>
-<li>PHQ-9 (ìš°ìš¸ ê²€ì‚¬) â€” ìžì‚´ ìœ„ê¸° ìžë£Œ í¬í•¨</li>
-<li>GAD-7 (ë¶ˆì•ˆ ê²€ì‚¬)</li>
-<li>ì£¼ê´€ì  ì¦ìƒ ì ìˆ˜ (0.0-1.0):</li>
-<li>ë¶€ì£¼ì˜ (Inattention)</li>
-<li>ë¶„ì‚°ì„± (Distractibility)</li>
-<li>ì‹¤í–‰ê¸°ëŠ¥ ì €í•˜ (Executive Dysfunction)</li>
-<li>ì‹ ì²´ ë¶ˆì•ˆ (Anxiety Somatic)</li>
-<li>ì¸ì§€ ë¶ˆì•ˆ (Anxiety Cognitive)</li>
-<li>ê¸°ë¶„ ì €í•˜ (Low Mood)</li>
-<li>ë™ê¸° ì €í•˜ (Low Motivation)</li>
-<li>ì‚¬íšŒì  ìœ„ì¶• (Social Withdrawal)</li>
+<li>PHQ-9 (우울 검사) — 자살 위기 자료 포함</li>
+<li>GAD-7 (불안 검사)</li>
+<li>주관적 증상 점수 (0.0-1.0):</li>
+<li>부주의 (Inattention)</li>
+<li>분산성 (Distractibility)</li>
+<li>실행기능 저하 (Executive Dysfunction)</li>
+<li>신체 불안 (Anxiety Somatic)</li>
+<li>인지 불안 (Anxiety Cognitive)</li>
+<li>기분 저하 (Low Mood)</li>
+<li>동기 저하 (Low Motivation)</li>
+<li>사회적 위축 (Social Withdrawal)</li>
 </ul>
-<h4 id="step-4-v7-new-15">Step 4 (v7 NEW): ì‹œê°„ ì •ë³´ ì¸í„°ë·° (15ë¶„) â­</h4>
-<p><strong>DDE ì •í™•ë„ì˜ í•µì‹¬.</strong> ìžì„¸í•œ ê°€ì´ë“œëŠ” 6ìž¥ ì°¸ì¡°. í•µì‹¬ 8ë¬¸í•­:</p>
+<h4 id="step-4-v7-new-15">Step 4 (v7 NEW): 시간 정보 인터뷰 (15분) ⭐</h4>
+<p><strong>DDE 정확도의 핵심.</strong> 자세한 가이드는 6장 참조. 핵심 8문항:</p>
 <ol>
-<li>"ì¦ìƒì´ ì²˜ìŒ ë‚˜íƒ€ë‚œ ë‚˜ì´ëŠ”?" â†’ <code>onset_age</code></li>
-<li>"ì•„ë™ê¸°/ì²­ì†Œë…„ê¸°/ì„±ì¸ê¸°?" â†’ <code>onset_category</code></li>
-<li>"ë§Œì„±ì ìœ¼ë¡œ ì§€ì†? ì—í”¼ì†Œë“œì²˜ëŸ¼ ì™”ë‹¤ ê°”ë‹¤?" â†’ <code>course</code></li>
-<li>"í˜„ìž¬ ì¦ìƒì´ ëª‡ ê°œì›”ì§¸?" â†’ <code>duration_months</code></li>
-<li>"ì—¬ëŸ¬ í™˜ê²½ì—ì„œ ì¼ê´€ë˜ê²Œ? íŠ¹ì • ìƒí™©ì—ë§Œ?" â†’ <code>pervasiveness</code></li>
-<li>"ìŠ¤íŠ¸ë ˆìŠ¤ë¡œ ì•…í™”ë˜ë‚˜? íœ´ì‹ ì‹œ í˜¸ì „?" â†’ <code>stress_triggered</code></li>
-<li>"ê°€ì¡±ë ¥?" â†’ <code>family_history</code></li>
-<li>"ì´ì „ ì¹˜ë£Œ ë°˜ì‘?" â†’ <code>prior_treatment_response</code></li>
+<li>"증상이 처음 나타난 나이는?" → <code>onset_age</code></li>
+<li>"아동기/청소년기/성인기?" → <code>onset_category</code></li>
+<li>"만성적으로 지속? 에피소드처럼 왔다 갔다?" → <code>course</code></li>
+<li>"현재 증상이 몇 개월째?" → <code>duration_months</code></li>
+<li>"여러 환경에서 일관되게? 특정 상황에만?" → <code>pervasiveness</code></li>
+<li>"스트레스로 악화되나? 휴식 시 호전?" → <code>stress_triggered</code></li>
+<li>"가족력?" → <code>family_history</code></li>
+<li>"이전 치료 반응?" → <code>prior_treatment_response</code></li>
 </ol>
-<h4 id="step-5-10">Step 5: í´ë¼ì´ì–¸íŠ¸ ëª©í‘œ ì²­ì·¨ (10ë¶„)</h4>
+<h4 id="step-5-10">Step 5: 클라이언트 목표 청취 (10분)</h4>
 <ul>
-<li>ê°€ìž¥ ê°œì„ í•˜ê³  ì‹¶ì€ ì˜ì—­ 1ê°œ ì„ íƒ:</li>
-<li>ì£¼ì˜ë ¥</li>
-<li>í•™ìŠµ íš¨ìœ¨</li>
-<li>ìˆ˜í–‰ ìµœì í™”</li>
-<li>ë¶ˆì•ˆ ê´€ë¦¬</li>
-<li>ê¸°ë¶„ ì•ˆì •</li>
-<li>ë™ê¸° ìˆ˜ì¤€ (0-10)</li>
-<li>ì¸ì‹ëœ ìž¥ì• ë¬¼</li>
+<li>가장 개선하고 싶은 영역 1개 선택:</li>
+<li>주의력</li>
+<li>학습 효율</li>
+<li>수행 최적화</li>
+<li>불안 관리</li>
+<li>기분 안정</li>
+<li>동기 수준 (0-10)</li>
+<li>인식된 장애물</li>
 </ul>
-<h3 id="42-cli-5">4.2 CLI ì‹¤í–‰ (5ë¶„)</h3>
+<h3 id="42-cli-5">4.2 CLI 실행 (5분)</h3>
 <pre><code class="language-bash">cd cna_v7
 source venv/bin/activate
 python cli/run_assessment.py
 </code></pre>
-<p>ëŒ€í™”í˜• ì§ˆë¬¸ì´ ë‚˜ì˜¤ë©´ ìˆ˜ì§‘í•œ ìžë£Œ ìž…ë ¥. ë˜ëŠ” JSON íŒŒì¼ ì‚¬ìš©:</p>
+<p>대화형 질문이 나오면 수집한 자료 입력. 또는 JSON 파일 사용:</p>
 <pre><code class="language-bash">python cli/run_assessment.py --json patient_001.json
 </code></pre>
-<p><code>patient_001.json</code> ì˜ˆì‹œ:</p>
+<p><code>patient_001.json</code> 예시:</p>
 <pre><code class="language-json">{
   &quot;patient_id&quot;: &quot;AK001&quot;,
   &quot;cognitive_levels&quot;: {
@@ -386,138 +386,138 @@ python cli/run_assessment.py
   &quot;n_sessions&quot;: 0
 }
 </code></pre>
-<p><strong>temporal_history í•„ë“œ (v7 NEW)</strong> â€” DDE ì •í™•ë„ì— ê²°ì •ì . 6ìž¥ ì°¸ì¡°.</p>
-<h3 id="43-15">4.3 ê²°ê³¼ í™•ì¸ (15ë¶„)</h3>
-<p>ì‹œìŠ¤í…œì´ ì¶œë ¥:
-1. <strong>ìž„ìƒ 5ì¶• ì˜ˆì¸¡í‘œ</strong> â€” í´ë¼ì´ì–¸íŠ¸ì™€ í•¨ê»˜ ê²€í† 
-2. <strong>5ì¶• ê´€ê³„í‘œ</strong> â€” ë¶€ìˆ˜ íš¨ê³¼
-3. <strong>ê°ë³„ ì§„ë‹¨ ê²°ê³¼</strong> (v7 NEW) â€” Primary/Secondary + Comorbidity pattern
-4. <strong>ê³µì¡´ ì§„ë‹¨ ë¶„í•´í‘œ</strong> (v7 NEW) â€” ê° ìž„ìƒì¶•ì˜ sourceë³„ ê¸°ì—¬
-5. <strong>ê°œìž… ìš°ì„ ìˆœìœ„ í‘œ</strong> (v7 NEW) â€” ì–´ëŠ ì¸ì§€ì¶•ì´ ê°€ìž¥ íš¨ê³¼ì ?
-6. <strong>ëª©í‘œ Level ì¶”ì²œ</strong> (v7 NEW) â€” ìž„ìƒ ëª©í‘œ ë„ë‹¬ê¹Œì§€ í•„ìš”í•œ Level
-7. <strong>ì‹œìŠ¤í…œ ì¶”ì²œ ì¹´ë“œ 3ê°œ</strong> â€” ìž„ìƒê°€ ê²€í† 
-8. <strong>8ì£¼ í”„ë¡œí† ì½œ ë¯¸ë¦¬ë³´ê¸°</strong> â€” í´ë¼ì´ì–¸íŠ¸ ë™ì˜ + íš¨ê³¼ ì‹œë®¬ë ˆì´ì…˜ (v7 NEW)</p>
-<p>ê²°ê³¼ëŠ” <code>outputs/{patient_id}_{timestamp}.json</code>ìœ¼ë¡œ ìžë™ ì €ìž¥.</p>
+<p><strong>temporal_history 필드 (v7 NEW)</strong> — DDE 정확도에 결정적. 6장 참조.</p>
+<h3 id="43-15">4.3 결과 확인 (15분)</h3>
+<p>시스템이 출력:
+1. <strong>임상 5축 예측표</strong> — 클라이언트와 함께 검토
+2. <strong>5축 관계표</strong> — 부수 효과
+3. <strong>감별 진단 결과</strong> (v7 NEW) — Primary/Secondary + Comorbidity pattern
+4. <strong>공존 진단 분해표</strong> (v7 NEW) — 각 임상축의 source별 기여
+5. <strong>개입 우선순위 표</strong> (v7 NEW) — 어느 인지축이 가장 효과적?
+6. <strong>목표 Level 추천</strong> (v7 NEW) — 임상 목표 도달까지 필요한 Level
+7. <strong>시스템 추천 카드 3개</strong> — 임상가 검토
+8. <strong>8주 프로토콜 미리보기</strong> — 클라이언트 동의 + 효과 시뮬레이션 (v7 NEW)</p>
+<p>결과는 <code>outputs/{patient_id}_{timestamp}.json</code>으로 자동 저장.</p>
 <hr />
-<h2 id="5-entry-protocol-5">5. Entry Protocol 5 ì¸¡ì • ê°€ì´ë“œ</h2>
-<h3 id="51-time-estimation">5.1 ì‹œê°„ ì¶”ì • (Time Estimation)</h3>
-<p><strong>ì¸¡ì •:</strong>
-- í´ë¼ì´ì–¸íŠ¸ì—ê²Œ "30ì´ˆê°€ ì§€ë‚¬ë‹¤ê³  ìƒê°ë˜ë©´ ì†ì„ ë“¤ì–´ì£¼ì„¸ìš”" ì•ˆë‚´
-- 5íšŒ ë°˜ë³µ
-- ê° íšŒê¸° ì˜¤ì°¨ % ê³„ì‚°
-- í‰ê·  ì˜¤ì°¨ % â†’ time_awareness Level ë³€í™˜</p>
-<p><strong>í•´ì„:</strong>
-| í‰ê·  ì˜¤ì°¨ | Fischer Level | ìž„ìƒ ìžë£Œ |
+<h2 id="5-entry-protocol-5">5. Entry Protocol 5 측정 가이드</h2>
+<h3 id="51-time-estimation">5.1 시간 추정 (Time Estimation)</h3>
+<p><strong>측정:</strong>
+- 클라이언트에게 "30초가 지났다고 생각되면 손을 들어주세요" 안내
+- 5회 반복
+- 각 회기 오차 % 계산
+- 평균 오차 % → time_awareness Level 변환</p>
+<p><strong>해석:</strong>
+| 평균 오차 | Fischer Level | 임상 자료 |
 |---------|---------------|----------|
-| 0-5% | L11+ | ë§¤ìš° ì •í™• |
-| 5-12% | L9-10 | ì •ìƒ |
-| 12-25% | L8 | ì•½í•¨ |
-| 25%+ | L7 ì´í•˜ | ìž„ìƒ ì£¼ì˜ |</p>
-<h3 id="52-hrv-rmssd">5.2 HRV ì¸¡ì • (RMSSD)</h3>
-<p><strong>ì¸¡ì •:</strong>
-- Polar H10 ë˜ëŠ” Apple Watch ì‚¬ìš©
-- 5ë¶„ ì•ˆì • í˜¸í¡ (ì•‰ì€ ìžì„¸)
-- RMSSD ìžë™ ê³„ì‚°
-- LF/HF ë¹„ìœ¨ ìžë£Œ í•¨ê»˜ ê¸°ë¡</p>
-<p><strong>í•´ì„:</strong>
-| RMSSD (ms) | ìžë£Œ |
+| 0-5% | L11+ | 매우 정확 |
+| 5-12% | L9-10 | 정상 |
+| 12-25% | L8 | 약함 |
+| 25%+ | L7 이하 | 임상 주의 |</p>
+<h3 id="52-hrv-rmssd">5.2 HRV 측정 (RMSSD)</h3>
+<p><strong>측정:</strong>
+- Polar H10 또는 Apple Watch 사용
+- 5분 안정 호흡 (앉은 자세)
+- RMSSD 자동 계산
+- LF/HF 비율 자료 함께 기록</p>
+<p><strong>해석:</strong>
+| RMSSD (ms) | 자료 |
 |----------|------|
-| 50+ | ë§¤ìš° ì¢‹ìŒ |
-| 35-50 | ì¢‹ìŒ |
-| 25-35 | ë³´í†µ |
-| 15-25 | ì•½í•¨ |
-| &lt; 15 | ìž„ìƒ ì£¼ì˜ |</p>
+| 50+ | 매우 좋음 |
+| 35-50 | 좋음 |
+| 25-35 | 보통 |
+| 15-25 | 약함 |
+| &lt; 15 | 임상 주의 |</p>
 <h3 id="53-cpt-continuous-performance-test">5.3 CPT (Continuous Performance Test)</h3>
-<p><strong>ì¸¡ì • ìžë£Œ:</strong>
-- Conners CPT, IVA-2, ë˜ëŠ” ìžì²´ ë„êµ¬ ì‚¬ìš©
-- 15ë¶„ í‘œì¤€ í”„ë¡œí† ì½œ
-- ê²°ê³¼: omissions, commissions, RT variability</p>
-<p><strong>Z-score ë³€í™˜:</strong>
-- Norm í‰ê·  = 0, SD = 1
-- í´ë¼ì´ì–¸íŠ¸ ì ìˆ˜ â†’ Z-score (positive = ë” ì¢‹ìŒ)
-- omissions Z &lt; -1.5 = ìž„ìƒ ìžë£Œ</p>
+<p><strong>측정 자료:</strong>
+- Conners CPT, IVA-2, 또는 자체 도구 사용
+- 15분 표준 프로토콜
+- 결과: omissions, commissions, RT variability</p>
+<p><strong>Z-score 변환:</strong>
+- Norm 평균 = 0, SD = 1
+- 클라이언트 점수 → Z-score (positive = 더 좋음)
+- omissions Z &lt; -1.5 = 임상 자료</p>
 <h3 id="54-n-back">5.4 N-back</h3>
-<p><strong>ì¸¡ì • ìžë£Œ:</strong>
-- 2-back 5ë¶„, 3-back 5ë¶„
-- ì •í™•ë„ % ê¸°ë¡
-- d-prime ê³„ì‚° (signal detection)</p>
-<p><strong>í•´ì„:</strong>
-| 2-back ì •í™•ë„ | Fischer Level |
+<p><strong>측정 자료:</strong>
+- 2-back 5분, 3-back 5분
+- 정확도 % 기록
+- d-prime 계산 (signal detection)</p>
+<p><strong>해석:</strong>
+| 2-back 정확도 | Fischer Level |
 |--------------|---------------|
 | 90%+ | L11+ |
 | 75-90% | L9-10 |
 | 60-75% | L8 |
 | &lt; 60% | L7 |</p>
-<h3 id="55-vsr">5.5 VSR (ì„ íƒ)</h3>
-<p><strong>ì¸¡ì •:</strong>
-- 800ì…€ stem reading
-- Acoustic ë¶„ì„ â†’ 4ì°¨ì› ë§¤í•‘
+<h3 id="55-vsr">5.5 VSR (선택)</h3>
+<p><strong>측정:</strong>
+- 800셀 stem reading
+- Acoustic 분석 → 4차원 매핑
 - consistency score 0-1</p>
 <hr />
-<h2 id="6-v7-new">6. ì‹œê°„ ì •ë³´ ìˆ˜ì§‘ ê°€ì´ë“œ (v7 NEW)</h2>
-<h3 id="61">6.1 ì™œ ê²°ì •ì ì¸ê°€</h3>
-<p>DDE (Differential Diagnosis Engine)ì˜ 4-source likelihood ì¤‘ <strong>temporal ê°€ì¤‘ì¹˜ 30%</strong>. ì‹œê°„ ì •ë³´ê°€ ë¹ ì§€ë©´ ê°ë³„ ì •í™•ë„ê°€ í¬ê²Œ ë–¨ì–´ì§‘ë‹ˆë‹¤.</p>
-<p><strong>ìž„ìƒ ê·¼ê±°:</strong> ADHD vs GAD vs MDD ê°ë³„ì˜ í•µì‹¬ì€ ì‹œê°„ íŒ¨í„´ìž…ë‹ˆë‹¤.
-- <strong>ADHD</strong>: ì•„ë™ê¸° ë°œë³‘ (&lt; 12ì„¸), ë§Œì„±, ì—¬ëŸ¬ í™˜ê²½ì—ì„œ ì¼ê´€
-- <strong>GAD</strong>: ì„±ì¸ ë°œë³‘ ê°€ëŠ¥, 6ê°œì›”+, ìŠ¤íŠ¸ë ˆìŠ¤ ìœ ë°œ
-- <strong>MDD</strong>: 2ì£¼+ ì—í”¼ì†Œë“œ, ì „ë°˜ì  í™˜ê²½ ì˜í–¥</p>
-<h3 id="62-8">6.2 8ë¬¸í•­ ì¸í„°ë·°</h3>
-<h4 id="1-onset_age">1. ë°œë³‘ ë‚˜ì´ (onset_age)</h4>
+<h2 id="6-v7-new">6. 시간 정보 수집 가이드 (v7 NEW)</h2>
+<h3 id="61">6.1 왜 결정적인가</h3>
+<p>DDE (Differential Diagnosis Engine)의 4-source likelihood 중 <strong>temporal 가중치 30%</strong>. 시간 정보가 빠지면 감별 정확도가 크게 떨어집니다.</p>
+<p><strong>임상 근거:</strong> ADHD vs GAD vs MDD 감별의 핵심은 시간 패턴입니다.
+- <strong>ADHD</strong>: 아동기 발병 (&lt; 12세), 만성, 여러 환경에서 일관
+- <strong>GAD</strong>: 성인 발병 가능, 6개월+, 스트레스 유발
+- <strong>MDD</strong>: 2주+ 에피소드, 전반적 환경 영향</p>
+<h3 id="62-8">6.2 8문항 인터뷰</h3>
+<h4 id="1-onset_age">1. 발병 나이 (onset_age)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ì´ëŸ° ì¦ìƒì´ ì²˜ìŒ ë‚˜íƒ€ë‚œ ê²Œ ëª‡ ì‚´ ë•Œì˜€ì–´ìš”?"</li>
-<li><strong>catch ìžë£Œ</strong>: 12ì„¸ ë¯¸ë§Œ = ADHD signal ê°•í•¨</li>
-<li><strong>ì‘ë‹µ ìžë£Œ</strong>: ì •ìˆ˜ (ì˜ˆ: 8)</li>
-<li><strong>ëª¨ë¦„ ì‹œ</strong>: null (ê´œì°®ìŒ, ë‹¤ë¥¸ ì •ë³´ë¡œ ë³´ì™„)</li>
+<li><strong>질문</strong>: "이런 증상이 처음 나타난 게 몇 살 때였어요?"</li>
+<li><strong>catch 자료</strong>: 12세 미만 = ADHD signal 강함</li>
+<li><strong>응답 자료</strong>: 정수 (예: 8)</li>
+<li><strong>모름 시</strong>: null (괜찮음, 다른 정보로 보완)</li>
 </ul>
-<h4 id="2-onset_category">2. ë°œë³‘ ë‹¨ê³„ (onset_category)</h4>
+<h4 id="2-onset_category">2. 발병 단계 (onset_category)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ì•„ë™ê¸°/ì²­ì†Œë…„ê¸°/ì„±ì¸ê¸° ì¤‘ ì–¸ì œ ì‹œìž‘?"</li>
-<li><strong>ì‘ë‹µ ì˜µì…˜</strong>: <code>"childhood"</code> | <code>"adolescence"</code> | <code>"adult"</code> | <code>"any_age"</code></li>
-<li><strong>catch ìžë£Œ</strong>: ADHD ì§„ë‹¨ì€ childhood ê°•í•œ marker</li>
+<li><strong>질문</strong>: "아동기/청소년기/성인기 중 언제 시작?"</li>
+<li><strong>응답 옵션</strong>: <code>"childhood"</code> | <code>"adolescence"</code> | <code>"adult"</code> | <code>"any_age"</code></li>
+<li><strong>catch 자료</strong>: ADHD 진단은 childhood 강한 marker</li>
 </ul>
-<h4 id="3-course">3. ê²½ê³¼ (course)</h4>
+<h4 id="3-course">3. 경과 (course)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ì­‰ ë§Œì„±ì ì´ì—ˆì–´ìš”, ì•„ë‹ˆë©´ ì™”ë‹¤ ê°”ë‹¤ ì—í”¼ì†Œë“œì²˜ëŸ¼?"</li>
-<li><strong>ì‘ë‹µ ì˜µì…˜</strong>: <code>"chronic"</code> | <code>"episodic"</code> | <code>"fluctuating"</code></li>
-<li><strong>catch ìžë£Œ</strong>: ADHD chronic, MDD episodic, GAD chronic ë˜ëŠ” episodic</li>
+<li><strong>질문</strong>: "쭉 만성적이었어요, 아니면 왔다 갔다 에피소드처럼?"</li>
+<li><strong>응답 옵션</strong>: <code>"chronic"</code> | <code>"episodic"</code> | <code>"fluctuating"</code></li>
+<li><strong>catch 자료</strong>: ADHD chronic, MDD episodic, GAD chronic 또는 episodic</li>
 </ul>
-<h4 id="4-duration_months">4. ì§€ì† ê¸°ê°„ (duration_months)</h4>
+<h4 id="4-duration_months">4. 지속 기간 (duration_months)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "í˜„ìž¬ ì¦ìƒì´ ëª‡ ê°œì›”ì§¸ ê³„ì†ë˜ê³  ìžˆì–´ìš”?"</li>
-<li><strong>ì‘ë‹µ ìžë£Œ</strong>: ì •ìˆ˜ ê°œì›”</li>
-<li><strong>ìž„ê³„ê°’</strong>:</li>
-<li>MDD: 0.5+ (2ì£¼ ì´ìƒ)</li>
+<li><strong>질문</strong>: "현재 증상이 몇 개월째 계속되고 있어요?"</li>
+<li><strong>응답 자료</strong>: 정수 개월</li>
+<li><strong>임계값</strong>:</li>
+<li>MDD: 0.5+ (2주 이상)</li>
 <li>GAD: 6+ (DSM-5-TR criterion)</li>
-<li>ADHD: 60+ (5ë…„ ì´ìƒ ë§Œì„±)</li>
+<li>ADHD: 60+ (5년 이상 만성)</li>
 </ul>
-<h4 id="5-pervasiveness">5. ê´‘ë²”ìœ„ì„± (pervasiveness)</h4>
+<h4 id="5-pervasiveness">5. 광범위성 (pervasiveness)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ì§ìž¥, ê°€ì •, ì¹œêµ¬ ë§Œë‚¨ ë“± ì—¬ëŸ¬ ìƒí™©ì—ì„œ ì¼ê´€ë˜ê²Œ? ì•„ë‹ˆë©´ íŠ¹ì • ìƒí™©ì—ë§Œ?"</li>
-<li><strong>ì‘ë‹µ ì˜µì…˜</strong>: </li>
-<li><code>"cross_setting"</code> â€” ëª¨ë“  í™˜ê²½ (ADHD signal)</li>
-<li><code>"context_dependent"</code> â€” íŠ¹ì • ìƒí™©ë§Œ (anxiety signal)</li>
-<li><code>"all_setting"</code> â€” ìš°ìš¸ ìžë£Œ</li>
-<li><strong>catch ìžë£Œ</strong>: ADHD ì§„ë‹¨ì˜ DSM-5-TR í•µì‹¬ criterion</li>
+<li><strong>질문</strong>: "직장, 가정, 친구 만남 등 여러 상황에서 일관되게? 아니면 특정 상황에만?"</li>
+<li><strong>응답 옵션</strong>: </li>
+<li><code>"cross_setting"</code> — 모든 환경 (ADHD signal)</li>
+<li><code>"context_dependent"</code> — 특정 상황만 (anxiety signal)</li>
+<li><code>"all_setting"</code> — 우울 자료</li>
+<li><strong>catch 자료</strong>: ADHD 진단의 DSM-5-TR 핵심 criterion</li>
 </ul>
-<h4 id="6-stress_triggered">6. ìŠ¤íŠ¸ë ˆìŠ¤ ìœ ë°œ (stress_triggered)</h4>
+<h4 id="6-stress_triggered">6. 스트레스 유발 (stress_triggered)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ìŠ¤íŠ¸ë ˆìŠ¤ ë°›ìœ¼ë©´ ì¦ìƒì´ ì‹¬í•´ì§€ê³ , íœ´ì‹í•˜ë©´ ì¢‹ì•„ì§€ë‚˜ìš”?"</li>
-<li><strong>ì‘ë‹µ</strong>: <code>true</code> | <code>false</code></li>
-<li><strong>catch ìžë£Œ</strong>: true = anxiety/depression, false = ADHD</li>
+<li><strong>질문</strong>: "스트레스 받으면 증상이 심해지고, 휴식하면 좋아지나요?"</li>
+<li><strong>응답</strong>: <code>true</code> | <code>false</code></li>
+<li><strong>catch 자료</strong>: true = anxiety/depression, false = ADHD</li>
 </ul>
-<h4 id="7-family_history">7. ê°€ì¡±ë ¥ (family_history)</h4>
+<h4 id="7-family_history">7. 가족력 (family_history)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ê°€ì¡± ì¤‘ì— ë¹„ìŠ·í•œ ì¦ìƒì´ë‚˜ ì •ì‹ ê³¼ ì§„ë‹¨ ë°›ìœ¼ì‹  ë¶„?"</li>
-<li><strong>ì‘ë‹µ ìžë£Œ</strong>: ë¬¸ìžì—´ ë¦¬ìŠ¤íŠ¸ (ì˜ˆ: <code>["father_ADHD", "mother_GAD"]</code>)</li>
-<li><strong>catch ìžë£Œ</strong>: 50% ìœ ì „ì  (ADHD íŠ¹ížˆ ê°•í•¨)</li>
+<li><strong>질문</strong>: "가족 중에 비슷한 증상이나 정신과 진단 받으신 분?"</li>
+<li><strong>응답 자료</strong>: 문자열 리스트 (예: <code>["father_ADHD", "mother_GAD"]</code>)</li>
+<li><strong>catch 자료</strong>: 50% 유전적 (ADHD 특히 강함)</li>
 </ul>
-<h4 id="8-prior_treatment_response">8. ì´ì „ ì¹˜ë£Œ ë°˜ì‘ (prior_treatment_response)</h4>
+<h4 id="8-prior_treatment_response">8. 이전 치료 반응 (prior_treatment_response)</h4>
 <ul>
-<li><strong>ì§ˆë¬¸</strong>: "ì´ì „ì— ì•½ë¬¼ì´ë‚˜ ìƒë‹´ ë°›ìœ¼ì‹  ì ? íš¨ê³¼ëŠ”?"</li>
-<li><strong>ì‘ë‹µ ìžë£Œ</strong>: dict (ì˜ˆ: <code>{"SSRI": "no_response", "stimulant": "good_response"}</code>)</li>
-<li><strong>catch ìžë£Œ</strong>: SSRI ë¬´ë°˜ì‘ + stimulant ì¢‹ì€ ë°˜ì‘ = ADHD primary ê°•í•œ ì‹ í˜¸ (McIntosh 2009)</li>
+<li><strong>질문</strong>: "이전에 약물이나 상담 받으신 적? 효과는?"</li>
+<li><strong>응답 자료</strong>: dict (예: <code>{"SSRI": "no_response", "stimulant": "good_response"}</code>)</li>
+<li><strong>catch 자료</strong>: SSRI 무반응 + stimulant 좋은 반응 = ADHD primary 강한 신호 (McIntosh 2009)</li>
 </ul>
-<h3 id="63">6.3 ë°ì´í„° ìž…ë ¥ ì˜ˆì‹œ</h3>
+<h3 id="63">6.3 데이터 입력 예시</h3>
 <pre><code class="language-python">from cna_core import TemporalHistory
 
 temporal = TemporalHistory(
@@ -531,399 +531,399 @@ temporal = TemporalHistory(
     prior_treatment_response={&quot;SSRI&quot;: &quot;no_response&quot;},
 )
 </code></pre>
-<h3 id="64">6.4 ì¸í„°ë·° íŒ</h3>
+<h3 id="64">6.4 인터뷰 팁</h3>
 <ul>
-<li><strong>ìˆœì„œ</strong>: ë°œë³‘ ë‚˜ì´ â†’ ë‹¨ê³„ â†’ ê²½ê³¼ â†’ ì§€ì† â†’ ê´‘ë²”ìœ„ì„± â†’ ìŠ¤íŠ¸ë ˆìŠ¤ â†’ ê°€ì¡± â†’ ì¹˜ë£Œë ¥</li>
-<li><strong>ëª¨ë¥´ëŠ” ìžë£Œ</strong>: null ë˜ëŠ” unknownìœ¼ë¡œ (ê°•ì œ X) â€” ë¶€ì •í™• ë°ì´í„°ë³´ë‹¤ ë¹ˆ ìžë£Œ ë‚«ë‹¤</li>
-<li><strong>ì‹ ë¢° ìžë£Œ</strong>: ê°€ì¡±ë ¥ì€ í´ë¼ì´ì–¸íŠ¸ ë³´ê³ ë§Œ ì˜ì¡´í•˜ì§€ ë§ê³ , ê°€ëŠ¥í•˜ë©´ ì§ì ‘ ê°€ì¡± ì¸í„°ë·°</li>
-<li><strong>MDD ì˜ì‹¬ ì‹œ</strong>: "ì§€ë‚œ 2ì£¼ê°„ ê±°ì˜ ë§¤ì¼?" ë¬¼ì–´ë³´ê¸° (DSM-5-TR criterion)</li>
+<li><strong>순서</strong>: 발병 나이 → 단계 → 경과 → 지속 → 광범위성 → 스트레스 → 가족 → 치료력</li>
+<li><strong>모르는 자료</strong>: null 또는 unknown으로 (강제 X) — 부정확 데이터보다 빈 자료 낫다</li>
+<li><strong>신뢰 자료</strong>: 가족력은 클라이언트 보고만 의존하지 말고, 가능하면 직접 가족 인터뷰</li>
+<li><strong>MDD 의심 시</strong>: "지난 2주간 거의 매일?" 물어보기 (DSM-5-TR criterion)</li>
 </ul>
 <hr />
-<h2 id="7">7. ìž„ìƒ ë¦¬í¬íŠ¸ í•´ì„</h2>
-<h3 id="71-5">7.1 5ì¶• ì˜ˆì¸¡í‘œ ì½ê¸°</h3>
-<pre><code>ã€ ìž„ìƒ 5ì¶• ì˜ˆì¸¡ ìžë£Œ ã€‘
-  ì˜ì—­             ì ìˆ˜    ë‹¨ê³„               ìš°ì„   ì£¼ìš” ê¸°ì—¬ ì¸ì§€ì¶•
-  ì£¼ì˜ë ¥            0.39   ì£¼ì˜ âš               #1    ì§€ì† ì£¼ì˜ë ¥ (+0.05)
-  ë¶ˆì•ˆ ê´€ë¦¬          0.14   ìž„ìƒ ìš°ì„  âš âš          #2    ì •ì„œ ì¡°ì ˆ (-0.27)
+<h2 id="7">7. 임상 리포트 해석</h2>
+<h3 id="71-5">7.1 5축 예측표 읽기</h3>
+<pre><code>【 임상 5축 예측 자료 】
+  영역             점수    단계               우선  주요 기여 인지축
+  주의력            0.39   주의 ⚠              #1    지속 주의력 (+0.05)
+  불안 관리          0.14   임상 우선 ⚠⚠         #2    정서 조절 (-0.27)
   ...
 </code></pre>
-<p><strong>ì ìˆ˜ í•´ì„:</strong>
-- 0.75+ : ë§¤ìš° ìš°ìˆ˜ (ê°œìž… ë¶ˆí•„ìš”)
-- 0.60-0.75: ìš°ìˆ˜ (ìœ ì§€)
-- 0.45-0.60: ë³´í†µ (ê´€ì°°)
-- 0.30-0.45: ì£¼ì˜ (ê°œìž… ê³ ë ¤)
-- &lt; 0.30: ìž„ìƒ ìš°ì„  (ì¦‰ì‹œ ê°œìž…)</p>
-<p><strong>ìš°ì„ ìˆœìœ„:</strong>
-- #1: í´ë¼ì´ì–¸íŠ¸ ì„ íƒ ì˜ì—­ (autonomy ìš°ì„ )
+<p><strong>점수 해석:</strong>
+- 0.75+ : 매우 우수 (개입 불필요)
+- 0.60-0.75: 우수 (유지)
+- 0.45-0.60: 보통 (관찰)
+- 0.30-0.45: 주의 (개입 고려)
+- &lt; 0.30: 임상 우선 (즉시 개입)</p>
+<p><strong>우선순위:</strong>
+- #1: 클라이언트 선택 영역 (autonomy 우선)
 - #2: priority tier (&lt; 0.30)
-- #3: ë†’ì€ leverage ì˜ì—­
-- #4: ì•½í™” ì˜ì—­
-- #5: ì•ˆì • ì˜ì—­</p>
-<h3 id="72-5">7.2 5ì¶• ê´€ê³„í‘œ í•´ì„</h3>
-<pre><code>ã€ 5ì¶• ê°„ ê´€ê³„ ìžë£Œ (Leverage ìˆœ) ã€‘
-  A ì¶•          ê´€ê³„         B ì¶•          ê°•ë„   Leverage
-  ë¶ˆì•ˆ ê´€ë¦¬       â†‘â†‘ ë™ë°˜ ë³€í™”    ê¸°ë¶„ ì•ˆì •       0.65   0.62
+- #3: 높은 leverage 영역
+- #4: 약화 영역
+- #5: 안정 영역</p>
+<h3 id="72-5">7.2 5축 관계표 해석</h3>
+<pre><code>【 5축 간 관계 자료 (Leverage 순) 】
+  A 축          관계         B 축          강도   Leverage
+  불안 관리       ↑↑ 동반 변화    기분 안정       0.65   0.62
   ...
 </code></pre>
-<p><strong>ê´€ê³„ ìœ í˜•:</strong>
-- <strong>ë™ë°˜ ë³€í™” (â†‘â†‘)</strong>: í•œ ì¶• ì¢‹ì•„ì§€ë©´ ë‹¤ë¥¸ ì¶•ë„ ì¢‹ì•„ì§
-- <strong>ë°˜ëŒ€ ë³€í™” (â†‘â†“)</strong>: í•œ ì¶• ì¢‹ì•„ì§€ë©´ ë‹¤ë¥¸ ì¶•ì€ ë‚˜ë¹ ì§ (ë“œë¬¼ì§€ë§Œ ê°€ëŠ¥)</p>
-<p><strong>Leverage ì ìˆ˜:</strong>
-- 0.5+: ë§¤ìš° í° ë¶€ìˆ˜ íš¨ê³¼ (ì´ ì¶• ê°œìž… ì‹œ ë‹¤ë¥¸ ì¶•ë„ ê°™ì´ ë³€í™”)
-- 0.3-0.5: ì¤‘ê°„ ë¶€ìˆ˜ íš¨ê³¼
-- &lt; 0.3: ì•½í•œ ë¶€ìˆ˜ íš¨ê³¼</p>
-<p><strong>ìž„ìƒ ì ìš©:</strong>
-- Leverage 0.5+ ì˜ì—­ì— ê°œìž… = íš¨ìœ¨ì 
-- í´ë¼ì´ì–¸íŠ¸ê°€ ì˜ì—­ ì„ íƒ ì‹œ leverage ìžë£Œ ë³´ì—¬ì£¼ê³  ì•ˆë‚´</p>
+<p><strong>관계 유형:</strong>
+- <strong>동반 변화 (↑↑)</strong>: 한 축 좋아지면 다른 축도 좋아짐
+- <strong>반대 변화 (↑↓)</strong>: 한 축 좋아지면 다른 축은 나빠짐 (드물지만 가능)</p>
+<p><strong>Leverage 점수:</strong>
+- 0.5+: 매우 큰 부수 효과 (이 축 개입 시 다른 축도 같이 변화)
+- 0.3-0.5: 중간 부수 효과
+- &lt; 0.3: 약한 부수 효과</p>
+<p><strong>임상 적용:</strong>
+- Leverage 0.5+ 영역에 개입 = 효율적
+- 클라이언트가 영역 선택 시 leverage 자료 보여주고 안내</p>
 <hr />
-<h2 id="8-v7-new">8. ê°ë³„ ì§„ë‹¨ + ê³µì¡´ ì§„ë‹¨ í•´ì„ (v7 NEW)</h2>
-<h3 id="81-dde">8.1 DDE ê²°ê³¼ ì½ê¸°</h3>
-<pre><code>ã€ Differential Diagnosis ìžë£Œ ã€‘
+<h2 id="8-v7-new">8. 감별 진단 + 공존 진단 해석 (v7 NEW)</h2>
+<h3 id="81-dde">8.1 DDE 결과 읽기</h3>
+<pre><code>【 Differential Diagnosis 자료 】
   Primary: adhd_inattentive
   Secondary: ['mdd', 'gad']
   Comorbidity pattern: adhd_plus_gad
   Confidence: 0.64
-  Treatment ìžë£Œ: ADHD + ë²”ë¶ˆì•ˆìž¥ì•  í‘œì¤€. ê³µì¡´ë¥  30% ìž„ìƒ íŒ¨í„´.
+  Treatment 자료: ADHD + 범불안장애 표준. 공존률 30% 임상 패턴.
 
-  ì§„ë‹¨ ê°€ì„¤ ìˆœìœ„:
-    â˜… Primary: ADHD ì£¼ì˜ë ¥ ê²°í• ìš°ì„¸í˜• (P=57%)
+  진단 가설 순위:
+    ★ Primary: ADHD 주의력 결핍 우세형 (P=57%)
            Symptom match: 0.99, Cognitive: 0.99, Biomarker: 0.98, Temporal: 0.95
-           âœ“ ì¶©ì¡±: Cross-setting consistency, Onset before age 12
-    â€¢ Secondary: ì£¼ìš” ìš°ìš¸ìž¥ì•  (P=21%)
-    â€¢ Secondary: ë²”ë¶ˆì•ˆìž¥ì•  (P=21%)
+           ✓ 충족: Cross-setting consistency, Onset before age 12
+    • Secondary: 주요 우울장애 (P=21%)
+    • Secondary: 범불안장애 (P=21%)
 </code></pre>
-<p><strong>Primary ìž„ê³„ê°’:</strong>
-- Posterior &gt; 40%: ê°•í•œ ì‹ í˜¸, primary í™•ì •
-- Posterior 30-40%: primaryë¡œ ë‘ì§€ë§Œ ê²€í†  ê¶Œê³ 
-- Posterior &lt; 30%: primary ë¯¸ì • (ê²€í†  ìžë£Œ)</p>
+<p><strong>Primary 임계값:</strong>
+- Posterior &gt; 40%: 강한 신호, primary 확정
+- Posterior 30-40%: primary로 두지만 검토 권고
+- Posterior &lt; 30%: primary 미정 (검토 자료)</p>
 <p><strong>Secondary:</strong> Posterior &gt; 20%</p>
 <p><strong>Confidence:</strong>
-- 0.7+: ë§¤ìš° ì‹ ë¢°
-- 0.5-0.7: ì ë‹¹ížˆ ì‹ ë¢°
-- &lt; 0.5: ì¶”ê°€ í‰ê°€ í•„ìš”</p>
-<h3 id="82-4-source-likelihood">8.2 4-Source Likelihood ìžë£Œ</h3>
+- 0.7+: 매우 신뢰
+- 0.5-0.7: 적당히 신뢰
+- &lt; 0.5: 추가 평가 필요</p>
+<h3 id="82-4-source-likelihood">8.2 4-Source Likelihood 자료</h3>
 <table>
 <thead>
 <tr>
 <th>Source</th>
-<th>ê°€ì¤‘ì¹˜</th>
-<th>ìžë£Œ</th>
+<th>가중치</th>
+<th>자료</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Symptom match</td>
 <td>40%</td>
-<td>í´ë¼ì´ì–¸íŠ¸ í˜¸ì†Œ ì¦ìƒ vs ì§„ë‹¨ íŒ¨í„´</td>
+<td>클라이언트 호소 증상 vs 진단 패턴</td>
 </tr>
 <tr>
 <td>Cognitive match</td>
 <td>20%</td>
-<td>ì¸ì§€ 5ì¶• ì•½í™” íŒ¨í„´</td>
+<td>인지 5축 약화 패턴</td>
 </tr>
 <tr>
 <td>Biomarker match</td>
 <td>10%</td>
-<td>CPT/HRV/N-back ë“± ê°ê´€ ì¸¡ì •</td>
+<td>CPT/HRV/N-back 등 객관 측정</td>
 </tr>
 <tr>
 <td>Temporal match</td>
 <td>30%</td>
-<td>ì‹œê°„ ì •ë³´ (ê°ë³„ì˜ í•µì‹¬)</td>
+<td>시간 정보 (감별의 핵심)</td>
 </tr>
 </tbody>
 </table>
-<p><strong>catch ìžë£Œ:</strong> Symptom + Temporal = 70%. ì´ ë‘ ì •ë³´ê°€ ê°€ìž¥ ê²°ì •ì .</p>
-<h3 id="83-differential-markers">8.3 Differential Markers ì¶©ì¡±/ë¯¸ì¶©ì¡±</h3>
-<p>ê° ì§„ë‹¨ì˜ DSM-5-TR ê¸°ì¤€ ìžë™ catch:</p>
+<p><strong>catch 자료:</strong> Symptom + Temporal = 70%. 이 두 정보가 가장 결정적.</p>
+<h3 id="83-differential-markers">8.3 Differential Markers 충족/미충족</h3>
+<p>각 진단의 DSM-5-TR 기준 자동 catch:</p>
 <p><strong>ADHD inattentive:</strong>
-- âœ“ Cross-setting consistency (pervasiveness == "cross_setting")
-- âœ“ Onset before age 12 (onset_age &lt; 12)
-- âœ“ Not better explained by mood/anxiety (ì¦ìƒ íŒ¨í„´ ë¶„ì„)</p>
+- ✓ Cross-setting consistency (pervasiveness == "cross_setting")
+- ✓ Onset before age 12 (onset_age &lt; 12)
+- ✓ Not better explained by mood/anxiety (증상 패턴 분석)</p>
 <p><strong>GAD:</strong>
-- âœ“ Excessive worry 6+ months (duration &gt;= 6)
-- âœ“ Worry &gt; attention deficit (ë¶ˆì•ˆ &gt; ë¶€ì£¼ì˜ ì¦ìƒ)
-- âœ“ HRV RMSSD &lt; 25ms</p>
+- ✓ Excessive worry 6+ months (duration &gt;= 6)
+- ✓ Worry &gt; attention deficit (불안 &gt; 부주의 증상)
+- ✓ HRV RMSSD &lt; 25ms</p>
 <p><strong>MDD:</strong>
-- âœ“ Anhedonia or low mood 2+ weeks
-- âœ“ Rumination (vs ADHD distractibility)
-- âœ“ Cognitive slowing (vs ADHD inconsistency)</p>
-<h3 id="84-comorbidity-decomposition">8.4 Comorbidity Decomposition í•´ì„</h3>
-<pre><code>ã€ ê³µì¡´ ì§„ë‹¨ ë¶„í•´ ìžë£Œ ã€‘
-  â–¶ ì£¼ì˜ë ¥
-     ì› ì ìˆ˜: 0.38 (ì•½í™” 0.62)
-     ì„¤ëª…ë ¥: 83%
-     â˜… ADHD ì£¼ì˜ë ¥ ê²°í• ìš°ì„¸í˜•           ê¸°ì—¬ 0.234 (posterior 57%)
-     â€¢ ì£¼ìš” ìš°ìš¸ìž¥ì•                    ê¸°ì—¬ 0.087 (posterior 21%)
-     â€¢ ë²”ë¶ˆì•ˆìž¥ì•                      ê¸°ì—¬ 0.087 (posterior 21%)
-     ìž”ì°¨ (ë¯¸ì„¤ëª…): 0.105
-     ì¹˜ë£Œ target: primary_first
+- ✓ Anhedonia or low mood 2+ weeks
+- ✓ Rumination (vs ADHD distractibility)
+- ✓ Cognitive slowing (vs ADHD inconsistency)</p>
+<h3 id="84-comorbidity-decomposition">8.4 Comorbidity Decomposition 해석</h3>
+<pre><code>【 공존 진단 분해 자료 】
+  ▶ 주의력
+     원 점수: 0.38 (약화 0.62)
+     설명력: 83%
+     ★ ADHD 주의력 결핍 우세형           기여 0.234 (posterior 57%)
+     • 주요 우울장애                   기여 0.087 (posterior 21%)
+     • 범불안장애                     기여 0.087 (posterior 21%)
+     잔차 (미설명): 0.105
+     치료 target: primary_first
 </code></pre>
-<p><strong>ê¸°ì—¬ë„ í•´ì„:</strong>
-- ADHD 0.234 â†’ ì£¼ì˜ë ¥ ì•½í™”ì˜ 23.4%ê°€ ADHD source
-- MDD 0.087 â†’ 8.7%ê°€ ìš°ìš¸ë¡œ ì¸í•œ 2ì°¨
-- ìž”ì°¨ 0.105 â†’ ì‹œìŠ¤í…œì´ ì„¤ëª… ëª» í•˜ëŠ” ìžë£Œ (ê°œì¸ ì°¨ì´, ê¸°íƒ€ ìš”ì¸)</p>
-<p><strong>ì¹˜ë£Œ target:</strong>
-- <code>primary_first</code>: Primary ì§„ë‹¨ë¶€í„° ì¹˜ë£Œ (ì´ ìž„ìƒì¶•ì´ primary source)
-- <code>concurrent</code>: ë™ì‹œ ì¹˜ë£Œ (Comorbidity pattern)
-- <code>monitor</code>: ê´€ì°°</p>
-<h3 id="85-catch">8.5 ìž„ìƒê°€ ê²€í†  ìžë£Œ catch</h3>
-<p>ì‹œìŠ¤í…œì´ ìžë™ìœ¼ë¡œ ê²€í†  ê¶Œê³ :
-- ì§„ë‹¨ í™•ì‹¤ì„± ë‚®ìŒ (top posterior &lt; 40%)
-- ì‹œê°„ ì •ë³´ ë¶€ì¡± (onset/course unknown)
-- ê°ë³„ ì–´ë ¤ì›€ (1ìˆœìœ„ vs 2ìˆœìœ„ ê²©ì°¨ &lt; 10%)
-- ADHD ì˜ì‹¬ì¸ë° ë°œë³‘ ë‚˜ì´ ë¯¸í™•ì¸</p>
-<p>ê²€í†  ê¶Œê³  ì‹œ ìž„ìƒê°€ê°€ ì§ì ‘ ê²°ì • (ì‹œìŠ¤í…œ ìžë™ ê²°ì • X).</p>
-<h3 id="86-counterfactual">8.6 ê°œìž… ìš°ì„ ìˆœìœ„ (Counterfactual)</h3>
-<pre><code>ã€ ê°œìž… ìš°ì„ ìˆœìœ„ ìžë£Œ ã€‘
-  #1 working_memory      L8.2â†’L9.2 | ì „ì²´ +0.085 | ì£¼ íš¨ê³¼: learning
-  #2 sustained_attention L7.8â†’L8.8 | ì „ì²´ +0.062 | ì£¼ íš¨ê³¼: attention
+<p><strong>기여도 해석:</strong>
+- ADHD 0.234 → 주의력 약화의 23.4%가 ADHD source
+- MDD 0.087 → 8.7%가 우울로 인한 2차
+- 잔차 0.105 → 시스템이 설명 못 하는 자료 (개인 차이, 기타 요인)</p>
+<p><strong>치료 target:</strong>
+- <code>primary_first</code>: Primary 진단부터 치료 (이 임상축이 primary source)
+- <code>concurrent</code>: 동시 치료 (Comorbidity pattern)
+- <code>monitor</code>: 관찰</p>
+<h3 id="85-catch">8.5 임상가 검토 자료 catch</h3>
+<p>시스템이 자동으로 검토 권고:
+- 진단 확실성 낮음 (top posterior &lt; 40%)
+- 시간 정보 부족 (onset/course unknown)
+- 감별 어려움 (1순위 vs 2순위 격차 &lt; 10%)
+- ADHD 의심인데 발병 나이 미확인</p>
+<p>검토 권고 시 임상가가 직접 결정 (시스템 자동 결정 X).</p>
+<h3 id="86-counterfactual">8.6 개입 우선순위 (Counterfactual)</h3>
+<pre><code>【 개입 우선순위 자료 】
+  #1 working_memory      L8.2→L9.2 | 전체 +0.085 | 주 효과: learning
+  #2 sustained_attention L7.8→L8.8 | 전체 +0.062 | 주 효과: attention
   ...
 </code></pre>
-<p>ê° ì¸ì§€ì¶• +1.0 Level ì ìš©í–ˆì„ ë•Œ íš¨ê³¼ ë¹„êµ. 1ìˆœìœ„ê°€ ê°€ìž¥ íš¨ìœ¨ì .</p>
+<p>각 인지축 +1.0 Level 적용했을 때 효과 비교. 1순위가 가장 효율적.</p>
 <hr />
-<h2 id="9">9. í›ˆë ¨ í”„ë¡œí† ì½œ ìš´ì˜</h2>
-<h3 id="91">9.1 ì˜ì—­ë³„ í”„ë¡œí† ì½œ</h3>
+<h2 id="9">9. 훈련 프로토콜 운영</h2>
+<h3 id="91">9.1 영역별 프로토콜</h3>
 <table>
 <thead>
 <tr>
-<th>ì˜ì—­</th>
-<th>ê¸°ê°„</th>
-<th>íšŒ/ì£¼</th>
-<th>ì§„í–‰ ìžë£Œ</th>
+<th>영역</th>
+<th>기간</th>
+<th>회/주</th>
+<th>진행 자료</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ì£¼ì˜ë ¥</td>
-<td>4ì£¼</td>
-<td>3íšŒ</td>
-<td>Complexity ramp (ë‚œì´ë„ ì ì§„ ì¦ê°€)</td>
+<td>주의력</td>
+<td>4주</td>
+<td>3회</td>
+<td>Complexity ramp (난이도 점진 증가)</td>
 </tr>
 <tr>
-<td>í•™ìŠµ íš¨ìœ¨</td>
-<td>4ì£¼</td>
-<td>4íšŒ</td>
-<td>Consolidation (ë°˜ë³µ í›„ í™•ìž¥)</td>
+<td>학습 효율</td>
+<td>4주</td>
+<td>4회</td>
+<td>Consolidation (반복 후 확장)</td>
 </tr>
 <tr>
-<td>ìˆ˜í–‰ ìµœì í™”</td>
-<td>4ì£¼</td>
-<td>3íšŒ</td>
-<td>Skill stacking (ìŠ¤í‚¬ ëˆ„ì )</td>
+<td>수행 최적화</td>
+<td>4주</td>
+<td>3회</td>
+<td>Skill stacking (스킬 누적)</td>
 </tr>
 <tr>
-<td>ë¶ˆì•ˆ ê´€ë¦¬</td>
-<td>4ì£¼</td>
-<td>5íšŒ</td>
-<td>Exposure gradient (ì ì§„ ë…¸ì¶œ)</td>
+<td>불안 관리</td>
+<td>4주</td>
+<td>5회</td>
+<td>Exposure gradient (점진 노출)</td>
 </tr>
 <tr>
-<td>ê¸°ë¶„ ì•ˆì •</td>
-<td>8ì£¼</td>
-<td>4íšŒ</td>
+<td>기분 안정</td>
+<td>8주</td>
+<td>4회</td>
 <td>Behavioral activation</td>
 </tr>
 </tbody>
 </table>
-<h3 id="72">7.2 íšŒê¸°ë³„ ìžë£Œ ìš´ì˜</h3>
-<p>ê° íšŒê¸°:
-1. <strong>ì‹œìž‘ (5ë¶„)</strong>: HRV ì¸¡ì •, ê¸°ë¶„ ìžë£Œ ì²´í¬
-2. <strong>ì¹´ë“œ ì‹¤í–‰ (15-60ë¶„)</strong>: ì‹œìŠ¤í…œ ì¶”ì²œ ì¹´ë“œ ìžë£Œ
-3. <strong>ì¢…ë£Œ (5ë¶„)</strong>: HRV ìž¬ì¸¡ì •, OMR ì‘ë‹µ ìžë£Œ</p>
-<h3 id="73">7.3 ì£¼ê°„ ì¸¡ì • ìžë£Œ</h3>
+<h3 id="72">7.2 회기별 자료 운영</h3>
+<p>각 회기:
+1. <strong>시작 (5분)</strong>: HRV 측정, 기분 자료 체크
+2. <strong>카드 실행 (15-60분)</strong>: 시스템 추천 카드 자료
+3. <strong>종료 (5분)</strong>: HRV 재측정, OMR 응답 자료</p>
+<h3 id="73">7.3 주간 측정 자료</h3>
 <ul>
-<li>1ì£¼ì°¨: Entry Protocol 5 ì „ì²´ ì¸¡ì •</li>
-<li>2-3ì£¼ì°¨: í•µì‹¬ 1ê°œ ìžë£Œë§Œ (ì‹œê°„ì´)</li>
-<li>ë§ˆì§€ë§‰ ì£¼: Entry Protocol 5 ì „ì²´ + outcome ìžë£Œ</li>
+<li>1주차: Entry Protocol 5 전체 측정</li>
+<li>2-3주차: 핵심 1개 자료만 (시간이)</li>
+<li>마지막 주: Entry Protocol 5 전체 + outcome 자료</li>
 </ul>
-<h3 id="74-override">7.4 ìž„ìƒê°€ Override ìžë£Œ</h3>
-<p>ì‹œìŠ¤í…œ ì¶”ì²œì´ ìž„ìƒì ìœ¼ë¡œ ë¶€ì í•©í•œ ê²½ìš°:
-- ìž„ìƒê°€ê°€ ë‹¤ë¥¸ ì¹´ë“œ ì„ íƒ ê°€ëŠ¥
-- override ì‚¬ìœ  ìžë£Œ ê¸°ë¡ í•„ìˆ˜ (í•™ìŠµ ì‹ í˜¸)
-- ì‹œìŠ¤í…œì´ ì´ ìžë£Œë¥¼ Ã—2 weightë¡œ í•™ìŠµ</p>
+<h3 id="74-override">7.4 임상가 Override 자료</h3>
+<p>시스템 추천이 임상적으로 부적합한 경우:
+- 임상가가 다른 카드 선택 가능
+- override 사유 자료 기록 필수 (학습 신호)
+- 시스템이 이 자료를 ×2 weight로 학습</p>
 <hr />
-<h2 id="10">10. ìœ„ê¸° ëŒ€ì‘</h2>
-<h3 id="81">8.1 ìžë™ ê°ì§€ ìžë£Œ</h3>
-<p>ì‹œìŠ¤í…œì´ í´ë¼ì´ì–¸íŠ¸ ë°œí™”ì—ì„œ 10ê°œ ìœ„ê¸° ìžë£Œ ìžë™ catch:</p>
+<h2 id="10">10. 위기 대응</h2>
+<h3 id="81">8.1 자동 감지 자료</h3>
+<p>시스템이 클라이언트 발화에서 10개 위기 자료 자동 catch:</p>
 <table>
 <thead>
 <tr>
-<th>ìžë£Œ</th>
+<th>자료</th>
 <th>Severity</th>
-<th>ì¦‰ì‹œ ì¡°ì¹˜</th>
+<th>즉시 조치</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>ìˆ˜ë™ì  ìžì‚´ ìƒê°</td>
+<td>수동적 자살 생각</td>
 <td>moderate</td>
-<td>íšŒê¸° ê³„ì† + ì•ˆì „ ì ê²€</td>
+<td>회기 계속 + 안전 점검</td>
 </tr>
 <tr>
-<td>ëŠ¥ë™ì  ìžì‚´ ìƒê°</td>
+<td>능동적 자살 생각</td>
 <td>high</td>
-<td>íšŒê¸° ì¤‘ë‹¨ + Columbia SSRS</td>
+<td>회기 중단 + Columbia SSRS</td>
 </tr>
 <tr>
-<td>ìžì‚´ ê³„íš/ìˆ˜ë‹¨</td>
+<td>자살 계획/수단</td>
 <td>imminent</td>
-<td>119/911 + í´ë¼ì´ì–¸íŠ¸ í˜¼ìž ë‘ì§€ ì•ŠìŒ</td>
+<td>119/911 + 클라이언트 혼자 두지 않음</td>
 </tr>
 <tr>
-<td>ìµœê·¼ ìží•´</td>
+<td>최근 자해</td>
 <td>high</td>
-<td>íšŒê¸° ì¤‘ë‹¨ + ì•ˆì „ ê³„íš</td>
+<td>회기 중단 + 안전 계획</td>
 </tr>
 <tr>
-<td>íƒ€ì‚´ ì˜ë„</td>
+<td>타살 의도</td>
 <td>imminent</td>
-<td>Tarasoff ì˜ë¬´ + ë²• ì§‘í–‰ í†µë³´</td>
+<td>Tarasoff 의무 + 법 집행 통보</td>
 </tr>
 <tr>
-<td>ì •ì‹ ì¦ í™œì„±</td>
+<td>정신증 활성</td>
 <td>high</td>
-<td>ì •ì‹ ê³¼ ì˜ë¢°</td>
+<td>정신과 의뢰</td>
 </tr>
 <tr>
-<td>ê¸‰ì„± ì¤‘ë…</td>
+<td>급성 중독</td>
 <td>high</td>
-<td>íšŒê¸° ì—°ê¸° + ì•ˆì „ ê·€ê°€</td>
+<td>회기 연기 + 안전 귀가</td>
 </tr>
 <tr>
-<td>ê°€ì •í­ë ¥ ì§„í–‰</td>
+<td>가정폭력 진행</td>
 <td>imminent</td>
-<td>DV Hotline + DCF (ìžë…€ ìžˆì„ ì‹œ)</td>
+<td>DV Hotline + DCF (자녀 있을 시)</td>
 </tr>
 <tr>
-<td>ì•„ë™í•™ëŒ€ ê³µê°œ</td>
+<td>아동학대 공개</td>
 <td>imminent</td>
-<td><strong>MA DCF 800-792-5200 ì¦‰ì‹œ ì‹ ê³ </strong></td>
+<td><strong>MA DCF 800-792-5200 즉시 신고</strong></td>
 </tr>
 <tr>
-<td>ì‹¬í•œ í•´ë¦¬</td>
+<td>심한 해리</td>
 <td>moderate</td>
-<td>Grounding + PTSD/DID í‰ê°€</td>
+<td>Grounding + PTSD/DID 평가</td>
 </tr>
 </tbody>
 </table>
-<h3 id="82-ma-mandated-reporter">8.2 MA Mandated Reporter ìžë£Œ</h3>
-<p><strong>ì¤‘ìš”</strong>: í• ë¹„ (BCN + PhD) = MA M.G.L. c. 119 Â§51A "allied mental health professional" ì¹´í…Œê³ ë¦¬.</p>
-<p><strong>ì˜ë¬´ ìžë£Œ:</strong>
-1. <strong>ì¦‰ì‹œ êµ¬ë‘ ì‹ ê³ </strong>: MA DCF Emergency Line <strong>1-800-792-5200</strong>
-2. <strong>48ì‹œê°„ ë‚´ ì„œë©´ ë³´ê³ </strong>: 51A form (online portal)
-3. <strong>ìœ„ë°˜ ì‹œ ë²Œê¸ˆ</strong>: 1íšŒ $1,000, ì´í›„ $5,000</p>
-<p><strong>ëŒ€ìƒ ìžë£Œ:</strong>
-- ì•„ë™ (18ì„¸ ë¯¸ë§Œ) í•™ëŒ€/ë°©ì¹˜
-- ìž¥ì• ì¸ í•™ëŒ€ (DPPC Hotline 1-800-426-9009)</p>
-<h3 id="83-phq-9-9">8.3 PHQ-9 9ë²ˆ í†µí•© ìžë£Œ</h3>
-<p>PHQ-9 9ë²ˆ ("ì£½ìŒ ë˜ëŠ” ìží•´ ìƒê°") ì ìˆ˜ ìžë™ catch:
-- 1ì  ì´ìƒ: passive ideation í™œì„±
-- 2ì  ì´ìƒ: active ideation í™œì„±
-- 3ì  ì´ìƒ: plan/means ìžë£Œ ê°€ëŠ¥ì„±</p>
-<p>CLIì—ì„œ PHQ-9 ìžë£Œ ìž…ë ¥ ì‹œ ìžë™ ê°ì§€.</p>
+<h3 id="82-ma-mandated-reporter">8.2 MA Mandated Reporter 자료</h3>
+<p><strong>중요</strong>: 할비 (BCN + PhD) = MA M.G.L. c. 119 §51A "allied mental health professional" 카테고리.</p>
+<p><strong>의무 자료:</strong>
+1. <strong>즉시 구두 신고</strong>: MA DCF Emergency Line <strong>1-800-792-5200</strong>
+2. <strong>48시간 내 서면 보고</strong>: 51A form (online portal)
+3. <strong>위반 시 벌금</strong>: 1회 $1,000, 이후 $5,000</p>
+<p><strong>대상 자료:</strong>
+- 아동 (18세 미만) 학대/방치
+- 장애인 학대 (DPPC Hotline 1-800-426-9009)</p>
+<h3 id="83-phq-9-9">8.3 PHQ-9 9번 통합 자료</h3>
+<p>PHQ-9 9번 ("죽음 또는 자해 생각") 점수 자동 catch:
+- 1점 이상: passive ideation 활성
+- 2점 이상: active ideation 활성
+- 3점 이상: plan/means 자료 가능성</p>
+<p>CLI에서 PHQ-9 자료 입력 시 자동 감지.</p>
 <hr />
-<h2 id="11-4-outcome-adaptive-re-routing-v7-new">11. 4ì£¼ í›„ Outcome + Adaptive Re-routing (v7 NEW)</h2>
-<h3 id="111-4">11.1 4ì£¼ í›„ ì¸¡ì •</h3>
-<p>íšŒê¸° ì¢…ë£Œ í›„ 4-8ì£¼ (ì˜ì—­ë³„ ë‹¤ë¦„):</p>
+<h2 id="11-4-outcome-adaptive-re-routing-v7-new">11. 4주 후 Outcome + Adaptive Re-routing (v7 NEW)</h2>
+<h3 id="111-4">11.1 4주 후 측정</h3>
+<p>회기 종료 후 4-8주 (영역별 다름):</p>
 <ol>
-<li><strong>Entry Protocol 5 ìž¬ì¸¡ì •</strong> â€” ëª¨ë“  ì¸¡ì • ë‹¤ì‹œ</li>
-<li><strong>ìž„ìƒ 5ì¶• ì ìˆ˜ í‰ê°€</strong> â€” ìž„ìƒê°€ í‰ê°€</li>
-<li><strong>ìžê¸° ë³´ê³ </strong>:</li>
-<li>ê°œì„  ì •ë„ (0-10)</li>
-<li>ë§Œì¡±ë„ (0-10)</li>
-<li><strong>PHQ-9 / GAD-7 ìž¬ì¸¡ì •</strong></li>
+<li><strong>Entry Protocol 5 재측정</strong> — 모든 측정 다시</li>
+<li><strong>임상 5축 점수 평가</strong> — 임상가 평가</li>
+<li><strong>자기 보고</strong>:</li>
+<li>개선 정도 (0-10)</li>
+<li>만족도 (0-10)</li>
+<li><strong>PHQ-9 / GAD-7 재측정</strong></li>
 </ol>
-<h3 id="112-cli-outcome">11.2 CLI Outcome ìž…ë ¥</h3>
+<h3 id="112-cli-outcome">11.2 CLI Outcome 입력</h3>
 <pre><code class="language-bash">python cli/run_assessment.py --outcome
 </code></pre>
-<p>ìžë£Œ ìž…ë ¥:
-- Episode ID (ì´ì „ íšŒê¸°ì—ì„œ ë°›ì€ ìžë£Œ)
-- Outcome score (-1.0 ~ +1.0, 0ì´ ë³€í™” ì—†ìŒ)
-- ì¸ì§€ 5ì¶• ë³€í™” (cognitive_after)
-- ìž„ìƒ 5ì¶• ë³€í™” (clinical_after)
-- ì¸¡ì • ë¶„ì‚° (ìžë£Œ ì‹ ë¢°ë„)
-- Primary intervention axis (ì–´ëŠ ìž„ìƒì¶•ì— ê°œìž…í–ˆë‚˜)
-- Intervention card IDs (ì ìš©í•œ ì¹´ë“œ)</p>
-<h3 id="113">11.3 ì‹œìŠ¤í…œ ìžë™ í•™ìŠµ</h3>
-<p>Outcome ê¸°ë¡ ì‹œ:</p>
-<p><strong>ê¸°ë³¸ í•™ìŠµ (v6):</strong>
-1. <strong>ê°€ì¤‘ì¹˜ ìžë™ ì¡°ì •</strong> (variational update)
-2. <strong>ë§¤í•‘ í–‰ë ¬ ë³´ì •</strong> (calibration history)
-3. <strong>Prediction error ëˆ„ì </strong> (êµ¬ì¡°ì  misfit ê°ì§€)
-4. <strong>Crisis FN/FP ì¶”ì </strong></p>
+<p>자료 입력:
+- Episode ID (이전 회기에서 받은 자료)
+- Outcome score (-1.0 ~ +1.0, 0이 변화 없음)
+- 인지 5축 변화 (cognitive_after)
+- 임상 5축 변화 (clinical_after)
+- 측정 분산 (자료 신뢰도)
+- Primary intervention axis (어느 임상축에 개입했나)
+- Intervention card IDs (적용한 카드)</p>
+<h3 id="113">11.3 시스템 자동 학습</h3>
+<p>Outcome 기록 시:</p>
+<p><strong>기본 학습 (v6):</strong>
+1. <strong>가중치 자동 조정</strong> (variational update)
+2. <strong>매핑 행렬 보정</strong> (calibration history)
+3. <strong>Prediction error 누적</strong> (구조적 misfit 감지)
+4. <strong>Crisis FN/FP 추적</strong></p>
 <p><strong>Adaptive Re-routing (v7 NEW):</strong>
-5. <strong>ì˜ˆìƒ ë°˜ì‘ vs ì‹¤ì œ ë°˜ì‘ ë¹„êµ</strong>
-6. <strong>ë¶ˆì¼ì¹˜ ì‹œ DDE ìžë™ ìž¬ì‹¤í–‰</strong> (weakened prior)
-7. <strong>ì§„ë‹¨ ë³€ê²½ catch</strong> (no_change | secondary_added | primary_swap | diagnosis_dropped)</p>
-<h3 id="114-re-routing">11.4 Re-routing ê²°ì • í•´ì„</h3>
-<pre><code>ã€ ì§„ë‹¨ ìžë£Œ ìž¬êµ¬ì„± ê²°ì • ã€‘
-  Primary: adhd_inattentive â†’ gad
-  Secondary: [] â†’ [adhd_inattentive]
-  ë³€ê²½ ì—¬ë¶€: ì˜ˆ
-  ë³€ê²½ ìœ í˜•: primary_swap
-  ë°˜ì‘ íŒ¨í„´: primary_no_response_secondary_improved_anxiety
-  Posterior ë³€í™”: 0.35
-  âš  ìž„ìƒê°€ ê²€í†  í•„ìš”
+5. <strong>예상 반응 vs 실제 반응 비교</strong>
+6. <strong>불일치 시 DDE 자동 재실행</strong> (weakened prior)
+7. <strong>진단 변경 catch</strong> (no_change | secondary_added | primary_swap | diagnosis_dropped)</p>
+<h3 id="114-re-routing">11.4 Re-routing 결정 해석</h3>
+<pre><code>【 진단 자료 재구성 결정 】
+  Primary: adhd_inattentive → gad
+  Secondary: [] → [adhd_inattentive]
+  변경 여부: 예
+  변경 유형: primary_swap
+  반응 패턴: primary_no_response_secondary_improved_anxiety
+  Posterior 변화: 0.35
+  ⚠ 임상가 검토 필요
 </code></pre>
-<p><strong>ë³€ê²½ ìœ í˜•:</strong>
-- <code>no_change</code>: ì§„ë‹¨ ìœ ì§€ (ë°˜ì‘ fit 0.60+)
-- <code>secondary_added</code>: ìƒˆ ê³µì¡´ ì§„ë‹¨ catch
-- <code>primary_swap</code>: Primary ì§„ë‹¨ ë³€ê²½ (ì˜ˆ: ADHD â†’ GAD)
-- <code>diagnosis_dropped</code>: ì´ì „ ì§„ë‹¨ ì œì™¸</p>
-<p><strong>ë°˜ì‘ íŒ¨í„´:</strong>
-- <code>expected_response_strong</code>: Primary target ìž˜ ë°˜ì‘ (&gt;+0.15)
-- <code>partial_response</code>: ë¶€ë¶„ ë°˜ì‘
-- <code>primary_no_response_secondary_improved_*</code>: Primary ë¬´ë°˜ì‘ + ë‹¤ë¥¸ ì¶•ë§Œ ë°˜ì‘ â†’ ì§„ë‹¨ ì˜ì‹¬
-- <code>treatment_no_response</code>: ì „í˜€ ë°˜ì‘ X
-- <code>diagnosis_revision_from_response</code>: ë°˜ì‘ì´ ë‹¤ë¥¸ ì§„ë‹¨ íŒ¨í„´</p>
-<h3 id="115-re-routing">11.5 ìž„ìƒ ìžë£Œ â€” Re-routing ì‹œë‚˜ë¦¬ì˜¤</h3>
-<p><strong>ì‹œë‚˜ë¦¬ì˜¤ A: ADHD primary â†’ ìžê·¹ì œ ì¹´ë“œ â†’ íš¨ê³¼ âŒ, ë¶ˆì•ˆë§Œ â†‘</strong>
-- ì‹œìŠ¤í…œ catch: "ADHD primaryì¼ ì¤„ ì•Œì•˜ëŠ”ë° ìžê·¹ì œ ë¬´ë°˜ì‘ + ë¶ˆì•ˆ ì•…í™”"
-- Re-routing: GAD primaryë¡œ ë³€ê²½, ADHD secondaryë¡œ
-- ìž„ìƒì  ì˜ë¯¸: GADê°€ ADHD-like ì¦ìƒ ì¼ìœ¼í‚¨ ê²ƒ (Eysenck ACT)</p>
-<p><strong>ì‹œë‚˜ë¦¬ì˜¤ B: MDD primary â†’ BA ì¹´ë“œ â†’ ê¸°ë¶„ ë³€í™” âŒ, HRVë§Œ â†‘</strong>
-- ì‹œìŠ¤í…œ catch: "MDD ì¹˜ë£Œì— ìš°ìš¸ ë°˜ì‘ âŒ"
-- Re-routing: GAD secondary ê°€ëŠ¥ì„± â†‘
-- ìž„ìƒì  ì˜ë¯¸: ìš°ìš¸ì¦ë³´ë‹¤ ë§Œì„± ë¶ˆì•ˆì´ primary</p>
-<p><strong>ì‹œë‚˜ë¦¬ì˜¤ C: ADHD primary â†’ ìžê·¹ì œ ì¹´ë“œ â†’ ì£¼ì˜ë ¥ â†‘, í•™ìŠµ â†‘</strong>
-- ì‹œìŠ¤í…œ catch: "ì˜ˆìƒëŒ€ë¡œ ë°˜ì‘ (response fit 0.85+)"
-- Re-routing: ë³€ê²½ ì—†ìŒ, ì§„ë‹¨ ì‹ ë¢°ë„ â†‘</p>
-<h3 id="116">11.6 ì•ˆì „ ìžë£Œ</h3>
+<p><strong>변경 유형:</strong>
+- <code>no_change</code>: 진단 유지 (반응 fit 0.60+)
+- <code>secondary_added</code>: 새 공존 진단 catch
+- <code>primary_swap</code>: Primary 진단 변경 (예: ADHD → GAD)
+- <code>diagnosis_dropped</code>: 이전 진단 제외</p>
+<p><strong>반응 패턴:</strong>
+- <code>expected_response_strong</code>: Primary target 잘 반응 (&gt;+0.15)
+- <code>partial_response</code>: 부분 반응
+- <code>primary_no_response_secondary_improved_*</code>: Primary 무반응 + 다른 축만 반응 → 진단 의심
+- <code>treatment_no_response</code>: 전혀 반응 X
+- <code>diagnosis_revision_from_response</code>: 반응이 다른 진단 패턴</p>
+<h3 id="115-re-routing">11.5 임상 자료 — Re-routing 시나리오</h3>
+<p><strong>시나리오 A: ADHD primary → 자극제 카드 → 효과 ❌, 불안만 ↑</strong>
+- 시스템 catch: "ADHD primary일 줄 알았는데 자극제 무반응 + 불안 악화"
+- Re-routing: GAD primary로 변경, ADHD secondary로
+- 임상적 의미: GAD가 ADHD-like 증상 일으킨 것 (Eysenck ACT)</p>
+<p><strong>시나리오 B: MDD primary → BA 카드 → 기분 변화 ❌, HRV만 ↑</strong>
+- 시스템 catch: "MDD 치료에 우울 반응 ❌"
+- Re-routing: GAD secondary 가능성 ↑
+- 임상적 의미: 우울증보다 만성 불안이 primary</p>
+<p><strong>시나리오 C: ADHD primary → 자극제 카드 → 주의력 ↑, 학습 ↑</strong>
+- 시스템 catch: "예상대로 반응 (response fit 0.85+)"
+- Re-routing: 변경 없음, 진단 신뢰도 ↑</p>
+<h3 id="116">11.6 안전 자료</h3>
 <ul>
-<li>Volatility 0.15 ì´ˆê³¼ ì‹œ ìžë™ rollback</li>
-<li>Protected cellsëŠ” í•™ìŠµ ë©´ì—­ (ì˜ˆ: emotional_regulationâ†’anxiety)</li>
-<li>ì „ì²´ outcome í‰ê·  &lt; -0.30 ì‹œ í•™ìŠµ ìžë™ ì •ì§€</li>
-<li>Re-routingì€ posterior ë³€í™” &gt; 0.20ì¼ ë•Œë§Œ í™œì„± (ìž‘ì€ ë³€í™”ë¡œ ì§„ë‹¨ í”ë“¤ë¦¬ì§€ ì•Šê²Œ)</li>
-<li>Primary swap ì‹œ ìžë™ ìž„ìƒê°€ ê²€í†  flag</li>
+<li>Volatility 0.15 초과 시 자동 rollback</li>
+<li>Protected cells는 학습 면역 (예: emotional_regulation→anxiety)</li>
+<li>전체 outcome 평균 &lt; -0.30 시 학습 자동 정지</li>
+<li>Re-routing은 posterior 변화 &gt; 0.20일 때만 활성 (작은 변화로 진단 흔들리지 않게)</li>
+<li>Primary swap 시 자동 임상가 검토 flag</li>
 </ul>
 <hr />
-<h2 id="12-">12. ê³ ê¸‰ - ë§¤í•‘ í–‰ë ¬ ì¡°ì •</h2>
-<h3 id="121">12.1 ì–¸ì œ ì¡°ì •?</h3>
+<h2 id="12-">12. 고급 - 매핑 행렬 조정</h2>
+<h3 id="121">12.1 언제 조정?</h3>
 <ul>
-<li>5ëª… ë² íƒ€ ëë‚œ í›„, prediction error ìžë£Œ ë¶„ì„ ì‹œ</li>
-<li>íŠ¹ì • í´ë¼ì´ì–¸íŠ¸ ê·¸ë£¹ì— ì‹œìŠ¤í…œ ìžë£Œê°€ ì•ˆ ë§žëŠ” ê²½ìš°</li>
-<li>ìž„ìƒê°€ê°€ ë¶„ëª…í•œ ìžë£Œ íŒ¨í„´ catch ì‹œ</li>
+<li>5명 베타 끝난 후, prediction error 자료 분석 시</li>
+<li>특정 클라이언트 그룹에 시스템 자료가 안 맞는 경우</li>
+<li>임상가가 분명한 자료 패턴 catch 시</li>
 </ul>
-<h3 id="122">12.2 ìˆ˜ì • ìœ„ì¹˜</h3>
-<p><strong>íŒŒì¼</strong>: <code>config/cognitive_clinical_mapping.yaml</code></p>
+<h3 id="122">12.2 수정 위치</h3>
+<p><strong>파일</strong>: <code>config/cognitive_clinical_mapping.yaml</code></p>
 <pre><code class="language-yaml">positive_loading:
   sustained_attention:
-    attention:        0.45   # â† ì´ ìˆ«ìž ìˆ˜ì • ê°€ëŠ¥
+    attention:        0.45   # ← 이 숫자 수정 가능
     learning:         0.20
     peak_performance: 0.20
     anxiety:          0.05
     depression:       0.10
 </code></pre>
-<p><strong>ê·œì¹™:</strong>
-1. í–‰ í•© = 1.0 ìœ ì§€ (ê° ì¸ì§€ì¶•ì˜ ì˜í–¥ë ¥ ë¶„ë°°)
-2. í–‰/ì—´ êµ¬ì¡°ëŠ” ê±´ë“œë¦¬ì§€ ì•ŠìŒ
-3. ì½”ë“œ ë³€ê²½ ì—†ì´ YAMLë§Œ ìˆ˜ì •
-4. ìˆ˜ì • í›„ í†µí•© í…ŒìŠ¤íŠ¸ ë‹¤ì‹œ ì‹¤í–‰:
+<p><strong>규칙:</strong>
+1. 행 합 = 1.0 유지 (각 인지축의 영향력 분배)
+2. 행/열 구조는 건드리지 않음
+3. 코드 변경 없이 YAML만 수정
+4. 수정 후 통합 테스트 다시 실행:
    <code>bash
    python tests/test_integration.py</code></p>
 <h3 id="123-protected-cells">12.3 Protected Cells</h3>
-<p>í•™ìŠµìœ¼ë¡œë„ ë³€ê²½ë˜ì§€ ì•ŠëŠ” ì…€:</p>
+<p>학습으로도 변경되지 않는 셀:</p>
 <pre><code class="language-yaml">imperturbable:
   protected_cells:
     - [emotional_regulation, anxiety]
@@ -931,64 +931,64 @@ temporal = TemporalHistory(
     - [sustained_attention, attention]
     - [emotional_regulation, depression]
 </code></pre>
-<p>ê°•í•œ ìž„ìƒ ê·¼ê±° ìžë£Œê°€ ìžˆëŠ” ì…€ ìžë£Œìž…ë‹ˆë‹¤. ë³€ê²½ ì‹œ ì‹ ì¤‘.</p>
+<p>강한 임상 근거 자료가 있는 셀 자료입니다. 변경 시 신중.</p>
 <hr />
-<h2 id="13-api">13. API ì‚¬ìš© ê°€ì´ë“œ</h2>
-<h3 id="131">13.1 ì„œë²„ ì‹œìž‘</h3>
+<h2 id="13-api">13. API 사용 가이드</h2>
+<h3 id="131">13.1 서버 시작</h3>
 <pre><code class="language-bash">cd cna_v6
 source venv/bin/activate
 uvicorn api.main:app --reload --port 8000
 </code></pre>
-<p>ë¸Œë¼ìš°ì €ì—ì„œ ìžë£Œ í™•ì¸: <code>http://localhost:8000/docs</code></p>
-<h3 id="132-endpoints">13.2 ì£¼ìš” Endpoints</h3>
+<p>브라우저에서 자료 확인: <code>http://localhost:8000/docs</code></p>
+<h3 id="132-endpoints">13.2 주요 Endpoints</h3>
 <table>
 <thead>
 <tr>
 <th>Endpoint</th>
-<th>ë©”ì„œë“œ</th>
-<th>ì„¤ëª…</th>
+<th>메서드</th>
+<th>설명</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>/health</code></td>
 <td>GET</td>
-<td>ì‹œìŠ¤í…œ ìƒíƒœ</td>
+<td>시스템 상태</td>
 </tr>
 <tr>
 <td><code>/cards</code></td>
 <td>GET</td>
-<td>ì¹´ë“œ ìžë£Œ ì¡°íšŒ</td>
+<td>카드 자료 조회</td>
 </tr>
 <tr>
 <td><code>/full-cycle</code></td>
 <td>POST</td>
-<td>ì „ì²´ ì‚¬ì´í´ í•œ ë²ˆì—</td>
+<td>전체 사이클 한 번에</td>
 </tr>
 <tr>
 <td><code>/assess</code></td>
 <td>POST</td>
-<td>Loop 1-2 í‰ê°€</td>
+<td>Loop 1-2 평가</td>
 </tr>
 <tr>
 <td><code>/protocol/generate</code></td>
 <td>POST</td>
-<td>í”„ë¡œí† ì½œ ìƒì„±</td>
+<td>프로토콜 생성</td>
 </tr>
 <tr>
 <td><code>/safety/check</code></td>
 <td>POST</td>
-<td>Crisis ìžë£Œ ê²€ì‚¬</td>
+<td>Crisis 자료 검사</td>
 </tr>
 <tr>
 <td><code>/system/state</code></td>
 <td>GET</td>
-<td>í•™ìŠµ ìƒíƒœ ìžë£Œ</td>
+<td>학습 상태 자료</td>
 </tr>
 </tbody>
 </table>
-<h3 id="133">13.3 ì˜ˆì‹œ í˜¸ì¶œ</h3>
-<pre><code class="language-bash"># Full cycle ìžë£Œ
+<h3 id="133">13.3 예시 호출</h3>
+<pre><code class="language-bash"># Full cycle 자료
 curl -X POST &quot;http://localhost:8000/full-cycle&quot; \
   -H &quot;Content-Type: application/json&quot; \
   -d '{
@@ -1007,12 +1007,12 @@ curl -X POST &quot;http://localhost:8000/full-cycle&quot; \
     &quot;n_sessions&quot;: 0
   }'
 </code></pre>
-<h3 id="134-learningneurocatcherscom">13.4 learning.neurocatchers.com í†µí•©</h3>
-<p>CORS ìžë£Œ ìžë™ í™œì„±:
+<h3 id="134-learningneurocatcherscom">13.4 learning.neurocatchers.com 통합</h3>
+<p>CORS 자료 자동 활성:
 - <code>https://learning.neurocatchers.com</code>
 - <code>https://neurocatchers.com</code>
 - <code>https://bostonneuromind.com</code></p>
-<p>JavaScript í˜¸ì¶œ ì˜ˆ:</p>
+<p>JavaScript 호출 예:</p>
 <pre><code class="language-javascript">const response = await fetch('https://cna-api.example.com/full-cycle', {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
@@ -1021,24 +1021,24 @@ curl -X POST &quot;http://localhost:8000/full-cycle&quot; \
 const result = await response.json();
 </code></pre>
 <hr />
-<h2 id="14">14. ë¬¸ì œ í•´ê²°</h2>
-<h3 id="141-python">14.1 Python ì˜¤ë¥˜</h3>
-<p><strong>ì¦ìƒ</strong>: <code>ModuleNotFoundError: No module named 'pydantic'</code></p>
+<h2 id="14">14. 문제 해결</h2>
+<h3 id="141-python">14.1 Python 오류</h3>
+<p><strong>증상</strong>: <code>ModuleNotFoundError: No module named 'pydantic'</code></p>
 <pre><code class="language-bash">pip install --upgrade pydantic numpy pyyaml fastapi uvicorn --break-system-packages
 </code></pre>
-<h3 id="142">14.2 í†µí•© í…ŒìŠ¤íŠ¸ ì‹¤íŒ¨</h3>
-<p><strong>ì¦ìƒ</strong>: <code>test_integration.py</code> ì—ëŸ¬</p>
-<pre><code class="language-bash"># 1. ê°€ìƒí™˜ê²½ í™œì„±í™” í™•ì¸
+<h3 id="142">14.2 통합 테스트 실패</h3>
+<p><strong>증상</strong>: <code>test_integration.py</code> 에러</p>
+<pre><code class="language-bash"># 1. 가상환경 활성화 확인
 source venv/bin/activate
 
-# 2. íŒ¨í‚¤ì§€ ìž¬ì„¤ì¹˜
+# 2. 패키지 재설치
 pip install -r requirements.txt
 
-# 3. config íŒŒì¼ ìžë£Œ í™•ì¸
+# 3. config 파일 자료 확인
 python -c &quot;import yaml; yaml.safe_load(open('config/cognitive_clinical_mapping.yaml'))&quot;
 </code></pre>
-<h3 id="143">14.3 í–‰ í•© ìžë£Œ ê²€ì¦</h3>
-<p>ë§¤í•‘ í–‰ë ¬ ìˆ˜ì • í›„:</p>
+<h3 id="143">14.3 행 합 자료 검증</h3>
+<p>매핑 행렬 수정 후:</p>
 <pre><code class="language-bash">python -c &quot;
 import yaml
 cfg = yaml.safe_load(open('config/cognitive_clinical_mapping.yaml'))
@@ -1047,45 +1047,45 @@ for axis, row in cfg['positive_loading'].items():
     print(f'{axis}: {total:.4f}')
 &quot;
 </code></pre>
-<p>ê° í–‰ = 1.0 Â± 0.001 ìžë£Œ.</p>
-<h3 id="144">14.4 ì¹´ë“œ ìžë£Œ ì¶”ê°€</h3>
-<p><code>cna_core/card_deck.py</code> ìžë£Œì— ìƒˆ Card ê°ì²´ ì¶”ê°€:</p>
+<p>각 행 = 1.0 ± 0.001 자료.</p>
+<h3 id="144">14.4 카드 자료 추가</h3>
+<p><code>cna_core/card_deck.py</code> 자료에 새 Card 객체 추가:</p>
 <pre><code class="language-python">Card(
     id=&quot;att-007&quot;,
     target_symptoms={&quot;inattention&quot;: 0.6},
     target_fischer_levels={&quot;sustained_attention&quot;: 9.0},
     target_clinical_axes=[&quot;attention&quot;],
     evidence_d=0.5,
-    text_ko=&quot;ìƒˆ ì¹´ë“œ ìžë£Œ ì„¤ëª…&quot;,
+    text_ko=&quot;새 카드 자료 설명&quot;,
     text_en=&quot;New card description&quot;,
     cost_minutes=15,
     expected_outcome=0.55,
 ),
 </code></pre>
-<h3 id="145-supabase">14.5 Supabase ì—°ê²° ìžë£Œ</h3>
-<p>ë² íƒ€ ì‹œìž‘ ì „ ìžë£Œ:
-1. Supabase Project ìƒì„± (Pro $25/ì›”)
-2. <code>supabase/schema.sql</code> ì‹¤í–‰
-3. RLS ì •ì±… í™•ì¸
-4. HIPAA BAA ì‹ ì²­</p>
+<h3 id="145-supabase">14.5 Supabase 연결 자료</h3>
+<p>베타 시작 전 자료:
+1. Supabase Project 생성 (Pro $25/월)
+2. <code>supabase/schema.sql</code> 실행
+3. RLS 정책 확인
+4. HIPAA BAA 신청</p>
 <hr />
-<h2 id="a">ë¶€ë¡ A â€” ìž„ìƒ ê·¼ê±° ìžë£Œ</h2>
+<h2 id="a">부록 A — 임상 근거 자료</h2>
 <table>
 <thead>
 <tr>
-<th>í•­ëª©</th>
+<th>항목</th>
 <th>Effect Size</th>
-<th>ì¶œì²˜</th>
+<th>출처</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Working Memory â†” Learning</td>
+<td>Working Memory ↔ Learning</td>
 <td>r=0.43</td>
 <td>Meta-analysis, n=7947</td>
 </tr>
 <tr>
-<td>Emotional Intelligence â†” Academic</td>
+<td>Emotional Intelligence ↔ Academic</td>
 <td>r=0.39</td>
 <td>EI-AP meta-analysis 2023</td>
 </tr>
@@ -1095,7 +1095,7 @@ for axis, row in cfg['positive_loading'].items():
 <td>Aldao et al. 2010</td>
 </tr>
 <tr>
-<td>Rumination â†” Depression</td>
+<td>Rumination ↔ Depression</td>
 <td>r=0.42</td>
 <td>Nolen-Hoeksema response styles</td>
 </tr>
@@ -1112,24 +1112,24 @@ for axis, row in cfg['positive_loading'].items():
 </tbody>
 </table>
 <hr />
-<h2 id="b">ë¶€ë¡ B â€” ì—°ë½ ìžë£Œ</h2>
+<h2 id="b">부록 B — 연락 자료</h2>
 <ul>
-<li><strong>ê°œë°œìž</strong>: Alex Kwon (BCN, PhD)</li>
-<li><strong>íšŒì‚¬</strong>: Boston Neuromind LLC</li>
-<li><strong>ì´ë©”ì¼</strong>: bostonneuromind@gmail.com</li>
-<li><strong>ì‘ê¸‰ ìžì›</strong>:</li>
-<li>í•œêµ­: 1393 (ìžì‚´ì˜ˆë°©), 1577-0199 (ì •ì‹ ê±´ê°•), 1366 (ì—¬ì„±ê¸´ê¸‰), 112 (ì•„ë™í•™ëŒ€)</li>
-<li>ë¯¸êµ­: 988 (ìžì‚´ì˜ˆë°©), 911 (ì‘ê¸‰), 1-800-792-5200 (MA DCF)</li>
+<li><strong>개발자</strong>: Alex Kwon (BCN, PhD)</li>
+<li><strong>회사</strong>: Boston Neuromind LLC</li>
+<li><strong>이메일</strong>: bostonneuromind@gmail.com</li>
+<li><strong>응급 자원</strong>:</li>
+<li>한국: 1393 (자살예방), 1577-0199 (정신건강), 1366 (여성긴급), 112 (아동학대)</li>
+<li>미국: 988 (자살예방), 911 (응급), 1-800-792-5200 (MA DCF)</li>
 </ul>
 <hr />
-<p><strong>ë²„ì „</strong>: CNA v7.0.0<br />
-<strong>ìµœì¢… ì—…ë°ì´íŠ¸</strong>: 2026-05-21<br />
-<strong>ë¼ì´ì„ ìŠ¤</strong>: Proprietary, Boston Neuromind LLC</p>
+<p><strong>버전</strong>: CNA v7.0.0<br />
+<strong>최종 업데이트</strong>: 2026-05-21<br />
+<strong>라이선스</strong>: Proprietary, Boston Neuromind LLC</p>
 <hr />
   </div>
 </div>
 <footer class="footer">
-  <p>Boston Neuromind LLC Â· CNA v7.0.0</p>
+  <p>Boston Neuromind LLC · CNA v7.0.0</p>
 </footer>
 <script src="/decision.js"></script>
 </body>
