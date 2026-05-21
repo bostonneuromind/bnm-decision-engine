@@ -1,0 +1,153 @@
+# ============================================================
+# Cognitive → Clinical Mapping Configuration
+# ============================================================
+# Boston Neuromind LLC · CNA v6 (Round 1 — 임상 자료 보정)
+#
+# 임상 근거:
+#   - Working Memory ↔ Learning: r=0.43 (meta-analysis, n=7947)
+#   - Emotional Intelligence ↔ Academic: r=0.39
+#   - Rumination ↔ Depression: 양방향 (Nolen-Hoeksema response styles)
+#   - Executive Function ↔ Math: r=0.37 (working memory 우선)
+#
+# 행 합 = 1.0 유지 필수.
+# ============================================================
+
+version: "1.1"
+last_updated: "2026-05-21"
+curator: "Alex Kwon (BCN, PhD) · CNA v6 Round 1"
+
+# ============================================================
+# 양의 기여 행렬 (positive contribution)
+# ============================================================
+positive_loading:
+  sustained_attention:
+    attention:          0.45
+    learning:           0.20
+    peak_performance:   0.20
+    anxiety:            0.05
+    depression:         0.10
+
+  working_memory:
+    attention:          0.15
+    learning:           0.40
+    peak_performance:   0.30
+    anxiety:            0.05
+    depression:         0.10
+
+  emotional_regulation:
+    attention:          0.05
+    learning:           0.20
+    peak_performance:   0.15
+    anxiety:            0.35
+    depression:         0.25
+
+  time_awareness:
+    attention:          0.20
+    learning:           0.20
+    peak_performance:   0.25
+    anxiety:            0.15
+    depression:         0.20
+
+  self_awareness:
+    attention:          0.05
+    learning:           0.15
+    peak_performance:   0.15
+    anxiety:            0.20
+    depression:         0.45
+
+# ============================================================
+# 음의 기여 행렬 (negative loading)
+# ============================================================
+negative_loading:
+  sustained_attention:
+    attention:          0.0
+    learning:           0.0
+    peak_performance:   0.0
+    anxiety:            0.15
+    depression:         0.10
+
+  working_memory:
+    attention:          0.0
+    learning:           0.0
+    peak_performance:   0.0
+    anxiety:            0.20
+    depression:         0.15
+
+  emotional_regulation:
+    attention:          0.10
+    learning:           0.10
+    peak_performance:   0.0
+    anxiety:            0.65
+    depression:         0.50
+
+  time_awareness:
+    attention:          0.0
+    learning:           0.0
+    peak_performance:   0.0
+    anxiety:            0.15
+    depression:         0.0
+
+  self_awareness:
+    attention:          0.0
+    learning:           0.0
+    peak_performance:   0.0
+    anxiety:            0.15
+    depression:         0.35
+
+# ============================================================
+# 임상축 간 상호작용 행렬 (5x5)
+# ============================================================
+clinical_interaction:
+  attention:
+    attention:          1.00
+    learning:           0.60
+    peak_performance:   0.55
+    anxiety:           -0.30
+    depression:        -0.40
+
+  learning:
+    attention:          0.60
+    learning:           1.00
+    peak_performance:   0.65
+    anxiety:           -0.35
+    depression:        -0.45
+
+  peak_performance:
+    attention:          0.55
+    learning:           0.65
+    peak_performance:   1.00
+    anxiety:           -0.40
+    depression:        -0.50
+
+  anxiety:
+    attention:         -0.30
+    learning:          -0.35
+    peak_performance:  -0.40
+    anxiety:            1.00
+    depression:         0.65
+
+  depression:
+    attention:         -0.40
+    learning:          -0.45
+    peak_performance:  -0.50
+    anxiety:            0.65
+    depression:         1.00
+
+# ============================================================
+# Severity tier 경계값
+# ============================================================
+severity_tiers:
+  strong:           0.75
+  good:             0.60
+  moderate:         0.45
+  needs_attention:  0.30
+
+# ============================================================
+# 학습 보호 자료 (Imperturbable)
+# ============================================================
+imperturbable:
+  protected_cells:
+    - [emotional_regulation, anxiety]
+    - [working_memory, learning]
+    - [sustained_attention, attention]
+    - [emotional_regulation, depression]

@@ -1,0 +1,304 @@
+# ============================================================
+# Diagnostic Patterns Library (DSM-5-TR + 임상 자료)
+# ============================================================
+# Boston Neuromind LLC · CNA v7
+#
+# 각 진단의 canonical pattern을 인지 5축 + 임상 5축 + 시간 자료로 정의.
+# Bayesian prior로 사용 (Differential Diagnosis Engine).
+#
+# 임상 근거:
+#   - 성인 ADHD 50-80%가 1개 이상 공존 (Frontiers 2025)
+#   - ADHD-불안 25-50%, ADHD-우울 ~50% (Postgraduate Med 2014)
+#   - ADHD는 만성/광범위, 불안/우울은 에피소드 (시간 패턴 차이)
+#   - 미인지 ADHD에 SSRI 단독 = 실패 (McIntosh et al. 2009)
+# ============================================================
+
+version: "1.0"
+last_updated: "2026-05-21"
+
+# ============================================================
+# Canonical patterns (Primary diagnosis)
+# 각 패턴: 인지 axis별 expected level 약화 정도 + 시간 자료
+# ============================================================
+
+primary_patterns:
+
+  # ADHD - Inattentive type (성인)
+  adhd_inattentive:
+    name_ko: "ADHD 주의력 결핍 우세형"
+    name_en: "ADHD Inattentive Type"
+    dsm5_code: "F90.0"
+    prevalence_adult: 0.045  # ~4.5% adult prevalence
+    
+    # 인지 5축 예상 약화 (0=정상, 1=극심한 약화)
+    cognitive_signature:
+      sustained_attention:    0.70   # 핵심
+      working_memory:         0.55
+      emotional_regulation:   0.30
+      time_awareness:         0.50
+      self_awareness:         0.20
+    
+    # 임상 5축 예상 영향
+    clinical_signature:
+      attention:              0.75   # primary 영향
+      learning:               0.55
+      peak_performance:       0.50
+      anxiety:                0.20   # secondary
+      depression:             0.20
+    
+    # 시간 패턴 (감별 핵심)
+    temporal_pattern:
+      onset: "childhood"             # 아동기 발병
+      course: "chronic"              # 만성
+      variability: "stable"          # 안정적 (에피소드 ❌)
+      pervasiveness: "cross_setting" # 여러 환경에서 일관
+    
+    # 핵심 감별 자료
+    differential_markers:
+      - "Cross-setting consistency (집, 직장, 학교 모두)"
+      - "Onset before age 12 (DSM-5-TR criterion)"
+      - "Not better explained by mood/anxiety"
+    
+    # 1차 치료 우선순위
+    treatment_priority: "address_first"  # 다른 공존 자료 전에 먼저
+    medication_class: "stimulant_or_atomoxetine"
+
+  # GAD - 범불안장애
+  gad:
+    name_ko: "범불안장애"
+    name_en: "Generalized Anxiety Disorder"
+    dsm5_code: "F41.1"
+    prevalence_adult: 0.029
+    
+    cognitive_signature:
+      sustained_attention:    0.40   # 걱정으로 인한 2차 저하
+      working_memory:         0.50   # ACT theory (Eysenck)
+      emotional_regulation:   0.75   # 핵심
+      time_awareness:         0.30
+      self_awareness:         0.45   # 과각성
+    
+    clinical_signature:
+      attention:              0.40   # secondary
+      learning:               0.40
+      peak_performance:       0.45
+      anxiety:                0.85   # primary
+      depression:             0.35
+    
+    temporal_pattern:
+      onset: "adolescence_or_adult"
+      course: "episodic_or_chronic"
+      variability: "fluctuates_with_stress"
+      pervasiveness: "context_dependent"  # 특정 상황 악화
+    
+    differential_markers:
+      - "Excessive worry 6+ months (DSM-5-TR)"
+      - "Worry > attention deficit (vs ADHD)"
+      - "Concentration ↓ during anxiety episodes"
+      - "HRV RMSSD typically <25ms"
+    
+    treatment_priority: "address_concurrent"
+    medication_class: "ssri_or_snri"
+
+  # MDD - 주요 우울장애
+  mdd:
+    name_ko: "주요 우울장애"
+    name_en: "Major Depressive Disorder"
+    dsm5_code: "F33"
+    prevalence_adult: 0.083
+    
+    cognitive_signature:
+      sustained_attention:    0.50   # 무기력 인지 위축
+      working_memory:         0.45
+      emotional_regulation:   0.65
+      time_awareness:         0.55   # 시간 왜곡 (slow)
+      self_awareness:         0.60   # rumination
+    
+    clinical_signature:
+      attention:              0.45
+      learning:               0.55
+      peak_performance:       0.55
+      anxiety:                0.50
+      depression:             0.85   # primary
+    
+    temporal_pattern:
+      onset: "any_age"
+      course: "episodic"
+      variability: "2_week_minimum_episode"
+      pervasiveness: "all_setting"
+    
+    differential_markers:
+      - "Anhedonia or low mood 2+ weeks"
+      - "Sleep/appetite/energy changes"
+      - "Rumination (vs ADHD distractibility)"
+      - "Cognitive slowing (vs ADHD inconsistency)"
+    
+    treatment_priority: "address_concurrent"
+    medication_class: "ssri_or_snri"
+
+  # 학습 / 수행 영역 (임상 진단 아니지만 시스템 자체 카테고리)
+  learning_optimization:
+    name_ko: "학습 최적화 영역"
+    name_en: "Learning Optimization"
+    dsm5_code: null
+    prevalence_adult: null
+    
+    cognitive_signature:
+      sustained_attention:    0.30
+      working_memory:         0.45   # 학습 핵심 약점
+      emotional_regulation:   0.20
+      time_awareness:         0.30
+      self_awareness:         0.40
+    
+    clinical_signature:
+      attention:              0.30
+      learning:               0.65   # primary
+      peak_performance:       0.45
+      anxiety:                0.15
+      depression:             0.15
+    
+    temporal_pattern:
+      onset: "any"
+      course: "stable"
+      variability: "depends_on_motivation"
+      pervasiveness: "academic_work"
+    
+    differential_markers:
+      - "Specific to learning context"
+      - "No mood/anxiety primary"
+      - "Goal: cognitive enhancement"
+    
+    treatment_priority: "primary_goal"
+    medication_class: null
+  
+  peak_performance:
+    name_ko: "수행 최적화 영역"
+    name_en: "Peak Performance"
+    dsm5_code: null
+    prevalence_adult: null
+    
+    cognitive_signature:
+      sustained_attention:    0.25
+      working_memory:         0.30
+      emotional_regulation:   0.30   # 수행 불안
+      time_awareness:         0.45   # 시간 관리
+      self_awareness:         0.35
+    
+    clinical_signature:
+      attention:              0.25
+      learning:               0.30
+      peak_performance:       0.70   # primary
+      anxiety:                0.25
+      depression:             0.15
+    
+    temporal_pattern:
+      onset: "any"
+      course: "stable"
+      variability: "context_dependent"
+      pervasiveness: "performance_settings"
+    
+    differential_markers:
+      - "High functioning baseline"
+      - "Goal: exceed current capability"
+      - "Time/energy management focus"
+    
+    treatment_priority: "primary_goal"
+    medication_class: null
+
+# ============================================================
+# Comorbidity Patterns (자주 동반되는 조합)
+# ============================================================
+
+comorbidity_patterns:
+
+  adhd_plus_gad:
+    name_ko: "ADHD + 범불안장애"
+    primary: "adhd_inattentive"
+    secondary: "gad"
+    coverage_rate: 0.30   # 성인 ADHD의 ~30%
+    
+    # 치료 자료
+    treatment_sequence:
+      - "ADHD 1차 (자극제 + 인지 훈련)"
+      - "잔존 불안 → SSRI/SNRI 추가"
+      - "근거: Treating ADHD first prevents worsening"
+    
+    # 인지 자료 결합 (max로 가중)
+    combined_cognitive:
+      sustained_attention:    0.75   # 두 진단 모두 영향
+      working_memory:         0.65
+      emotional_regulation:   0.75   # GAD primary
+      time_awareness:         0.50
+      self_awareness:         0.45
+
+  adhd_plus_mdd:
+    name_ko: "ADHD + 주요 우울"
+    primary: "adhd_inattentive"
+    secondary: "mdd"
+    coverage_rate: 0.30
+    
+    treatment_sequence:
+      - "ADHD 평가 우선 (자주 미인지)"
+      - "ADHD 치료 + 우울 동시 (SSRI 단독 ❌)"
+      - "근거: SSRI 단독은 primary ADHD 못 잡음"
+    
+    combined_cognitive:
+      sustained_attention:    0.75
+      working_memory:         0.60
+      emotional_regulation:   0.65
+      time_awareness:         0.55
+      self_awareness:         0.60
+
+  gad_plus_mdd:
+    name_ko: "범불안 + 우울 (혼합)"
+    primary: "gad"
+    secondary: "mdd"
+    coverage_rate: 0.50   # GAD 환자의 ~50% MDD 공존
+    
+    treatment_sequence:
+      - "심한 자료 우선 (가장 기능 손상)"
+      - "SSRI/SNRI 공통 1차 치료"
+      - "CBT + 행동활성화 결합"
+    
+    combined_cognitive:
+      sustained_attention:    0.50
+      working_memory:         0.55
+      emotional_regulation:   0.80   # 두 진단 핵심
+      time_awareness:         0.45
+      self_awareness:         0.65
+
+# ============================================================
+# 시간 패턴 vs 진단 매핑
+# ============================================================
+
+temporal_signatures:
+
+  childhood_chronic_stable:
+    typical_diagnosis: "adhd_inattentive"
+    notes: "발달적 자료. 어릴 때부터 일관됨."
+  
+  episodic_stress_triggered:
+    typical_diagnosis: "gad"
+    notes: "스트레스 유발. 휴식 시 호전."
+  
+  episodic_2week_minimum:
+    typical_diagnosis: "mdd"
+    notes: "DSM-5-TR MDD criterion. 2주 이상 지속 에피소드."
+  
+  fluctuating_chronic_mixed:
+    typical_diagnosis: "gad_plus_mdd"
+    notes: "혼합형. 만성 불안 위에 우울 에피소드."
+
+# ============================================================
+# Bayesian Prior (각 진단의 베이스라인 확률)
+# ============================================================
+
+# 일반 인구 prevalence (감별 진단 prior)
+population_priors:
+  adhd_inattentive:    0.045
+  gad:                 0.029
+  mdd:                 0.083
+  learning_optimization: 0.300  # 자기 선택 인구
+  peak_performance:    0.200    # 자기 선택 인구
+  
+  # 임상 자기-의뢰 인구는 위와 다름 (할비 베타 환자 자료)
+  # 첫 환자 보면 update 자동

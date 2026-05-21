@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>새 환자 평가 - Decision Catcher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body data-auth>
+
+<header class="header">
+  <h1>🩺 새 환자 평가</h1>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/clinician.html" class="active">새 환자</a>
+    <a href="/outcome.html">Outcome</a>
+    <a href="/manual.html">매뉴얼</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="alert alert-info">
+    <strong>회기 1 워크플로 (75-105분)</strong><br>
+    Step 1: 환자 등록 → Step 2: Entry Protocol 5 측정 → Step 3: 증상 자료 → 
+    Step 4: 시간 정보 인터뷰 (v7 NEW) → Step 5: 환자 목표
+  </div>
+
+  <form id="assessForm">
+
+    <!-- Step 1: 환자 등록 -->
+    <div class="section">
+      <h2>Step 1: 환자 등록</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>환자 ID *</label>
+          <input type="text" name="patient_id" required placeholder="AK001">
+          <div class="form-help">이니셜 + 번호 (예: AK001)</div>
+        </div>
+        <div class="form-group">
+          <label>회기 번호</label>
+          <input type="number" name="n_sessions" value="0" min="0">
+          <div class="form-help">첫 회기 = 0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Fischer 5축 측정 -->
+    <div class="section">
+      <h2>Step 2: Fischer 인지 5축 측정</h2>
+      <p style="color:#5a4a35;margin-bottom:16px;">Entry Protocol 5 측정 결과 → Fischer Level (L7.0-L13.0)</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>지속 주의력 (CPT) *</label>
+          <input type="number" name="cog_sustained_attention" step="0.1" min="7" max="13" required value="9.0">
+        </div>
+        <div class="form-group">
+          <label>작업 기억 (N-back) *</label>
+          <input type="number" name="cog_working_memory" step="0.1" min="7" max="13" required value="9.0">
+        </div>
+        <div class="form-group">
+          <label>정서 조절 (HRV) *</label>
+          <input type="number" name="cog_emotional_regulation" step="0.1" min="7" max="13" required value="9.0">
+        </div>
+        <div class="form-group">
+          <label>시간 감각 *</label>
+          <input type="number" name="cog_time_awareness" step="0.1" min="7" max="13" required value="9.0">
+        </div>
+        <div class="form-group">
+          <label>자기 인지 *</label>
+          <input type="number" name="cog_self_awareness" step="0.1" min="7" max="13" required value="9.0">
+        </div>
+      </div>
+      
+      <h3>바이오마커 (선택)</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>CPT Omissions Z-score</label>
+          <input type="number" name="bio_cpt_omissions_zscore" step="0.1" placeholder="-0.5">
+        </div>
+        <div class="form-group">
+          <label>CPT RT Variability</label>
+          <input type="number" name="bio_cpt_rt_variability" step="0.1" placeholder="0.5">
+        </div>
+        <div class="form-group">
+          <label>HRV RMSSD (ms)</label>
+          <input type="number" name="bio_hrv_rmssd" step="1" placeholder="35">
+        </div>
+        <div class="form-group">
+          <label>N-back 정확도 (0-1)</label>
+          <input type="number" name="bio_nback_accuracy" step="0.01" min="0" max="1" placeholder="0.75">
+        </div>
+        <div class="form-group">
+          <label>시간 추정 오차 %</label>
+          <input type="number" name="bio_time_estimation_error_pct" step="0.1" placeholder="12">
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: 증상 자료 -->
+    <div class="section">
+      <h2>Step 3: 증상 자료 (0.0 - 1.0)</h2>
+      <p style="color:#5a4a35;margin-bottom:16px;"><strong>중요:</strong> 환자가 호소하는 증상 강도. DDE 입력의 핵심 (40% 가중치).</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>부주의 (Inattention)</label>
+          <input type="number" name="sym_inattention" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>분산성 (Distractibility)</label>
+          <input type="number" name="sym_distractibility" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>실행 기능 저하</label>
+          <input type="number" name="sym_executive_dysfunction" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>신체 불안</label>
+          <input type="number" name="sym_anxiety_somatic" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>인지 불안</label>
+          <input type="number" name="sym_anxiety_cognitive" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>기분 저하</label>
+          <input type="number" name="sym_low_mood" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>동기 저하</label>
+          <input type="number" name="sym_low_motivation" step="0.05" min="0" max="1" value="0">
+        </div>
+        <div class="form-group">
+          <label>사회적 위축</label>
+          <input type="number" name="sym_social_withdrawal" step="0.05" min="0" max="1" value="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: 시간 정보 (v7 NEW) -->
+    <div class="section" style="border-color:#C9444F;">
+      <h2 style="color:#C9444F;">Step 4 (v7 NEW): 시간 정보 인터뷰 ⭐</h2>
+      <p style="color:#5a4a35;margin-bottom:16px;">
+        DDE 정확도의 핵심. 8문항 (감별 진단 30% 가중치).
+        모르는 항목은 비워두세요 — 부정확보다 빈 자료가 낫습니다.
+      </p>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>1. 발병 나이</label>
+          <input type="number" name="temp_onset_age" min="0" max="100" placeholder="예: 8">
+          <div class="form-help">"증상이 처음 나타난 나이?" 12세 미만 = ADHD signal</div>
+        </div>
+        <div class="form-group">
+          <label>2. 발병 단계</label>
+          <select name="temp_onset_category">
+            <option value="unknown">모름</option>
+            <option value="childhood">아동기 (&lt;12세)</option>
+            <option value="adolescence">청소년기 (12-18세)</option>
+            <option value="adult">성인기 (18+)</option>
+            <option value="any_age">어느 나이든</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>3. 경과</label>
+          <select name="temp_course">
+            <option value="unknown">모름</option>
+            <option value="chronic">만성 (쭉 지속)</option>
+            <option value="episodic">에피소드 (왔다 갔다)</option>
+            <option value="fluctuating">변동 (강도 차이)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>4. 지속 기간 (개월)</label>
+          <input type="number" name="temp_duration_months" min="0" placeholder="예: 12">
+          <div class="form-help">MDD 0.5+, GAD 6+, ADHD 60+</div>
+        </div>
+        <div class="form-group">
+          <label>5. 광범위성</label>
+          <select name="temp_pervasiveness">
+            <option value="">모름</option>
+            <option value="cross_setting">모든 환경 (ADHD signal)</option>
+            <option value="context_dependent">특정 상황만 (anxiety signal)</option>
+            <option value="all_setting">전반적 (depression)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>6. 스트레스 유발?</label>
+          <select name="temp_stress_triggered">
+            <option value="">모름</option>
+            <option value="true">예 (anxiety/depression signal)</option>
+            <option value="false">아니오 (ADHD signal)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>7. 가족력 (콤마 구분)</label>
+        <input type="text" name="temp_family_history" placeholder="예: father_ADHD, mother_GAD">
+      </div>
+      
+      <div class="form-group">
+        <label>8. 이전 치료 반응 (JSON)</label>
+        <input type="text" name="temp_prior_treatment" placeholder='예: {"SSRI": "no_response", "stimulant": "good_response"}'>
+        <div class="form-help">SSRI 무반응 + stimulant 좋은 반응 = ADHD strong signal</div>
+      </div>
+    </div>
+
+    <!-- Step 5: 환자 목표 -->
+    <div class="section">
+      <h2>Step 5: 환자 목표</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>가장 개선하고 싶은 영역 *</label>
+          <select name="primary_axis" required>
+            <option value="attention">주의력</option>
+            <option value="learning" selected>학습 효율</option>
+            <option value="peak_performance">수행 최적화</option>
+            <option value="anxiety">불안 관리</option>
+            <option value="depression">기분 안정</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>동기 수준 (0.0 - 1.0) *</label>
+          <input type="number" name="motivation" step="0.1" min="0" max="1" value="0.7" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>인식된 장애물</label>
+        <textarea name="barriers" rows="3" placeholder="예: 시간 부족, 가족 협조 어려움"></textarea>
+      </div>
+    </div>
+
+    <div class="section" style="text-align:center;">
+      <button type="submit" class="btn btn-primary" style="font-size:18px;padding:18px 36px;">
+        평가 실행 (DDE + Decomposition + Simulator)
+      </button>
+      <div id="errMsg" class="alert alert-danger" style="display:none;margin-top:16px;"></div>
+      <div id="loading" style="display:none;margin-top:16px;color:#5a4a35;">
+        <strong>처리 중...</strong> CNA v7 자료 분석 중 (보통 2-5초)
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+<footer class="footer">
+  <p>Boston Neuromind LLC · CNA v7.0.0</p>
+</footer>
+
+<script src="/decision.js"></script>
+<script>
+document.getElementById('assessForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const errEl = document.getElementById('errMsg');
+  const loadEl = document.getElementById('loading');
+  
+  errEl.style.display = 'none';
+  loadEl.style.display = 'block';
+  
+  // 자료 정리
+  const cognitive = {
+    sustained_attention: parseFloat(formData.get('cog_sustained_attention')),
+    working_memory: parseFloat(formData.get('cog_working_memory')),
+    emotional_regulation: parseFloat(formData.get('cog_emotional_regulation')),
+    time_awareness: parseFloat(formData.get('cog_time_awareness')),
+    self_awareness: parseFloat(formData.get('cog_self_awareness')),
+  };
+  
+  const biomarkers = {};
+  ['cpt_omissions_zscore', 'cpt_rt_variability', 'hrv_rmssd', 'nback_accuracy', 'time_estimation_error_pct'].forEach(k => {
+    const v = formData.get('bio_' + k);
+    if (v) biomarkers[k] = parseFloat(v);
+  });
+  
+  const symptoms = {};
+  ['inattention', 'distractibility', 'executive_dysfunction', 'anxiety_somatic',
+   'anxiety_cognitive', 'low_mood', 'low_motivation', 'social_withdrawal'].forEach(k => {
+    const v = parseFloat(formData.get('sym_' + k));
+    if (v > 0) symptoms[k] = v;
+  });
+  
+  // 시간 정보 자료
+  const tempStress = formData.get('temp_stress_triggered');
+  const tempFamily = formData.get('temp_family_history');
+  let tempTreatment = null;
+  try {
+    const raw = formData.get('temp_prior_treatment');
+    if (raw) tempTreatment = JSON.parse(raw);
+  } catch (e) {
+    errEl.textContent = '이전 치료 반응 JSON 형식 catch 안 됨: ' + e.message;
+    errEl.style.display = 'block';
+    loadEl.style.display = 'none';
+    return;
+  }
+  
+  const temporal = {
+    onset_age: formData.get('temp_onset_age') ? parseInt(formData.get('temp_onset_age')) : null,
+    onset_category: formData.get('temp_onset_category') || 'unknown',
+    course: formData.get('temp_course') || 'unknown',
+    duration_months: formData.get('temp_duration_months') ? parseInt(formData.get('temp_duration_months')) : null,
+    pervasiveness: formData.get('temp_pervasiveness') || null,
+    stress_triggered: tempStress === 'true' ? true : (tempStress === 'false' ? false : null),
+    family_history: tempFamily ? tempFamily.split(',').map(s => s.trim()).filter(s => s) : [],
+    prior_treatment_response: tempTreatment || {},
+  };
+  
+  const requestBody = {
+    patient_id: formData.get('patient_id'),
+    cognitive_levels: cognitive,
+    symptom_vector: symptoms,
+    biomarkers: biomarkers,
+    biomarker_variance: {},
+    primary_clinical_axis: formData.get('primary_axis'),
+    motivation: parseFloat(formData.get('motivation')),
+    barriers: formData.get('barriers') ? [formData.get('barriers')] : [],
+    n_sessions: parseInt(formData.get('n_sessions')),
+    temporal_history: temporal,
+  };
+  
+  // State 자료 저장
+  State.save('assessment_input', requestBody);
+  
+  try {
+    const result = await callAPI('/full-cycle', 'POST', requestBody);
+    State.save('assessment_result', result);
+    window.location.href = '/result.html';
+  } catch (err) {
+    errEl.textContent = 'API 오류: ' + err.message;
+    errEl.style.display = 'block';
+    loadEl.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>

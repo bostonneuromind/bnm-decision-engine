@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "name": "decision-neurocatchers",
+  "builds": [
+    {
+      "src": "api/cna.py",
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": "api/**"
+      }
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/cna.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "env": {
+    "PYTHONPATH": "api"
+  }
+}

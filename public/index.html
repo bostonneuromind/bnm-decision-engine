@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Decision Catcher - CNA v7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="header">
+  <h1>🩺 Decision Catcher</h1>
+  <nav class="nav">
+    <a href="/" class="active">Home</a>
+    <a href="/clinician.html">새 환자</a>
+    <a href="/outcome.html">4주 Outcome</a>
+    <a href="/manual.html">매뉴얼</a>
+    <a href="/beta-guide.html">베타 가이드</a>
+    <a href="https://neurocatchers.com/admin.html">← Admin</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="badge">CNA v7.0 · Round 7-10 통합</div>
+    <h1>Decision Catcher</h1>
+    <p class="subtitle">감별 진단 + 공존 진단 + 적응적 훈련</p>
+    <p style="color:#5a4a35;margin-bottom:32px;">Boston Neuromind LLC · Catcher Navigator Algorithm</p>
+    <a href="/clinician.html" class="btn btn-primary">새 환자 평가 시작</a>
+    &nbsp;
+    <a href="/manual.html" class="btn btn-secondary">매뉴얼 자료</a>
+  </div>
+
+  <div class="section">
+    <h2>왜 이 시스템인가</h2>
+    <p>
+      기존 5축 매핑 시스템 (CNA v6)에 <strong style="color:#C9444F;">감별 진단 + 공존 진단 자료</strong>를 추가했습니다.
+      한 환자의 임상 점수 안에서 ADHD, GAD, MDD가 각각 얼마나 기여하는지 분해하고,
+      그에 맞는 훈련 카드를 적응적으로 제공합니다.
+    </p>
+    <p style="margin-top:12px;">
+      <strong>핵심 원리:</strong> 같은 "주의력 0.39" 점수도, ADHD가 primary인 경우와 GAD가 primary인 경우의
+      치료 전략이 완전히 다릅니다. 미인지 ADHD에 SSRI 단독 처방은 효과 없음
+      (McIntosh et al. 2009). 진단 정확도가 치료 효과의 기반입니다.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>v7 추가 모듈 (Round 7-10)</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>① Differential Diagnosis Engine</h3>
+        <p>증상 호소 + 인지 5축 + 바이오마커 + 시간 정보 → Bayesian 감별 진단</p>
+        <p><small>DSM-5-TR canonical pattern matching</small></p>
+      </div>
+      <div class="feature-card">
+        <h3>② Comorbidity Decomposition</h3>
+        <p>임상 점수를 진단 source별로 분해 (예: Attention 0.39 = ADHD 0.25 + GAD 0.10 + MDD 0.04)</p>
+      </div>
+      <div class="feature-card">
+        <h3>③ Cognitive Simulator</h3>
+        <p>"이 인지축을 박으면 임상축이 어떻게 변할까?" Counterfactual 시뮬레이션</p>
+      </div>
+      <div class="feature-card">
+        <h3>④ Adaptive Re-routing</h3>
+        <p>4주 outcome → 예상 반응 패턴 비교 → 불일치 시 진단 자동 재구성</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5축 임상 영역</h2>
+    <ul style="list-style:none;padding-left:0;">
+      <li style="padding:8px 0;border-bottom:1px solid #eee;"><strong>주의력</strong> (Attention) — CPT, ASRS</li>
+      <li style="padding:8px 0;border-bottom:1px solid #eee;"><strong>학습 효율</strong> (Learning) — N-back, retention</li>
+      <li style="padding:8px 0;border-bottom:1px solid #eee;"><strong>수행 최적화</strong> (Peak Performance) — 시간 추정, HRV</li>
+      <li style="padding:8px 0;border-bottom:1px solid #eee;"><strong>불안 관리</strong> (Anxiety) — HRV, GAD-7</li>
+      <li style="padding:8px 0;"><strong>기분 안정</strong> (Depression) — PHQ-9, BA count</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>임상 근거</h2>
+    <table class="table">
+      <thead>
+        <tr><th>매핑 / 알고리즘</th><th>임상 근거</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Working Memory → Learning (r=0.43)</td><td>Meta-analysis, n=7947</td></tr>
+        <tr><td>Emotional Intelligence → Academic (r=0.39)</td><td>EI-AP meta-analysis 2023</td></tr>
+        <tr><td>Emotion Regulation 효과 (d=0.605)</td><td>Aldao et al. 2010</td></tr>
+        <tr><td>Active Inference 임상 적용</td><td>Friston 2010-2025</td></tr>
+        <tr><td>성인 ADHD 공존률 50-80%</td><td>Frontiers 2025</td></tr>
+        <tr><td>감별의 핵심 = temporal pattern</td><td>Multiple</td></tr>
+        <tr><td>미인지 ADHD에 SSRI 단독 = 실패</td><td>McIntosh et al. 2009</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>다음 단계</h2>
+    <ol style="padding-left:24px;">
+      <li style="margin:8px 0;"><strong>새 환자 평가</strong> — Entry Protocol 5 + 증상 + 시간 정보 + 환자 목표</li>
+      <li style="margin:8px 0;"><strong>임상 리포트 검토</strong> — 5축 점수 + DDE + Decomposition + Simulator</li>
+      <li style="margin:8px 0;"><strong>훈련 프로토콜 운영</strong> — 4-8주, 시스템 추천 + 임상가 override</li>
+      <li style="margin:8px 0;"><strong>4주 outcome 입력</strong> — Adaptive Re-routing 자동 실행</li>
+    </ol>
+    <a href="/clinician.html" class="btn btn-primary" style="margin-top:16px;">시작하기</a>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>Boston Neuromind LLC · CNA v7.0.0 · 2026</p>
+  <p>Alex Kwon (BCN, PhD) · <a href="mailto:bostonneuromind@gmail.com" style="color:#C9444F;">bostonneuromind@gmail.com</a></p>
+</footer>
+
+<script src="/decision.js"></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>평가 결과 - Decision Catcher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body data-auth>
+
+<header class="header">
+  <h1>🩺 평가 결과</h1>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/clinician.html">새 환자</a>
+    <a href="/protocol.html">프로토콜</a>
+    <a href="/outcome.html">Outcome</a>
+    <a href="/manual.html">매뉴얼</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div id="noData" class="alert alert-warning" style="display:none;">
+    평가 자료 ❌. <a href="/clinician.html">새 환자 평가</a>를 시작하세요.
+  </div>
+
+  <div id="resultsRoot"></div>
+
+  <div class="section no-print">
+    <h2>다음 단계</h2>
+    <a href="/protocol.html" class="btn btn-primary">프로토콜 자료 + 시뮬레이션 자료</a>
+    &nbsp;
+    <button onclick="window.print()" class="btn btn-secondary">PDF 저장</button>
+    &nbsp;
+    <a href="/clinician.html" class="btn btn-secondary">새 환자</a>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>Boston Neuromind LLC · CNA v7.0.0</p>
+</footer>
+
+<script src="/decision.js"></script>
+<script>
+const result = State.load('assessment_result');
+const input = State.load('assessment_input');
+
+if (!result) {
+  document.getElementById('noData').style.display = 'block';
+} else {
+  renderResults(result, input);
+}
+
+function renderResults(r, input) {
+  const root = document.getElementById('resultsRoot');
+  const a = r.assessment;
+  const d = r.decision;
+  const sim = r.protocol_simulation;
+  
+  let html = '';
+  
+  // Header info
+  html += `
+    <div class="section">
+      <h2>환자 ${a.clinical_report.patient_id} — ${new Date().toLocaleString('ko-KR')}</h2>
+      <p><strong>환자 선택 영역:</strong> ${clinicalAxisKo(input.primary_clinical_axis)} | 
+         <strong>동기:</strong> ${input.motivation.toFixed(1)} | 
+         <strong>회기:</strong> ${input.n_sessions}</p>
+    </div>
+  `;
+  
+  // Safety alerts (있으면 최상단)
+  if (a.safety_flags && a.safety_flags.length > 0) {
+    html += `<div class="section" style="border-color:#C9444F;border-width:3px;">
+      <h2 style="color:#C9444F;">⚠️ 안전 자료 catch — ${a.safety_flags.length}개</h2>`;
+    a.safety_flags.forEach(f => {
+      html += `<div class="alert alert-danger">
+        <strong>${f.flag_type}</strong> (severity: ${f.severity})<br>
+        Triggered by: ${f.triggered_by}<br>
+        조치: ${f.immediate_action}
+      </div>`;
+    });
+    if (a.imminent_safety) {
+      html += `<p style="font-weight:700;color:#C9444F;">⚠️ Imminent 자료 — 회기 중단 + 응급 조치 필요</p>`;
+    }
+    html += `</div>`;
+  }
+  
+  // 1. Fischer 5축
+  html += `<div class="section">
+    <h2>① Fischer 인지 5축</h2>`;
+  const cog = input.cognitive_levels;
+  Object.keys(cog).forEach(axis => {
+    const level = cog[axis];
+    const pct = ((level - 7) / 6) * 100;
+    html += `
+      <div style="margin:12px 0;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <strong>${cognitiveAxisKo(axis)}</strong>
+          <span>L${level.toFixed(1)}</span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:${pct}%;">${pct.toFixed(0)}%</div></div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  
+  // 2. 임상 5축 예측표
+  html += `<div class="section">
+    <h2>② 임상 5축 예측표</h2>
+    <table class="table">
+      <thead><tr><th>영역</th><th>점수</th><th>단계</th><th>우선</th><th>주요 기여 인지축</th></tr></thead>
+      <tbody>`;
+  const axesList = Object.entries(a.clinical_report.axes).sort((x, y) => x[1].priority - y[1].priority);
+  axesList.forEach(([axis, data]) => {
+    const tier = scoreTier(data.score);
+    const topCog = Object.entries(data.contributing_cognitive || {}).sort((x, y) => Math.abs(y[1]) - Math.abs(x[1]))[0];
+    const topCogStr = topCog ? `${cognitiveAxisKo(topCog[0])} (${topCog[1] >= 0 ? '+' : ''}${topCog[1].toFixed(2)})` : '-';
+    html += `<tr>
+      <td><strong>${clinicalAxisKo(axis)}</strong></td>
+      <td>${data.score.toFixed(2)}</td>
+      <td><span class="score-badge ${tier.class}">${tier.name}</span></td>
+      <td>#${data.priority}</td>
+      <td>${topCogStr}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>`;
+  
+  // 3. DDE 결과
+  const dde = a.differential_diagnosis;
+  html += `<div class="section" style="border-color:#C9444F;">
+    <h2 style="color:#C9444F;">③ Differential Diagnosis Engine (v7)</h2>
+    <p><strong>Primary:</strong> <span class="brand-color">${diagnosisKo(dde.primary_diagnosis || 'unknown')}</span></p>
+    <p><strong>Secondary:</strong> ${dde.secondary_diagnoses.map(diagnosisKo).join(', ') || '없음'}</p>
+    <p><strong>Comorbidity pattern:</strong> ${dde.comorbidity_pattern || '단일 진단'}
+       ${dde.comorbidity_pattern ? `(공존률 ${(dde.comorbidity_coverage * 100).toFixed(0)}%)` : ''}</p>
+    <p><strong>Confidence:</strong> ${(dde.diagnostic_confidence * 100).toFixed(0)}%</p>
+    <p><strong>치료 자료:</strong> ${dde.treatment_rationale}</p>`;
+  
+  if (dde.flagged_for_review) {
+    html += `<div class="alert alert-warning"><strong>⚠ 임상가 검토 자료:</strong><ul style="margin-left:20px;">`;
+    dde.review_reasons.forEach(r => html += `<li>${r}</li>`);
+    html += `</ul></div>`;
+  }
+  
+  html += `<h3>진단 가설 분포</h3>`;
+  dde.hypotheses.forEach(h => {
+    const cls = h.is_primary ? 'primary' : (h.is_comorbid ? 'secondary' : '');
+    html += `
+      <div class="dx-card ${cls}">
+        <div class="dx-header">
+          <div>
+            <span class="dx-name">${h.is_primary ? '★ Primary: ' : (h.is_comorbid ? '• Secondary: ' : '  ')}${h.name_ko}</span>
+          </div>
+          <div class="dx-posterior">${(h.posterior_probability * 100).toFixed(0)}%</div>
+        </div>
+        <div class="dx-matches">
+          <div class="dx-match-item">
+            <div class="dx-match-label">증상 매칭 (40%)</div>
+            <div class="dx-match-value">${(h.symptom_match * 100).toFixed(0)}%</div>
+          </div>
+          <div class="dx-match-item">
+            <div class="dx-match-label">인지 매칭 (20%)</div>
+            <div class="dx-match-value">${(h.cognitive_match * 100).toFixed(0)}%</div>
+          </div>
+          <div class="dx-match-item">
+            <div class="dx-match-label">바이오마커 (10%)</div>
+            <div class="dx-match-value">${(h.biomarker_match * 100).toFixed(0)}%</div>
+          </div>
+          <div class="dx-match-item">
+            <div class="dx-match-label">시간 정보 (30%)</div>
+            <div class="dx-match-value">${(h.temporal_match * 100).toFixed(0)}%</div>
+          </div>
+        </div>
+        ${h.differential_markers_met.length > 0 ? 
+          `<p style="margin-top:12px;color:#155724;font-size:13px;">✓ 충족: ${h.differential_markers_met.join(', ')}</p>` : ''}
+        ${h.differential_markers_missed.length > 0 && h.is_primary ? 
+          `<p style="color:#721c24;font-size:13px;">✗ 미충족: ${h.differential_markers_missed.join(', ')}</p>` : ''}
+      </div>
+    `;
+  });
+  html += `</div>`;
+  
+  // 4. Comorbidity Decomposition
+  const decomp = a.comorbidity_profile;
+  html += `<div class="section">
+    <h2>④ Comorbidity Decomposition (v7)</h2>
+    <p><strong>Primary source:</strong> ${diagnosisKo(decomp.primary_source)} | 
+       <strong>Secondary:</strong> ${decomp.secondary_sources.map(diagnosisKo).join(', ') || '없음'}</p>
+    
+    <h3>임상 5축 source 분해</h3>`;
+  
+  Object.entries(decomp.decomposed_axes).forEach(([axis, data]) => {
+    if (data.sources.length === 0) return;
+    html += `
+      <div style="background:#f0eee9;border-radius:12px;padding:16px;margin:12px 0;">
+        <div style="display:flex;justify-content:space-between;">
+          <strong>▶ ${data.clinical_axis_ko}</strong>
+          <span>점수 ${data.total_score.toFixed(2)} (약화 ${data.total_impairment.toFixed(2)}, 설명력 ${(data.sources_explanation * 100).toFixed(0)}%)</span>
+        </div>
+        <table class="table" style="margin-top:12px;">
+          <tbody>`;
+    data.sources.forEach(s => {
+      const marker = s.primary_pathway ? '★' : '•';
+      html += `<tr>
+        <td>${marker} ${diagnosisKo(s.source_id)}</td>
+        <td>기여 ${s.contribution.toFixed(3)}</td>
+        <td>posterior ${(s.posterior_prob * 100).toFixed(0)}%</td>
+      </tr>`;
+    });
+    html += `</tbody></table>
+        <p style="margin-top:8px;font-size:13px;color:#5a4a35;">치료 target: <strong>${data.treatment_target}</strong> | 잔차: ${data.residual.toFixed(3)}</p>
+      </div>`;
+  });
+  
+  html += `<h3>개입 우선순위</h3><ol style="padding-left:24px;">`;
+  decomp.intervention_priority.forEach(p => {
+    html += `<li><strong>${diagnosisKo(p.source)}</strong> → 주 영향: ${clinicalAxisKo(p.target_clinical_axis)}<br>
+              <small style="color:#5a4a35;">${p.rationale}</small></li>`;
+  });
+  html += `</ol></div>`;
+  
+  // 5. Intervention Ranking (Simulator)
+  const rank = a.intervention_ranking;
+  html += `<div class="section">
+    <h2>⑤ 개입 우선순위 — Counterfactual Simulator (v7)</h2>
+    <p style="color:#5a4a35;">${rank.rationale}</p>
+    <table class="table">
+      <thead><tr><th>순위</th><th>인지축</th><th>Level 변경</th><th>전체 임상 개선</th><th>주 효과</th></tr></thead>
+      <tbody>`;
+  rank.ranked_interventions.forEach(r => {
+    html += `<tr>
+      <td>#${r.rank}</td>
+      <td>${r.axis_ko}</td>
+      <td>L${r.current_level.toFixed(1)} → L${r.target_level.toFixed(1)}</td>
+      <td>${r.expected_total_improvement >= 0 ? '+' : ''}${r.expected_total_improvement.toFixed(3)}</td>
+      <td>${clinicalAxisKo(r.primary_beneficiary)}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>`;
+  
+  // 6. Target Levels
+  const targets = a.target_levels;
+  if (targets && targets.status === 'computed') {
+    html += `<div class="section">
+      <h2>⑥ 목표 Level 자동 추천 (${clinicalAxisKo(targets.target_clinical_axis)} 점수 ≥ ${targets.target_score})</h2>
+      <p style="color:#5a4a35;">현재 점수: ${targets.current_score.toFixed(2)} → 목표: ${targets.target_score.toFixed(2)}</p>
+      <table class="table">
+        <thead><tr><th>인지축</th><th>현재 Level</th><th>필요 Level</th><th>증가량</th><th>달성 가능성</th></tr></thead>
+        <tbody>`;
+    Object.entries(targets.per_axis_recommendations).forEach(([axis, rec]) => {
+      html += `<tr>
+        <td>${rec.axis_ko}</td>
+        <td>L${rec.current_level.toFixed(1)}</td>
+        <td>${rec.target_level ? 'L' + rec.target_level.toFixed(1) : '단독 불가'}</td>
+        <td>${rec.delta_needed ? '+' + rec.delta_needed.toFixed(1) : '-'}</td>
+        <td>${rec.feasibility === 'feasible' ? '✓ 가능' : `✗ 단독 불가 (최대 ${rec.max_achievable_score.toFixed(2)})`}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  }
+  
+  // 7. 시스템 추천 카드
+  html += `<div class="section">
+    <h2>⑦ 시스템 추천 (Free Energy 자료)</h2>
+    ${d.emergency_phase_active ? '<div class="alert alert-warning">⚠ Emergency phase 활성 — Pragmatic 우선 자료</div>' : ''}
+    ${d.diagnosis_aligned ? '<div class="alert alert-success">✓ 진단 자료 카드 우선 자료</div>' : ''}
+    <table class="table">
+      <thead><tr><th>순위</th><th>카드 ID</th><th>점수</th><th>설명</th></tr></thead>
+      <tbody>`;
+  d.candidate_cards.slice(0, 3).forEach((sc, i) => {
+    html += `<tr>
+      <td>#${i + 1}</td>
+      <td>${sc.card.id}</td>
+      <td>${sc.score >= 0 ? '+' : ''}${sc.score.toFixed(4)}</td>
+      <td>${sc.card.text_ko || sc.card.text_en || ''}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>`;
+  
+  // 8. 프로토콜 미리보기
+  if (r.protocol_preview) {
+    const p = r.protocol_preview;
+    html += `<div class="section">
+      <h2>⑧ 프로토콜 미리보기 (${p.target_duration_weeks}주, 총 ${p.sessions.length}회기)</h2>
+      <p><strong>영역:</strong> ${clinicalAxisKo(p.selected_axis)} | 
+         <strong>진행:</strong> ${p.weekly_progression}</p>
+    </div>`;
+  }
+  
+  // 9. 프로토콜 시뮬레이션
+  if (sim) {
+    html += `<div class="section">
+      <h2>⑨ 프로토콜 효과 시뮬레이션 (${sim.weeks}주, uncertainty ${(sim.uncertainty * 100).toFixed(0)}%)</h2>
+      <h3>예상 인지 자료 변화</h3>
+      <table class="table"><thead><tr><th>인지축</th><th>현재</th><th>예상</th><th>변화</th></tr></thead><tbody>`;
+    Object.keys(sim.starting_cognitive).forEach(axis => {
+      const before = sim.starting_cognitive[axis];
+      const after = sim.projected_cognitive[axis];
+      const delta = sim.cognitive_deltas[axis];
+      if (Math.abs(delta) > 0.01) {
+        html += `<tr>
+          <td>${cognitiveAxisKo(axis)}</td>
+          <td>L${before.toFixed(1)}</td>
+          <td>L${after.toFixed(1)}</td>
+          <td>${delta >= 0 ? '+' : ''}${delta.toFixed(2)}</td>
+        </tr>`;
+      }
+    });
+    html += `</tbody></table>
+      <h3>예상 임상 자료 변화</h3>
+      <table class="table"><thead><tr><th>임상축</th><th>현재</th><th>예상</th><th>변화</th></tr></thead><tbody>`;
+    Object.keys(sim.starting_clinical).forEach(axis => {
+      const before = sim.starting_clinical[axis];
+      const after = sim.projected_clinical[axis];
+      const delta = sim.clinical_deltas[axis];
+      html += `<tr>
+        <td>${clinicalAxisKo(axis)}</td>
+        <td>${before.toFixed(2)}</td>
+        <td>${after.toFixed(2)}</td>
+        <td>${delta >= 0 ? '+' : ''}${delta.toFixed(3)}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>
+      <details style="margin-top:16px;">
+        <summary style="cursor:pointer;color:#5a4a35;">시뮬레이션 가정 자료</summary>
+        <ul style="margin-top:8px;padding-left:24px;color:#5a4a35;">`;
+    sim.assumptions.forEach(a => html += `<li>${a}</li>`);
+    html += `</ul></details></div>`;
+  }
+  
+  root.innerHTML = html;
+}
+</script>
+</body>
+</html>

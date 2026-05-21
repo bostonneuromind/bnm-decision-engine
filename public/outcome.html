@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>4주 Outcome - Decision Catcher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body data-auth>
+
+<header class="header">
+  <h1>🩺 4주 Outcome + Re-routing</h1>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/clinician.html">새 환자</a>
+    <a href="/result.html">평가 결과</a>
+    <a href="/protocol.html">프로토콜</a>
+    <a href="/manual.html">매뉴얼</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="alert alert-info">
+    <strong>4주 회기 종료 후</strong> Outcome 입력 → Adaptive Re-routing 자동 실행 (v7)
+  </div>
+
+  <div id="rerouteResult" style="display:none;"></div>
+
+  <form id="outcomeForm">
+    
+    <div class="section">
+      <h2>회기 자료</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>환자 ID *</label>
+          <input type="text" name="patient_id" required placeholder="AK001">
+        </div>
+        <div class="form-group">
+          <label>Episode ID *</label>
+          <input type="text" name="episode_id" required placeholder="EP_xxx">
+          <div class="form-help">이전 평가에서 받은 자료</div>
+        </div>
+        <div class="form-group">
+          <label>Primary 개입 영역 *</label>
+          <select name="primary_intervention_axis" required>
+            <option value="attention">주의력</option>
+            <option value="learning">학습 효율</option>
+            <option value="peak_performance">수행 최적화</option>
+            <option value="anxiety">불안 관리</option>
+            <option value="depression">기분 안정</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>적용한 카드 IDs (콤마)</label>
+          <input type="text" name="intervention_cards" placeholder="att-001, att-003">
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>이전 자료 (Before)</h2>
+      <h3>인지 5축</h3>
+      <div class="form-row">
+        <div class="form-group"><label>지속 주의력</label><input type="number" name="cog_before_sustained_attention" step="0.1" min="7" max="13" value="9.0"></div>
+        <div class="form-group"><label>작업 기억</label><input type="number" name="cog_before_working_memory" step="0.1" min="7" max="13" value="9.0"></div>
+        <div class="form-group"><label>정서 조절</label><input type="number" name="cog_before_emotional_regulation" step="0.1" min="7" max="13" value="9.0"></div>
+        <div class="form-group"><label>시간 감각</label><input type="number" name="cog_before_time_awareness" step="0.1" min="7" max="13" value="9.0"></div>
+        <div class="form-group"><label>자기 인지</label><input type="number" name="cog_before_self_awareness" step="0.1" min="7" max="13" value="9.0"></div>
+      </div>
+      <h3>임상 5축 점수</h3>
+      <div class="form-row">
+        <div class="form-group"><label>주의력</label><input type="number" name="clin_before_attention" step="0.01" min="0" max="1" value="0.5"></div>
+        <div class="form-group"><label>학습 효율</label><input type="number" name="clin_before_learning" step="0.01" min="0" max="1" value="0.5"></div>
+        <div class="form-group"><label>수행 최적화</label><input type="number" name="clin_before_peak_performance" step="0.01" min="0" max="1" value="0.5"></div>
+        <div class="form-group"><label>불안 관리</label><input type="number" name="clin_before_anxiety" step="0.01" min="0" max="1" value="0.5"></div>
+        <div class="form-group"><label>기분 안정</label><input type="number" name="clin_before_depression" step="0.01" min="0" max="1" value="0.5"></div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>4주 후 자료 (After)</h2>
+      <h3>인지 5축</h3>
+      <div class="form-row">
+        <div class="form-group"><label>지속 주의력</label><input type="number" name="cog_after_sustained_attention" step="0.1" min="7" max="13" value="9.2"></div>
+        <div class="form-group"><label>작업 기억</label><input type="number" name="cog_after_working_memory" step="0.1" min="7" max="13" value="9.2"></div>
+        <div class="form-group"><label>정서 조절</label><input type="number" name="cog_after_emotional_regulation" step="0.1" min="7" max="13" value="9.0"></div>
+        <div class="form-group"><label>시간 감각</label><input type="number" name="cog_after_time_awareness" step="0.1" min="7" max="13" value="9.0"></div>
+        <div class="form-group"><label>자기 인지</label><input type="number" name="cog_after_self_awareness" step="0.1" min="7" max="13" value="9.0"></div>
+      </div>
+      <h3>임상 5축 점수</h3>
+      <div class="form-row">
+        <div class="form-group"><label>주의력</label><input type="number" name="clin_after_attention" step="0.01" min="0" max="1" value="0.6"></div>
+        <div class="form-group"><label>학습 효율</label><input type="number" name="clin_after_learning" step="0.01" min="0" max="1" value="0.55"></div>
+        <div class="form-group"><label>수행 최적화</label><input type="number" name="clin_after_peak_performance" step="0.01" min="0" max="1" value="0.55"></div>
+        <div class="form-group"><label>불안 관리</label><input type="number" name="clin_after_anxiety" step="0.01" min="0" max="1" value="0.55"></div>
+        <div class="form-group"><label>기분 안정</label><input type="number" name="clin_after_depression" step="0.01" min="0" max="1" value="0.5"></div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>이전 진단 자료 (필수)</h2>
+      <div class="form-group">
+        <label>이전 평가의 Differential Diagnosis 결과 (JSON)</label>
+        <textarea name="previous_diagnosis" rows="6" placeholder='{"primary_diagnosis": "adhd_inattentive", "secondary_diagnoses": ["gad"], ...}'></textarea>
+        <div class="form-help">이전 평가 페이지의 DDE 결과를 그대로 복사하세요 (sessionStorage에 자동 저장됨)</div>
+      </div>
+      <button type="button" class="btn btn-secondary" id="loadPrevBtn">이전 평가 자료 자동 자료</button>
+    </div>
+    
+    <div class="section" style="text-align:center;">
+      <button type="submit" class="btn btn-primary" style="font-size:18px;padding:18px 36px;">
+        Re-routing 실행
+      </button>
+      <div id="errMsg" class="alert alert-danger" style="display:none;margin-top:16px;"></div>
+      <div id="loading" style="display:none;margin-top:16px;color:#5a4a35;">
+        <strong>처리 중...</strong>
+      </div>
+    </div>
+    
+  </form>
+
+</div>
+
+<footer class="footer">
+  <p>Boston Neuromind LLC · CNA v7.0.0</p>
+</footer>
+
+<script src="/decision.js"></script>
+<script>
+// 이전 자료 자동 자료
+document.getElementById('loadPrevBtn').addEventListener('click', () => {
+  const prev = State.load('assessment_result');
+  if (prev && prev.assessment && prev.assessment.differential_diagnosis) {
+    const form = document.getElementById('outcomeForm');
+    form.querySelector('[name=previous_diagnosis]').value = JSON.stringify(prev.assessment.differential_diagnosis, null, 2);
+    
+    const input = State.load('assessment_input');
+    if (input) {
+      form.querySelector('[name=patient_id]').value = input.patient_id;
+      Object.keys(input.cognitive_levels).forEach(k => {
+        const el = form.querySelector(`[name=cog_before_${k}]`);
+        if (el) el.value = input.cognitive_levels[k];
+      });
+      Object.entries(prev.assessment.clinical_report.axes).forEach(([k, v]) => {
+        const el = form.querySelector(`[name=clin_before_${k}]`);
+        if (el) el.value = v.score.toFixed(2);
+      });
+      form.querySelector('[name=primary_intervention_axis]').value = input.primary_clinical_axis;
+    }
+  } else {
+    alert('이전 평가 자료 ❌');
+  }
+});
+
+document.getElementById('outcomeForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const fd = new FormData(form);
+  const errEl = document.getElementById('errMsg');
+  const loadEl = document.getElementById('loading');
+  
+  errEl.style.display = 'none';
+  loadEl.style.display = 'block';
+  
+  let prevDx;
+  try {
+    prevDx = JSON.parse(fd.get('previous_diagnosis'));
+  } catch (err) {
+    errEl.textContent = '이전 진단 JSON 형식 catch ❌: ' + err.message;
+    errEl.style.display = 'block';
+    loadEl.style.display = 'none';
+    return;
+  }
+  
+  const cogAxes = ['sustained_attention', 'working_memory', 'emotional_regulation', 'time_awareness', 'self_awareness'];
+  const clinAxes = ['attention', 'learning', 'peak_performance', 'anxiety', 'depression'];
+  
+  const cogBefore = {};
+  const cogAfter = {};
+  cogAxes.forEach(a => {
+    cogBefore[a] = parseFloat(fd.get('cog_before_' + a));
+    cogAfter[a] = parseFloat(fd.get('cog_after_' + a));
+  });
+  
+  const clinBefore = {};
+  const clinAfter = {};
+  clinAxes.forEach(a => {
+    clinBefore[a] = parseFloat(fd.get('clin_before_' + a));
+    clinAfter[a] = parseFloat(fd.get('clin_after_' + a));
+  });
+  
+  const body = {
+    patient_id: fd.get('patient_id'),
+    episode_id: fd.get('episode_id'),
+    previous_diagnosis: prevDx,
+    primary_intervention_axis: fd.get('primary_intervention_axis'),
+    intervention_cards: fd.get('intervention_cards').split(',').map(s => s.trim()).filter(s => s),
+    cognitive_before: cogBefore,
+    cognitive_after: cogAfter,
+    clinical_before: clinBefore,
+    clinical_after: clinAfter,
+  };
+  
+  try {
+    const result = await callAPI('/reroute', 'POST', body);
+    renderRerouteResult(result);
+    document.getElementById('outcomeForm').style.display = 'none';
+  } catch (err) {
+    errEl.textContent = 'API 오류: ' + err.message;
+    errEl.style.display = 'block';
+  }
+  loadEl.style.display = 'none';
+});
+
+function renderRerouteResult(r) {
+  const root = document.getElementById('rerouteResult');
+  root.style.display = 'block';
+  
+  const changeColors = {
+    'no_change': '#6B9B5C',
+    'secondary_added': '#E8A317',
+    'primary_swap': '#C9444F',
+    'diagnosis_dropped': '#5a4a35',
+  };
+  
+  let html = `
+    <div class="section" style="border-color:${changeColors[r.change_type] || '#1a1a1a'};border-width:3px;">
+      <h2 style="color:${changeColors[r.change_type]};">진단 재구성 결과</h2>
+      
+      <div style="background:#f0eee9;border-radius:12px;padding:20px;margin:16px 0;">
+        <h3>이전 → 갱신</h3>
+        <p><strong>Primary:</strong> ${diagnosisKo(r.previous_primary)} → <span class="brand-color"><strong>${diagnosisKo(r.updated_primary)}</strong></span></p>
+        <p><strong>Secondary:</strong> ${r.previous_secondary.map(diagnosisKo).join(', ') || '없음'} → ${r.updated_secondary.map(diagnosisKo).join(', ') || '없음'}</p>
+      </div>
+      
+      <table class="table">
+        <tbody>
+          <tr><td><strong>변경 여부</strong></td><td>${r.diagnosis_changed ? '예' : '아니오'}</td></tr>
+          <tr><td><strong>변경 유형</strong></td><td>${r.change_type}</td></tr>
+          <tr><td><strong>반응 패턴</strong></td><td>${r.treatment_response_pattern}</td></tr>
+          <tr><td><strong>Posterior 변화 magnitude</strong></td><td>${r.posterior_update_magnitude.toFixed(3)}</td></tr>
+        </tbody>
+      </table>
+      
+      <div class="alert ${r.flagged_for_review ? 'alert-warning' : 'alert-success'}">
+        <strong>임상가 자료:</strong> ${r.rationale_ko}
+        ${r.flagged_for_review ? '<br><br>⚠ 임상가 검토 필요' : ''}
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>다음 단계</h2>
+      ${r.diagnosis_changed ? 
+        `<p>진단이 변경되었습니다. <a href="/clinician.html" class="btn btn-primary">새 진단으로 평가 재실행</a></p>` :
+        `<p>진단 유지. 현재 프로토콜 계속 또는 새 프로토콜 자료.</p><a href="/protocol.html" class="btn btn-secondary">프로토콜 자료</a>`
+      }
+    </div>
+  `;
+  
+  root.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+# ============================================================
+# Free Energy 6-Component Weights Configuration
+# ============================================================
+# Active Inference framework (Friston):
+#   G = Complexity − Accuracy − Preference − Epistemic − Pragmatic
+#   추천 카드 = argmin G  (= argmax -G)
+#
+# Round 1 강화:
+#   - 위급 환자 (priority tier) → pragmatic 우선 자동 (윤리적 자료)
+#   - 학습률 0.03 → 0.02 (베타 5명 자료, 과학습 방지)
+# ============================================================
+
+version: "1.1"
+
+phase_weights:
+  # Phase 0: 새 환자 (n_sessions == 0)
+  new_patient:
+    accuracy_symptom:    0.20
+    accuracy_biomarker:  0.15
+    complexity_penalty:  0.15
+    preference:          0.15
+    epistemic:           0.25
+    pragmatic:           0.10
+
+  # Phase 1: 초기 (1 <= n_sessions < 4)
+  early:
+    accuracy_symptom:    0.20
+    accuracy_biomarker:  0.18
+    complexity_penalty:  0.15
+    preference:          0.17
+    epistemic:           0.15
+    pragmatic:           0.15
+
+  # Phase 2: 안정 (n_sessions >= 4)
+  stable:
+    accuracy_symptom:    0.20
+    accuracy_biomarker:  0.20
+    complexity_penalty:  0.10
+    preference:          0.15
+    epistemic:           0.10
+    pragmatic:           0.25
+
+  # ⭐ NEW Round 1: 위급 환자 자료 — phase 무시하고 자동 적용
+  # priority tier 임상축 있으면 (= clinical score < 0.30) 활성
+  emergency:
+    accuracy_symptom:    0.25
+    accuracy_biomarker:  0.15
+    complexity_penalty:  0.05    # 난이도 페널티 최소
+    preference:          0.20
+    epistemic:           0.05    # 자료 잡기 ↓
+    pragmatic:           0.30    # 즉시 효과 ↑↑
+
+# ============================================================
+# 학습 자료 (Variational Belief Update)
+# ============================================================
+learning:
+  rates:
+    weights:                      0.02   # ⬇ 0.03 → 0.02 (베타 안전 자료)
+    cognitive_clinical_mapping:   0.015  # ⬇ 0.02 → 0.015
+    patterns:                     0.01
+    crisis:                       0.00
+
+  safety:
+    max_volatility_5_episodes:    0.15   # ⬇ 0.20 → 0.15 (더 엄격)
+    rollback_enabled:             true
+    expert_signal_multiplier:     2.0
+
+  meta:
+    review_interval_days:         30
+    pause_threshold_mean_outcome: -0.30
+    resume_threshold:             0.00
+
+# ============================================================
+# 위급 phase 활성 조건
+# ============================================================
+emergency_phase:
+  # 임상축 점수가 이 값 이하면 emergency phase 자동
+  activation_threshold:           0.30
+  # 위급 자료 axes
+  triggers_on_axes:               ["anxiety", "depression"]
+
+# ============================================================
+# 의사결정 자료
+# ============================================================
+decision:
+  candidate_top_n:               20
+  llm_rerank_top_n:              5
+  final_recommendations:         3
+
+# ============================================================
+# Complexity penalty (Fischer ZPD)
+# ============================================================
+complexity:
+  optimal_zone_levels:           0.5
+  penalty_growth_exponent:       2.0
+
+# ============================================================
+# Imperturbable Components (학습 면역)
+# ============================================================
+fixed_components:
+  - complexity_penalty
+  - epistemic
