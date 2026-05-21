@@ -25,6 +25,8 @@ h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
 .minor-section{display:none;background:#fff8e1;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin-top:12px}
 .minor-section.show{display:block}
 .minor-section h3{font-size:15px;margin-bottom:10px;color:#92400e}
+.delivery-section{background:#f0f7ff;border:2px solid #4a90c2;border-radius:12px;padding:20px;margin-top:12px;margin-bottom:16px}
+.delivery-section h3{font-size:15px;margin-bottom:10px;color:#075985}
 .radio-group{display:flex;gap:10px;margin-top:8px}
 .radio-option{flex:1;border:2px solid #ddd;border-radius:10px;padding:14px;cursor:pointer;text-align:center;background:#fafafa;transition:all 0.15s}
 .radio-option:hover{border-color:#C9444F}
@@ -74,12 +76,12 @@ h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
 
       <div class="row">
         <div class="field">
-          <label>이메일 <span class="required">*</span></label>
-          <input type="email" id="email" required placeholder="you@example.com">
+          <label>이메일 <span class="required" id="emailStar" style="display:none">*</span></label>
+          <input type="email" id="email" placeholder="you@example.com (선택)">
         </div>
         <div class="field">
           <label>전화번호</label>
-          <input type="tel" id="phone" placeholder="010-0000-0000">
+          <input type="tel" id="phone" placeholder="010-0000-0000 (선택)">
         </div>
       </div>
 
@@ -87,6 +89,23 @@ h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
         <label>생년월일 <span class="required">*</span></label>
         <input type="date" id="birthDate" required>
         <div class="hint">만 18세 미만은 부모/보호자 동의가 필요합니다</div>
+      </div>
+
+      <!-- 동의서 받기 방식 (성인용) -->
+      <div class="delivery-section" id="deliverySection">
+        <h3>📋 동의서 받기 방식</h3>
+        <div class="radio-group">
+          <label class="radio-option selected" id="deliveryInPerson">
+            <input type="radio" name="consentDelivery" value="in_person" checked>
+            <div class="opt-title">현장에서 서명</div>
+            <div class="opt-desc">바로 다음 화면에서 서명</div>
+          </label>
+          <label class="radio-option" id="deliveryEmail">
+            <input type="radio" name="consentDelivery" value="email">
+            <div class="opt-title">이메일로 받기</div>
+            <div class="opt-desc">이메일 링크로 서명</div>
+          </label>
+        </div>
       </div>
 
       <!-- 미성년자 섹션 -->
@@ -149,8 +168,7 @@ h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
 <script>
 const birthDate = document.getElementById('birthDate');
 const minorSection = document.getElementById('minorSection');
-const parentPresent = document.getElementById('parentPresent');
-const parentRemote = document.getElementById('parentRemote');
+const deliverySection = document.getElementById('deliverySection');
 const form = document.getElementById('signupForm');
 const errorMsg = document.getElementById('errorMsg');
 const successMsg = document.getElementById('successMsg');
@@ -171,19 +189,54 @@ birthDate.addEventListener('change', () => {
   const age = calculateAge(birthDate.value);
   if (age < 18 && age >= 0) {
     minorSection.classList.add('show');
+    deliverySection.style.display = 'none';
   } else {
     minorSection.classList.remove('show');
+    deliverySection.style.display = 'block';
   }
+  toggleEmailRequired();
 });
 
-// Radio button styling
 document.querySelectorAll('.radio-option').forEach(opt => {
   opt.addEventListener('click', () => {
-    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+    const groupName = opt.querySelector('input').name;
+    document.querySelectorAll(`.radio-option input[name="${groupName}"]`).forEach(inp => {
+      inp.closest('.radio-option').classList.remove('selected');
+    });
     opt.classList.add('selected');
     opt.querySelector('input').checked = true;
+    toggleEmailRequired();
+    toggleParentEmailRequired();
   });
 });
+
+function toggleEmailRequired() {
+  const star = document.getElementById('emailStar');
+  const emailInput = document.getElementById('email');
+  const deliveryRadio = document.querySelector('input[name="consentDelivery"]:checked');
+  const isAdult = !minorSection.classList.contains('show');
+  if (isAdult && deliveryRadio && deliveryRadio.value === 'email') {
+    star.style.display = '';
+    emailInput.placeholder = 'you@example.com';
+  } else {
+    star.style.display = 'none';
+    emailInput.placeholder = 'you@example.com (선택)';
+  }
+}
+
+function toggleParentEmailRequired() {
+  const radio = document.querySelector('input[name="parentLocation"]:checked');
+  const star = document.getElementById('parentEmailStar');
+  const emailInput = document.getElementById('parentEmail');
+  if (!radio || !star) return;
+  if (radio.value === 'present') {
+    star.style.display = 'none';
+    if (emailInput) emailInput.placeholder = 'parent@example.com (선택)';
+  } else {
+    star.style.display = '';
+    if (emailInput) emailInput.placeholder = 'parent@example.com';
+  }
+}
 
 function showError(msg) {
   errorMsg.textContent = msg;
@@ -202,8 +255,8 @@ form.addEventListener('submit', async (e) => {
   const phone = document.getElementById('phone').value.trim();
   const birth = birthDate.value;
 
-  if (!fullName || !email || !birth) {
-    showError('필수 항목을 모두 박아주세요');
+  if (!fullName || !birth) {
+    showError('이름과 생년월일은 필수야');
     return;
   }
 
@@ -215,6 +268,7 @@ form.addEventListener('submit', async (e) => {
 
   const isMinor = age < 18;
   let parentData = {};
+  let consentDelivery = 'in_person';
 
   if (isMinor) {
     const radio = document.querySelector('input[name="parentLocation"]:checked');
@@ -231,12 +285,19 @@ form.addEventListener('submit', async (e) => {
       return;
     }
     parentData = {
-      parentPresent: radio.value === 'present',
+      parentPresent: isParentPresent,
       parentName: parentName,
       parentEmail: parentEmail,
       parentPhone: document.getElementById('parentPhone').value.trim(),
       parentRelationship: parentRel
     };
+  } else {
+    const deliveryRadio = document.querySelector('input[name="consentDelivery"]:checked');
+    consentDelivery = deliveryRadio ? deliveryRadio.value : 'in_person';
+    if (consentDelivery === 'email' && !email) {
+      showError('이메일로 받기를 선택하면 이메일이 필요해');
+      return;
+    }
   }
 
   submitBtn.disabled = true;
@@ -248,6 +309,7 @@ form.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         fullName, email, phone, birthDate: birth, age, isMinor, language: 'ko',
+        consentDelivery,
         ...parentData
       })
     });
@@ -257,21 +319,24 @@ form.addEventListener('submit', async (e) => {
       throw new Error(data.error || '서버 오류');
     }
 
-    successMsg.textContent = '✅ 신청 완료! 동의서 페이지로 이동합니다...';
     successMsg.classList.add('show');
 
     setTimeout(() => {
       if (isMinor && parentData.parentPresent) {
-        // 현장에서 부모 사인 — 동의서 페이지 (본인 + 부모 둘 다)
+        successMsg.textContent = '✅ 신청 완료! 동의서 페이지로 이동합니다...';
         window.location.href = `/consent.html?signup_id=${data.signup_id}&mode=in_person`;
       } else if (isMinor) {
-        // 부모에게 이메일 보냄 — 본인은 assent만
+        successMsg.textContent = '✅ 신청 완료! 자녀 본인 Assent 페이지로 이동합니다...';
         window.location.href = `/consent.html?signup_id=${data.signup_id}&mode=minor_assent`;
+      } else if (consentDelivery === 'email') {
+        successMsg.textContent = '✅ 신청 완료! 동의서 이메일이 발송되었습니다. 이메일에서 서명해 주세요.';
+        setTimeout(() => { window.location.href = `/beta-pending.html?signup_id=${data.signup_id}`; }, 2500);
+        return;
       } else {
-        // 성인 — 본인 사인
+        successMsg.textContent = '✅ 신청 완료! 동의서 페이지로 이동합니다...';
         window.location.href = `/consent.html?signup_id=${data.signup_id}&mode=adult`;
       }
-    }, 1500);
+    }, 1200);
 
   } catch (err) {
     showError('오류: ' + err.message);
@@ -281,28 +346,10 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-// 부모 현장 여부에 따라 이메일 별표 토글
-function toggleParentEmailRequired() {
-  const radio = document.querySelector('input[name="parentLocation"]:checked');
-  const star = document.getElementById('parentEmailStar');
-  const emailInput = document.getElementById('parentEmail');
-  if (!radio || !star) return;
-  if (radio.value === 'present') {
-    star.style.display = 'none';
-    if (emailInput) emailInput.placeholder = 'parent@example.com (선택사항)';
-  } else {
-    star.style.display = '';
-    if (emailInput) emailInput.placeholder = 'parent@example.com';
-  }
-}
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('input[name="parentLocation"]').forEach(r => {
-    r.addEventListener('change', toggleParentEmailRequired);
-    r.addEventListener('click', toggleParentEmailRequired);
-  });
+  toggleEmailRequired();
   toggleParentEmailRequired();
 });
-
 </script>
 </body>
 </html>
