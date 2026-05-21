@@ -2,1147 +2,343 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Manual (English) - Decision Catcher</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Manual — Decision Catcher Beta</title>
 <style>
-.manual-content { background:#fff; padding:40px; border:2px solid #1a1a1a; border-radius:24px; }
-.manual-content h1 { color:#C9444F; margin:24px 0 12px; font-size:32px; }
-.manual-content h2 { color:#2a2018; margin:32px 0 12px; font-size:24px; border-bottom:2px solid #1a1a1a; padding-bottom:8px; }
-.manual-content h3 { color:#2a2018; margin:20px 0 8px; font-size:18px; }
-.manual-content h4 { color:#5a4a35; margin:16px 0 8px; font-size:16px; }
-.manual-content p { margin:8px 0; line-height:1.7; }
-.manual-content ul, .manual-content ol { padding-left:28px; margin:8px 0; }
-.manual-content li { margin:4px 0; line-height:1.7; }
-.manual-content code { background:#f0eee9; padding:2px 8px; border-radius:4px; font-family:Monaco,monospace; font-size:0.9em; }
-.manual-content pre { background:#2a2018; color:#f0eee9; padding:16px; border-radius:12px; overflow-x:auto; margin:12px 0; }
-.manual-content pre code { background:none; color:inherit; padding:0; }
-.manual-content table { width:100%; border-collapse:collapse; margin:12px 0; }
-.manual-content th { background:#f0eee9; padding:8px 12px; text-align:left; border-bottom:2px solid #1a1a1a; }
-.manual-content td { padding:8px 12px; border-bottom:1px solid #eee; }
-.manual-content strong { color:#2a2018; }
-.manual-content hr { border:none; border-top:1px solid #ddd; margin:24px 0; }
-.manual-content a { color:#C9444F; }
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px;line-height:1.7}
+.container{max-width:780px;margin:0 auto}
+.lang-switch{text-align:right;margin-bottom:20px}
+.lang-switch a{color:#5a4a35;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px}
+.head{text-align:center;margin-bottom:40px}
+.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:36px;color:#2a2018;margin-bottom:10px}
+.sub{font-size:15px;color:#5a4a35}
+.toc{background:#fff;border:2px solid #1a1a1a;border-radius:16px;padding:24px 28px;margin-bottom:24px}
+.toc h2{font-size:18px;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #f0eee9}
+.toc ol{padding-left:24px}
+.toc li{margin-bottom:8px}
+.toc a{color:#C9444F;text-decoration:none;font-weight:600}
+.toc a:hover{text-decoration:underline}
+.section{background:#fff;border:2px solid #1a1a1a;border-radius:16px;padding:28px 32px;margin-bottom:20px}
+.section h2{font-size:24px;color:#2a2018;margin-bottom:14px;padding-bottom:10px;border-bottom:3px solid #C9444F}
+.section h3{font-size:18px;color:#2a2018;margin:20px 0 10px;font-weight:700}
+.section p{margin-bottom:12px;color:#2a2018}
+.section ul,.section ol{margin:10px 0 14px 24px}
+.section li{margin-bottom:6px}
+.section strong{color:#2a2018;font-weight:700}
+.section em{font-style:normal;background:#fff5e6;padding:2px 6px;border-radius:4px}
+.callout{background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 20px;border-radius:8px;margin:16px 0;font-size:14px}
+.callout strong{color:#92400e}
+.safety{background:#fee;border-left:4px solid #C9444F;padding:14px 20px;border-radius:8px;margin:16px 0;font-size:14px}
+.safety strong{color:#a03540}
+.step-list{background:#f0eee9;border-radius:12px;padding:20px 24px;margin:16px 0}
+.step-list ol{margin-left:20px}
+.step-list li{margin-bottom:10px;font-weight:500}
+.faq-item{margin-bottom:18px;padding:14px 18px;background:#fafafa;border-radius:10px;border:1.5px solid #eee}
+.faq-item .q{font-weight:700;color:#C9444F;margin-bottom:6px}
+.faq-item .a{color:#2a2018;font-size:14px}
+.contact-box{background:#fff5f5;border:2px solid #C9444F;border-radius:12px;padding:20px 24px;text-align:center;margin-top:24px}
+.contact-box h3{margin-bottom:10px}
+.contact-box a{color:#C9444F;font-weight:700;text-decoration:none}
+.back-to-top{display:inline-block;color:#5a4a35;text-decoration:none;font-size:13px;margin-top:10px}
+nav.topnav{background:#fff;border:2px solid #1a1a1a;border-radius:999px;padding:8px 20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center}
+nav.topnav .brand{font-weight:800;color:#C9444F}
+nav.topnav a{color:#5a4a35;text-decoration:none;padding:6px 12px;font-size:14px;font-weight:600}
+nav.topnav a:hover{color:#C9444F}
 </style>
 </head>
 <body>
-<header class="header">
-  <h1>📖 Manual (English)</h1>
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/manual.html">← Manual hub</a>
-    <a href="/manual-ko.html">한국어</a>
-    <a href="/clinician.html">New Client</a>
-      <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
-  </nav>
-</header>
 <div class="container">
-  <div class="manual-content">
-<h1 id="cna-v7-user-manual-english">CNA v7 User Manual (English)</h1>
-<p><strong>Catcher Navigator Algorithm v7.0</strong><br />
-<strong>Boston Neuromind LLC · 2026</strong></p>
-<hr />
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="#1-system-overview">System Overview</a></li>
-<li><a href="#2-core-concepts">Core Concepts</a></li>
-<li><a href="#3-installation-guide">Installation Guide</a></li>
-<li><a href="#4-first-client-workflow">First Client Workflow</a></li>
-<li><a href="#5-entry-protocol-5-measurement-guide">Entry Protocol 5 Measurement Guide</a></li>
-<li><a href="#6-temporal-history-collection-guide-v7-new">Temporal History Collection Guide (v7 NEW)</a></li>
-<li><a href="#7-clinical-report-interpretation">Clinical Report Interpretation</a></li>
-<li><a href="#8-differential--comorbidity-diagnosis-v7-new">Differential &amp; Comorbidity Diagnosis (v7 NEW)</a></li>
-<li><a href="#9-training-protocol-operations">Training Protocol Operations</a></li>
-<li><a href="#10-crisis-response">Crisis Response</a></li>
-<li><a href="#11-4-week-outcome--adaptive-re-routing-v7-new">4-Week Outcome + Adaptive Re-routing (v7 NEW)</a></li>
-<li><a href="#12-advanced--mapping-matrix-adjustment">Advanced — Mapping Matrix Adjustment</a></li>
-<li><a href="#13-api-usage-guide">API Usage Guide</a></li>
-<li><a href="#14-troubleshooting">Troubleshooting</a></li>
-</ol>
-<hr />
-<h2 id="1-system-overview">1. System Overview</h2>
-<h3 id="11-what-this-system-does">1.1 What This System Does</h3>
-<p>CNA v7 is a clinical decision support system for 5 beta clients (part-time therapy clients).</p>
-<p><strong>v7 Core Additions (Round 7-10):</strong>
-- <strong>Differential Diagnosis Engine (DDE)</strong>: Client data → Bayesian differential diagnosis (ADHD/GAD/MDD)
-- <strong>Comorbidity Decomposition</strong>: Decompose clinical scores by diagnostic source
-- <strong>Cognitive Simulator</strong>: Counterfactual simulation of clinical outcomes when cognitive axes change
-- <strong>Adaptive Re-routing</strong>: Auto-reconstruct diagnosis from 4-week outcome</p>
-<p><strong>Core Functions:</strong></p>
-<ul>
-<li>Fischer Dynamic Skill Theory: cognitive 5-axis → clinical 5-axis prediction</li>
-<li>Auto-analysis of relationships among 5 clinical axes (Attention/Learning/Peak Performance/Anxiety/Depression)</li>
-<li>DSM-5-TR based differential &amp; comorbidity diagnosis (v7)</li>
-<li>Auto-generation of training protocols (4-8 weeks) when client selects area</li>
-<li>Decision-making based on Karl Friston's Active Inference framework</li>
-<li>System auto-learns from outcomes (Variational Belief Update + Diagnostic Re-routing)</li>
-</ul>
-<h3 id="12-target-users">1.2 Target Users</h3>
-<ul>
-<li><strong>Clinicians</strong>: BCN, PhD, LMHC, LMFT, mental health professionals</li>
-<li><strong>Clients</strong>: 18+ (beta), Learning + Peak Performance + mild anxiety/depression domains</li>
-<li><strong>Exclusions</strong>: Acute psychosis, active suicidal crisis, uncontrolled bipolar disorder</li>
-</ul>
-<h3 id="13-clinical-evidence-base">1.3 Clinical Evidence Base</h3>
-<table>
-<thead>
-<tr>
-<th>Mapping / Algorithm</th>
-<th>Clinical Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Working Memory → Learning (r=0.43)</td>
-<td>Meta-analysis, n=7947</td>
-</tr>
-<tr>
-<td>Emotional Intelligence → Academic (r=0.39)</td>
-<td>EI-AP meta-analysis 2023</td>
-</tr>
-<tr>
-<td>Emotion Regulation training (d=0.605)</td>
-<td>Aldao et al. 2010</td>
-</tr>
-<tr>
-<td>Rumination → Depression (bidirectional)</td>
-<td>Nolen-Hoeksema response styles</td>
-</tr>
-<tr>
-<td>Active Inference clinical application</td>
-<td>Friston 2010-2025</td>
-</tr>
-<tr>
-<td>Adult ADHD comorbidity 50-80%</td>
-<td>Frontiers 2025</td>
-</tr>
-<tr>
-<td>ADHD-anxiety 25-50%, ADHD-depression ~50%</td>
-<td>Postgraduate Med 2014</td>
-</tr>
-<tr>
-<td>Differential key = temporal pattern</td>
-<td>ADHD chronic/pervasive vs anxiety/depression episodic</td>
-</tr>
-<tr>
-<td>Unrecognized ADHD + SSRI alone = fails</td>
-<td>McIntosh et al. 2009</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="2-core-concepts">2. Core Concepts</h2>
-<h3 id="21-fischer-cognitive-5-axis-layer-a">2.1 Fischer Cognitive 5-Axis (Layer A)</h3>
-<p>Measurable cognitive abilities:</p>
-<table>
-<thead>
-<tr>
-<th>Axis</th>
-<th>Measurement Tool</th>
-<th>Normal Range</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Sustained Attention</strong></td>
-<td>CPT (Continuous Performance Test)</td>
-<td>Omissions Z = -0.5 to +0.5</td>
-</tr>
-<tr>
-<td><strong>Working Memory</strong></td>
-<td>N-back (2-back, 3-back)</td>
-<td>Accuracy 70-85%</td>
-</tr>
-<tr>
-<td><strong>Emotional Regulation</strong></td>
-<td>HRV RMSSD + VSR</td>
-<td>RMSSD 25-50ms</td>
-</tr>
-<tr>
-<td><strong>Time Awareness</strong></td>
-<td>Time estimation task</td>
-<td>Error 5-15%</td>
-</tr>
-<tr>
-<td><strong>Self-Awareness</strong></td>
-<td>OMR (Observable Model Refinement)</td>
-<td>Response depth</td>
-</tr>
-</tbody>
-</table>
-<p>Fischer Level: L7.0 ~ L13.0 (adult typical range)</p>
-<h3 id="22-clinical-outcome-5-axis-layer-b">2.2 Clinical Outcome 5-Axis (Layer B)</h3>
-<p>Client-selectable treatment areas:</p>
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Primary Measurements</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Attention</td>
-<td>CPT, ASRS</td>
-</tr>
-<tr>
-<td>Learning</td>
-<td>N-back, learning retention</td>
-</tr>
-<tr>
-<td>Peak Performance</td>
-<td>Time estimation, HRV</td>
-</tr>
-<tr>
-<td>Anxiety</td>
-<td>HRV, GAD-7</td>
-</tr>
-<tr>
-<td>Depression</td>
-<td>PHQ-9, BA count</td>
-</tr>
-</tbody>
-</table>
-<h3 id="23-4-vector-input">2.3 4-Vector Input</h3>
-<ul>
-<li><strong>V1 State</strong>: Current measurements + symptom scores</li>
-<li><strong>V2 Desire</strong>: Client's desired outcomes + motivation</li>
-<li><strong>V3 Skill</strong>: Fischer 5-axis Levels</li>
-<li><strong>V4 Trajectory</strong>: Cumulative past session data</li>
-</ul>
-<h3 id="24-free-energy-6-component-decision">2.4 Free Energy 6-Component Decision</h3>
-<p>Each card scored on 6 components:</p>
-<ol>
-<li><strong>Accuracy (Symptom)</strong>: Client symptoms ↔ card targets matching</li>
-<li><strong>Accuracy (Biomarker)</strong>: Measurements ↔ card expected profile</li>
-<li><strong>Complexity Penalty</strong>: Fischer level distance (Vygotsky ZPD)</li>
-<li><strong>Preference</strong>: Match with client's selected area</li>
-<li><strong>Epistemic Value</strong>: Information gain potential</li>
-<li><strong>Pragmatic Value</strong>: Evidence + immediate effect</li>
-</ol>
-<p>Weights auto-adjust based on client phase:
-- <strong>New client</strong>: epistemic priority (data gathering)
-- <strong>Stable client</strong>: pragmatic priority (efficacy)
-- <strong>Emergency client</strong> (priority tier): emergency phase auto-activates, pragmatic highest priority</p>
-<hr />
-<h2 id="3-installation-guide">3. Installation Guide</h2>
-<h3 id="31-system-requirements">3.1 System Requirements</h3>
-<ul>
-<li>Python 3.10 or higher</li>
-<li>8GB RAM or more</li>
-<li>macOS / Windows / Linux</li>
-</ul>
-<h3 id="32-installation-steps">3.2 Installation Steps</h3>
-<pre><code class="language-bash"># 1. Unzip
-unzip cna_v7_final.zip
-cd cna_v7
+  <nav class="topnav">
+    <a href="/" class="brand">Decision Catcher</a>
+    <div>
+      <a href="/">Home</a>
+      <a href="/beta-signup-en.html">Beta Signup</a>
+      <a href="/feedback.html?lang=en">Feedback</a>
+    </div>
+  </nav>
 
-# 2. Create virtual environment (one-time)
-python -m venv venv
+  <div class="lang-switch">
+    <a href="/manual-ko.html">한국어</a>
+  </div>
 
-# 3. Activate
-source venv/bin/activate     # Mac/Linux
-# or
-venv\Scripts\activate         # Windows
+  <div class="head">
+    <div class="badge">Beta Client Manual</div>
+    <h1>Decision Catcher User Guide</h1>
+    <div class="sub">Bilingual guide for beta participants · Boston Neuromind LLC</div>
+  </div>
 
-# 4. Install packages
-pip install pydantic numpy pyyaml fastapi uvicorn
+  <div class="toc">
+    <h2>📑 Table of Contents</h2>
+    <ol>
+      <li><a href="#sec1">What is Decision Catcher?</a></li>
+      <li><a href="#sec2">Beta Program Enrollment</a></li>
+      <li><a href="#sec3">How the Assessment Works</a></li>
+      <li><a href="#sec4">Understanding Your Results</a></li>
+      <li><a href="#sec5">Weekly Progress Entry</a></li>
+      <li><a href="#sec6">4-Week Outcome Assessment</a></li>
+      <li><a href="#sec7">Privacy & Data Protection</a></li>
+      <li><a href="#sec8">Crisis Response</a></li>
+      <li><a href="#sec9">Frequently Asked Questions</a></li>
+      <li><a href="#sec10">Contact & Support</a></li>
+    </ol>
+  </div>
 
-# 5. Run integration test
-python tests/test_integration.py
-</code></pre>
-<p>Tests pass: "✓ Integration tests passed" message appears.</p>
-<h3 id="33-directory-structure">3.3 Directory Structure</h3>
-<pre><code>cna_v7/
-├── config/                          # User-editable
-│   ├── cognitive_clinical_mapping.yaml
-│   ├── free_energy_weights.yaml
-│   └── diagnostic_patterns.yaml     # v7 NEW
-├── cna_core/                        # Core logic
-│   ├── types.py
-│   ├── cognitive_clinical_mapper.py
-│   ├── free_energy_scorer.py
-│   ├── biomarker_normalization.py
-│   ├── clinical_report.py
-│   ├── card_deck.py
-│   ├── crisis_detection.py
-│   ├── protocol_generator.py
-│   ├── variational_update.py
-│   ├── differential_diagnosis.py    # v7 NEW
-│   ├── comorbidity_decomposition.py # v7 NEW
-│   ├── cognitive_simulator.py       # v7 NEW
-│   ├── adaptive_rerouting.py        # v7 NEW
-│   └── orchestrator.py
-├── tests/test_integration.py
-├── cli/run_assessment.py
-├── api/main.py                      # FastAPI server
-├── supabase/schema.sql
-└── README.md
-</code></pre>
-<hr />
-<h2 id="4-first-client-workflow">4. First Client Workflow</h2>
-<h3 id="41-session-1-initial-assessment-75-105-min-v7-adds-15-min-for-temporal-interview">4.1 Session 1 (Initial Assessment) — 75-105 min (v7 adds ~15 min for temporal interview)</h3>
-<h4 id="step-1-client-registration-5-min">Step 1: Client Registration (5 min)</h4>
-<ul>
-<li>Client initials + ID number (e.g., AK001)</li>
-<li>DOB, gender</li>
-<li>Chief complaints</li>
-<li>Medications</li>
-<li>Guardian consent (if needed)</li>
-</ul>
-<h4 id="step-2-entry-protocol-5-measurement-30-min">Step 2: Entry Protocol 5 Measurement (30 min)</h4>
-<p>Use paper measurement sheets. Five measurements:</p>
-<ol>
-<li><strong>Time Estimation</strong> (5 min) → time_awareness</li>
-<li><strong>HRV</strong> (5 min, Polar H10 or Apple Watch) → emotional_regulation</li>
-<li><strong>CPT</strong> (15 min, paper or digital) → sustained_attention</li>
-<li><strong>N-back</strong> (10 min, 2-back 3-back) → working_memory</li>
-<li><strong>VSR</strong> (optional, 5 min) → additional data</li>
-</ol>
-<h4 id="step-3-symptom-data-collection-15-min">Step 3: Symptom Data Collection (15 min)</h4>
-<ul>
-<li>PHQ-9 (depression screening) — includes suicide risk item</li>
-<li>GAD-7 (anxiety screening)</li>
-<li>Subjective symptom scores (0.0-1.0):</li>
-<li>Inattention</li>
-<li>Distractibility</li>
-<li>Executive Dysfunction</li>
-<li>Anxiety Somatic</li>
-<li>Anxiety Cognitive</li>
-<li>Low Mood</li>
-<li>Low Motivation</li>
-<li>Social Withdrawal</li>
-</ul>
-<h4 id="step-4-v7-new-temporal-history-interview-15-min">Step 4 (v7 NEW): Temporal History Interview (15 min) ⭐</h4>
-<p><strong>DDE accuracy's foundation.</strong> Detailed guide in Section 6. Core 8 questions:</p>
-<ol>
-<li>"Age symptoms first appeared?" → <code>onset_age</code></li>
-<li>"Childhood/adolescence/adult?" → <code>onset_category</code></li>
-<li>"Chronic or episodic?" → <code>course</code></li>
-<li>"How many months ongoing?" → <code>duration_months</code></li>
-<li>"Consistent across settings or context-specific?" → <code>pervasiveness</code></li>
-<li>"Worsens with stress? Improves with rest?" → <code>stress_triggered</code></li>
-<li>"Family history?" → <code>family_history</code></li>
-<li>"Prior treatment response?" → <code>prior_treatment_response</code></li>
-</ol>
-<h4 id="step-5-client-goal-elicitation-10-min">Step 5: Client Goal Elicitation (10 min)</h4>
-<ul>
-<li>Select one area to improve most:</li>
-<li>Attention</li>
-<li>Learning Efficiency</li>
-<li>Peak Performance</li>
-<li>Anxiety Management</li>
-<li>Mood Stability</li>
-<li>Motivation level (0-10)</li>
-<li>Perceived barriers</li>
-</ul>
-<h3 id="42-run-cli-5-min">4.2 Run CLI (5 min)</h3>
-<pre><code class="language-bash">cd cna_v7
-source venv/bin/activate
-python cli/run_assessment.py
-</code></pre>
-<p>Answer interactive prompts. Or use JSON file:</p>
-<pre><code class="language-bash">python cli/run_assessment.py --json client_001.json
-</code></pre>
-<p><code>client_001.json</code> example:</p>
-<pre><code class="language-json">{
-  &quot;client_id&quot;: &quot;AK001&quot;,
-  &quot;cognitive_levels&quot;: {
-    &quot;sustained_attention&quot;: 8.5,
-    &quot;working_memory&quot;: 9.0,
-    &quot;emotional_regulation&quot;: 8.5,
-    &quot;time_awareness&quot;: 9.0,
-    &quot;self_awareness&quot;: 9.5
-  },
-  &quot;biomarkers&quot;: {
-    &quot;cpt_omissions_zscore&quot;: -0.5,
-    &quot;hrv_rmssd&quot;: 30.0,
-    &quot;nback_accuracy&quot;: 0.75,
-    &quot;time_estimation_error_pct&quot;: 15.0
-  },
-  &quot;symptoms&quot;: {
-    &quot;inattention&quot;: 0.4,
-    &quot;distractibility&quot;: 0.35,
-    &quot;executive_dysfunction&quot;: 0.3,
-    &quot;anxiety_somatic&quot;: 0.3,
-    &quot;anxiety_cognitive&quot;: 0.3,
-    &quot;low_mood&quot;: 0.2,
-    &quot;low_motivation&quot;: 0.2
-  },
-  &quot;temporal_history&quot;: {
-    &quot;onset_age&quot;: 8,
-    &quot;onset_category&quot;: &quot;childhood&quot;,
-    &quot;course&quot;: &quot;chronic&quot;,
-    &quot;duration_months&quot;: 240,
-    &quot;pervasiveness&quot;: &quot;cross_setting&quot;,
-    &quot;stress_triggered&quot;: false,
-    &quot;family_history&quot;: [&quot;father_ADHD&quot;],
-    &quot;prior_treatment_response&quot;: {}
-  },
-  &quot;primary_axis&quot;: &quot;learning&quot;,
-  &quot;motivation&quot;: 0.7,
-  &quot;n_sessions&quot;: 0
-}
-</code></pre>
-<p><strong>temporal_history field (v7 NEW)</strong> — Critical for DDE accuracy. See Section 6.</p>
-<h3 id="43-review-results-15-min">4.3 Review Results (15 min)</h3>
-<p>System outputs:
-1. <strong>Clinical 5-Axis Prediction Table</strong> — review with client
-2. <strong>5-Axis Relationship Table</strong> — collateral effects
-3. <strong>Differential Diagnosis</strong> (v7 NEW) — Primary/Secondary + Comorbidity pattern
-4. <strong>Comorbidity Decomposition Table</strong> (v7 NEW) — Per-axis source contributions
-5. <strong>Intervention Priority Table</strong> (v7 NEW) — Which cognitive axis is most effective?
-6. <strong>Target Level Recommendations</strong> (v7 NEW) — Required levels to reach clinical target
-7. <strong>Top 3 System Recommendations</strong> — clinician review
-8. <strong>8-Week Protocol Preview</strong> — client consent + effect simulation (v7 NEW)</p>
-<p>Results auto-save to <code>outputs/{client_id}_{timestamp}.json</code>.</p>
-<hr />
-<h2 id="5-entry-protocol-5-measurement-guide">5. Entry Protocol 5 Measurement Guide</h2>
-<h3 id="51-time-estimation">5.1 Time Estimation</h3>
-<p><strong>Procedure:</strong>
-- Instruct: "Raise hand when you think 30 seconds have passed"
-- Repeat 5 times
-- Calculate error % per trial
-- Average error % → time_awareness Level</p>
-<p><strong>Interpretation:</strong>
-| Avg Error | Fischer Level | Clinical Note |
-|-----------|---------------|---------------|
-| 0-5% | L11+ | Highly accurate |
-| 5-12% | L9-10 | Normal |
-| 12-25% | L8 | Weak |
-| 25%+ | L7 or below | Clinical attention |</p>
-<h3 id="52-hrv-measurement-rmssd">5.2 HRV Measurement (RMSSD)</h3>
-<p><strong>Procedure:</strong>
-- Use Polar H10 or Apple Watch
-- 5-min resting breathing (seated)
-- Auto-calculate RMSSD
-- Record LF/HF ratio also</p>
-<p><strong>Interpretation:</strong>
-| RMSSD (ms) | Status |
-|------------|--------|
-| 50+ | Very good |
-| 35-50 | Good |
-| 25-35 | Average |
-| 15-25 | Weak |
-| &lt; 15 | Clinical attention |</p>
-<h3 id="53-cpt">5.3 CPT</h3>
-<p><strong>Procedure:</strong>
-- Use Conners CPT, IVA-2, or custom tool
-- 15-min standard protocol
-- Results: omissions, commissions, RT variability</p>
-<p><strong>Z-score Conversion:</strong>
-- Norm mean = 0, SD = 1
-- Client score → Z-score (positive = better)
-- Omissions Z &lt; -1.5 = clinical concern</p>
-<h3 id="54-n-back">5.4 N-back</h3>
-<p><strong>Procedure:</strong>
-- 2-back 5 min, 3-back 5 min
-- Record accuracy %
-- Calculate d-prime</p>
-<p><strong>Interpretation:</strong>
-| 2-back Accuracy | Fischer Level |
-|-----------------|---------------|
-| 90%+ | L11+ |
-| 75-90% | L9-10 |
-| 60-75% | L8 |
-| &lt; 60% | L7 |</p>
-<h3 id="55-vsr-optional">5.5 VSR (Optional)</h3>
-<ul>
-<li>800-cell stem reading</li>
-<li>Acoustic analysis → 4D mapping</li>
-<li>Consistency score 0-1</li>
-</ul>
-<hr />
-<h2 id="6-temporal-history-collection-guide-v7-new">6. Temporal History Collection Guide (v7 NEW)</h2>
-<h3 id="61-why-its-decisive">6.1 Why It's Decisive</h3>
-<p>DDE's 4-source likelihood weights <strong>temporal at 30%</strong>. Missing temporal info drops differential accuracy significantly.</p>
-<p><strong>Clinical basis:</strong> Differentiating ADHD vs GAD vs MDD hinges on temporal patterns.
-- <strong>ADHD</strong>: Childhood onset (&lt; 12 yo), chronic, consistent across settings
-- <strong>GAD</strong>: Adult onset possible, 6+ months, stress-triggered
-- <strong>MDD</strong>: 2+ week episodes, pervasive environmental impact</p>
-<h3 id="62-8-item-interview">6.2 8-Item Interview</h3>
-<h4 id="1-onset-age-onset_age">1. Onset Age (onset_age)</h4>
-<ul>
-<li><strong>Question</strong>: "What age did these symptoms first appear?"</li>
-<li><strong>Significance</strong>: Under 12 = strong ADHD signal</li>
-<li><strong>Response</strong>: Integer (e.g., 8)</li>
-<li><strong>If unknown</strong>: null (OK, supplement with other info)</li>
-</ul>
-<h4 id="2-onset-category-onset_category">2. Onset Category (onset_category)</h4>
-<ul>
-<li><strong>Question</strong>: "When did it start — childhood, adolescence, or adulthood?"</li>
-<li><strong>Options</strong>: <code>"childhood"</code> | <code>"adolescence"</code> | <code>"adult"</code> | <code>"any_age"</code></li>
-<li><strong>Significance</strong>: Childhood = strong ADHD marker</li>
-</ul>
-<h4 id="3-course-course">3. Course (course)</h4>
-<ul>
-<li><strong>Question</strong>: "Has it been chronic, or episodic — coming and going?"</li>
-<li><strong>Options</strong>: <code>"chronic"</code> | <code>"episodic"</code> | <code>"fluctuating"</code></li>
-<li><strong>Significance</strong>: ADHD chronic, MDD episodic, GAD chronic or episodic</li>
-</ul>
-<h4 id="4-duration-in-months-duration_months">4. Duration in Months (duration_months)</h4>
-<ul>
-<li><strong>Question</strong>: "How many months have these symptoms persisted?"</li>
-<li><strong>Response</strong>: Integer months</li>
-<li><strong>Thresholds</strong>:</li>
-<li>MDD: 0.5+ (2+ weeks)</li>
-<li>GAD: 6+ (DSM-5-TR criterion)</li>
-<li>ADHD: 60+ (5+ years chronic)</li>
-</ul>
-<h4 id="5-pervasiveness-pervasiveness">5. Pervasiveness (pervasiveness)</h4>
-<ul>
-<li><strong>Question</strong>: "Consistent across work, home, social — or specific to certain situations?"</li>
-<li><strong>Options</strong>: </li>
-<li><code>"cross_setting"</code> — all environments (ADHD signal)</li>
-<li><code>"context_dependent"</code> — specific situations only (anxiety signal)</li>
-<li><code>"all_setting"</code> — depression presentation</li>
-<li><strong>Significance</strong>: DSM-5-TR core ADHD criterion</li>
-</ul>
-<h4 id="6-stress-triggered-stress_triggered">6. Stress Triggered (stress_triggered)</h4>
-<ul>
-<li><strong>Question</strong>: "Do symptoms worsen with stress and improve with rest?"</li>
-<li><strong>Response</strong>: <code>true</code> | <code>false</code></li>
-<li><strong>Significance</strong>: true = anxiety/depression, false = ADHD</li>
-</ul>
-<h4 id="7-family-history-family_history">7. Family History (family_history)</h4>
-<ul>
-<li><strong>Question</strong>: "Family members with similar symptoms or psychiatric diagnoses?"</li>
-<li><strong>Response</strong>: String list (e.g., <code>["father_ADHD", "mother_GAD"]</code>)</li>
-<li><strong>Significance</strong>: ~50% genetic (especially strong for ADHD)</li>
-</ul>
-<h4 id="8-prior-treatment-response-prior_treatment_response">8. Prior Treatment Response (prior_treatment_response)</h4>
-<ul>
-<li><strong>Question</strong>: "Past medications or therapy? What worked?"</li>
-<li><strong>Response</strong>: dict (e.g., <code>{"SSRI": "no_response", "stimulant": "good_response"}</code>)</li>
-<li><strong>Significance</strong>: SSRI non-response + stimulant good response = strong ADHD primary signal (McIntosh 2009)</li>
-</ul>
-<h3 id="63-data-entry-example">6.3 Data Entry Example</h3>
-<pre><code class="language-python">from cna_core import TemporalHistory
+  <div class="section" id="sec1">
+    <h2>1. What is Decision Catcher?</h2>
+    <p>Decision Catcher is a <strong>clinical decision support system</strong> developed by Boston Neuromind LLC. It helps clinicians better understand your cognitive and emotional state, and recommends suitable training methods.</p>
 
-temporal = TemporalHistory(
-    onset_age=8,
-    onset_category=&quot;childhood&quot;,
-    course=&quot;chronic&quot;,
-    duration_months=240,
-    pervasiveness=&quot;cross_setting&quot;,
-    stress_triggered=False,
-    family_history=[&quot;father_ADHD&quot;],
-    prior_treatment_response={&quot;SSRI&quot;: &quot;no_response&quot;},
-)
-</code></pre>
-<h3 id="64-interview-tips">6.4 Interview Tips</h3>
-<ul>
-<li><strong>Order</strong>: onset age → category → course → duration → pervasiveness → stress → family → treatment</li>
-<li><strong>Unknown items</strong>: null or unknown (don't force) — empty data better than inaccurate</li>
-<li><strong>Reliability</strong>: Family history from client report — supplement with direct family interview if possible</li>
-<li><strong>MDD suspicion</strong>: Ask "Almost every day for past 2 weeks?" (DSM-5-TR criterion)</li>
-</ul>
-<hr />
-<h2 id="7-clinical-report-interpretation">7. Clinical Report Interpretation</h2>
-<h3 id="71-reading-the-5-axis-prediction-table">7.1 Reading the 5-Axis Prediction Table</h3>
-<pre><code>【 Clinical 5-Axis Predictions 】
-  Area              Score   Tier              Priority  Top Contributing
-  Attention         0.39    Caution ⚠         #1        Sustained Attn (+0.05)
-  Anxiety           0.14    Priority ⚠⚠       #2        Emotional Reg (-0.27)
-  ...
-</code></pre>
-<p><strong>Score Interpretation:</strong>
-- 0.75+ : Excellent (no intervention needed)
-- 0.60-0.75: Good (maintenance)
-- 0.45-0.60: Average (observation)
-- 0.30-0.45: Caution (consider intervention)
-- &lt; 0.30: Priority (immediate intervention)</p>
-<p><strong>Priority:</strong>
-- #1: Client-selected area (autonomy priority)
-- #2: Priority tier (&lt; 0.30)
-- #3: High-leverage areas
-- #4: Weak areas
-- #5: Stable areas</p>
-<h3 id="72-5-axis-relationship-table">7.2 5-Axis Relationship Table</h3>
-<pre><code>【 5-Axis Relationships (by Leverage) 】
-  Axis A         Relation       Axis B         Strength  Leverage
-  Anxiety        ↑↑ Co-vary     Mood Stability 0.65      0.62
-  ...
-</code></pre>
-<p><strong>Relationship Types:</strong>
-- <strong>Co-vary (↑↑)</strong>: One improves, other improves
-- <strong>Inverse (↑↓)</strong>: One improves, other worsens (rare)</p>
-<p><strong>Leverage Score:</strong>
-- 0.5+: Very large collateral effect
-- 0.3-0.5: Medium collateral
-- &lt; 0.3: Weak collateral</p>
-<p><strong>Clinical Application:</strong>
-- Intervention on leverage 0.5+ areas = efficient
-- When client selects, show leverage data for informed choice</p>
-<hr />
-<h2 id="8-differential-comorbidity-diagnosis-v7-new">8. Differential &amp; Comorbidity Diagnosis (v7 NEW)</h2>
-<h3 id="81-reading-dde-output">8.1 Reading DDE Output</h3>
-<pre><code>【 Differential Diagnosis 】
-  Primary: adhd_inattentive
-  Secondary: ['mdd', 'gad']
-  Comorbidity pattern: adhd_plus_gad
-  Confidence: 0.64
-  Treatment: ADHD + GAD standard. 30% coverage rate clinical pattern.
+    <h3>What the system does</h3>
+    <ul>
+      <li>Analyzes possible diagnoses from your symptoms (differential diagnosis)</li>
+      <li>Decomposes contributions when multiple conditions co-occur (comorbidity)</li>
+      <li>Automatically recommends personalized training cards</li>
+      <li>Measures outcomes after 4 weeks and re-evaluates diagnoses when needed</li>
+    </ul>
 
-  Diagnostic Hypothesis Ranking:
-    ★ Primary: ADHD Inattentive Type (P=57%)
-           Symptom match: 0.99, Cognitive: 0.99, Biomarker: 0.98, Temporal: 0.95
-           ✓ Met: Cross-setting consistency, Onset before age 12
-    • Secondary: MDD (P=21%)
-    • Secondary: GAD (P=21%)
-</code></pre>
-<p><strong>Primary Thresholds:</strong>
-- Posterior &gt; 40%: strong signal, primary confirmed
-- Posterior 30-40%: primary but review recommended
-- Posterior &lt; 30%: primary uncertain (review required)</p>
-<p><strong>Secondary:</strong> Posterior &gt; 20%</p>
-<p><strong>Confidence:</strong>
-- 0.7+: very reliable
-- 0.5-0.7: moderately reliable
-- &lt; 0.5: additional evaluation needed</p>
-<h3 id="82-4-source-likelihood">8.2 4-Source Likelihood</h3>
-<table>
-<thead>
-<tr>
-<th>Source</th>
-<th>Weight</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Symptom match</td>
-<td>40%</td>
-<td>Client complaint vs diagnosis pattern</td>
-</tr>
-<tr>
-<td>Cognitive match</td>
-<td>20%</td>
-<td>Cognitive 5-axis weakness pattern</td>
-</tr>
-<tr>
-<td>Biomarker match</td>
-<td>10%</td>
-<td>CPT/HRV/N-back etc. objective measures</td>
-</tr>
-<tr>
-<td>Temporal match</td>
-<td>30%</td>
-<td>Temporal info (differential's key)</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Key insight:</strong> Symptom + Temporal = 70%. These two are most decisive.</p>
-<h3 id="83-differential-markers-metmissed">8.3 Differential Markers Met/Missed</h3>
-<p>DSM-5-TR criteria auto-checked per diagnosis:</p>
-<p><strong>ADHD Inattentive:</strong>
-- ✓ Cross-setting consistency (pervasiveness == "cross_setting")
-- ✓ Onset before age 12 (onset_age &lt; 12)
-- ✓ Not better explained by mood/anxiety (symptom pattern analysis)</p>
-<p><strong>GAD:</strong>
-- ✓ Excessive worry 6+ months (duration &gt;= 6)
-- ✓ Worry &gt; attention deficit (anxiety &gt; inattention)
-- ✓ HRV RMSSD &lt; 25ms</p>
-<p><strong>MDD:</strong>
-- ✓ Anhedonia or low mood 2+ weeks
-- ✓ Rumination (vs ADHD distractibility)
-- ✓ Cognitive slowing (vs ADHD inconsistency)</p>
-<h3 id="84-comorbidity-decomposition-interpretation">8.4 Comorbidity Decomposition Interpretation</h3>
-<pre><code>【 Comorbidity Decomposition 】
-  ▶ Attention
-     Original score: 0.38 (impairment 0.62)
-     Explanatory power: 83%
-     ★ ADHD Inattentive                Contribution 0.234 (posterior 57%)
-     • MDD                              Contribution 0.087 (posterior 21%)
-     • GAD                              Contribution 0.087 (posterior 21%)
-     Residual (unexplained): 0.105
-     Treatment target: primary_first
-</code></pre>
-<p><strong>Contribution Interpretation:</strong>
-- ADHD 0.234 → 23.4% of attention impairment from ADHD source
-- MDD 0.087 → 8.7% from depression-induced secondary
-- Residual 0.105 → unexplained (individual variance, other factors)</p>
-<p><strong>Treatment Target:</strong>
-- <code>primary_first</code>: Primary diagnosis treatment first
-- <code>concurrent</code>: Concurrent treatment (Comorbidity pattern)
-- <code>monitor</code>: Observe</p>
-<h3 id="85-auto-flag-for-clinician-review">8.5 Auto-Flag for Clinician Review</h3>
-<p>System auto-recommends review when:
-- Low diagnostic certainty (top posterior &lt; 40%)
-- Insufficient temporal info (onset/course unknown)
-- Difficult differential (1st vs 2nd gap &lt; 10%)
-- ADHD suspicion but onset age unconfirmed</p>
-<p>When flagged, clinician makes final decision (not system auto-decide).</p>
-<h3 id="86-intervention-priority-counterfactual">8.6 Intervention Priority (Counterfactual)</h3>
-<pre><code>【 Intervention Priority 】
-  #1 working_memory      L8.2→L9.2 | Total +0.085 | Main effect: learning
-  #2 sustained_attention L7.8→L8.8 | Total +0.062 | Main effect: attention
-  ...
-</code></pre>
-<p>Compares effect of +1.0 Level boost per cognitive axis. #1 = most efficient.</p>
-<hr />
-<h2 id="9-training-protocol-operations">9. Training Protocol Operations</h2>
-<h3 id="91-protocols-by-area">9.1 Protocols by Area</h3>
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Duration</th>
-<th>Sessions/Week</th>
-<th>Progression</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Attention</td>
-<td>4 weeks</td>
-<td>3</td>
-<td>Complexity ramp</td>
-</tr>
-<tr>
-<td>Learning</td>
-<td>4 weeks</td>
-<td>4</td>
-<td>Consolidation</td>
-</tr>
-<tr>
-<td>Peak Performance</td>
-<td>4 weeks</td>
-<td>3</td>
-<td>Skill stacking</td>
-</tr>
-<tr>
-<td>Anxiety</td>
-<td>4 weeks</td>
-<td>5</td>
-<td>Exposure gradient</td>
-</tr>
-<tr>
-<td>Depression</td>
-<td>8 weeks</td>
-<td>4</td>
-<td>Behavioral activation</td>
-</tr>
-</tbody>
-</table>
-<h3 id="92-per-session-operations">9.2 Per-Session Operations</h3>
-<ol>
-<li><strong>Start (5 min)</strong>: HRV measurement, mood check</li>
-<li><strong>Card execution (15-60 min)</strong>: System-recommended cards</li>
-<li><strong>End (5 min)</strong>: HRV re-measurement, OMR response</li>
-</ol>
-<h3 id="93-weekly-measurements">9.3 Weekly Measurements</h3>
-<ul>
-<li>Week 1: Full Entry Protocol 5</li>
-<li>Weeks 2-3: Core 1 measurement only</li>
-<li>Final week: Full Entry Protocol 5 + outcome data</li>
-</ul>
-<h3 id="94-clinician-override">9.4 Clinician Override</h3>
-<p>When system recommendation is clinically inappropriate:
-- Clinician can select different card
-- Override rationale must be recorded (learning signal)
-- System weighs this ×2 in learning</p>
-<hr />
-<h2 id="10-crisis-response">10. Crisis Response</h2>
-<h3 id="101-auto-detection">10.1 Auto-Detection</h3>
-<p>System auto-catches 10 crisis types:</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Severity</th>
-<th>Immediate Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Passive suicidal ideation</td>
-<td>moderate</td>
-<td>Continue + safety check</td>
-</tr>
-<tr>
-<td>Active suicidal ideation</td>
-<td>high</td>
-<td>Stop + Columbia SSRS</td>
-</tr>
-<tr>
-<td>Suicide plan/means</td>
-<td>imminent</td>
-<td>911 + don't leave alone</td>
-</tr>
-<tr>
-<td>Recent self-harm</td>
-<td>high</td>
-<td>Stop + safety plan</td>
-</tr>
-<tr>
-<td>Homicidal ideation</td>
-<td>imminent</td>
-<td>Tarasoff duty + law enforcement</td>
-</tr>
-<tr>
-<td>Active psychosis</td>
-<td>high</td>
-<td>Psychiatric referral</td>
-</tr>
-<tr>
-<td>Acute intoxication</td>
-<td>high</td>
-<td>Reschedule + safe transport</td>
-</tr>
-<tr>
-<td>Active DV</td>
-<td>imminent</td>
-<td>DV Hotline + DCF (if children)</td>
-</tr>
-<tr>
-<td>Child abuse disclosure</td>
-<td>imminent</td>
-<td><strong>MA DCF 800-792-5200 immediately</strong></td>
-</tr>
-<tr>
-<td>Severe dissociation</td>
-<td>moderate</td>
-<td>Grounding + PTSD/DID eval</td>
-</tr>
-</tbody>
-</table>
-<h3 id="102-ma-mandated-reporter">10.2 MA Mandated Reporter</h3>
-<p><strong>Important</strong>: BCN + PhD clinicians = MA M.G.L. c. 119 §51A "allied mental health professional" category.</p>
-<p><strong>Obligations:</strong>
-1. <strong>Immediate verbal report</strong>: MA DCF Emergency Line <strong>1-800-792-5200</strong>
-2. <strong>Written report within 48 hours</strong>: 51A form (online portal)
-3. <strong>Penalties</strong>: $1,000 first violation, $5,000 thereafter</p>
-<h3 id="103-phq-9-item-9-integration">10.3 PHQ-9 Item 9 Integration</h3>
-<p>PHQ-9 Item 9 auto-detected:
-- ≥1: passive ideation activated
-- ≥2: active ideation activated
-- ≥3: plan/means possibility</p>
-<hr />
-<h2 id="11-4-week-outcome-adaptive-re-routing-v7-new">11. 4-Week Outcome + Adaptive Re-routing (v7 NEW)</h2>
-<h3 id="111-post-protocol-measurements">11.1 Post-Protocol Measurements</h3>
-<p>4-8 weeks after session end:</p>
-<ol>
-<li><strong>Re-measure Entry Protocol 5</strong> — all measurements</li>
-<li><strong>Clinical 5-axis scoring</strong> — clinician assessment</li>
-<li><strong>Self-report</strong>:</li>
-<li>Improvement (0-10)</li>
-<li>Satisfaction (0-10)</li>
-<li><strong>Re-measure PHQ-9 / GAD-7</strong></li>
-</ol>
-<h3 id="112-cli-outcome-entry">11.2 CLI Outcome Entry</h3>
-<pre><code class="language-bash">python cli/run_assessment.py --outcome
-</code></pre>
-<p>Enter:
-- Episode ID (from previous session)
-- Outcome score (-1.0 to +1.0, 0 = no change)
-- Cognitive 5-axis after (cognitive_after)
-- Clinical 5-axis after (clinical_after)
-- Measurement variance (data reliability)
-- Primary intervention axis
-- Intervention card IDs</p>
-<h3 id="113-auto-learning">11.3 Auto-Learning</h3>
-<p>When outcome recorded:</p>
-<p><strong>Base Learning (v6):</strong>
-1. <strong>Weights auto-adjust</strong> (variational update)
-2. <strong>Mapping matrix calibration</strong>
-3. <strong>Prediction error accumulation</strong>
-4. <strong>Crisis FN/FP tracking</strong></p>
-<p><strong>Adaptive Re-routing (v7 NEW):</strong>
-5. <strong>Expected vs actual response comparison</strong>
-6. <strong>Mismatch → auto DDE re-run</strong> (weakened prior)
-7. <strong>Diagnosis change detection</strong> (no_change | secondary_added | primary_swap | diagnosis_dropped)</p>
-<h3 id="114-re-routing-decision-interpretation">11.4 Re-routing Decision Interpretation</h3>
-<pre><code>【 Diagnostic Re-routing Decision 】
-  Primary: adhd_inattentive → gad
-  Secondary: [] → [adhd_inattentive]
-  Changed: yes
-  Change type: primary_swap
-  Response pattern: primary_no_response_secondary_improved_anxiety
-  Posterior change: 0.35
-  ⚠ Clinician review needed
-</code></pre>
-<p><strong>Change Types:</strong>
-- <code>no_change</code>: Diagnosis maintained (response fit 0.60+)
-- <code>secondary_added</code>: New comorbid diagnosis
-- <code>primary_swap</code>: Primary diagnosis changed (e.g., ADHD → GAD)
-- <code>diagnosis_dropped</code>: Previous diagnosis excluded</p>
-<p><strong>Response Patterns:</strong>
-- <code>expected_response_strong</code>: Primary target responds well (&gt;+0.15)
-- <code>partial_response</code>: Partial response
-- <code>primary_no_response_secondary_improved_*</code>: Primary unresponsive + only other axis improved → diagnosis doubt
-- <code>treatment_no_response</code>: No response at all
-- <code>diagnosis_revision_from_response</code>: Response matches different diagnosis pattern</p>
-<h3 id="115-clinical-re-routing-scenarios">11.5 Clinical Re-routing Scenarios</h3>
-<p><strong>Scenario A: ADHD primary → stimulant card → no effect, anxiety worsens</strong>
-- System catches: "Expected ADHD primary but stimulant non-response + anxiety increase"
-- Re-routing: Change primary to GAD, ADHD secondary
-- Clinical meaning: GAD caused ADHD-like symptoms (Eysenck ACT)</p>
-<p><strong>Scenario B: MDD primary → BA card → no mood change, only HRV improves</strong>
-- System catches: "MDD treatment with no depression response"
-- Re-routing: GAD secondary likelihood ↑
-- Clinical meaning: Chronic anxiety more primary than depression</p>
-<p><strong>Scenario C: ADHD primary → stimulant card → attention ↑, learning ↑</strong>
-- System catches: "Response as expected (response fit 0.85+)"
-- Re-routing: No change, diagnosis confidence ↑</p>
-<h3 id="116-safety">11.6 Safety</h3>
-<ul>
-<li>Auto-rollback if volatility &gt; 0.15</li>
-<li>Protected cells immune to learning (e.g., emotional_regulation→anxiety)</li>
-<li>Auto-pause learning if mean outcome &lt; -0.30</li>
-<li>Re-routing only activates when posterior change &gt; 0.20</li>
-<li>Primary swap auto-flags clinician review</li>
-</ul>
-<hr />
-<h2 id="12-advanced-mapping-matrix-adjustment">12. Advanced — Mapping Matrix Adjustment</h2>
-<h3 id="121-when-to-adjust">12.1 When to Adjust</h3>
-<ul>
-<li>After 5 beta clients, analyzing prediction errors</li>
-<li>When system doesn't fit specific client subgroup</li>
-<li>When clinician spots clear pattern</li>
-</ul>
-<h3 id="122-edit-location">12.2 Edit Location</h3>
-<p><strong>File</strong>: <code>config/cognitive_clinical_mapping.yaml</code></p>
-<pre><code class="language-yaml">positive_loading:
-  sustained_attention:
-    attention:        0.45   # ← modify this
-    learning:         0.20
-    peak_performance: 0.20
-    anxiety:          0.05
-    depression:       0.10
-</code></pre>
-<p><strong>Rules:</strong>
-1. Keep row sum = 1.0
-2. Don't modify row/column structure
-3. YAML-only edit, no code changes
-4. After modification, run test:
-   <code>bash
-   python tests/test_integration.py</code></p>
-<h3 id="123-protected-cells">12.3 Protected Cells</h3>
-<p>Immune to learning updates:</p>
-<pre><code class="language-yaml">imperturbable:
-  protected_cells:
-    - [emotional_regulation, anxiety]
-    - [working_memory, learning]
-    - [sustained_attention, attention]
-    - [emotional_regulation, depression]
-</code></pre>
-<p>Strong clinical evidence cells. Modify with caution.</p>
-<hr />
-<h2 id="13-api-usage-guide">13. API Usage Guide</h2>
-<h3 id="131-start-server">13.1 Start Server</h3>
-<pre><code class="language-bash">cd cna_v7
-source venv/bin/activate
-uvicorn api.main:app --reload --port 8000
-</code></pre>
-<p>Browse: <code>http://localhost:8000/docs</code></p>
-<h3 id="132-main-endpoints">13.2 Main Endpoints</h3>
-<table>
-<thead>
-<tr>
-<th>Endpoint</th>
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>/health</code></td>
-<td>GET</td>
-<td>System status</td>
-</tr>
-<tr>
-<td><code>/cards</code></td>
-<td>GET</td>
-<td>Card data</td>
-</tr>
-<tr>
-<td><code>/full-cycle</code></td>
-<td>POST</td>
-<td>Full cycle in one call</td>
-</tr>
-<tr>
-<td><code>/assess</code></td>
-<td>POST</td>
-<td>Loop 1-2 assessment</td>
-</tr>
-<tr>
-<td><code>/protocol/generate</code></td>
-<td>POST</td>
-<td>Protocol generation</td>
-</tr>
-<tr>
-<td><code>/safety/check</code></td>
-<td>POST</td>
-<td>Crisis check</td>
-</tr>
-<tr>
-<td><code>/system/state</code></td>
-<td>GET</td>
-<td>Learning state</td>
-</tr>
-</tbody>
-</table>
-<h3 id="133-example-call">13.3 Example Call</h3>
-<pre><code class="language-bash">curl -X POST &quot;http://localhost:8000/full-cycle&quot; \
-  -H &quot;Content-Type: application/json&quot; \
-  -d '{
-    &quot;client_id&quot;: &quot;AK001&quot;,
-    &quot;cognitive_levels&quot;: {
-      &quot;sustained_attention&quot;: 8.5,
-      &quot;working_memory&quot;: 9.0,
-      &quot;emotional_regulation&quot;: 8.5,
-      &quot;time_awareness&quot;: 9.0,
-      &quot;self_awareness&quot;: 9.5
-    },
-    &quot;symptom_vector&quot;: {&quot;inattention&quot;: 0.4},
-    &quot;biomarkers&quot;: {&quot;hrv_rmssd&quot;: 30.0},
-    &quot;primary_clinical_axis&quot;: &quot;learning&quot;,
-    &quot;motivation&quot;: 0.7,
-    &quot;n_sessions&quot;: 0
-  }'
-</code></pre>
-<h3 id="134-learningneurocatcherscom-integration">13.4 learning.neurocatchers.com Integration</h3>
-<p>CORS auto-enabled for:
-- <code>https://learning.neurocatchers.com</code>
-- <code>https://neurocatchers.com</code>
-- <code>https://bostonneuromind.com</code></p>
-<p>JavaScript example:</p>
-<pre><code class="language-javascript">const response = await fetch('https://cna-api.example.com/full-cycle', {
-  method: 'POST',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify(clientData)
-});
-const result = await response.json();
-</code></pre>
-<hr />
-<h2 id="14-troubleshooting">14. Troubleshooting</h2>
-<h3 id="141-python-errors">14.1 Python Errors</h3>
-<p><strong>Symptom</strong>: <code>ModuleNotFoundError: No module named 'pydantic'</code></p>
-<pre><code class="language-bash">pip install --upgrade pydantic numpy pyyaml fastapi uvicorn --break-system-packages
-</code></pre>
-<h3 id="142-integration-test-fails">14.2 Integration Test Fails</h3>
-<pre><code class="language-bash"># 1. Verify venv active
-source venv/bin/activate
+    <div class="callout">
+      <strong>Important:</strong> Decision Catcher <em>does not replace your clinician's diagnosis.</em> All final decisions are made by your clinician. The system is a support tool.
+    </div>
 
-# 2. Reinstall packages
-pip install -r requirements.txt
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
 
-# 3. Check config files
-python -c &quot;import yaml; yaml.safe_load(open('config/cognitive_clinical_mapping.yaml'))&quot;
-</code></pre>
-<h3 id="143-row-sum-validation">14.3 Row Sum Validation</h3>
-<pre><code class="language-bash">python -c &quot;
-import yaml
-cfg = yaml.safe_load(open('config/cognitive_clinical_mapping.yaml'))
-for axis, row in cfg['positive_loading'].items():
-    total = sum(row.values())
-    print(f'{axis}: {total:.4f}')
-&quot;
-</code></pre>
-<p>Each row = 1.0 ± 0.001.</p>
-<h3 id="144-adding-new-cards">14.4 Adding New Cards</h3>
-<p>Add new Card object to <code>cna_core/card_deck.py</code>:</p>
-<pre><code class="language-python">Card(
-    id=&quot;att-007&quot;,
-    target_symptoms={&quot;inattention&quot;: 0.6},
-    target_fischer_levels={&quot;sustained_attention&quot;: 9.0},
-    target_clinical_axes=[&quot;attention&quot;],
-    evidence_d=0.5,
-    text_ko=&quot;New card description&quot;,
-    text_en=&quot;New card description&quot;,
-    cost_minutes=15,
-    expected_outcome=0.55,
-),
-</code></pre>
-<h3 id="145-supabase-connection">14.5 Supabase Connection</h3>
-<p>Before beta start:
-1. Create Supabase Project (Pro $25/month)
-2. Execute <code>supabase/schema.sql</code>
-3. Verify RLS policies
-4. Apply for HIPAA BAA</p>
-<hr />
-<h2 id="appendix-a-clinical-evidence">Appendix A — Clinical Evidence</h2>
-<table>
-<thead>
-<tr>
-<th>Item</th>
-<th>Effect Size</th>
-<th>Source</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Working Memory ↔ Learning</td>
-<td>r=0.43</td>
-<td>Meta-analysis, n=7947</td>
-</tr>
-<tr>
-<td>Emotional Intelligence ↔ Academic</td>
-<td>r=0.39</td>
-<td>EI-AP meta-analysis 2023</td>
-</tr>
-<tr>
-<td>Emotion Regulation training</td>
-<td>d=0.605</td>
-<td>Aldao et al. 2010</td>
-</tr>
-<tr>
-<td>Rumination ↔ Depression</td>
-<td>r=0.42</td>
-<td>Nolen-Hoeksema response styles</td>
-</tr>
-<tr>
-<td>HRV biofeedback (anxiety)</td>
-<td>d=0.70</td>
-<td>Lehrer et al. meta-analysis</td>
-</tr>
-<tr>
-<td>Behavioral Activation (depression)</td>
-<td>d=0.74</td>
-<td>Dimidjian et al. 2006</td>
-</tr>
-<tr>
-<td>Adult ADHD comorbidity 50-80%</td>
-<td>Frontiers 2025</td>
-<td></td>
-</tr>
-<tr>
-<td>ADHD-anxiety 25-50% / ADHD-depression ~50%</td>
-<td>Postgraduate Med 2014</td>
-<td></td>
-</tr>
-<tr>
-<td>Differential key = temporal pattern</td>
-<td>Multiple</td>
-<td></td>
-</tr>
-<tr>
-<td>Unrecognized ADHD + SSRI fails</td>
-<td>McIntosh et al. 2009</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="appendix-b-contact">Appendix B — Contact</h2>
-<ul>
-<li><strong>Developer</strong>: Alex Kwon (BCN, PhD)</li>
-<li><strong>Company</strong>: Boston Neuromind LLC</li>
-<li><strong>Email</strong>: bostonneuromind@gmail.com</li>
-<li><strong>Emergency Resources</strong>:</li>
-<li>Korea: 1393 (suicide prevention), 1577-0199 (mental health), 1366 (women emergency), 112 (child abuse)</li>
-<li>USA: 988 (suicide prevention), 911 (emergency), 1-800-792-5200 (MA DCF)</li>
-</ul>
-<hr />
-<p><strong>Version</strong>: CNA v7.0.0<br />
-<strong>Last Updated</strong>: 2026-05-21<br />
-<strong>License</strong>: Proprietary, Boston Neuromind LLC</p>
+  <div class="section" id="sec2">
+    <h2>2. Beta Program Enrollment</h2>
+
+    <div class="step-list">
+      <ol>
+        <li><strong>Complete the beta signup form</strong> — Enter basic info (name, email, date of birth)</li>
+        <li><strong>Sign the consent form</strong> — Read and check 4 items, then sign</li>
+        <li><strong>(If minor) Parent consent</strong> — If parent is present, sign immediately; otherwise consent form is emailed</li>
+        <li><strong>Initial assessment (60-90 min)</strong> — First assessment with your clinician</li>
+        <li><strong>Weekly progress entry</strong> — 5-10 minutes each week to track changes</li>
+        <li><strong>4-week outcome assessment (60 min)</strong> — Measure changes and review diagnosis</li>
+      </ol>
+    </div>
+
+    <p>Total duration: <strong>~8 weeks</strong> (4-8 weeks training + 4 weeks outcome tracking)</p>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec3">
+    <h2>3. How the Assessment Works</h2>
+
+    <h3>During the initial assessment</h3>
+    <ol>
+      <li>Identify your 5 most challenging current symptoms</li>
+      <li>5-axis evaluation: attention, executive function, emotional, social, somatic</li>
+      <li>Enter temporal information about when symptoms started</li>
+      <li>(Optional) Biometric measurements — HRV, CPT (continuous performance test)</li>
+    </ol>
+
+    <h3>How to prepare</h3>
+    <ul>
+      <li>Reflect on your state over the past week</li>
+      <li>List any current medications</li>
+      <li>Summarize past diagnoses or treatment history</li>
+      <li>Dress comfortably</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Tip:</strong> The assessment is a conversation. Don't try to give "right" answers — just describe your state honestly. That leads to the most accurate results.
+    </div>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec4">
+    <h2>4. Understanding Your Results</h2>
+
+    <h3>What you'll receive</h3>
+    <ul>
+      <li><strong>Clinical scores</strong> — Across 5 axes (attention/executive/emotional/social/somatic)</li>
+      <li><strong>Differential diagnosis</strong> — System-estimated possibilities (e.g., ADHD 60%, GAD 25%)</li>
+      <li><strong>Training recommendations</strong> — Personalized training cards</li>
+      <li><strong>Training schedule</strong> — 4-8 week protocol</li>
+    </ul>
+
+    <h3>How to interpret results</h3>
+    <ol>
+      <li>System scores are <strong>reference data</strong>. Your clinician interprets them with you.</li>
+      <li>A high score doesn't necessarily mean "bad" — it helps you understand your patterns.</li>
+      <li>Multiple diagnoses may appear simultaneously. This is common; the system shows priorities.</li>
+      <li>"Differential diagnosis" results are not medical diagnoses. Your clinician's final evaluation is the diagnosis.</li>
+    </ol>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec5">
+    <h2>5. Weekly Progress Entry</h2>
+
+    <p>Once a week, take <strong>5-10 minutes</strong> to record your changes.</p>
+
+    <h3>What you'll enter</h3>
+    <ul>
+      <li>Symptom changes this week (1-10 scale)</li>
+      <li>Whether you completed training cards and their effects</li>
+      <li>Sleep, exercise, stress levels</li>
+      <li>Free-form notes (if any)</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Why it matters:</strong> As weekly data accumulates, the system learns your change patterns and provides more accurate recommendations. Please don't skip — enter every week.
+    </div>
+
+    <h3>When to enter</h3>
+    <p>Enter at any convenient time during the week. You'll receive a reminder email once a week.</p>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec6">
+    <h2>6. 4-Week Outcome Assessment</h2>
+
+    <p>4 weeks after starting training, you'll have an assessment to measure changes. Takes about 60 minutes.</p>
+
+    <h3>What happens in this assessment</h3>
+    <ul>
+      <li>Same 5-axis measurements as initial assessment (calculates change)</li>
+      <li>Training effectiveness evaluation</li>
+      <li>Review system's automatic diagnostic re-routing</li>
+      <li>Plan the next phase</li>
+    </ul>
+
+    <h3>Possible outcomes</h3>
+    <ol>
+      <li><strong>Effective</strong> — Continue same training, possibly adjust intensity</li>
+      <li><strong>Partial effect</strong> — Modify training combination (e.g., add emotional regulation to attention)</li>
+      <li><strong>Limited effect</strong> — Review diagnosis, consider different approach</li>
+    </ol>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec7">
+    <h2>7. Privacy & Data Protection</h2>
+
+    <h3>Information stored</h3>
+    <ul>
+      <li>Basic info (name, email, date of birth)</li>
+      <li>Clinical assessment scores</li>
+      <li>Weekly progress entries</li>
+      <li>Signed consent forms</li>
+    </ul>
+
+    <h3>How it's protected</h3>
+    <ul>
+      <li>All data is encrypted per <strong>HIPAA standards</strong></li>
+      <li>(Minors) Children under 13 receive additional <strong>COPPA</strong> protection</li>
+      <li>Your information is not shared with third parties</li>
+      <li>For research disclosure, all identifying information is removed</li>
+    </ul>
+
+    <h3>Right to withdraw</h3>
+    <p>You may withdraw from the beta program at any time. Upon withdrawal:</p>
+    <ul>
+      <li>All data is <strong>deleted within 30 days</strong></li>
+      <li>No penalty for withdrawal</li>
+      <li>Request via support@neurocatchers.com</li>
+    </ul>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec8">
+    <h2>8. Crisis Response</h2>
+
+    <div class="safety">
+      <strong>⚠️ If you need immediate help</strong><br>
+      If any of the following apply, <strong>call 911 or 988 (Suicide & Crisis Lifeline) immediately</strong>:
+      <ul style="margin-top:8px">
+        <li>Thoughts of self-harm or suicide</li>
+        <li>Possibility of harm to yourself or others</li>
+        <li>Severe emotional crisis</li>
+        <li>Changes in reality perception (hallucinations, etc.)</li>
+      </ul>
+    </div>
+
+    <h3>Non-emergency situations</h3>
+    <p>When you need help but it's not urgent:</p>
+    <ul>
+      <li>Contact your clinician</li>
+      <li>support@neurocatchers.com</li>
+      <li>Tell a trusted family member or friend</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Mandated Reporter notice:</strong> Boston Neuromind clinicians are legally required to report:
+      <ul style="margin-top:6px">
+        <li>Imminent risk of harm to self or others</li>
+        <li>Suspected abuse of children, elderly, or disabled persons</li>
+      </ul>
+    </div>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec9">
+    <h2>9. Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="q">Q. Does this system replace a doctor's diagnosis?</div>
+      <div class="a">No. Decision Catcher is a tool that supports clinician decisions. All final diagnoses and treatment decisions are made by your clinician.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Q. Is there a fee for beta participation?</div>
+      <div class="a">The beta program itself is free. However, clinical assessment or training fees follow the clinic's policy.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Q. What if I don't like the results?</div>
+      <div class="a">Results are for reference. You can interpret them with your clinician and pursue a different evaluation direction if needed.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Q. Can I share my results with friends or family?</div>
+      <div class="a">Your results are yours. However, during the beta stage, system recommendations may not be perfect, so we recommend interpreting them with your clinician.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Q. Can minors (under 18) participate?</div>
+      <div class="a">Yes. However, parental/legal guardian consent is required. If parents are present, they can sign immediately; otherwise, we email the consent form.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Q. What happens after the beta ends?</div>
+      <div class="a">After beta and official launch, you can continue using the system. Beta participants receive priority notifications.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Q. How do I delete my data?</div>
+      <div class="a">Email support@neurocatchers.com — all data will be deleted within 30 days.</div>
+    </div>
+
+    <a href="#" class="back-to-top">↑ Top</a>
+  </div>
+
+  <div class="section" id="sec10">
+    <h2>10. Contact & Support</h2>
+
+    <div class="contact-box">
+      <h3>📧 Boston Neuromind LLC</h3>
+      <p>Canton, Massachusetts, USA</p>
+      <p>Email: <a href="mailto:support@neurocatchers.com">support@neurocatchers.com</a></p>
+      <p style="margin-top:10px;font-size:13px;color:#5a4a35">
+        Beta program inquiries, data deletion requests, or general questions — all by email.<br>
+        We respond within 48 hours on business days.
+      </p>
+    </div>
+
+    <p style="margin-top:20px;text-align:center;font-size:13px;color:#888">
+      © 2026 Boston Neuromind LLC · Decision Catcher v7.0 Beta<br>
+      Client Manual v1.0 (2026-05-21)
+    </p>
   </div>
 </div>
-<footer class="footer">
-  <p>Boston Neuromind LLC · CNA v7.0.0</p>
-</footer>
-<script src="/decision.js"></script>
 </body>
 </html>

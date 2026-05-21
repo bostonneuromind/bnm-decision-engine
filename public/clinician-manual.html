@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>매뉴얼 · Manual — Decision Catcher</title>
+<title>임상가 매뉴얼 · Clinician Manual — Decision Catcher</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
 body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px;display:flex;align-items:center;justify-content:center}
@@ -12,16 +12,18 @@ nav.topnav{background:#fff;border:2px solid #1a1a1a;border-radius:999px;padding:
 nav.topnav .brand{font-weight:800;color:#C9444F}
 nav.topnav a{color:#5a4a35;text-decoration:none;padding:6px 12px;font-size:14px;font-weight:600}
 .head{text-align:center;margin-bottom:40px}
-.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+.badge{display:inline-block;background:#2563eb;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
 h1{font-size:36px;color:#2a2018;margin-bottom:10px}
 .sub{font-size:15px;color:#5a4a35}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:36px;text-align:center;text-decoration:none;color:inherit;transition:all 0.15s}
-.card:hover{transform:translateY(-6px);border-color:#C9444F}
+.card:hover{transform:translateY(-6px);border-color:#2563eb}
 .flag{font-size:48px;margin-bottom:16px}
 .card h2{font-size:24px;color:#2a2018;margin-bottom:10px}
 .card .desc{font-size:14px;color:#5a4a35;margin-bottom:20px;line-height:1.5}
-.card .btn{display:inline-block;background:#C9444F;color:#fff;padding:10px 24px;border-radius:10px;font-weight:700;font-size:14px}
+.card .btn{display:inline-block;background:#2563eb;color:#fff;padding:10px 24px;border-radius:10px;font-weight:700;font-size:14px}
+.warning{background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 20px;border-radius:8px;margin-bottom:24px;font-size:14px;line-height:1.6}
+.warning strong{color:#92400e}
 @media (max-width:600px){.cards{grid-template-columns:1fr}}
 </style>
 </head>
@@ -30,29 +32,34 @@ h1{font-size:36px;color:#2a2018;margin-bottom:10px}
   <nav class="topnav">
     <a href="/" class="brand">Decision Catcher</a>
     <div>
-      <a href="/">홈 / Home</a>
-      <a href="/beta-signup.html">베타 등록 / Beta</a>
+      <a href="https://neurocatchers.com/admin.html">Admin</a>
     </div>
   </nav>
 
   <div class="head">
-    <div class="badge">베타 클라이언트 매뉴얼 · Beta Client Manual</div>
-    <h1>언어 선택 · Choose Language</h1>
-    <div class="sub">Decision Catcher 사용 가이드를 선택해주세요<br>Please select your preferred language for the user guide</div>
+    <div class="badge">임상가 전용 · Clinician Only</div>
+    <h1>임상가 매뉴얼 · Clinician Manual</h1>
+    <div class="sub">Catcher Navigator Algorithm v7.0 · Boston Neuromind LLC</div>
+  </div>
+
+  <div class="warning">
+    <strong>⚠️ 임상가 전용 자료 · For Clinicians Only</strong><br>
+    이 매뉴얼은 임상 훈련을 받은 전문가용입니다. 클라이언트 매뉴얼은 <a href="/manual.html" style="color:#C9444F;font-weight:700">여기</a>에 있습니다.<br>
+    This manual is for trained clinicians only. The client manual is <a href="/manual.html" style="color:#C9444F;font-weight:700">here</a>.
   </div>
 
   <div class="cards">
-    <a href="/manual-ko.html" class="card">
+    <a href="/clinician-manual-ko.html" class="card">
       <div class="flag">🇰🇷</div>
       <h2>한국어 매뉴얼</h2>
-      <div class="desc">베타 참여자를 위한<br>전체 사용 가이드<br>(10개 섹션, 약 15분 읽기)</div>
+      <div class="desc">전체 14장 + 부록 A (임상 근거) + 부록 B (연락처)</div>
       <div class="btn">읽기 →</div>
     </a>
 
-    <a href="/manual-en.html" class="card">
+    <a href="/clinician-manual-en.html" class="card">
       <div class="flag">🇺🇸</div>
       <h2>English Manual</h2>
-      <div class="desc">Complete user guide<br>for beta participants<br>(10 sections, ~15 min read)</div>
+      <div class="desc">Complete 14 chapters + Appendix A (clinical evidence) + B (contact)</div>
       <div class="btn">Read →</div>
     </a>
   </div>
