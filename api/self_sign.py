@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import secrets
 from datetime import timedelta
 from _supabase import select, update, insert
-from _resend import send_parent_consent_email
+from _resend import parent_consent_email
 
 
 def _resp(h, status, body):
@@ -81,12 +81,14 @@ class handler(BaseHTTPRequestHandler):
 
                 # Resend 이메일 발송
                 try:
-                    send_parent_consent_email(
-                        parent_email=row.get('parent_email'),
+                    site_url = os.environ.get('SITE_URL', 'https://decision.neurocatchers.com')
+                    consent_url = f"{site_url}/parent-consent.html?token={token}"
+                    parent_consent_email(
                         parent_name=row.get('parent_name'),
+                        parent_email=row.get('parent_email'),
                         child_name=row.get('full_name'),
                         child_age=row.get('age'),
-                        consent_token=token,
+                        consent_url=consent_url,
                         language=row.get('language', 'ko'),
                     )
                     print(f"parent consent email sent to {row.get('parent_email')}")
