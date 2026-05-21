@@ -30,7 +30,14 @@ class handler(BaseHTTPRequestHandler):
             return _resp(self, 401, {'error': 'Unauthorized'})
 
         try:
-            rows = select('beta_signups', order='created_at.desc', limit=200)
+            # filters로 order/limit 박기 (PostgREST는 query param으로 받음)
+            rows = select('beta_signups', filters={
+                'order': 'created_at.desc',
+                'limit': '200'
+            })
+
+            if rows is None:
+                rows = []
 
             stats = {
                 'total': len(rows),
@@ -57,5 +64,7 @@ class handler(BaseHTTPRequestHandler):
             })
 
         except Exception as e:
+            import traceback
             print(f"admin_beta_list error: {e}")
+            print(traceback.format_exc())
             return _resp(self, 500, {'error': str(e)})
