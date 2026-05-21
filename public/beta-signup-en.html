@@ -6,47 +6,47 @@
 <title>Beta Signup — Decision Catcher</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
-body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
+body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);color:#2E5A7A;min-height:100vh;padding:40px 20px}
 .container{max-width:680px;margin:0 auto}
 .lang-switch{text-align:right;margin-bottom:20px}
-.lang-switch a{color:#5a4a35;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px}
+.lang-switch a{color:#4A90C2;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #BDD7E7;font-size:14px}
 .head{text-align:center;margin-bottom:40px}
-.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
-h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
-.sub{font-size:16px;color:#5a4a35}
-.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:32px;margin-bottom:20px}
-.section-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0eee9}
+.badge{display:inline-block;background:#4A90C2;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:36px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
+.sub{font-size:16px;color:#4A90C2}
+.card{background:#fff;border:2px solid #2E5A7A;border-radius:20px;padding:32px;margin-bottom:20px}
+.section-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #E8F1F8}
 .field{margin-bottom:16px}
-.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px;color:#2a2018}
-.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:2px solid #ddd;border-radius:10px;font-size:15px;font-family:inherit;background:#fafafa}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#C9444F;background:#fff}
-.field .hint{font-size:12px;color:#888;margin-top:4px}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px;color:#2E5A7A}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:2px solid #BDD7E7;border-radius:10px;font-size:15px;font-family:inherit;background:#F5F9FC}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#4A90C2;background:#fff}
+.field .hint{font-size:12px;color:#7BAFD0;margin-top:4px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.minor-section{display:none;background:#fff8e1;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin-top:12px}
+.minor-section{display:none;background:#E8F1F8;border:2px solid #7BAFD0;border-radius:12px;padding:20px;margin-top:12px}
 .minor-section.show{display:block}
-.minor-section h3{font-size:15px;margin-bottom:10px;color:#92400e}
-.delivery-section{background:#f0f7ff;border:2px solid #4a90c2;border-radius:12px;padding:20px;margin-top:12px;margin-bottom:16px}
-.delivery-section h3{font-size:15px;margin-bottom:10px;color:#075985}
+.minor-section h3{font-size:15px;margin-bottom:10px;color:#2E5A7A}
+.delivery-section{background:#E8F1F8;border:2px solid #4A90C2;border-radius:12px;padding:20px;margin-top:12px;margin-bottom:16px}
+.delivery-section h3{font-size:15px;margin-bottom:10px;color:#2E5A7A}
 .radio-group{display:flex;gap:10px;margin-top:8px}
-.radio-option{flex:1;border:2px solid #ddd;border-radius:10px;padding:14px;cursor:pointer;text-align:center;background:#fafafa;transition:all 0.15s}
-.radio-option:hover{border-color:#C9444F}
-.radio-option.selected{border-color:#C9444F;background:#fff5f5}
+.radio-option{flex:1;border:2px solid #BDD7E7;border-radius:10px;padding:14px;cursor:pointer;text-align:center;background:#F5F9FC;transition:all 0.15s}
+.radio-option:hover{border-color:#4A90C2}
+.radio-option.selected{border-color:#4A90C2;background:#E8F1F8}
 .radio-option input{display:none}
 .radio-option .opt-title{font-weight:700;font-size:14px;margin-bottom:4px}
-.radio-option .opt-desc{font-size:12px;color:#666}
-.btn{display:block;width:100%;padding:16px;background:#1a1a1a;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px}
+.radio-option .opt-desc{font-size:12px;color:#4A90C2}
+.btn{display:block;width:100%;padding:16px;background:#2E5A7A;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px}
 .btn:hover{background:#000}
-.btn:disabled{background:#ccc;cursor:not-allowed}
-.btn.primary{background:#C9444F}
-.btn.primary:hover{background:#a03540}
-.error{background:#fee;color:#c00;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.btn:disabled{background:#BDD7E7;cursor:not-allowed}
+.btn.primary{background:#4A90C2}
+.btn.primary:hover{background:#2E5A7A}
+.error{background:#fee2e2;color:#dc2626;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
 .error.show{display:block}
 .success{background:#efe;color:#080;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
 .success.show{display:block}
-.loading{display:none;text-align:center;padding:20px;color:#666}
+.loading{display:none;text-align:center;padding:20px;color:#4A90C2}
 .loading.show{display:block}
-.required{color:#C9444F}
-.exclusion-note{background:#fff3f3;border-left:4px solid #C9444F;padding:14px 18px;border-radius:8px;font-size:13px;color:#5a4a35;margin-bottom:20px;line-height:1.6}
+.required{color:#4A90C2}
+.exclusion-note{background:#E8F1F8;border-left:4px solid #4A90C2;padding:14px 18px;border-radius:8px;font-size:13px;color:#4A90C2;margin-bottom:20px;line-height:1.6}
 </style>
 </head>
 <body>

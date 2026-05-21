@@ -6,46 +6,46 @@
 <title>임상 동의서 — Decision Catcher</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
-body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
+body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);color:#2E5A7A;min-height:100vh;padding:40px 20px}
 .container{max-width:780px;margin:0 auto}
 .lang-switch{text-align:right;margin-bottom:20px}
-.lang-switch button{padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:13px;cursor:pointer;font-family:inherit}
+.lang-switch button{padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #BDD7E7;font-size:13px;cursor:pointer;font-family:inherit}
 .head{text-align:center;margin-bottom:40px}
-.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
-h1{font-size:32px;color:#2a2018;margin-bottom:10px;line-height:1.2}
-.sub{font-size:15px;color:#5a4a35}
-.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:32px;margin-bottom:20px}
-.consent-content{font-size:14px;line-height:1.7;color:#2a2018;max-height:400px;overflow-y:auto;padding:20px;background:#fafafa;border:1.5px solid #e5e5e5;border-radius:12px;margin-bottom:20px}
-.consent-content h3{font-size:16px;font-weight:800;margin:18px 0 10px;color:#2a2018}
+.badge{display:inline-block;background:#4A90C2;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:32px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
+.sub{font-size:15px;color:#4A90C2}
+.card{background:#fff;border:2px solid #2E5A7A;border-radius:20px;padding:32px;margin-bottom:20px}
+.consent-content{font-size:14px;line-height:1.7;color:#2E5A7A;max-height:400px;overflow-y:auto;padding:20px;background:#F5F9FC;border:1.5px solid #e5e5e5;border-radius:12px;margin-bottom:20px}
+.consent-content h3{font-size:16px;font-weight:800;margin:18px 0 10px;color:#2E5A7A}
 .consent-content h3:first-child{margin-top:0}
 .consent-content p{margin-bottom:10px}
 .consent-content ul{padding-left:20px;margin-bottom:10px}
 .consent-content li{margin-bottom:6px}
-.checkboxes{margin:20px 0;padding:20px;background:#f0eee9;border-radius:12px}
+.checkboxes{margin:20px 0;padding:20px;background:#E8F1F8;border-radius:12px}
 .check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;cursor:pointer}
-.check-item input[type=checkbox]{margin-top:3px;width:18px;height:18px;cursor:pointer;accent-color:#C9444F}
+.check-item input[type=checkbox]{margin-top:3px;width:18px;height:18px;cursor:pointer;accent-color:#4A90C2}
 .check-item label{font-size:14px;line-height:1.5;cursor:pointer;flex:1}
-.signature-section{margin-top:24px;padding:20px;background:#fff5f5;border:2px solid #C9444F;border-radius:12px}
+.signature-section{margin-top:24px;padding:20px;background:#E8F1F8;border:2px solid #4A90C2;border-radius:12px}
 .signature-section h3{font-size:16px;margin-bottom:12px}
-.signature-pad-wrapper{position:relative;background:#fff;border:2px dashed #C9444F;border-radius:10px;overflow:hidden}
+.signature-pad-wrapper{position:relative;background:#fff;border:2px dashed #4A90C2;border-radius:10px;overflow:hidden}
 canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
 .sig-actions{display:flex;gap:10px;margin-top:10px}
-.btn-clear{padding:8px 16px;background:#fff;color:#666;border:1.5px solid #ccc;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit}
-.btn-clear:hover{border-color:#C9444F;color:#C9444F}
+.btn-clear{padding:8px 16px;background:#fff;color:#4A90C2;border:1.5px solid #BDD7E7;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit}
+.btn-clear:hover{border-color:#4A90C2;color:#4A90C2}
 .sig-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .field{margin-bottom:10px}
 .field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
-.field input{width:100%;padding:10px 12px;border:2px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;background:#fff}
-.btn-submit{display:block;width:100%;padding:16px;background:#C9444F;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:20px}
-.btn-submit:hover{background:#a03540}
-.btn-submit:disabled{background:#ccc;cursor:not-allowed}
-.error{background:#fee;color:#c00;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.field input{width:100%;padding:10px 12px;border:2px solid #BDD7E7;border-radius:8px;font-size:14px;font-family:inherit;background:#fff}
+.btn-submit{display:block;width:100%;padding:16px;background:#4A90C2;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:20px}
+.btn-submit:hover{background:#2E5A7A}
+.btn-submit:disabled{background:#BDD7E7;cursor:not-allowed}
+.error{background:#fee2e2;color:#dc2626;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
 .error.show{display:block}
 .success{background:#efe;color:#080;padding:14px 18px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
 .success.show{display:block}
 .mode-banner{padding:14px 18px;border-radius:10px;font-size:14px;margin-bottom:16px;line-height:1.5}
-.mode-banner.adult{background:#e0f2fe;border-left:4px solid #0284c7;color:#075985}
-.mode-banner.minor{background:#fff8e1;border-left:4px solid #f59e0b;color:#92400e}
+.mode-banner.adult{background:#e0f2fe;border-left:4px solid #0284c7;color:#2E5A7A}
+.mode-banner.minor{background:#E8F1F8;border-left:4px solid #7BAFD0;color:#2E5A7A}
 .mode-banner.in-person{background:#dcfce7;border-left:4px solid #16a34a;color:#14532d}
 </style>
 </head>
@@ -211,7 +211,7 @@ function resizeCanvas() {
   const rect = canvas.getBoundingClientRect();
   canvas.width = rect.width;
   canvas.height = rect.height;
-  ctx.strokeStyle = '#1a1a1a';
+  ctx.strokeStyle = '#2E5A7A';
   ctx.lineWidth = 2.5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
