@@ -295,11 +295,13 @@ function toggleParentEmailRequired() {
     if (emailInput) emailInput.placeholder = 'parent@example.com';
   }
 }
-document.querySelectorAll('input[name="parentLocation"]').forEach(r => {
-  r.addEventListener('change', toggleParentEmailRequired);
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('input[name="parentLocation"]').forEach(r => {
+    r.addEventListener('change', toggleParentEmailRequired);
+    r.addEventListener('click', toggleParentEmailRequired);
+  });
+  toggleParentEmailRequired();
 });
-// 초기 상태도 반영
-toggleParentEmailRequired();
 
 </script>
 </body>
