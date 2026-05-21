@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부모 동의 자료 / Awaiting Parent Consent</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px;display:flex;align-items:center;justify-content:center}
+.container{max-width:600px;width:100%}
+.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:48px 32px;text-align:center}
+.icon{font-size:64px;margin-bottom:20px}
+h1{font-size:28px;color:#2a2018;margin-bottom:16px;line-height:1.2}
+p{font-size:15px;color:#5a4a35;line-height:1.6;margin-bottom:12px}
+.email-box{background:#fff8e1;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin:24px 0;font-size:14px}
+.btn{display:inline-block;background:#1a1a1a;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;margin-top:20px}
+.lang-en{display:none}
+body.lang-en .lang-ko{display:none}
+body.lang-en .lang-en{display:block}
+.lang-toggle{position:absolute;top:20px;right:20px}
+.lang-toggle button{background:#fff;border:1.5px solid #ccc;padding:8px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:13px}
+</style>
+</head>
+<body>
+<div class="lang-toggle">
+  <button onclick="document.body.classList.toggle('lang-en')">한 / EN</button>
+</div>
+<div class="container">
+  <div class="card">
+    <div class="icon">📧</div>
+    <h1 class="lang-ko">부모님 동의 자료</h1>
+    <h1 class="lang-en">Awaiting Parent Consent</h1>
+
+    <p class="lang-ko">본인 Assent가 완료되었습니다.</p>
+    <p class="lang-en">Your assent has been recorded.</p>
+
+    <div class="email-box">
+      <strong class="lang-ko">📨 부모님께 동의서 이메일이 자료 자료 자료.</strong>
+      <strong class="lang-en">📨 Consent form sent to your parent.</strong>
+      <br><br>
+      <span class="lang-ko">부모님이 이메일의 링크를 클릭하고 동의서에 서명하시면 베타 참여가 자료 자료 자료.</span>
+      <span class="lang-en">Once your parent clicks the email link and signs the consent form, your beta enrollment will be activated.</span>
+    </div>
+
+    <p class="lang-ko">자료 자료 자료 자료 자료 자료 자료 자료 자료, support@neurocatchers.com 으로 자료 자료.</p>
+    <p class="lang-en">If you have any questions, please contact support@neurocatchers.com</p>
+
+    <a href="/" class="btn lang-ko">홈으로</a>
+    <a href="/" class="btn lang-en">Home</a>
+  </div>
+</div>
+</body>
+</html>

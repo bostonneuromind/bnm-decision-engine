@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beta Signup — Decision Catcher</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
+.container{max-width:680px;margin:0 auto}
+.lang-switch{text-align:right;margin-bottom:20px}
+.lang-switch a{color:#5a4a35;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px}
+.head{text-align:center;margin-bottom:40px}
+.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
+.sub{font-size:16px;color:#5a4a35}
+.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:32px;margin-bottom:20px}
+.section-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0eee9}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px;color:#2a2018}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:2px solid #ddd;border-radius:10px;font-size:15px;font-family:inherit;background:#fafafa}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#C9444F;background:#fff}
+.field .hint{font-size:12px;color:#888;margin-top:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.minor-section{display:none;background:#fff8e1;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin-top:12px}
+.minor-section.show{display:block}
+.minor-section h3{font-size:15px;margin-bottom:10px;color:#92400e}
+.radio-group{display:flex;gap:10px;margin-top:8px}
+.radio-option{flex:1;border:2px solid #ddd;border-radius:10px;padding:14px;cursor:pointer;text-align:center;background:#fafafa;transition:all 0.15s}
+.radio-option:hover{border-color:#C9444F}
+.radio-option.selected{border-color:#C9444F;background:#fff5f5}
+.radio-option input{display:none}
+.radio-option .opt-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.radio-option .opt-desc{font-size:12px;color:#666}
+.btn{display:block;width:100%;padding:16px;background:#1a1a1a;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px}
+.btn:hover{background:#000}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.btn.primary{background:#C9444F}
+.btn.primary:hover{background:#a03540}
+.error{background:#fee;color:#c00;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.error.show{display:block}
+.success{background:#efe;color:#080;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.success.show{display:block}
+.loading{display:none;text-align:center;padding:20px;color:#666}
+.loading.show{display:block}
+.required{color:#C9444F}
+.exclusion-note{background:#fff3f3;border-left:4px solid #C9444F;padding:14px 18px;border-radius:8px;font-size:13px;color:#5a4a35;margin-bottom:20px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lang-switch">
+    <a href="/beta-signup.html">한국어</a>
+  </div>
+
+  <div class="head">
+    <div class="badge">CNA v7 Beta · 5 Clients Only</div>
+    <h1>Decision Catcher<br>Beta Enrollment</h1>
+    <div class="sub">Differential diagnosis + Comorbidity + Adaptive training</div>
+  </div>
+
+  <div class="card">
+    <div class="exclusion-note">
+      <strong>⚠️ Exclusion Criteria:</strong> Acute psychosis, active suicidal crisis, uncontrolled bipolar disorder, suicide attempt within the past 6 months, or current substance dependence — these conditions exclude participation.
+    </div>
+
+    <form id="signupForm">
+      <div class="section-title">1. Applicant Information</div>
+
+      <div class="field">
+        <label>Full Name <span class="required">*</span></label>
+        <input type="text" id="fullName" required placeholder="John Doe">
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" id="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label>Phone</label>
+          <input type="tel" id="phone" placeholder="555-0100">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Date of Birth <span class="required">*</span></label>
+        <input type="date" id="birthDate" required>
+        <div class="hint">Parental/guardian consent required for those under 18</div>
+      </div>
+
+      <div class="minor-section" id="minorSection">
+        <h3>🛡️ Parent/Guardian Consent Required</h3>
+
+        <div class="field">
+          <label>Is your parent/guardian with you now? <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option" id="parentPresent">
+              <input type="radio" name="parentLocation" value="present">
+              <div class="opt-title">Yes, they're here</div>
+              <div class="opt-desc">Sign in person now</div>
+            </label>
+            <label class="radio-option" id="parentRemote">
+              <input type="radio" name="parentLocation" value="remote">
+              <div class="opt-title">No, send by email</div>
+              <div class="opt-desc">Email the consent form</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Parent/Guardian Name <span class="required">*</span></label>
+          <input type="text" id="parentName" placeholder="Jane Doe">
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Parent/Guardian Email <span class="required">*</span></label>
+            <input type="email" id="parentEmail" placeholder="parent@example.com">
+          </div>
+          <div class="field">
+            <label>Relationship <span class="required">*</span></label>
+            <select id="parentRelationship">
+              <option value="">Select...</option>
+              <option value="mother">Mother</option>
+              <option value="father">Father</option>
+              <option value="guardian">Legal Guardian</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Parent/Guardian Phone</label>
+          <input type="tel" id="parentPhone" placeholder="555-0100">
+        </div>
+      </div>
+
+      <button type="submit" class="btn primary" id="submitBtn">Next (Consent Form)</button>
+
+      <div class="error" id="errorMsg"></div>
+      <div class="success" id="successMsg"></div>
+      <div class="loading" id="loadingMsg">Submitting...</div>
+    </form>
+  </div>
+</div>
+
+<script>
+const birthDate = document.getElementById('birthDate');
+const minorSection = document.getElementById('minorSection');
+const form = document.getElementById('signupForm');
+const errorMsg = document.getElementById('errorMsg');
+const successMsg = document.getElementById('successMsg');
+const loadingMsg = document.getElementById('loadingMsg');
+const submitBtn = document.getElementById('submitBtn');
+
+function calculateAge(birth) {
+  const today = new Date();
+  const b = new Date(birth);
+  let age = today.getFullYear() - b.getFullYear();
+  const m = today.getMonth() - b.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+  return age;
+}
+
+birthDate.addEventListener('change', () => {
+  if (!birthDate.value) return;
+  const age = calculateAge(birthDate.value);
+  if (age < 18 && age >= 0) {
+    minorSection.classList.add('show');
+  } else {
+    minorSection.classList.remove('show');
+  }
+});
+
+document.querySelectorAll('.radio-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    opt.querySelector('input').checked = true;
+  });
+});
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.classList.add('show');
+  successMsg.classList.remove('show');
+  setTimeout(() => errorMsg.classList.remove('show'), 5000);
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorMsg.classList.remove('show');
+  successMsg.classList.remove('show');
+
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const birth = birthDate.value;
+
+  if (!fullName || !email || !birth) {
+    showError('Please fill in all required fields');
+    return;
+  }
+
+  const age = calculateAge(birth);
+  if (age < 0 || age > 120) {
+    showError('Please check the date of birth');
+    return;
+  }
+
+  const isMinor = age < 18;
+  let parentData = {};
+
+  if (isMinor) {
+    const radio = document.querySelector('input[name="parentLocation"]:checked');
+    if (!radio) {
+      showError('Please select parent/guardian consent method');
+      return;
+    }
+    const parentName = document.getElementById('parentName').value.trim();
+    const parentEmail = document.getElementById('parentEmail').value.trim();
+    const parentRel = document.getElementById('parentRelationship').value;
+    if (!parentName || !parentEmail || !parentRel) {
+      showError('Please fill in all parent/guardian information');
+      return;
+    }
+    parentData = {
+      parentPresent: radio.value === 'present',
+      parentName: parentName,
+      parentEmail: parentEmail,
+      parentPhone: document.getElementById('parentPhone').value.trim(),
+      parentRelationship: parentRel
+    };
+  }
+
+  submitBtn.disabled = true;
+  loadingMsg.classList.add('show');
+
+  try {
+    const res = await fetch('/api/beta_signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName, email, phone, birthDate: birth, age, isMinor, language: 'en',
+        ...parentData
+      })
+    });
+    const data = await res.json();
+
+    if (!res.ok || data.error) {
+      throw new Error(data.error || 'Server error');
+    }
+
+    successMsg.textContent = '✅ Submitted! Redirecting to consent form...';
+    successMsg.classList.add('show');
+
+    setTimeout(() => {
+      if (isMinor && parentData.parentPresent) {
+        window.location.href = `/consent-en.html?signup_id=${data.signup_id}&mode=in_person`;
+      } else if (isMinor) {
+        window.location.href = `/consent-en.html?signup_id=${data.signup_id}&mode=minor_assent`;
+      } else {
+        window.location.href = `/consent-en.html?signup_id=${data.signup_id}&mode=adult`;
+      }
+    }, 1500);
+
+  } catch (err) {
+    showError('Error: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    loadingMsg.classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

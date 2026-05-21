@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>베타 등록 — Decision Catcher</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
+.container{max-width:680px;margin:0 auto}
+.lang-switch{text-align:right;margin-bottom:20px}
+.lang-switch a{color:#5a4a35;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px}
+.head{text-align:center;margin-bottom:40px}
+.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
+.sub{font-size:16px;color:#5a4a35}
+.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:32px;margin-bottom:20px}
+.section-title{font-size:18px;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0eee9}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:14px;font-weight:700;margin-bottom:6px;color:#2a2018}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:2px solid #ddd;border-radius:10px;font-size:15px;font-family:inherit;background:#fafafa}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#C9444F;background:#fff}
+.field .hint{font-size:12px;color:#888;margin-top:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.minor-section{display:none;background:#fff8e1;border:2px solid #f59e0b;border-radius:12px;padding:20px;margin-top:12px}
+.minor-section.show{display:block}
+.minor-section h3{font-size:15px;margin-bottom:10px;color:#92400e}
+.radio-group{display:flex;gap:10px;margin-top:8px}
+.radio-option{flex:1;border:2px solid #ddd;border-radius:10px;padding:14px;cursor:pointer;text-align:center;background:#fafafa;transition:all 0.15s}
+.radio-option:hover{border-color:#C9444F}
+.radio-option.selected{border-color:#C9444F;background:#fff5f5}
+.radio-option input{display:none}
+.radio-option .opt-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.radio-option .opt-desc{font-size:12px;color:#666}
+.btn{display:block;width:100%;padding:16px;background:#1a1a1a;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px}
+.btn:hover{background:#000}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.btn.primary{background:#C9444F}
+.btn.primary:hover{background:#a03540}
+.error{background:#fee;color:#c00;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.error.show{display:block}
+.success{background:#efe;color:#080;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.success.show{display:block}
+.loading{display:none;text-align:center;padding:20px;color:#666}
+.loading.show{display:block}
+.required{color:#C9444F}
+.exclusion-note{background:#fff3f3;border-left:4px solid #C9444F;padding:14px 18px;border-radius:8px;font-size:13px;color:#5a4a35;margin-bottom:20px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lang-switch">
+    <a href="/beta-signup-en.html">English</a>
+  </div>
+
+  <div class="head">
+    <div class="badge">CNA v7 베타 · 5명 한정</div>
+    <h1>Decision Catcher<br>베타 참여 신청</h1>
+    <div class="sub">감별 진단 + 공존 진단 + 적응적 훈련</div>
+  </div>
+
+  <div class="card">
+    <div class="exclusion-note">
+      <strong>⚠️ 참여 제외 자료:</strong> 급성 정신증, 활성 자살 위기, 통제되지 않은 양극성 장애, 최근 6개월 자살 시도력, 약물 의존(현재)에 해당하는 경우 참여가 어렵습니다.
+    </div>
+
+    <form id="signupForm">
+      <div class="section-title">1. 신청자 기본 정보</div>
+
+      <div class="field">
+        <label>성명 <span class="required">*</span></label>
+        <input type="text" id="fullName" required placeholder="홍길동">
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>이메일 <span class="required">*</span></label>
+          <input type="email" id="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label>전화번호</label>
+          <input type="tel" id="phone" placeholder="010-0000-0000">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>생년월일 <span class="required">*</span></label>
+        <input type="date" id="birthDate" required>
+        <div class="hint">만 18세 미만은 부모/보호자 동의가 필요합니다</div>
+      </div>
+
+      <!-- 미성년자 자료 -->
+      <div class="minor-section" id="minorSection">
+        <h3>🛡️ 부모/보호자 동의 자료</h3>
+
+        <div class="field">
+          <label>부모/보호자가 현재 함께 계신가요? <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option" id="parentPresent">
+              <input type="radio" name="parentLocation" value="present">
+              <div class="opt-title">네, 현장에 함께 있어요</div>
+              <div class="opt-desc">바로 사인 받을 수 있어요</div>
+            </label>
+            <label class="radio-option" id="parentRemote">
+              <input type="radio" name="parentLocation" value="remote">
+              <div class="opt-title">아니요, 이메일로 보낼게요</div>
+              <div class="opt-desc">부모님 이메일로 동의서 전송</div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>부모/보호자 성명 <span class="required">*</span></label>
+          <input type="text" id="parentName" placeholder="홍부모">
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>부모/보호자 이메일 <span class="required">*</span></label>
+            <input type="email" id="parentEmail" placeholder="parent@example.com">
+          </div>
+          <div class="field">
+            <label>관계 <span class="required">*</span></label>
+            <select id="parentRelationship">
+              <option value="">선택...</option>
+              <option value="mother">어머니</option>
+              <option value="father">아버지</option>
+              <option value="guardian">법정 보호자</option>
+              <option value="other">기타</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>부모/보호자 전화번호</label>
+          <input type="tel" id="parentPhone" placeholder="010-0000-0000">
+        </div>
+      </div>
+
+      <button type="submit" class="btn primary" id="submitBtn">다음 (동의서 자료)</button>
+
+      <div class="error" id="errorMsg"></div>
+      <div class="success" id="successMsg"></div>
+      <div class="loading" id="loadingMsg">전송 중...</div>
+    </form>
+  </div>
+</div>
+
+<script>
+const birthDate = document.getElementById('birthDate');
+const minorSection = document.getElementById('minorSection');
+const parentPresent = document.getElementById('parentPresent');
+const parentRemote = document.getElementById('parentRemote');
+const form = document.getElementById('signupForm');
+const errorMsg = document.getElementById('errorMsg');
+const successMsg = document.getElementById('successMsg');
+const loadingMsg = document.getElementById('loadingMsg');
+const submitBtn = document.getElementById('submitBtn');
+
+function calculateAge(birth) {
+  const today = new Date();
+  const b = new Date(birth);
+  let age = today.getFullYear() - b.getFullYear();
+  const m = today.getMonth() - b.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
+  return age;
+}
+
+birthDate.addEventListener('change', () => {
+  if (!birthDate.value) return;
+  const age = calculateAge(birthDate.value);
+  if (age < 18 && age >= 0) {
+    minorSection.classList.add('show');
+  } else {
+    minorSection.classList.remove('show');
+  }
+});
+
+// Radio button styling
+document.querySelectorAll('.radio-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    opt.querySelector('input').checked = true;
+  });
+});
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.classList.add('show');
+  successMsg.classList.remove('show');
+  setTimeout(() => errorMsg.classList.remove('show'), 5000);
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorMsg.classList.remove('show');
+  successMsg.classList.remove('show');
+
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const birth = birthDate.value;
+
+  if (!fullName || !email || !birth) {
+    showError('필수 항목을 모두 박아주세요');
+    return;
+  }
+
+  const age = calculateAge(birth);
+  if (age < 0 || age > 120) {
+    showError('생년월일을 확인해주세요');
+    return;
+  }
+
+  const isMinor = age < 18;
+  let parentData = {};
+
+  if (isMinor) {
+    const radio = document.querySelector('input[name="parentLocation"]:checked');
+    if (!radio) {
+      showError('부모/보호자 동의 방식을 선택해주세요');
+      return;
+    }
+    const parentName = document.getElementById('parentName').value.trim();
+    const parentEmail = document.getElementById('parentEmail').value.trim();
+    const parentRel = document.getElementById('parentRelationship').value;
+    if (!parentName || !parentEmail || !parentRel) {
+      showError('부모/보호자 정보를 모두 박아주세요');
+      return;
+    }
+    parentData = {
+      parentPresent: radio.value === 'present',
+      parentName: parentName,
+      parentEmail: parentEmail,
+      parentPhone: document.getElementById('parentPhone').value.trim(),
+      parentRelationship: parentRel
+    };
+  }
+
+  submitBtn.disabled = true;
+  loadingMsg.classList.add('show');
+
+  try {
+    const res = await fetch('/api/beta_signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName, email, phone, birthDate: birth, age, isMinor, language: 'ko',
+        ...parentData
+      })
+    });
+    const data = await res.json();
+
+    if (!res.ok || data.error) {
+      throw new Error(data.error || '서버 오류');
+    }
+
+    successMsg.textContent = '✅ 신청 완료! 동의서 페이지로 이동합니다...';
+    successMsg.classList.add('show');
+
+    setTimeout(() => {
+      if (isMinor && parentData.parentPresent) {
+        // 현장에서 부모 사인 — 동의서 페이지 (본인 + 부모 둘 다)
+        window.location.href = `/consent.html?signup_id=${data.signup_id}&mode=in_person`;
+      } else if (isMinor) {
+        // 부모에게 이메일 보냄 — 본인은 assent만
+        window.location.href = `/consent.html?signup_id=${data.signup_id}&mode=minor_assent`;
+      } else {
+        // 성인 — 본인 사인
+        window.location.href = `/consent.html?signup_id=${data.signup_id}&mode=adult`;
+      }
+    }, 1500);
+
+  } catch (err) {
+    showError('오류: ' + err.message);
+  } finally {
+    submitBtn.disabled = false;
+    loadingMsg.classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

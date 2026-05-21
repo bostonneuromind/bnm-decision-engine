@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informed Consent — Decision Catcher</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
+.container{max-width:780px;margin:0 auto}
+.lang-switch{text-align:right;margin-bottom:20px}
+.lang-switch a{color:#5a4a35;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px}
+.head{text-align:center;margin-bottom:40px}
+.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:32px;color:#2a2018;margin-bottom:10px;line-height:1.2}
+.sub{font-size:15px;color:#5a4a35}
+.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:32px;margin-bottom:20px}
+.consent-content{font-size:14px;line-height:1.7;color:#2a2018;max-height:400px;overflow-y:auto;padding:20px;background:#fafafa;border:1.5px solid #e5e5e5;border-radius:12px;margin-bottom:20px}
+.consent-content h3{font-size:16px;font-weight:800;margin:18px 0 10px;color:#2a2018}
+.consent-content h3:first-child{margin-top:0}
+.consent-content p{margin-bottom:10px}
+.consent-content ul{padding-left:20px;margin-bottom:10px}
+.consent-content li{margin-bottom:6px}
+.checkboxes{margin:20px 0;padding:20px;background:#f0eee9;border-radius:12px}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;cursor:pointer}
+.check-item input[type=checkbox]{margin-top:3px;width:18px;height:18px;cursor:pointer;accent-color:#C9444F}
+.check-item label{font-size:14px;line-height:1.5;cursor:pointer;flex:1}
+.signature-section{margin-top:24px;padding:20px;background:#fff5f5;border:2px solid #C9444F;border-radius:12px}
+.signature-section h3{font-size:16px;margin-bottom:12px}
+.signature-pad-wrapper{position:relative;background:#fff;border:2px dashed #C9444F;border-radius:10px;overflow:hidden}
+canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
+.sig-actions{display:flex;gap:10px;margin-top:10px}
+.btn-clear{padding:8px 16px;background:#fff;color:#666;border:1.5px solid #ccc;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit}
+.btn-clear:hover{border-color:#C9444F;color:#C9444F}
+.sig-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+.field input{width:100%;padding:10px 12px;border:2px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;background:#fff}
+.btn-submit{display:block;width:100%;padding:16px;background:#C9444F;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:20px}
+.btn-submit:hover{background:#a03540}
+.btn-submit:disabled{background:#ccc;cursor:not-allowed}
+.error{background:#fee;color:#c00;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.error.show{display:block}
+.success{background:#efe;color:#080;padding:14px 18px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.success.show{display:block}
+.mode-banner{padding:14px 18px;border-radius:10px;font-size:14px;margin-bottom:16px;line-height:1.5}
+.mode-banner.adult{background:#e0f2fe;border-left:4px solid #0284c7;color:#075985}
+.mode-banner.minor{background:#fff8e1;border-left:4px solid #f59e0b;color:#92400e}
+.mode-banner.in-person{background:#dcfce7;border-left:4px solid #16a34a;color:#14532d}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lang-switch">
+    <a href="#" id="langLink">한국어</a>
+  </div>
+
+  <div class="head">
+    <div class="badge">Informed Consent</div>
+    <h1>Decision Catcher<br>Beta Consent Form</h1>
+    <div class="sub">Boston Neuromind LLC · IRB-Standard Consent</div>
+  </div>
+
+  <div class="card">
+    <div id="modeBanner" class="mode-banner"></div>
+
+    <div class="consent-content">
+      <h3>1. Study Overview</h3>
+      <p>This beta program is a non-commercial pilot to evaluate the clinical utility of <strong>Decision Catcher (CNA v7)</strong>, developed by Boston Neuromind LLC. The system supports clinical decision-making through differential diagnosis, comorbidity decomposition, and adaptive training recommendations.</p>
+
+      <h3>2. Duration & Procedures</h3>
+      <ul>
+        <li>Total 8 weeks (4-8 week protocol + 4-week outcome assessment)</li>
+        <li>Initial assessment (60-90 minutes), one time</li>
+        <li>Weekly progress entry (5-10 minutes each)</li>
+        <li>Final outcome assessment (60 minutes)</li>
+      </ul>
+
+      <h3>3. Potential Benefits</h3>
+      <p>You may receive objective assessment of cognitive/emotional status and personalized training recommendations. However, this system <strong>does not replace a clinician's diagnosis</strong> — recommendations serve only as supporting information for clinical decisions.</p>
+
+      <h3>4. Potential Risks</h3>
+      <p>This beta system is a clinical decision support tool, with the following potential risks:</p>
+      <ul>
+        <li>Possible inaccuracy in system recommendations (beta stage)</li>
+        <li>Possible psychological discomfort during assessment</li>
+        <li>Possible technical errors in data processing</li>
+      </ul>
+      <p>To minimize these risks, all decisions are finalized by clinicians. Crisis situations (suicidal ideation, psychosis, etc.) are immediately reported to a clinician.</p>
+
+      <h3>5. Confidentiality & Data Protection</h3>
+      <p>All identifying and clinical information is encrypted per HIPAA standards. Information will not be disclosed to third parties without consent. For research disclosure, only de-identified anonymous data is used.</p>
+
+      <h3>6. Right to Withdraw</h3>
+      <p>You may withdraw from this beta program at any time without penalty. Upon withdrawal, all your data will be deleted within 30 days.</p>
+
+      <h3>7. Safety Protocol</h3>
+      <p>The following situations will be reported to a clinician immediately (Mandated Reporter duty):</p>
+      <ul>
+        <li>Imminent risk of harm to self or others</li>
+        <li>Active suicidal ideation or suicide attempt</li>
+        <li>Suspected abuse of children, elderly, or disabled persons</li>
+      </ul>
+
+      <h3>8. Contact</h3>
+      <p>For questions or concerns about this study, please contact:<br>
+      <strong>Boston Neuromind LLC</strong><br>
+      Canton, Massachusetts<br>
+      Email: support@neurocatchers.com</p>
+    </div>
+
+    <div class="checkboxes">
+      <div class="check-item">
+        <input type="checkbox" id="check1">
+        <label for="check1"><strong>I have read and understood the consent form above.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check2">
+        <label for="check2"><strong>I understand the potential benefits and risks of this beta program and voluntarily agree to participate.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check3">
+        <label for="check3"><strong>I understand I may withdraw at any time without penalty.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check4">
+        <label for="check4"><strong>I understand my data is protected under HIPAA standards and will be anonymized for any research disclosure.</strong></label>
+      </div>
+    </div>
+
+    <div class="signature-section">
+      <h3>✍️ Your Signature / Assent</h3>
+      <div class="sig-info">
+        <div class="field">
+          <label>Name (auto-filled)</label>
+          <input type="text" id="signerName" readonly>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="text" id="signDate" readonly>
+        </div>
+      </div>
+      <div class="signature-pad-wrapper">
+        <canvas id="sigPad"></canvas>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-clear" id="clearSig">Clear Signature</button>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="submitBtn">Agree & Submit</button>
+
+    <div class="error" id="errorMsg"></div>
+    <div class="success" id="successMsg"></div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const signupId = params.get('signup_id');
+const mode = params.get('mode') || 'adult';
+
+document.getElementById('langLink').href = `/consent.html?signup_id=${signupId}&mode=${mode}`;
+
+const modeBanner = document.getElementById('modeBanner');
+if (mode === 'adult') {
+  modeBanner.className = 'mode-banner adult';
+  modeBanner.innerHTML = '👤 <strong>Adult Consent:</strong> You sign for yourself.';
+} else if (mode === 'minor_assent') {
+  modeBanner.className = 'mode-banner minor';
+  modeBanner.innerHTML = '🙋 <strong>Minor Assent:</strong> Your assent + parental consent form will be emailed.';
+} else if (mode === 'in_person') {
+  modeBanner.className = 'mode-banner in-person';
+  modeBanner.innerHTML = '👨‍👧 <strong>In-Person Consent:</strong> After your assent, parent signs on the next screen.';
+}
+
+async function loadSignup() {
+  if (!signupId) return;
+  try {
+    const res = await fetch(`/api/get_signup?signup_id=${signupId}`);
+    const data = await res.json();
+    if (data.full_name) document.getElementById('signerName').value = data.full_name;
+  } catch(e) {}
+}
+loadSignup();
+
+document.getElementById('signDate').value = new Date().toLocaleDateString('en-US');
+
+const canvas = document.getElementById('sigPad');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+let lastX = 0, lastY = 0;
+let hasSignature = false;
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  if (e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function startDraw(e) { e.preventDefault(); drawing = true; hasSignature = true; const p = getPos(e); lastX = p.x; lastY = p.y; }
+function draw(e) { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke(); lastX = p.x; lastY = p.y; }
+function stopDraw() { drawing = false; }
+
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDraw);
+canvas.addEventListener('mouseleave', stopDraw);
+canvas.addEventListener('touchstart', startDraw);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDraw);
+
+document.getElementById('clearSig').addEventListener('click', (e) => {
+  e.preventDefault();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  hasSignature = false;
+});
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 5000);
+}
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  if (!document.getElementById('check1').checked || !document.getElementById('check2').checked ||
+      !document.getElementById('check3').checked || !document.getElementById('check4').checked) {
+    showError('Please check all consent items');
+    return;
+  }
+  if (!hasSignature) { showError('Please sign'); return; }
+
+  const sigData = canvas.toDataURL('image/png');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch('/api/self_sign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ signup_id: signupId, signature: sigData, mode: mode })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Server error');
+
+    const successEl = document.getElementById('successMsg');
+    if (mode === 'in_person') {
+      successEl.textContent = '✅ Assent submitted! Redirecting to parent signature...';
+      successEl.classList.add('show');
+      setTimeout(() => { window.location.href = `/parent-consent.html?signup_id=${signupId}&mode=in_person&lang=en`; }, 1500);
+    } else if (mode === 'minor_assent') {
+      successEl.textContent = '✅ Assent submitted! Consent form sent to your parent. You can start once they sign.';
+      successEl.classList.add('show');
+      setTimeout(() => { window.location.href = `/beta-pending.html?signup_id=${signupId}&lang=en`; }, 3000);
+    } else {
+      successEl.textContent = '✅ Consent submitted! Redirecting to Decision Catcher...';
+      successEl.classList.add('show');
+      setTimeout(() => { window.location.href = `/?signup_id=${signupId}`; }, 2000);
+    }
+  } catch (err) {
+    showError('Error: ' + err.message);
+    btn.disabled = false;
+    btn.textContent = 'Agree & Submit';
+  }
+});
+</script>
+</body>
+</html>

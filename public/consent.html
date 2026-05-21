@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임상 동의서 — Decision Catcher</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
+.container{max-width:780px;margin:0 auto}
+.lang-switch{text-align:right;margin-bottom:20px}
+.lang-switch a{color:#5a4a35;text-decoration:none;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px}
+.head{text-align:center;margin-bottom:40px}
+.badge{display:inline-block;background:#C9444F;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:32px;color:#2a2018;margin-bottom:10px;line-height:1.2}
+.sub{font-size:15px;color:#5a4a35}
+.card{background:#fff;border:2px solid #1a1a1a;border-radius:20px;padding:32px;margin-bottom:20px}
+.consent-content{font-size:14px;line-height:1.7;color:#2a2018;max-height:400px;overflow-y:auto;padding:20px;background:#fafafa;border:1.5px solid #e5e5e5;border-radius:12px;margin-bottom:20px}
+.consent-content h3{font-size:16px;font-weight:800;margin:18px 0 10px;color:#2a2018}
+.consent-content h3:first-child{margin-top:0}
+.consent-content p{margin-bottom:10px}
+.consent-content ul{padding-left:20px;margin-bottom:10px}
+.consent-content li{margin-bottom:6px}
+.checkboxes{margin:20px 0;padding:20px;background:#f0eee9;border-radius:12px}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;cursor:pointer}
+.check-item input[type=checkbox]{margin-top:3px;width:18px;height:18px;cursor:pointer;accent-color:#C9444F}
+.check-item label{font-size:14px;line-height:1.5;cursor:pointer;flex:1}
+.signature-section{margin-top:24px;padding:20px;background:#fff5f5;border:2px solid #C9444F;border-radius:12px}
+.signature-section h3{font-size:16px;margin-bottom:12px}
+.signature-pad-wrapper{position:relative;background:#fff;border:2px dashed #C9444F;border-radius:10px;overflow:hidden}
+canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
+.sig-actions{display:flex;gap:10px;margin-top:10px}
+.btn-clear{padding:8px 16px;background:#fff;color:#666;border:1.5px solid #ccc;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit}
+.btn-clear:hover{border-color:#C9444F;color:#C9444F}
+.sig-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+.field input{width:100%;padding:10px 12px;border:2px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;background:#fff}
+.btn-submit{display:block;width:100%;padding:16px;background:#C9444F;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:20px}
+.btn-submit:hover{background:#a03540}
+.btn-submit:disabled{background:#ccc;cursor:not-allowed}
+.error{background:#fee;color:#c00;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.error.show{display:block}
+.success{background:#efe;color:#080;padding:14px 18px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.success.show{display:block}
+.mode-banner{padding:14px 18px;border-radius:10px;font-size:14px;margin-bottom:16px;line-height:1.5}
+.mode-banner.adult{background:#e0f2fe;border-left:4px solid #0284c7;color:#075985}
+.mode-banner.minor{background:#fff8e1;border-left:4px solid #f59e0b;color:#92400e}
+.mode-banner.in-person{background:#dcfce7;border-left:4px solid #16a34a;color:#14532d}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lang-switch">
+    <a href="#" id="langLink">English</a>
+  </div>
+
+  <div class="head">
+    <div class="badge">임상 동의서</div>
+    <h1>Decision Catcher<br>베타 참여 동의</h1>
+    <div class="sub">Boston Neuromind LLC · IRB 표준 동의서</div>
+  </div>
+
+  <div class="card">
+    <div id="modeBanner" class="mode-banner"></div>
+
+    <div class="consent-content" id="consentText">
+      <h3>1. 연구 개요</h3>
+      <p>본 베타 프로그램은 Boston Neuromind LLC가 개발한 <strong>Decision Catcher (CNA v7)</strong> 시스템의 임상적 유용성을 평가하기 위한 비영리 베타 테스트입니다. 본 시스템은 감별 진단, 공존 진단 분해, 적응적 훈련 추천을 통해 임상가의 의사결정을 보조합니다.</p>
+
+      <h3>2. 참여 기간 및 절차</h3>
+      <ul>
+        <li>총 8주 (4-8주 프로토콜 + 4주 outcome 측정)</li>
+        <li>초기 평가 1회 (60-90분)</li>
+        <li>주차별 진행 자료 입력 (5-10분/회)</li>
+        <li>최종 outcome 평가 (60분)</li>
+      </ul>
+
+      <h3>3. 잠재적 이익</h3>
+      <p>본인의 인지/감정 상태에 대한 객관적 평가 및 개인화된 훈련 추천을 받을 수 있습니다. 그러나 본 시스템은 <strong>임상가의 진단을 대체하지 않으며</strong>, 시스템의 추천은 임상가의 최종 결정에 보조 자료로만 활용됩니다.</p>
+
+      <h3>4. 잠재적 위험</h3>
+      <p>본 베타 시스템은 임상 결정 보조 도구이며, 다음의 위험이 있을 수 있습니다:</p>
+      <ul>
+        <li>시스템 추천의 부정확성 가능성 (베타 단계)</li>
+        <li>평가 과정에서의 심리적 불편감 가능성</li>
+        <li>데이터 처리상의 기술적 오류 가능성</li>
+      </ul>
+      <p>상기 위험을 최소화하기 위해 모든 결정은 임상가가 최종 검토하며, 위기 상황(자살 위기, 정신증 등) 발생 시 즉시 임상가에게 보고됩니다.</p>
+
+      <h3>5. 비밀 보장 및 데이터 보호</h3>
+      <p>본인의 모든 식별 정보 및 임상 자료는 HIPAA 표준에 따라 암호화되어 저장됩니다. 본인의 동의 없이 제3자에게 공개되지 않으며, 연구 목적의 공개 시 모든 식별 정보가 제거된 익명 자료만 사용됩니다.</p>
+
+      <h3>6. 참여 철회 권리</h3>
+      <p>본인은 언제든지 어떠한 불이익 없이 본 베타 프로그램에서 철회할 수 있습니다. 철회 시 본인의 모든 자료는 30일 이내에 삭제됩니다.</p>
+
+      <h3>7. 안전 자료 (Safety Protocol)</h3>
+      <p>다음 상황 발생 시 즉시 임상가에게 보고됩니다 (Mandated Reporter 의무):</p>
+      <ul>
+        <li>본인 또는 타인에 대한 임박한 위해 우려</li>
+        <li>활성 자살 사고 또는 자살 시도</li>
+        <li>아동, 노인, 장애인 학대 의심 자료</li>
+      </ul>
+
+      <h3>8. 연락처</h3>
+      <p>본 연구에 대한 질문이나 우려 사항은 다음으로 연락 주십시오:<br>
+      <strong>Boston Neuromind LLC</strong><br>
+      Canton, Massachusetts<br>
+      Email: support@neurocatchers.com</p>
+    </div>
+
+    <div class="checkboxes">
+      <div class="check-item">
+        <input type="checkbox" id="check1">
+        <label for="check1"><strong>본인은 위 동의서를 읽고 이해했습니다.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check2">
+        <label for="check2"><strong>본인은 본 베타 프로그램의 잠재적 이익과 위험을 이해하며, 자발적으로 참여에 동의합니다.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check3">
+        <label for="check3"><strong>본인은 언제든지 철회할 수 있으며, 철회 시 어떠한 불이익도 없음을 이해합니다.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check4">
+        <label for="check4"><strong>본인은 데이터가 HIPAA 표준에 따라 보호되며, 연구 목적의 공개 시 익명화됨을 이해합니다.</strong></label>
+      </div>
+    </div>
+
+    <div class="signature-section" id="selfSignSection">
+      <h3>✍️ 본인 서명 / Assent</h3>
+      <div class="sig-info">
+        <div class="field">
+          <label>성명 (자동 자료)</label>
+          <input type="text" id="signerName" readonly>
+        </div>
+        <div class="field">
+          <label>날짜</label>
+          <input type="text" id="signDate" readonly>
+        </div>
+      </div>
+      <div class="signature-pad-wrapper">
+        <canvas id="sigPad"></canvas>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-clear" id="clearSig">서명 지우기</button>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="submitBtn">동의 및 제출</button>
+
+    <div class="error" id="errorMsg"></div>
+    <div class="success" id="successMsg"></div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const signupId = params.get('signup_id');
+const mode = params.get('mode') || 'adult';
+
+document.getElementById('langLink').href = `/consent-en.html?signup_id=${signupId}&mode=${mode}`;
+
+const modeBanner = document.getElementById('modeBanner');
+if (mode === 'adult') {
+  modeBanner.className = 'mode-banner adult';
+  modeBanner.innerHTML = '👤 <strong>성인 동의:</strong> 본인이 직접 서명합니다.';
+} else if (mode === 'minor_assent') {
+  modeBanner.className = 'mode-banner minor';
+  modeBanner.innerHTML = '🙋 <strong>미성년자 Assent:</strong> 본인 동의 + 부모님께 이메일로 동의서 전송됩니다.';
+} else if (mode === 'in_person') {
+  modeBanner.className = 'mode-banner in-person';
+  modeBanner.innerHTML = '👨‍👧 <strong>현장 동의:</strong> 본인 Assent 후, 부모님 서명도 같은 화면에서 진행됩니다.';
+}
+
+// 자료 자료 — Supabase에서 신청자 이름 가져오기
+async function loadSignup() {
+  if (!signupId) {
+    showError('잘못된 접근입니다');
+    return;
+  }
+  try {
+    const res = await fetch(`/api/get_signup?signup_id=${signupId}`);
+    const data = await res.json();
+    if (data.full_name) {
+      document.getElementById('signerName').value = data.full_name;
+    }
+  } catch(e) {}
+}
+loadSignup();
+
+document.getElementById('signDate').value = new Date().toLocaleDateString('ko-KR');
+
+// 서명 패드
+const canvas = document.getElementById('sigPad');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+let lastX = 0, lastY = 0;
+let hasSignature = false;
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  ctx.strokeStyle = '#1a1a1a';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  if (e.touches) {
+    return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+  }
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+
+function startDraw(e) {
+  e.preventDefault();
+  drawing = true;
+  hasSignature = true;
+  const pos = getPos(e);
+  lastX = pos.x; lastY = pos.y;
+}
+function draw(e) {
+  if (!drawing) return;
+  e.preventDefault();
+  const pos = getPos(e);
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+  lastX = pos.x; lastY = pos.y;
+}
+function stopDraw() { drawing = false; }
+
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDraw);
+canvas.addEventListener('mouseleave', stopDraw);
+canvas.addEventListener('touchstart', startDraw);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDraw);
+
+document.getElementById('clearSig').addEventListener('click', (e) => {
+  e.preventDefault();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  hasSignature = false;
+});
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 5000);
+}
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  const c1 = document.getElementById('check1').checked;
+  const c2 = document.getElementById('check2').checked;
+  const c3 = document.getElementById('check3').checked;
+  const c4 = document.getElementById('check4').checked;
+  if (!c1 || !c2 || !c3 || !c4) {
+    showError('모든 동의 항목에 체크해주세요');
+    return;
+  }
+  if (!hasSignature) {
+    showError('서명을 박아주세요');
+    return;
+  }
+
+  const sigData = canvas.toDataURL('image/png');
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = '제출 중...';
+
+  try {
+    const res = await fetch('/api/self_sign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ signup_id: signupId, signature: sigData, mode: mode })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || '서버 오류');
+
+    const successEl = document.getElementById('successMsg');
+    if (mode === 'in_person') {
+      successEl.textContent = '✅ 본인 Assent 완료! 부모님 서명 페이지로 이동합니다...';
+      successEl.classList.add('show');
+      setTimeout(() => { window.location.href = `/parent-consent.html?signup_id=${signupId}&mode=in_person`; }, 1500);
+    } else if (mode === 'minor_assent') {
+      successEl.textContent = '✅ Assent 완료! 부모님께 동의서 이메일이 전송되었습니다. 부모님 동의 후 시작할 수 있어요.';
+      successEl.classList.add('show');
+      setTimeout(() => { window.location.href = `/beta-pending.html?signup_id=${signupId}`; }, 3000);
+    } else {
+      successEl.textContent = '✅ 동의 완료! Decision Catcher로 이동합니다...';
+      successEl.classList.add('show');
+      setTimeout(() => { window.location.href = `/?signup_id=${signupId}`; }, 2000);
+    }
+  } catch (err) {
+    showError('오류: ' + err.message);
+    submitBtn.disabled = false;
+    submitBtn.textContent = '동의 및 제출';
+  }
+});
+</script>
+</body>
+</html>
