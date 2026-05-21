@@ -116,7 +116,7 @@ h1{font-size:36px;color:#2a2018;margin-bottom:10px;line-height:1.2}
 
         <div class="row">
           <div class="field">
-            <label>부모/보호자 이메일 <span class="required">*</span></label>
+            <label id="parentEmailLabel">부모/보호자 이메일 <span class="required" id="parentEmailStar">*</span></label>
             <input type="email" id="parentEmail" placeholder="parent@example.com">
           </div>
           <div class="field">
@@ -225,8 +225,9 @@ form.addEventListener('submit', async (e) => {
     const parentName = document.getElementById('parentName').value.trim();
     const parentEmail = document.getElementById('parentEmail').value.trim();
     const parentRel = document.getElementById('parentRelationship').value;
-    if (!parentName || !parentEmail || !parentRel) {
-      showError('부모/보호자 정보를 모두 박아주세요');
+    const isParentPresent = radio.value === 'present';
+    if (!parentName || !parentRel || (!isParentPresent && !parentEmail)) {
+      showError(isParentPresent ? '부모/보호자 성명과 관계를 입력해주세요' : '부모/보호자 정보를 모두 입력해주세요');
       return;
     }
     parentData = {
@@ -279,6 +280,27 @@ form.addEventListener('submit', async (e) => {
     loadingMsg.classList.remove('show');
   }
 });
+
+// 부모 현장 여부에 따라 이메일 별표 토글
+function toggleParentEmailRequired() {
+  const radio = document.querySelector('input[name="parentLocation"]:checked');
+  const star = document.getElementById('parentEmailStar');
+  const emailInput = document.getElementById('parentEmail');
+  if (!radio || !star) return;
+  if (radio.value === 'present') {
+    star.style.display = 'none';
+    if (emailInput) emailInput.placeholder = 'parent@example.com (선택사항)';
+  } else {
+    star.style.display = '';
+    if (emailInput) emailInput.placeholder = 'parent@example.com';
+  }
+}
+document.querySelectorAll('input[name="parentLocation"]').forEach(r => {
+  r.addEventListener('change', toggleParentEmailRequired);
+});
+// 초기 상태도 반영
+toggleParentEmailRequired();
+
 </script>
 </body>
 </html>
