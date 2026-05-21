@@ -1,28 +1,17 @@
-{
+﻿{
   "version": 2,
-  "name": "decision-neurocatchers",
   "builds": [
-    {
-      "src": "api/cna.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": "api/**"
-      }
-    },
-    {
-      "src": "public/**",
-      "use": "@vercel/static"
-    }
+    { "src": "api/*.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/cna.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1"
-    }
+    { "src": "/api/beta_signup", "dest": "/api/beta_signup.py" },
+    { "src": "/api/get_signup", "dest": "/api/get_signup.py" },
+    { "src": "/api/self_sign", "dest": "/api/self_sign.py" },
+    { "src": "/api/parent_sign", "dest": "/api/parent_sign.py" },
+    { "src": "/api/feedback", "dest": "/api/feedback.py" },
+    { "src": "/api/(.*)", "dest": "/api/cna.py" },
+    { "src": "/(.*)", "dest": "/public/$1" }
   ],
   "env": {
     "PYTHONPATH": "api"
