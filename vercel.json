@@ -1,4 +1,4 @@
-﻿{
+{
   "version": 2,
   "builds": [
     { "src": "api/*.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
