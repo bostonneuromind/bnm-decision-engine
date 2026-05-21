@@ -206,6 +206,10 @@ const I18N = {
     pending_check_email: '이메일을 확인해 주세요',
     pending_status_label: '현재 상태',
     pending_back_home: '홈으로',
+    pending_assent_done: 'Your assent has been recorded.',
+    pending_email_sent: '📨 Consent form sent to your parent.',
+    pending_email_explain: 'Once your parent clicks the email link and signs the consent form, your beta enrollment will be activated.',
+    pending_contact: 'If you have any questions, please contact support@neurocatchers.com',
   },
   en: {
     // Common menu
