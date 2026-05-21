@@ -40,7 +40,7 @@ class handler(BaseHTTPRequestHandler):
             if not signature:
                 return _resp(self, 400, {'error': 'signature required'})
 
-            # 자료 자료 자료 자료 자료
+            # 진행 중
             if token:
                 row = select('beta_signups', filters={'parent_consent_token': f'eq.{token}'}, single=True)
                 if not row:
@@ -61,7 +61,7 @@ class handler(BaseHTTPRequestHandler):
             now = datetime.now(timezone.utc).isoformat()
             ip = self.headers.get('X-Forwarded-For', '').split(',')[0].strip() or None
 
-            # 부모 서명 자료, 자료 자료 자료 자료
+            # 부모 서명 자료, 입력하세요
             new_status = 'fully_consented' if row.get('self_signed_at') else 'parent_signed'
 
             update('beta_signups', {'id': f'eq.{signup_id}'}, {
@@ -69,7 +69,7 @@ class handler(BaseHTTPRequestHandler):
                 'parent_signature_data': signature,
                 'parent_ip': ip,
                 'status': new_status,
-                # 자료 자료 자료 자료 자료 자료 (자료 보안)
+                # 진행 중 (자료 보안)
                 'parent_consent_token': None,
                 'parent_consent_token_expires_at': None,
             })

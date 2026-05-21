@@ -1,6 +1,6 @@
 """
 GET /api/get_signup?signup_id=xxx 또는 ?token=xxx
-신청자 정보 조회 (이름 자동입력용 + 부모 동의서 자료)
+신청자 정보 조회 (이름 자동입력용 + 부모 동의서 작성)
 """
 import json
 import os
@@ -38,14 +38,14 @@ class handler(BaseHTTPRequestHandler):
                 if not row:
                     return _resp(self, 404, {'error': '링크가 만료되었거나 잘못되었습니다 / Invalid or expired link'})
 
-                # 자료 자료
+                # 입력
                 expires_str = row.get('parent_consent_token_expires_at')
                 if expires_str:
                     expires = datetime.fromisoformat(expires_str.replace('Z', '+00:00'))
                     if datetime.now(timezone.utc) > expires:
                         return _resp(self, 410, {'error': '링크가 만료되었습니다 / Link expired'})
 
-                # 자료 자료 자료 자료 자료 자료
+                # 진행 중
                 return _resp(self, 200, {
                     'full_name': row.get('full_name'),
                     'age': row.get('age'),

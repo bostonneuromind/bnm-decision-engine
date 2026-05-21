@@ -1,6 +1,6 @@
 """
 POST /api/feedback
-피드백 자료
+피드백 내용
 """
 import json
 import os

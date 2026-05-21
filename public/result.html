@@ -24,7 +24,7 @@
 <div class="container">
 
   <div id="noData" class="alert alert-warning" style="display:none;">
-    평가 자료 ❌. <a href="/clinician.html">새 클라이언트 평가</a>를 시작하세요.
+    평가 항목 ❌. <a href="/clinician.html">새 클라이언트 평가</a>를 시작하세요.
   </div>
 
   <div id="resultsRoot"></div>
@@ -76,7 +76,7 @@ function renderResults(r, input) {
   // Safety alerts (있으면 최상단)
   if (a.safety_flags && a.safety_flags.length > 0) {
     html += `<div class="section" style="border-color:#C9444F;border-width:3px;">
-      <h2 style="color:#C9444F;">⚠️ 안전 자료 catch — ${a.safety_flags.length}개</h2>`;
+      <h2 style="color:#C9444F;">⚠️ 안전 프로토콜 catch — ${a.safety_flags.length}개</h2>`;
     a.safety_flags.forEach(f => {
       html += `<div class="alert alert-danger">
         <strong>${f.flag_type}</strong> (severity: ${f.severity})<br>

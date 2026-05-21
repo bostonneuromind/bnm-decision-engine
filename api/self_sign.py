@@ -47,12 +47,12 @@ class handler(BaseHTTPRequestHandler):
             now = datetime.now(timezone.utc).isoformat()
             ip = self.headers.get('X-Forwarded-For', '').split(',')[0].strip() or None
 
-            # 자료 자료
+            # 입력
             new_status = row['status']
             if mode == 'adult':
                 new_status = 'fully_consented'
             elif mode == 'in_person':
-                new_status = 'self_signed'  # 자료 부모 자료 자료 자료
+                new_status = 'self_signed'  # 자료 부모 불러오는 중
             elif mode == 'minor_assent':
                 new_status = 'parent_email_sent' if row.get('parent_email_sent_at') else 'self_signed'
 

@@ -61,27 +61,27 @@ def parent_consent_email(parent_name, parent_email, child_name, child_age, conse
     <p>안녕하세요, <strong>{parent_name}</strong>님</p>
 
     <p>자녀 <strong>{child_name}</strong> ({child_age}세)이(가) Boston Neuromind LLC의
-    <strong>Decision Catcher 베타 프로그램</strong> 참여를 자료 자료.</p>
+    <strong>Decision Catcher 베타 프로그램</strong> 참여를 입력.</p>
 
-    <p>자녀가 본인 Assent (동의)를 이미 완료했으며, <strong>부모/법정 보호자의 동의</strong>가 자료 자료 자료 자료 자료 자료 자료.</p>
+    <p>자녀가 본인 Assent (동의)를 이미 완료했으며, <strong>부모/법정 보호자의 동의</strong>가 진행 중.</p>
 
     <div style="background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:8px;margin:24px 0">
-      <strong>📋 베타 자료 자료:</strong><br>
+      <strong>📋 베타 입력:</strong><br>
       · 총 8주 (4-8주 프로토콜 + 4주 outcome)<br>
       · 초기 평가 1회 (60-90분)<br>
-      · 주차별 진행 자료 입력 (5-10분)<br>
+      · 주간 진행 상태 입력 (5-10분)<br>
       · 최종 outcome 평가
     </div>
 
-    <p>자료 자료 자료 자료 자료 자료 자료 자료, 자료 자료 자료 자료 자료 자료 자료:</p>
+    <p>진행 중 자료, 진행 중:</p>
 
     <div style="text-align:center;margin:30px 0">
-      <a href="{consent_url}" style="display:inline-block;background:#C9444F;color:#fff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px">동의서 자료 자료</a>
+      <a href="{consent_url}" style="display:inline-block;background:#C9444F;color:#fff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px">동의서 입력</a>
     </div>
 
     <p style="font-size:13px;color:#666;margin-top:24px">
-      · 자료 자료 7일 자료 자료 자료 자료.<br>
-      · 자료 자료 자료 자료 자료 자료 자료 자료.<br>
+      · 입력 7일 입력하세요.<br>
+      · 진행 중 자료.<br>
       · 문의: support@neurocatchers.com
     </p>
 
@@ -89,7 +89,7 @@ def parent_consent_email(parent_name, parent_email, child_name, child_age, conse
 
     <p style="font-size:11px;color:#999;text-align:center">
       Boston Neuromind LLC · Canton, Massachusetts<br>
-      본 이메일은 자료 자료 자료 자료 자료 자료. 자료 자료 자료 자료 자료 자료.
+      본 이메일은 진행 중. 진행 중.
     </p>
   </div>
 </body>

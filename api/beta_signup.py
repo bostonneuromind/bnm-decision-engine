@@ -9,7 +9,7 @@ from http.server import BaseHTTPRequestHandler
 import sys
 import os
 
-# api/ 폴더의 자료 자료
+# api/ 폴더의 입력
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _supabase import insert
 from _resend import parent_consent_email
@@ -37,7 +37,7 @@ class handler(BaseHTTPRequestHandler):
             raw = self.rfile.read(length).decode('utf-8')
             data = json.loads(raw) if raw else {}
 
-            # 필수 자료 자료
+            # 필수 입력
             full_name = (data.get('fullName') or '').strip()
             email = (data.get('email') or '').strip().lower()
             birth_date = data.get('birthDate')
@@ -46,9 +46,9 @@ class handler(BaseHTTPRequestHandler):
             language = data.get('language', 'ko')
 
             if not full_name or not email or not birth_date or age is None:
-                return _json_response(self, 400, {'error': '필수 자료 자료 자료'})
+                return _json_response(self, 400, {'error': '필수 불러오는 중'})
 
-            # 자료 자료
+            # 입력
             signup_row = {
                 'full_name': full_name,
                 'email': email,
@@ -73,7 +73,7 @@ class handler(BaseHTTPRequestHandler):
                 })
 
                 if not parent_present and parent_email:
-                    # 이메일 자료 자료 자료 자료 자료
+                    # 이메일 진행 중
                     token = secrets.token_urlsafe(32)
                     expires = datetime.now(timezone.utc) + timedelta(days=7)
                     signup_row['parent_consent_token'] = token
@@ -83,7 +83,7 @@ class handler(BaseHTTPRequestHandler):
             result = insert('beta_signups', signup_row)
             signup_id = result['id']
 
-            # 미성년 + 이메일 자료 자료 → 부모에게 이메일 전송
+            # 미성년 + 이메일 입력 → 부모에게 이메일 전송
             if is_minor and not parent_present and parent_email:
                 site_url = os.environ.get('SITE_URL', 'https://decision.neurocatchers.com').rstrip('/')
                 consent_url = f"{site_url}/parent-consent.html?token={result['parent_consent_token']}&lang={language}"
@@ -96,14 +96,14 @@ class handler(BaseHTTPRequestHandler):
                         consent_url=consent_url,
                         language=language
                     )
-                    # 자료 자료 자료
+                    # 불러오는 중
                     from _supabase import update as sb_update
                     sb_update('beta_signups', {'id': f'eq.{signup_id}'}, {
                         'parent_email_sent_at': datetime.now(timezone.utc).isoformat(),
                         'status': 'parent_email_sent'
                     })
                 except Exception as e:
-                    # 이메일 자료 자료 자료 자료 자료 자료 자료 자료
+                    # 이메일 진행 중 자료
                     print(f"Email send failed: {e}")
 
             # 감사 로그

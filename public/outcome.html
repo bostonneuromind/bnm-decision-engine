@@ -107,7 +107,7 @@
         <textarea name="previous_diagnosis" rows="6" placeholder='{"primary_diagnosis": "adhd_inattentive", "secondary_diagnoses": ["gad"], ...}'></textarea>
         <div class="form-help">이전 평가 페이지의 DDE 결과를 그대로 복사하세요 (sessionStorage에 자동 저장됨)</div>
       </div>
-      <button type="button" class="btn btn-secondary" id="loadPrevBtn">이전 평가 자료 자동 자료</button>
+      <button type="button" class="btn btn-secondary" id="loadPrevBtn">이전 평가 항목 자동 입력</button>
     </div>
     
     <div class="section" style="text-align:center;">
@@ -130,7 +130,7 @@
 
 <script src="/decision.js"></script>
 <script>
-// 이전 자료 자동 자료
+// 이전 자료 자동 입력
 document.getElementById('loadPrevBtn').addEventListener('click', () => {
   const prev = State.load('assessment_result');
   if (prev && prev.assessment && prev.assessment.differential_diagnosis) {
@@ -151,7 +151,7 @@ document.getElementById('loadPrevBtn').addEventListener('click', () => {
       form.querySelector('[name=primary_intervention_axis]').value = input.primary_clinical_axis;
     }
   } else {
-    alert('이전 평가 자료 ❌');
+    alert('이전 평가 항목 ❌');
   }
 });
 

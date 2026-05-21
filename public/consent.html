@@ -72,12 +72,12 @@ canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
       <ul>
         <li>총 8주 (4-8주 프로토콜 + 4주 outcome 측정)</li>
         <li>초기 평가 1회 (60-90분)</li>
-        <li>주차별 진행 자료 입력 (5-10분/회)</li>
+        <li>주간 진행 상태 입력 (5-10분/회)</li>
         <li>최종 outcome 평가 (60분)</li>
       </ul>
 
       <h3>3. 잠재적 이익</h3>
-      <p>본인의 인지/감정 상태에 대한 객관적 평가 및 개인화된 훈련 추천을 받을 수 있습니다. 그러나 본 시스템은 <strong>임상가의 진단을 대체하지 않으며</strong>, 시스템의 추천은 임상가의 최종 결정에 보조 자료로만 활용됩니다.</p>
+      <p>본인의 인지/감정 상태에 대한 객관적 평가 및 개인화된 훈련 추천을 받을 수 있습니다. 그러나 본 시스템은 <strong>임상가의 진단을 대체하지 않으며</strong>, 시스템의 추천은 임상가의 최종 결정에 보조 도구로만 활용됩니다.</p>
 
       <h3>4. 잠재적 위험</h3>
       <p>본 베타 시스템은 임상 결정 보조 도구이며, 다음의 위험이 있을 수 있습니다:</p>
@@ -94,12 +94,12 @@ canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
       <h3>6. 참여 철회 권리</h3>
       <p>본인은 언제든지 어떠한 불이익 없이 본 베타 프로그램에서 철회할 수 있습니다. 철회 시 본인의 모든 자료는 30일 이내에 삭제됩니다.</p>
 
-      <h3>7. 안전 자료 (Safety Protocol)</h3>
+      <h3>7. 안전 프로토콜 (Safety Protocol)</h3>
       <p>다음 상황 발생 시 즉시 임상가에게 보고됩니다 (Mandated Reporter 의무):</p>
       <ul>
         <li>본인 또는 타인에 대한 임박한 위해 우려</li>
         <li>활성 자살 사고 또는 자살 시도</li>
-        <li>아동, 노인, 장애인 학대 의심 자료</li>
+        <li>아동, 노인, 장애인 학대 의심 시</li>
       </ul>
 
       <h3>8. 연락처</h3>
@@ -132,7 +132,7 @@ canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
       <h3>✍️ 본인 서명 / Assent</h3>
       <div class="sig-info">
         <div class="field">
-          <label>성명 (자동 자료)</label>
+          <label>성명 (자동 입력)</label>
           <input type="text" id="signerName" readonly>
         </div>
         <div class="field">
@@ -174,7 +174,7 @@ if (mode === 'adult') {
   modeBanner.innerHTML = '👨‍👧 <strong>현장 동의:</strong> 본인 Assent 후, 부모님 서명도 같은 화면에서 진행됩니다.';
 }
 
-// 자료 자료 — Supabase에서 신청자 이름 가져오기
+// 자동 입력 — Supabase에서 신청자 이름 가져오기
 async function loadSignup() {
   if (!signupId) {
     showError('잘못된 접근입니다');

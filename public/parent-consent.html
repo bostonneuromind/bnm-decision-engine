@@ -66,39 +66,39 @@ body.lang-en .lang-en-inline{display:inline}
 
   <div class="card" id="mainCard">
     <div class="minor-info" id="minorInfo">
-      <span class="lang-ko">자녀 정보가 자료 자료 자료...</span>
+      <span class="lang-ko">자녀 정보를 불러오는 중...</span>
       <span class="lang-en">Loading child information...</span>
     </div>
 
     <div class="consent-content lang-ko">
-      <h3>1. 자료 자료</h3>
-      <p>본 동의서는 귀하의 자녀가 Boston Neuromind LLC의 <strong>Decision Catcher (CNA v7)</strong> 베타 프로그램에 참여하는 것에 대한 부모/법정 보호자의 동의를 자료 자료 자료 자료.</p>
+      <h3>1. 동의의 목적</h3>
+      <p>본 동의서는 귀하의 자녀가 Boston Neuromind LLC의 <strong>Decision Catcher (CNA v7)</strong> 베타 프로그램에 참여하는 것에 대한 부모/법정 보호자의 동의를 받기 위한 것입니다.</p>
 
-      <h3>2. 자녀의 참여 자료</h3>
-      <p>자녀의 본인 Assent는 이미 완료되었습니다. 본 부모 동의가 자료 자료 자료 자료 자료 자료 자료 자료 자료 자료.</p>
+      <h3>2. 자녀의 참여 동의</h3>
+      <p>자녀의 본인 Assent는 이미 완료되었습니다. 본 부모 동의가 완료되어야 자녀의 참여가 확정됩니다.</p>
 
-      <h3>3. 자료 자료 자료 자료</h3>
+      <h3>3. 자녀의 참여 내용</h3>
       <ul>
         <li>총 8주 (4-8주 프로토콜 + 4주 outcome)</li>
-        <li>초기 평가 1회, 주차별 진행 자료 입력</li>
+        <li>초기 평가 1회, 주간 진행 상태 입력</li>
         <li>최종 outcome 평가</li>
       </ul>
 
-      <h3>4. 자료 자료 (HIPAA + COPPA)</h3>
-      <p>자녀의 모든 정보는 HIPAA 표준에 따라 보호되며, 13세 미만의 자료 COPPA 자료 자료 자료 자료. 자료 자료 자료 자료 자료 자료.</p>
+      <h3>4. 개인정보 보호 (HIPAA + COPPA)</h3>
+      <p>자녀의 모든 정보는 HIPAA 표준에 따라 보호되며, 13세 미만의 경우 COPPA 추가 보호가 적용됩니다. 제3자에게 공개되지 않습니다.</p>
 
-      <h3>5. 자료 자료 자료</h3>
-      <p>자녀의 자료 자료 자료 자료 자료 자료. 자료 자료 자료 자료 자료 자료 자료.</p>
+      <h3>5. 철회 권리</h3>
+      <p>자녀의 참여는 언제든지 철회할 수 있습니다. 철회 시 모든 데이터는 30일 이내 삭제됩니다.</p>
 
       <h3>6. Safety Protocol</h3>
-      <p>Mandated Reporter 의무에 따라, 다음 자료 자료 자료 자료 자료 자료:</p>
+      <p>Mandated Reporter 의무에 따라, 다음 상황은 법적으로 신고됩니다:</p>
       <ul>
-        <li>자녀에 대한 임박한 위해 자료</li>
+        <li>자녀에 대한 임박한 위해 위험</li>
         <li>자살 사고/시도</li>
-        <li>학대 자료</li>
+        <li>학대 의심 시</li>
       </ul>
 
-      <h3>7. 자료</h3>
+      <h3>7. 동의 서명</h3>
       <p>Boston Neuromind LLC · support@neurocatchers.com</p>
     </div>
 
@@ -236,7 +236,7 @@ async function loadSignup() {
     const lang = document.documentElement.lang;
     const infoEl = document.getElementById('minorInfo');
     if (lang === 'ko') {
-      infoEl.innerHTML = `<strong>자녀 정보:</strong><br>이름: ${data.full_name}<br>나이: 만 ${data.age}세<br>본인 Assent: ${data.self_signed_at ? '✅ 완료' : '⏳ 자료'}`;
+      infoEl.innerHTML = `<strong>자녀 정보:</strong><br>이름: ${data.full_name}<br>나이: 만 ${data.age}세<br>본인 Assent: ${data.self_signed_at ? '✅ 완료' : '⏳ 대기 중'}`;
     } else {
       infoEl.innerHTML = `<strong>Child Information:</strong><br>Name: ${data.full_name}<br>Age: ${data.age}<br>Child's Assent: ${data.self_signed_at ? '✅ Completed' : '⏳ Pending'}`;
     }

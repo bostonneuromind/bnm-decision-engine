@@ -70,15 +70,15 @@ body.lang-en .lang-en{display:block}
       <label class="lang-en">Category</label>
       <select id="category">
         <option value="usability"><span class="lang-ko">사용성</span><span class="lang-en">Usability</span></option>
-        <option value="clarity"><span class="lang-ko">자료 자료 자료</span><span class="lang-en">Result Clarity</span></option>
-        <option value="recommendation"><span class="lang-ko">추천 자료 자료</span><span class="lang-en">Recommendation Quality</span></option>
+        <option value="clarity"><span class="lang-ko">불러오는 중</span><span class="lang-en">Result Clarity</span></option>
+        <option value="recommendation"><span class="lang-ko">추천 입력</span><span class="lang-en">Recommendation Quality</span></option>
         <option value="bug"><span class="lang-ko">버그/오류</span><span class="lang-en">Bug/Error</span></option>
         <option value="other"><span class="lang-ko">기타</span><span class="lang-en">Other</span></option>
       </select>
     </div>
 
     <div class="field">
-      <label class="lang-ko">자료 자료 자료 자료 자료 자료 자료?</label>
+      <label class="lang-ko">진행 중?</label>
       <label class="lang-en">Would you recommend it to colleagues?</label>
       <div class="radio-group">
         <label class="radio-option" data-value="true">
@@ -95,13 +95,13 @@ body.lang-en .lang-en{display:block}
     </div>
 
     <div class="field">
-      <label class="lang-ko">자료 자료 자료 (자료)</label>
+      <label class="lang-ko">불러오는 중 (자료)</label>
       <label class="lang-en">Details (Optional)</label>
       <textarea id="comment" placeholder=""></textarea>
     </div>
 
     <button class="btn-submit" id="submitBtn">
-      <span class="lang-ko">자료 자료</span>
+      <span class="lang-ko">입력</span>
       <span class="lang-en">Submit Feedback</span>
     </button>
 
@@ -120,7 +120,7 @@ function setLang(lang) {
   document.documentElement.lang = lang;
   document.getElementById('btnKo').classList.toggle('active', lang === 'ko');
   document.getElementById('btnEn').classList.toggle('active', lang === 'en');
-  const ph = lang === 'ko' ? '자유롭게 의견을 자료 자료...' : 'Share your thoughts freely...';
+  const ph = lang === 'ko' ? '자유롭게 의견을 입력...' : 'Share your thoughts freely...';
   document.getElementById('comment').placeholder = ph;
 }
 setLang(initialLang);
@@ -177,7 +177,7 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
     const data = await res.json();
     if (!res.ok || data.error) throw new Error(data.error || 'Server error');
 
-    sucEl.textContent = lang === 'ko' ? '✅ 자료 자료 자료 자료. 자료 자료.' : '✅ Thank you for your feedback!';
+    sucEl.textContent = lang === 'ko' ? '✅ 입력하세요. 입력.' : '✅ Thank you for your feedback!';
     sucEl.classList.add('show');
     btn.style.display = 'none';
   } catch (err) {
