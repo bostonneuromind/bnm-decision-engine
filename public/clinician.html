@@ -2,20 +2,21 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>새 환자 평가 - Decision Catcher</title>
+<title>새 클라이언트 평가 - Decision Catcher</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body data-auth>
 
 <header class="header">
-  <h1>🩺 새 환자 평가</h1>
+  <h1>🩺 새 클라이언트 평가</h1>
   <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/clinician.html" class="active">새 환자</a>
-    <a href="/outcome.html">Outcome</a>
-    <a href="/manual.html">매뉴얼</a>
-    <a href="#" id="logoutBtn">Logout</a>
+    <a href="/" data-i18n="home">Home</a>
+    <a href="/clinician.html" class="active" data-i18n="new_client">새 클라이언트</a>
+    <a href="/outcome.html" data-i18n="outcome">4주 Outcome</a>
+    <a href="/manual.html" data-i18n="manual">매뉴얼</a>
+    <a href="#" id="logoutBtn" data-i18n="logout">Logout</a>
+      <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
   </nav>
 </header>
 
@@ -23,18 +24,18 @@
 
   <div class="alert alert-info">
     <strong>회기 1 워크플로 (75-105분)</strong><br>
-    Step 1: 환자 등록 → Step 2: Entry Protocol 5 측정 → Step 3: 증상 자료 → 
-    Step 4: 시간 정보 인터뷰 (v7 NEW) → Step 5: 환자 목표
+    Step 1: 클라이언트 등록 → Step 2: Entry Protocol 5 측정 → Step 3: 증상 자료 → 
+    Step 4: 시간 정보 인터뷰 (v7 NEW) → Step 5: 클라이언트 목표
   </div>
 
   <form id="assessForm">
 
-    <!-- Step 1: 환자 등록 -->
+    <!-- Step 1: 클라이언트 등록 -->
     <div class="section">
-      <h2>Step 1: 환자 등록</h2>
+      <h2>Step 1: 클라이언트 등록</h2>
       <div class="form-row">
         <div class="form-group">
-          <label>환자 ID *</label>
+          <label>클라이언트 ID *</label>
           <input type="text" name="patient_id" required placeholder="AK001">
           <div class="form-help">이니셜 + 번호 (예: AK001)</div>
         </div>
@@ -101,7 +102,7 @@
     <!-- Step 3: 증상 자료 -->
     <div class="section">
       <h2>Step 3: 증상 자료 (0.0 - 1.0)</h2>
-      <p style="color:#5a4a35;margin-bottom:16px;"><strong>중요:</strong> 환자가 호소하는 증상 강도. DDE 입력의 핵심 (40% 가중치).</p>
+      <p style="color:#5a4a35;margin-bottom:16px;"><strong>중요:</strong> 클라이언트가 호소하는 증상 강도. DDE 입력의 핵심 (40% 가중치).</p>
       <div class="form-row">
         <div class="form-group">
           <label>부주의 (Inattention)</label>
@@ -207,9 +208,9 @@
       </div>
     </div>
 
-    <!-- Step 5: 환자 목표 -->
+    <!-- Step 5: 클라이언트 목표 -->
     <div class="section">
-      <h2>Step 5: 환자 목표</h2>
+      <h2>Step 5: 클라이언트 목표</h2>
       <div class="form-row">
         <div class="form-group">
           <label>가장 개선하고 싶은 영역 *</label>

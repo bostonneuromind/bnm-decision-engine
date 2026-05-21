@@ -344,3 +344,21 @@ body {
   .header, .footer, .no-print { display: none; }
   .section { border: 1px solid #000; box-shadow: none; }
 }
+
+/* 언어 토글 버튼 */
+.lang-btn {
+  background: #C9444F;
+  color: #fff;
+  border: 2px solid #C9444F;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.lang-btn:hover {
+  background: #fff;
+  color: #C9444F;
+}

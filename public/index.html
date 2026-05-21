@@ -11,12 +11,13 @@
 <header class="header">
   <h1>🩺 Decision Catcher</h1>
   <nav class="nav">
-    <a href="/" class="active">Home</a>
-    <a href="/clinician.html">새 환자</a>
-    <a href="/outcome.html">4주 Outcome</a>
-    <a href="/manual.html">매뉴얼</a>
-    <a href="/beta-guide.html">베타 가이드</a>
-    <a href="https://neurocatchers.com/admin.html">← Admin</a>
+    <a href="/" class="active" data-i18n="home">Home</a>
+    <a href="/clinician.html" data-i18n="new_client">새 클라이언트</a>
+    <a href="/outcome.html" data-i18n="outcome">4주 Outcome</a>
+    <a href="/manual.html" data-i18n="manual">매뉴얼</a>
+    <a href="/beta-guide.html" data-i18n="beta_guide">베타 가이드</a>
+    <a href="https://neurocatchers.com/admin.html" data-i18n="admin">← Admin</a>
+      <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
   </nav>
 </header>
 
@@ -27,7 +28,7 @@
     <h1>Decision Catcher</h1>
     <p class="subtitle">감별 진단 + 공존 진단 + 적응적 훈련</p>
     <p style="color:#5a4a35;margin-bottom:32px;">Boston Neuromind LLC · Catcher Navigator Algorithm</p>
-    <a href="/clinician.html" class="btn btn-primary">새 환자 평가 시작</a>
+    <a href="/clinician.html" class="btn btn-primary">새 클라이언트 평가 시작</a>
     &nbsp;
     <a href="/manual.html" class="btn btn-secondary">매뉴얼 자료</a>
   </div>
@@ -36,7 +37,7 @@
     <h2>왜 이 시스템인가</h2>
     <p>
       기존 5축 매핑 시스템 (CNA v6)에 <strong style="color:#C9444F;">감별 진단 + 공존 진단 자료</strong>를 추가했습니다.
-      한 환자의 임상 점수 안에서 ADHD, GAD, MDD가 각각 얼마나 기여하는지 분해하고,
+      한 클라이언트의 임상 점수 안에서 ADHD, GAD, MDD가 각각 얼마나 기여하는지 분해하고,
       그에 맞는 훈련 카드를 적응적으로 제공합니다.
     </p>
     <p style="margin-top:12px;">
@@ -101,7 +102,7 @@
   <div class="section">
     <h2>다음 단계</h2>
     <ol style="padding-left:24px;">
-      <li style="margin:8px 0;"><strong>새 환자 평가</strong> — Entry Protocol 5 + 증상 + 시간 정보 + 환자 목표</li>
+      <li style="margin:8px 0;"><strong>새 클라이언트 평가</strong> — Entry Protocol 5 + 증상 + 시간 정보 + 클라이언트 목표</li>
       <li style="margin:8px 0;"><strong>임상 리포트 검토</strong> — 5축 점수 + DDE + Decomposition + Simulator</li>
       <li style="margin:8px 0;"><strong>훈련 프로토콜 운영</strong> — 4-8주, 시스템 추천 + 임상가 override</li>
       <li style="margin:8px 0;"><strong>4주 outcome 입력</strong> — Adaptive Re-routing 자동 실행</li>

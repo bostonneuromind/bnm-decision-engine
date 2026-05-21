@@ -11,19 +11,20 @@
 <header class="header">
   <h1>🩺 훈련 프로토콜</h1>
   <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/clinician.html">새 환자</a>
+    <a href="/" data-i18n="home">Home</a>
+    <a href="/clinician.html" data-i18n="new_client">새 클라이언트</a>
     <a href="/result.html">평가 결과</a>
-    <a href="/outcome.html">Outcome</a>
-    <a href="/manual.html">매뉴얼</a>
-    <a href="#" id="logoutBtn">Logout</a>
+    <a href="/outcome.html" data-i18n="outcome">4주 Outcome</a>
+    <a href="/manual.html" data-i18n="manual">매뉴얼</a>
+    <a href="#" id="logoutBtn" data-i18n="logout">Logout</a>
+      <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
   </nav>
 </header>
 
 <div class="container">
 
   <div id="noData" class="alert alert-warning" style="display:none;">
-    프로토콜 자료 ❌. <a href="/clinician.html">새 환자 평가</a>부터 시작하세요.
+    프로토콜 자료 ❌. <a href="/clinician.html">새 클라이언트 평가</a>부터 시작하세요.
   </div>
 
   <div id="protocolRoot"></div>
@@ -62,11 +63,11 @@ function renderProtocol(p, sim) {
     <div class="section">
       <h2>프로토콜 자료</h2>
       <div class="form-row">
-        <div><strong>환자:</strong> ${p.patient_id}</div>
-        <div><strong>영역:</strong> ${clinicalAxisKo(p.selected_axis)}</div>
+        <div><strong>클라이언트:</strong> ${p.patient_id}</div>
+        <div><strong>영역:</strong> ${p.selected_axis ? clinicalAxisKo(p.selected_axis) : "주의력"}</div>
         <div><strong>기간:</strong> ${p.target_duration_weeks}주</div>
         <div><strong>총 회기:</strong> ${p.sessions.length}회</div>
-        <div><strong>진행 자료:</strong> ${p.weekly_progression}</div>
+        <div><strong>진행 방식:</strong> ${p.weekly_progression || "주차별 점진 강화"}</div>
       </div>
     </div>
     
