@@ -1,7 +1,12 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/*.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/cna.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/beta_signup.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/get_signup.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/self_sign.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/parent_sign.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/feedback.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
