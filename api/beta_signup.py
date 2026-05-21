@@ -9,10 +9,9 @@ from http.server import BaseHTTPRequestHandler
 import sys
 import os
 
-# api/ 폴더의 입력
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from _supabase import insert
-from _resend import parent_consent_email
+from _supabase import insert, update as sb_update
+from _resend import parent_consent_email, self_consent_email
 
 
 def _json_response(handler, status, body):
@@ -37,18 +36,24 @@ class handler(BaseHTTPRequestHandler):
             raw = self.rfile.read(length).decode('utf-8')
             data = json.loads(raw) if raw else {}
 
-            # 필수 입력
             full_name = (data.get('fullName') or '').strip()
-            email = (data.get('email') or '').strip().lower()
+            email = (data.get('email') or '').strip().lower() or None
             birth_date = data.get('birthDate')
             age = data.get('age')
             is_minor = bool(data.get('isMinor'))
             language = data.get('language', 'ko')
 
-            if not full_name or not email or not birth_date or age is None:
-                return _json_response(self, 400, {'error': '필수 불러오는 중'})
+            # 이름 + 생년월일만 필수
+            if not full_name or not birth_date or age is None:
+                return _json_response(self, 400, {'error': '이름과 생년월일은 필수야'})
 
-            # 입력
+            # 동의서 받기 방식: 'in_person' (현장) / 'email' (이메일)
+            consent_delivery = data.get('consentDelivery', 'in_person')
+
+            # 성인이 이메일 선택 시 본인 이메일 필수
+            if not is_minor and consent_delivery == 'email' and not email:
+                return _json_response(self, 400, {'error': '이메일로 받기를 선택하면 이메일이 필요해'})
+
             signup_row = {
                 'full_name': full_name,
                 'email': email,
@@ -58,6 +63,7 @@ class handler(BaseHTTPRequestHandler):
                 'is_minor': is_minor,
                 'language': language,
                 'status': 'pending',
+                'consent_delivery_method': consent_delivery,
             }
 
             parent_present = bool(data.get('parentPresent'))
@@ -73,19 +79,26 @@ class handler(BaseHTTPRequestHandler):
                 })
 
                 if not parent_present and parent_email:
-                    # 이메일 진행 중
                     token = secrets.token_urlsafe(32)
                     expires = datetime.now(timezone.utc) + timedelta(days=7)
                     signup_row['parent_consent_token'] = token
                     signup_row['parent_consent_token_expires_at'] = expires.isoformat()
 
-            # Supabase 자료
+            # 성인 + 이메일 방식 → self_consent_token 생성
+            if not is_minor and consent_delivery == 'email' and email:
+                self_token = secrets.token_urlsafe(32)
+                self_expires = datetime.now(timezone.utc) + timedelta(days=7)
+                signup_row['self_consent_token'] = self_token
+                signup_row['self_consent_token_expires_at'] = self_expires.isoformat()
+
+            # Supabase 박기
             result = insert('beta_signups', signup_row)
             signup_id = result['id']
 
-            # 미성년 + 이메일 입력 → 부모에게 이메일 전송
+            site_url = os.environ.get('SITE_URL', 'https://decision.neurocatchers.com').rstrip('/')
+
+            # 미성년 + 이메일 옵션 → 부모 이메일 발송
             if is_minor and not parent_present and parent_email:
-                site_url = os.environ.get('SITE_URL', 'https://decision.neurocatchers.com').rstrip('/')
                 consent_url = f"{site_url}/parent-consent.html?token={result['parent_consent_token']}&lang={language}"
                 try:
                     parent_consent_email(
@@ -96,15 +109,29 @@ class handler(BaseHTTPRequestHandler):
                         consent_url=consent_url,
                         language=language
                     )
-                    # 불러오는 중
-                    from _supabase import update as sb_update
                     sb_update('beta_signups', {'id': f'eq.{signup_id}'}, {
                         'parent_email_sent_at': datetime.now(timezone.utc).isoformat(),
                         'status': 'parent_email_sent'
                     })
                 except Exception as e:
-                    # 이메일 진행 중 자료
-                    print(f"Email send failed: {e}")
+                    print(f"Parent email send failed: {e}")
+
+            # 성인 + 이메일 옵션 → 본인 이메일 발송
+            if not is_minor and consent_delivery == 'email' and email:
+                consent_url = f"{site_url}/consent.html?signup_id={signup_id}&mode=adult&token={result['self_consent_token']}&lang={language}"
+                try:
+                    self_consent_email(
+                        full_name=full_name,
+                        email=email,
+                        consent_url=consent_url,
+                        language=language
+                    )
+                    sb_update('beta_signups', {'id': f'eq.{signup_id}'}, {
+                        'self_consent_email_sent_at': datetime.now(timezone.utc).isoformat(),
+                        'status': 'self_consent_email_sent'
+                    })
+                except Exception as e:
+                    print(f"Self consent email send failed: {e}")
 
             # 감사 로그
             try:
@@ -115,6 +142,7 @@ class handler(BaseHTTPRequestHandler):
                         'age': age,
                         'is_minor': is_minor,
                         'parent_present': parent_present,
+                        'consent_delivery': consent_delivery,
                     },
                     'ip_address': self.headers.get('X-Forwarded-For', '').split(',')[0].strip() or None,
                     'user_agent': self.headers.get('User-Agent', '')[:500],
@@ -127,8 +155,11 @@ class handler(BaseHTTPRequestHandler):
                 'signup_id': signup_id,
                 'is_minor': is_minor,
                 'parent_present': parent_present,
+                'consent_delivery': consent_delivery,
             })
 
         except Exception as e:
+            import traceback
             print(f"beta_signup error: {e}")
+            print(traceback.format_exc())
             return _json_response(self, 500, {'error': str(e)})
