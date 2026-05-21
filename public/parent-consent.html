@@ -10,7 +10,6 @@ body{background:#f0eee9;color:#1a1a1a;min-height:100vh;padding:40px 20px}
 .container{max-width:780px;margin:0 auto}
 .lang-switch{text-align:right;margin-bottom:20px}
 .lang-switch button{color:#5a4a35;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #ccc;font-size:14px;cursor:pointer;font-family:inherit}
-.lang-switch button.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 .head{text-align:center;margin-bottom:30px}
 .badge{display:inline-block;background:#f59e0b;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
 h1{font-size:30px;color:#2a2018;margin-bottom:10px;line-height:1.2}
@@ -43,142 +42,85 @@ canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
 .success{background:#efe;color:#080;padding:14px 18px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
 .success.show{display:block}
 .expired{text-align:center;padding:40px;color:#c00}
-.lang-en{display:none}
-body.lang-en .lang-ko{display:none}
-body.lang-en .lang-en{display:block}
-body.lang-en .lang-en-inline{display:inline}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="lang-switch">
-    <button id="btnKo" class="active" onclick="setLang('ko')">한국어</button>
-    <button id="btnEn" onclick="setLang('en')">English</button>
+    <button id="langToggleBtn" data-i18n="lang_toggle">EN</button>
   </div>
 
   <div class="head">
-    <div class="badge lang-ko">부모/보호자 동의서</div>
-    <div class="badge lang-en">Parent/Guardian Consent</div>
-    <h1 class="lang-ko">미성년자 임상 동의서</h1>
-    <h1 class="lang-en">Parental Consent Form</h1>
+    <div class="badge" data-i18n="pc_badge">부모/보호자 동의서</div>
+    <h1 data-i18n="pc_title">미성년자 임상 동의서</h1>
     <div class="sub">Boston Neuromind LLC · Decision Catcher Beta</div>
   </div>
 
   <div class="card" id="mainCard">
     <div class="minor-info" id="minorInfo">
-      <span class="lang-ko">자녀 정보를 불러오는 중...</span>
-      <span class="lang-en">Loading child information...</span>
+      <span data-i18n="pc_loading">자녀 정보를 불러오는 중...</span>
     </div>
 
-    <div class="consent-content lang-ko">
-      <h3>1. 동의의 목적</h3>
-      <p>본 동의서는 귀하의 자녀가 Boston Neuromind LLC의 <strong>Decision Catcher (CNA v7)</strong> 베타 프로그램에 참여하는 것에 대한 부모/법정 보호자의 동의를 받기 위한 것입니다.</p>
+    <div class="consent-content">
+      <h3 data-i18n="pc_s1_h">1. 동의의 목적</h3>
+      <p data-i18n="pc_s1_p">본 동의서는 귀하의 자녀가 Boston Neuromind LLC의 <strong>Decision Catcher (CNA v7)</strong> 베타 프로그램에 참여하는 것에 대한 부모/법정 보호자의 동의를 받기 위한 것입니다.</p>
 
-      <h3>2. 자녀의 참여 동의</h3>
-      <p>자녀의 본인 Assent는 이미 완료되었습니다. 본 부모 동의가 완료되어야 자녀의 참여가 확정됩니다.</p>
+      <h3 data-i18n="pc_s2_h">2. 자녀의 참여 동의</h3>
+      <p data-i18n="pc_s2_p">자녀의 본인 Assent는 이미 완료되었습니다. 본 부모 동의가 완료되어야 자녀의 참여가 확정됩니다.</p>
 
-      <h3>3. 자녀의 참여 내용</h3>
+      <h3 data-i18n="pc_s3_h">3. 자녀의 참여 내용</h3>
       <ul>
-        <li>총 8주 (4-8주 프로토콜 + 4주 outcome)</li>
-        <li>초기 평가 1회, 주간 진행 상태 입력</li>
-        <li>최종 outcome 평가</li>
+        <li data-i18n="pc_s3_l1">총 8주 (4-8주 프로토콜 + 4주 outcome)</li>
+        <li data-i18n="pc_s3_l2">초기 평가 1회, 주간 진행 상태 입력</li>
+        <li data-i18n="pc_s3_l3">최종 outcome 평가</li>
       </ul>
 
-      <h3>4. 개인정보 보호 (HIPAA + COPPA)</h3>
-      <p>자녀의 모든 정보는 HIPAA 표준에 따라 보호되며, 13세 미만의 경우 COPPA 추가 보호가 적용됩니다. 제3자에게 공개되지 않습니다.</p>
+      <h3 data-i18n="pc_s4_h">4. 개인정보 보호 (HIPAA + COPPA)</h3>
+      <p data-i18n="pc_s4_p">자녀의 모든 정보는 HIPAA 표준에 따라 보호되며, 13세 미만의 경우 COPPA 추가 보호가 적용됩니다. 제3자에게 공개되지 않습니다.</p>
 
-      <h3>5. 철회 권리</h3>
-      <p>자녀의 참여는 언제든지 철회할 수 있습니다. 철회 시 모든 데이터는 30일 이내 삭제됩니다.</p>
+      <h3 data-i18n="pc_s5_h">5. 철회 권리</h3>
+      <p data-i18n="pc_s5_p">자녀의 참여는 언제든지 철회할 수 있습니다. 철회 시 모든 데이터는 30일 이내 삭제됩니다.</p>
 
-      <h3>6. Safety Protocol</h3>
-      <p>Mandated Reporter 의무에 따라, 다음 상황은 법적으로 신고됩니다:</p>
+      <h3 data-i18n="pc_s6_h">6. Safety Protocol</h3>
+      <p data-i18n="pc_s6_p">Mandated Reporter 의무에 따라, 다음 상황은 법적으로 신고됩니다:</p>
       <ul>
-        <li>자녀에 대한 임박한 위해 위험</li>
-        <li>자살 사고/시도</li>
-        <li>학대 의심 시</li>
+        <li data-i18n="pc_s6_l1">자녀에 대한 임박한 위해 위험</li>
+        <li data-i18n="pc_s6_l2">자살 사고/시도</li>
+        <li data-i18n="pc_s6_l3">학대 의심 시</li>
       </ul>
 
-      <h3>7. 동의 서명</h3>
-      <p>Boston Neuromind LLC · support@neurocatchers.com</p>
-    </div>
-
-    <div class="consent-content lang-en">
-      <h3>1. About This Form</h3>
-      <p>This form requests parental/legal guardian consent for your child to participate in the <strong>Decision Catcher (CNA v7)</strong> beta program by Boston Neuromind LLC.</p>
-
-      <h3>2. Child's Assent</h3>
-      <p>Your child has already provided their assent. Parental consent is required for participation as a minor under 18.</p>
-
-      <h3>3. Study Procedures</h3>
-      <ul>
-        <li>Total 8 weeks (4-8 week protocol + 4-week outcome)</li>
-        <li>Initial assessment, weekly progress entries</li>
-        <li>Final outcome assessment</li>
-      </ul>
-
-      <h3>4. Data Protection (HIPAA + COPPA)</h3>
-      <p>All your child's information is protected per HIPAA standards. For children under 13, COPPA additionally applies. Data is not shared with third parties.</p>
-
-      <h3>5. Right to Withdraw</h3>
-      <p>You may withdraw your child from this study at any time without penalty. All data will be deleted within 30 days.</p>
-
-      <h3>6. Safety Protocol</h3>
-      <p>Under Mandated Reporter duty, the following will be reported immediately:</p>
-      <ul>
-        <li>Imminent risk of harm to your child</li>
-        <li>Suicidal ideation/attempt</li>
-        <li>Suspected abuse</li>
-      </ul>
-
-      <h3>7. Contact</h3>
-      <p>Boston Neuromind LLC · support@neurocatchers.com</p>
+      <h3 data-i18n="pc_s7_h">7. 동의 서명</h3>
+      <p data-i18n="pc_s7_p">Boston Neuromind LLC · support@neurocatchers.com</p>
     </div>
 
     <div class="checkboxes">
       <div class="check-item">
         <input type="checkbox" id="check1">
-        <label for="check1">
-          <span class="lang-ko"><strong>본인은 부모/법정 보호자로서, 위 동의서를 읽고 이해했습니다.</strong></span>
-          <span class="lang-en"><strong>I am the parent/legal guardian and have read and understood this consent form.</strong></span>
-        </label>
+        <label for="check1"><strong data-i18n="pc_check1">본인은 부모/법정 보호자로서, 위 동의서를 읽고 이해했습니다.</strong></label>
       </div>
       <div class="check-item">
         <input type="checkbox" id="check2">
-        <label for="check2">
-          <span class="lang-ko"><strong>본인은 자녀의 베타 프로그램 참여에 자발적으로 동의합니다.</strong></span>
-          <span class="lang-en"><strong>I voluntarily consent to my child's participation in this beta program.</strong></span>
-        </label>
+        <label for="check2"><strong data-i18n="pc_check2">본인은 자녀의 베타 프로그램 참여에 자발적으로 동의합니다.</strong></label>
       </div>
       <div class="check-item">
         <input type="checkbox" id="check3">
-        <label for="check3">
-          <span class="lang-ko"><strong>본인은 언제든지 자녀를 철회시킬 수 있음을 이해합니다.</strong></span>
-          <span class="lang-en"><strong>I understand I may withdraw my child at any time.</strong></span>
-        </label>
+        <label for="check3"><strong data-i18n="pc_check3">본인은 언제든지 자녀를 철회시킬 수 있음을 이해합니다.</strong></label>
       </div>
       <div class="check-item">
         <input type="checkbox" id="check4">
-        <label for="check4">
-          <span class="lang-ko"><strong>본인은 자녀의 데이터가 HIPAA/COPPA에 따라 보호됨을 이해합니다.</strong></span>
-          <span class="lang-en"><strong>I understand my child's data is protected under HIPAA/COPPA.</strong></span>
-        </label>
+        <label for="check4"><strong data-i18n="pc_check4">본인은 자녀의 데이터가 HIPAA/COPPA에 따라 보호됨을 이해합니다.</strong></label>
       </div>
     </div>
 
     <div class="signature-section">
-      <h3>
-        <span class="lang-ko">✍️ 부모/보호자 서명</span>
-        <span class="lang-en">✍️ Parent/Guardian Signature</span>
-      </h3>
+      <h3 data-i18n="pc_sig_h">✍️ 부모/보호자 서명</h3>
       <div class="sig-info">
         <div class="field">
-          <label class="lang-ko">성명</label>
-          <label class="lang-en">Name</label>
+          <label data-i18n="pc_sig_name_label">성명</label>
           <input type="text" id="parentName" readonly>
         </div>
         <div class="field">
-          <label class="lang-ko">날짜</label>
-          <label class="lang-en">Date</label>
+          <label data-i18n="pc_sig_date_label">날짜</label>
           <input type="text" id="signDate" readonly>
         </div>
       </div>
@@ -186,45 +128,54 @@ body.lang-en .lang-en-inline{display:inline}
         <canvas id="sigPad"></canvas>
       </div>
       <div class="sig-actions">
-        <button class="btn-clear" id="clearSig">
-          <span class="lang-ko">서명 지우기</span>
-          <span class="lang-en">Clear Signature</span>
-        </button>
+        <button class="btn-clear" id="clearSig" data-i18n="pc_clear_sig_btn">서명 지우기</button>
       </div>
     </div>
 
-    <button class="btn-submit" id="submitBtn">
-      <span class="lang-ko">동의 및 제출</span>
-      <span class="lang-en">Agree & Submit</span>
-    </button>
+    <button class="btn-submit" id="submitBtn" data-i18n="pc_submit_btn">동의 및 제출</button>
 
     <div class="error" id="errorMsg"></div>
     <div class="success" id="successMsg"></div>
   </div>
 </div>
 
+<script src="/decision.js"></script>
 <script>
 const params = new URLSearchParams(window.location.search);
 const signupId = params.get('signup_id');
 const token = params.get('token');
-const mode = params.get('mode');
-
-const initialLang = params.get('lang') || 'ko';
-
-function setLang(lang) {
-  document.body.classList.toggle('lang-en', lang === 'en');
-  document.documentElement.lang = lang;
-  document.getElementById('btnKo').classList.toggle('active', lang === 'ko');
-  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
-  document.getElementById('signDate').value = lang === 'ko'
-    ? new Date().toLocaleDateString('ko-KR')
-    : new Date().toLocaleDateString('en-US');
+const urlLang = params.get('lang');
+if (urlLang && (urlLang === 'ko' || urlLang === 'en')) {
+  setLang(urlLang);
 }
-setLang(initialLang);
+
+document.getElementById('signDate').value = getLang() === 'ko'
+  ? new Date().toLocaleDateString('ko-KR')
+  : new Date().toLocaleDateString('en-US');
+
+let signupData = null;
+
+function renderChildInfo() {
+  if (!signupData) return;
+  const infoEl = document.getElementById('minorInfo');
+  const assentTxt = signupData.self_signed_at ? t('pc_assent_done') : t('pc_assent_pending');
+  infoEl.innerHTML = `<strong>${t('pc_child_info_label')}</strong><br>${t('pc_child_name_label')} ${signupData.full_name}<br>${t('pc_child_age_label')} ${signupData.age}${t('pc_child_age_suffix')}<br>${t('pc_assent_label')} ${assentTxt}`;
+}
+
+const origApplyLang = window.applyLang;
+if (typeof origApplyLang === 'function') {
+  window.applyLang = function() {
+    origApplyLang.apply(this, arguments);
+    renderChildInfo();
+    document.getElementById('signDate').value = getLang() === 'ko'
+      ? new Date().toLocaleDateString('ko-KR')
+      : new Date().toLocaleDateString('en-US');
+  };
+}
 
 async function loadSignup() {
   if (!signupId && !token) {
-    document.getElementById('mainCard').innerHTML = '<div class="expired"><h2>⚠️ 잘못된 접근 / Invalid access</h2></div>';
+    document.getElementById('mainCard').innerHTML = `<div class="expired"><h2>${t('pc_err_invalid')}</h2></div>`;
     return;
   }
   try {
@@ -233,16 +184,11 @@ async function loadSignup() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    const lang = document.documentElement.lang;
-    const infoEl = document.getElementById('minorInfo');
-    if (lang === 'ko') {
-      infoEl.innerHTML = `<strong>자녀 정보:</strong><br>이름: ${data.full_name}<br>나이: 만 ${data.age}세<br>본인 Assent: ${data.self_signed_at ? '✅ 완료' : '⏳ 대기 중'}`;
-    } else {
-      infoEl.innerHTML = `<strong>Child Information:</strong><br>Name: ${data.full_name}<br>Age: ${data.age}<br>Child's Assent: ${data.self_signed_at ? '✅ Completed' : '⏳ Pending'}`;
-    }
+    signupData = data;
+    renderChildInfo();
     document.getElementById('parentName').value = data.parent_name || '';
   } catch(e) {
-    document.getElementById('mainCard').innerHTML = `<div class="expired"><h2>⚠️ ${e.message}</h2><p>${initialLang === 'ko' ? '링크가 만료되었거나 잘못되었습니다.' : 'Link expired or invalid.'}</p></div>`;
+    document.getElementById('mainCard').innerHTML = `<div class="expired"><h2>⚠️ ${e.message}</h2><p>${t('pc_err_link_expired')}</p></div>`;
   }
 }
 loadSignup();
@@ -289,14 +235,13 @@ function showError(msg) {
 }
 
 document.getElementById('submitBtn').addEventListener('click', async () => {
-  const lang = document.documentElement.lang;
   if (!document.getElementById('check1').checked || !document.getElementById('check2').checked ||
       !document.getElementById('check3').checked || !document.getElementById('check4').checked) {
-    showError(lang === 'ko' ? '모든 동의 항목에 체크해주세요' : 'Please check all consent items');
+    showError(t('pc_err_check_all'));
     return;
   }
   if (!hasSignature) {
-    showError(lang === 'ko' ? '서명을 박아주세요' : 'Please sign');
+    showError(t('pc_err_no_sig'));
     return;
   }
 
@@ -314,15 +259,11 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
     if (!res.ok || data.error) throw new Error(data.error || 'Server error');
 
     const successEl = document.getElementById('successMsg');
-    if (lang === 'ko') {
-      successEl.innerHTML = '✅ 동의 완료! 베타 참여가 확정되었습니다. 감사합니다.';
-    } else {
-      successEl.innerHTML = '✅ Consent submitted! Beta enrollment confirmed. Thank you.';
-    }
+    successEl.innerHTML = t('pc_succ');
     successEl.classList.add('show');
     btn.style.display = 'none';
   } catch (err) {
-    showError((lang === 'ko' ? '오류: ' : 'Error: ') + err.message);
+    showError(t('pc_err_prefix') + ' ' + err.message);
     btn.disabled = false;
   }
 });
