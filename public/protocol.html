@@ -9,41 +9,46 @@
 <body data-auth>
 
 <header class="header">
-  <h1>🩺 훈련 프로토콜</h1>
+  <h1>🩺 <span data-i18n="protocol_page_title">훈련 프로토콜</span></h1>
   <nav class="nav">
     <a href="/" data-i18n="home">Home</a>
     <a href="/clinician.html" data-i18n="new_client">새 클라이언트</a>
-    <a href="/result.html">평가 결과</a>
+    <a href="/result.html" data-i18n="btn_assessment_result">평가 결과</a>
     <a href="/outcome.html" data-i18n="outcome">4주 Outcome</a>
     <a href="/manual.html" data-i18n="manual">매뉴얼</a>
     <a href="#" id="logoutBtn" data-i18n="logout">Logout</a>
-      <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
+    <button id="langToggleBtn" class="lang-btn" data-i18n="lang_toggle">EN</button>
   </nav>
 </header>
 
 <div class="container">
 
   <div id="noData" class="alert alert-warning" style="display:none;">
-    프로토콜 자료 ❌. <a href="/clinician.html">새 클라이언트 평가</a>부터 시작하세요.
+    <span data-i18n="no_protocol_data">프로토콜 자료 없음.</span>
+    <a href="/clinician.html" data-i18n="no_protocol_link">새 클라이언트 평가</a>
+    <span data-i18n="no_protocol_continue">부터 시작하세요.</span>
   </div>
 
   <div id="protocolRoot"></div>
 
   <div class="section no-print">
-    <h2>회기 진행 자료</h2>
-    <p>각 회기:</p>
+    <h2 data-i18n="session_progress_h">회기 진행 자료</h2>
+    <p data-i18n="each_session_label">각 회기:</p>
     <ol style="padding-left:24px;">
-      <li>시작 (5분): HRV 측정, 기분 체크</li>
-      <li>카드 실행 (15-60분): 시스템 추천 카드 또는 임상가 override</li>
-      <li>종료 (5분): HRV 재측정, OMR 응답</li>
+      <li data-i18n="session_start">시작 (5분): HRV 측정, 기분 체크</li>
+      <li data-i18n="session_run">카드 실행 (15-60분): 시스템 추천 카드 또는 임상가 override</li>
+      <li data-i18n="session_end">종료 (5분): HRV 재측정, OMR 응답</li>
     </ol>
-    <p style="margin-top:16px;">4주 후 → <a href="/outcome.html" class="brand-color"><strong>Outcome 입력 + Re-routing</strong></a></p>
+    <p style="margin-top:16px;">
+      <span data-i18n="after_4w_label">4주 후 →</span>
+      <a href="/outcome.html" class="brand-color"><strong data-i18n="btn_outcome_reroute">Outcome 입력 + Re-routing</strong></a>
+    </p>
   </div>
 
 </div>
 
 <footer class="footer">
-  <p>Boston Neuromind LLC · CNA v7.0.0</p>
+  <p data-i18n="footer_company">Boston Neuromind LLC · CNA v7.0.0</p>
 </footer>
 
 <script src="/decision.js"></script>
@@ -58,26 +63,26 @@ if (!result || !result.protocol_preview) {
 
 function renderProtocol(p, sim) {
   const root = document.getElementById('protocolRoot');
-  
+
   let html = `
     <div class="section">
-      <h2>프로토콜 자료</h2>
+      <h2>${t('protocol_data_h')}</h2>
       <div class="form-row">
-        <div><strong>클라이언트:</strong> ${p.patient_id}</div>
-        <div><strong>영역:</strong> ${p.selected_axis ? clinicalAxisKo(p.selected_axis) : "주의력"}</div>
-        <div><strong>기간:</strong> ${p.target_duration_weeks}주</div>
-        <div><strong>총 회기:</strong> ${p.sessions.length}회</div>
-        <div><strong>진행 방식:</strong> ${p.weekly_progression || "주차별 점진 강화"}</div>
+        <div><strong>${t('client_label')}:</strong> ${p.patient_id}</div>
+        <div><strong>${t('area_label')}</strong> ${p.selected_axis ? clinicalAxisKo(p.selected_axis) : clinicalAxisKo('attention')}</div>
+        <div><strong>${t('p_period_label')}</strong> ${p.target_duration_weeks}${getLang() === 'en' ? ' weeks' : '주'}</div>
+        <div><strong>${t('p_total_sessions')}</strong> ${p.sessions.length}${getLang() === 'en' ? '' : '회'}</div>
+        <div><strong>${t('p_progression_method')}</strong> ${p.weekly_progression || t('default_progression')}</div>
       </div>
     </div>
-    
+
     <div class="section">
-      <h2>주별 자료</h2>
+      <h2>${t('weekly_data_h')}</h2>
       <table class="table">
-        <thead><tr><th>회기</th><th>주차</th><th>요일</th><th>시간</th><th>카드</th></tr></thead>
+        <thead><tr><th>${t('col_session')}</th><th>${t('col_week')}</th><th>${t('col_day')}</th><th>${t('col_time')}</th><th>${t('col_cards')}</th></tr></thead>
         <tbody>
   `;
-  
+
   p.sessions.forEach((s, i) => {
     const cards = s.cards.map(c => c.id).join(', ');
     const totalTime = s.cards.reduce((sum, c) => sum + (c.cost_minutes || 0), 0);
@@ -85,40 +90,40 @@ function renderProtocol(p, sim) {
       <td>${i + 1}</td>
       <td>W${s.week || Math.floor(i / (p.sessions.length / p.target_duration_weeks)) + 1}</td>
       <td>${s.day_of_week || '-'}</td>
-      <td>${totalTime}분</td>
+      <td>${totalTime}${t('minutes_suffix')}</td>
       <td>${cards}</td>
     </tr>`;
   });
-  
+
   html += `</tbody></table></div>`;
-  
+
   if (p.success_criteria) {
     html += `<div class="section">
-      <h2>성공 기준</h2>
+      <h2>${t('success_criteria_h')}</h2>
       <table class="table"><tbody>`;
     Object.entries(p.success_criteria).forEach(([k, v]) => {
       html += `<tr><td>${k}</td><td>≥ ${v}</td></tr>`;
     });
     html += `</tbody></table></div>`;
   }
-  
+
   if (p.measurement_schedule) {
     html += `<div class="section">
-      <h2>측정 자료</h2>
+      <h2>${t('measurement_data_h')}</h2>
       <table class="table"><tbody>`;
     Object.entries(p.measurement_schedule).forEach(([week, measures]) => {
       html += `<tr><td>${week}</td><td>${(measures || []).join(', ')}</td></tr>`;
     });
     html += `</tbody></table></div>`;
   }
-  
+
   if (sim) {
     html += `<div class="section" style="border-color:#C9444F;">
-      <h2 style="color:#C9444F;">예상 효과 시뮬레이션 (v7)</h2>
-      <p><strong>Uncertainty:</strong> ${(sim.uncertainty * 100).toFixed(0)}%</p>
-      
-      <h3>인지 5축 예상 변화</h3>
-      <table class="table"><thead><tr><th>인지축</th><th>현재</th><th>예상</th><th>변화</th></tr></thead><tbody>`;
+      <h2 style="color:#C9444F;">${t('expected_effect_sim_h')}</h2>
+      <p><strong>${t('uncertainty_label')}</strong> ${(sim.uncertainty * 100).toFixed(0)}%</p>
+
+      <h3>${t('cog_5axis_expected_h')}</h3>
+      <table class="table"><thead><tr><th>${t('col_cog_axis')}</th><th>${t('col_now')}</th><th>${t('col_expected')}</th><th>${t('col_change')}</th></tr></thead><tbody>`;
     Object.keys(sim.starting_cognitive).forEach(axis => {
       const before = sim.starting_cognitive[axis];
       const after = sim.projected_cognitive[axis];
@@ -131,9 +136,9 @@ function renderProtocol(p, sim) {
       </tr>`;
     });
     html += `</tbody></table>
-      
-      <h3>임상 5축 예상 변화</h3>
-      <table class="table"><thead><tr><th>임상축</th><th>현재</th><th>예상</th><th>변화</th></tr></thead><tbody>`;
+
+      <h3>${t('clin_5axis_expected_h')}</h3>
+      <table class="table"><thead><tr><th>${t('col_area')}</th><th>${t('col_now')}</th><th>${t('col_expected')}</th><th>${t('col_change')}</th></tr></thead><tbody>`;
     Object.keys(sim.starting_clinical).forEach(axis => {
       const before = sim.starting_clinical[axis];
       const after = sim.projected_clinical[axis];
@@ -146,14 +151,14 @@ function renderProtocol(p, sim) {
       </tr>`;
     });
     html += `</tbody></table>
-      
+
       <details style="margin-top:16px;">
-        <summary style="cursor:pointer;">시뮬레이션 가정</summary>
+        <summary style="cursor:pointer;">${t('sim_assumptions_h')}</summary>
         <ul style="padding-left:24px;margin-top:8px;color:#5a4a35;">`;
     sim.assumptions.forEach(a => html += `<li>${a}</li>`);
     html += `</ul></details></div>`;
   }
-  
+
   root.innerHTML = html;
 }
 </script>
