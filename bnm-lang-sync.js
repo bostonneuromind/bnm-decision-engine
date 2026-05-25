@@ -1,6 +1,6 @@
 // bnm-lang-sync.js v3 — strict explicit lang sync (no defaults)
 // Decision tree:
-//   URL ?lang=ko|en > localStorage 'bnm_lang' > 'en' (last-resort default)
+//   URL ?lang=ko|en > localStorage 'bnm_lang' > 'ko' (last-resort default — Decision Engine is Korean-primary)
 // Effect:
 //   1. ALL <a> tags get ?lang=<current> appended (family domains + same domain .html)
 //   2. On pages with -en.html/-ko.html variants, auto-redirect if URL explicit
@@ -43,7 +43,7 @@
       try { localStorage.setItem(STORAGE_KEY, old); } catch(e) {}
       return old;
     }
-    return 'en';
+    return 'ko'; // Decision Engine last-resort default (Korean-primary)
   }
 
   function isFamilyDomain(hostname) {
@@ -148,7 +148,7 @@
     maybeRedirectVariant(initial, true);
   }
 
-  window.bnmGetLang = function() { return window.BNM_LANG || 'en'; };
+  window.bnmGetLang = function() { return window.BNM_LANG || 'ko'; };
   window.bnmSetLang = function(newLang) {
     if (newLang !== 'ko' && newLang !== 'en') return;
     applyLang(newLang);

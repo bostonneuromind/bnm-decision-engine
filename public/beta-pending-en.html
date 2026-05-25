@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/bnm-lang-sync.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Awaiting Parent Consent — Decision Catcher</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);color:#2E5A7A;min-height:100vh;padding:40px 20px;display:flex;align-items:center;justify-content:center}
+.container{max-width:600px;width:100%}
+.card{background:#fff;border:2px solid #2E5A7A;border-radius:20px;padding:48px 32px;text-align:center}
+.icon{font-size:64px;margin-bottom:20px}
+h1{font-size:28px;color:#2E5A7A;margin-bottom:16px;line-height:1.2}
+p{font-size:15px;color:#4A90C2;line-height:1.6;margin-bottom:12px}
+.email-box{background:#E8F1F8;border:2px solid #7BAFD0;border-radius:12px;padding:20px;margin:24px 0;font-size:14px;color:#2E5A7A}
+.btn{display:inline-block;background:#2E5A7A;color:#fff;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;margin-top:20px}
+.lang-toggle{position:absolute;top:20px;right:20px}
+.lang-toggle button{background:#fff;border:1.5px solid #BDD7E7;padding:8px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:13px;color:#4A90C2}
+</style>
+</head>
+<body>
+<div class="lang-toggle">
+  <button onclick="location.href='/beta-pending.html'+location.search">한국어</button>
+</div>
+<div class="container">
+  <div class="card">
+    <div class="icon">📧</div>
+    <h1>Awaiting Parent Consent</h1>
+
+    <p>Your assent has been recorded.</p>
+
+    <div class="email-box">
+      <strong>📨 Consent form sent to your parent.</strong>
+      <br><br>
+      <span>Once your parent clicks the email link and signs the consent form, your beta enrollment will be activated.</span>
+    </div>
+
+    <p>If you have any questions, please contact support@neurocatchers.com</p>
+
+    <a href="/?lang=en" class="btn">Back to Home</a>
+  </div>
+</div>
+</body>
+</html>

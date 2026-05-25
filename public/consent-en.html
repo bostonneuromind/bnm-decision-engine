@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>임상 동의서 — Decision Catcher</title>
+<title>Clinical Consent — Decision Catcher</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
 body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);color:#2E5A7A;min-height:100vh;padding:40px 20px}
 .container{max-width:780px;margin:0 auto}
 .lang-switch{text-align:right;margin-bottom:20px}
-.lang-switch button{padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #BDD7E7;font-size:13px;cursor:pointer;font-family:inherit}
+.lang-switch button{padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #BDD7E7;font-size:13px;cursor:pointer;font-family:inherit;color:#4A90C2}
 .head{text-align:center;margin-bottom:40px}
 .badge{display:inline-block;background:#4A90C2;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
 h1{font-size:32px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
@@ -53,88 +53,88 @@ canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
 <body>
 <div class="container">
   <div class="lang-switch">
-    <button id="langToggleBtn" data-i18n="lang_toggle">EN</button>
+    <button onclick="location.href='/consent.html'+location.search">한국어</button>
   </div>
 
   <div class="head">
-    <div class="badge" data-i18n="consent_page_badge">임상 동의서</div>
-    <h1 data-i18n="consent_page_title">Decision Catcher<br>베타 참여 동의</h1>
-    <div class="sub" data-i18n="consent_page_sub">Boston Neuromind LLC · IRB 표준 동의서</div>
+    <div class="badge">Clinical Consent Form</div>
+    <h1>Decision Catcher<br>Beta Participation Consent</h1>
+    <div class="sub">Boston Neuromind LLC · IRB Standard Consent Form</div>
   </div>
 
   <div class="card">
     <div id="modeBanner" class="mode-banner"></div>
 
     <div class="consent-content" id="consentText">
-      <h3 data-i18n="consent_s1_h">1. 연구 개요</h3>
-      <p data-i18n="consent_s1_p">본 베타 프로그램은 Boston Neuromind LLC가 개발한 <strong>Decision Catcher (CNA v7)</strong> 시스템의 임상적 유용성을 평가하기 위한 비영리 베타 테스트입니다. 본 시스템은 감별 진단, 공존 진단 분해, 적응적 훈련 추천을 통해 임상가의 의사결정을 보조합니다.</p>
+      <h3>1. Study Overview</h3>
+      <p>This beta program is a non-commercial beta test to evaluate the clinical utility of the <strong>Decision Catcher (CNA v7)</strong> system developed by Boston Neuromind LLC. The system supports clinician decision-making through differential diagnosis, comorbidity decomposition, and adaptive training recommendations.</p>
 
-      <h3 data-i18n="consent_s2_h">2. 참여 기간 및 절차</h3>
+      <h3>2. Participation Duration &amp; Procedure</h3>
       <ul>
-        <li data-i18n="consent_s2_l1">총 8주 (4-8주 프로토콜 + 4주 outcome 측정)</li>
-        <li data-i18n="consent_s2_l2">초기 평가 1회 (60-90분)</li>
-        <li data-i18n="consent_s2_l3">주간 진행 상태 입력 (5-10분/회)</li>
-        <li data-i18n="consent_s2_l4">최종 outcome 평가 (60분)</li>
+        <li>Total 8 weeks (4-8 week protocol + 4 week outcome measurement)</li>
+        <li>Initial assessment (60-90 min)</li>
+        <li>Weekly progress entry (5-10 min/session)</li>
+        <li>Final outcome assessment (60 min)</li>
       </ul>
 
-      <h3 data-i18n="consent_s3_h">3. 잠재적 이익</h3>
-      <p data-i18n="consent_s3_p">본인의 인지/감정 상태에 대한 객관적 평가 및 개인화된 훈련 추천을 받을 수 있습니다. 그러나 본 시스템은 <strong>임상가의 진단을 대체하지 않으며</strong>, 시스템의 추천은 임상가의 최종 결정에 보조 도구로만 활용됩니다.</p>
+      <h3>3. Potential Benefits</h3>
+      <p>You may receive an objective assessment of your cognitive/emotional state and personalized training recommendations. However, this system <strong>does not replace your clinician's diagnosis</strong>, and system recommendations serve only as a support tool for the clinician's final decision.</p>
 
-      <h3 data-i18n="consent_s4_h">4. 잠재적 위험</h3>
-      <p data-i18n="consent_s4_p">본 베타 시스템은 임상 결정 보조 도구이며, 다음의 위험이 있을 수 있습니다:</p>
+      <h3>4. Potential Risks</h3>
+      <p>This beta system is a clinical decision support tool, with the following potential risks:</p>
       <ul>
-        <li data-i18n="consent_s4_l1">시스템 추천의 부정확성 가능성 (베타 단계)</li>
-        <li data-i18n="consent_s4_l2">평가 과정에서의 심리적 불편감 가능성</li>
-        <li data-i18n="consent_s4_l3">데이터 처리상의 기술적 오류 가능성</li>
+        <li>Possible inaccuracy of system recommendations (beta stage)</li>
+        <li>Possible psychological discomfort during assessment</li>
+        <li>Possible technical errors in data processing</li>
       </ul>
-      <p data-i18n="consent_s4_p2">상기 위험을 최소화하기 위해 모든 결정은 임상가가 최종 검토하며, 위기 상황(자살 위기, 정신증 등) 발생 시 즉시 임상가에게 보고됩니다.</p>
+      <p>To minimize these risks, all decisions are reviewed by your clinician, and crisis situations (suicidal crisis, psychosis, etc.) are immediately reported to the clinician.</p>
 
-      <h3 data-i18n="consent_s5_h">5. 비밀 보장 및 데이터 보호</h3>
-      <p data-i18n="consent_s5_p">본인의 모든 식별 정보 및 임상 자료는 HIPAA 표준에 따라 암호화되어 저장됩니다. 본인의 동의 없이 제3자에게 공개되지 않으며, 연구 목적의 공개 시 모든 식별 정보가 제거된 익명 자료만 사용됩니다.</p>
+      <h3>5. Confidentiality &amp; Data Protection</h3>
+      <p>All your identifying information and clinical data are encrypted and stored according to HIPAA standards. They are not disclosed to third parties without your consent, and for research disclosure, only anonymized data with all identifying information removed is used.</p>
 
-      <h3 data-i18n="consent_s6_h">6. 참여 철회 권리</h3>
-      <p data-i18n="consent_s6_p">본인은 언제든지 어떠한 불이익 없이 본 베타 프로그램에서 철회할 수 있습니다. 철회 시 본인의 모든 자료는 30일 이내에 삭제됩니다.</p>
+      <h3>6. Right to Withdraw</h3>
+      <p>You may withdraw from this beta program at any time without penalty. Upon withdrawal, all your data will be deleted within 30 days.</p>
 
-      <h3 data-i18n="consent_s7_h">7. 안전 프로토콜 (Safety Protocol)</h3>
-      <p data-i18n="consent_s7_p">다음 상황 발생 시 즉시 임상가에게 보고됩니다 (Mandated Reporter 의무):</p>
+      <h3>7. Safety Protocol</h3>
+      <p>The following situations are immediately reported to the clinician (Mandated Reporter obligation):</p>
       <ul>
-        <li data-i18n="consent_s7_l1">본인 또는 타인에 대한 임박한 위해 우려</li>
-        <li data-i18n="consent_s7_l2">활성 자살 사고 또는 자살 시도</li>
-        <li data-i18n="consent_s7_l3">아동, 노인, 장애인 학대 의심 시</li>
+        <li>Concern of imminent harm to self or others</li>
+        <li>Active suicidal ideation or attempt</li>
+        <li>Suspected abuse of children, elderly, or disabled persons</li>
       </ul>
 
-      <h3 data-i18n="consent_s8_h">8. 연락처</h3>
-      <p data-i18n="consent_s8_p">본 연구에 대한 질문이나 우려 사항은 다음으로 연락 주십시오:<br><strong>Boston Neuromind LLC</strong><br>Canton, Massachusetts<br>Email: support@neurocatchers.com</p>
+      <h3>8. Contact</h3>
+      <p>For questions or concerns about this study, please contact:<br><strong>Boston Neuromind LLC</strong><br>Canton, Massachusetts<br>Email: support@neurocatchers.com</p>
     </div>
 
     <div class="checkboxes">
       <div class="check-item">
         <input type="checkbox" id="check1">
-        <label for="check1"><strong data-i18n="consent_check1">본인은 위 동의서를 읽고 이해했습니다.</strong></label>
+        <label for="check1"><strong>I have read and understood the above consent form.</strong></label>
       </div>
       <div class="check-item">
         <input type="checkbox" id="check2">
-        <label for="check2"><strong data-i18n="consent_check2">본인은 본 베타 프로그램의 잠재적 이익과 위험을 이해하며, 자발적으로 참여에 동의합니다.</strong></label>
+        <label for="check2"><strong>I understand the potential benefits and risks of this beta program, and voluntarily agree to participate.</strong></label>
       </div>
       <div class="check-item">
         <input type="checkbox" id="check3">
-        <label for="check3"><strong data-i18n="consent_check3">본인은 언제든지 철회할 수 있으며, 철회 시 어떠한 불이익도 없음을 이해합니다.</strong></label>
+        <label for="check3"><strong>I understand I may withdraw at any time without penalty.</strong></label>
       </div>
       <div class="check-item">
         <input type="checkbox" id="check4">
-        <label for="check4"><strong data-i18n="consent_check4">본인은 데이터가 HIPAA 표준에 따라 보호되며, 연구 목적의 공개 시 익명화됨을 이해합니다.</strong></label>
+        <label for="check4"><strong>I understand my data is protected per HIPAA standards and will be anonymized for research disclosure.</strong></label>
       </div>
     </div>
 
     <div class="signature-section" id="selfSignSection">
-      <h3 data-i18n="consent_sig_h">✍️ 본인 서명 / Assent</h3>
+      <h3>✍️ Your Signature / Assent</h3>
       <div class="sig-info">
         <div class="field">
-          <label data-i18n="consent_sig_name_label">성명 (자동 입력)</label>
+          <label>Name (auto-filled)</label>
           <input type="text" id="signerName" readonly>
         </div>
         <div class="field">
-          <label data-i18n="consent_sig_date_label">날짜</label>
+          <label>Date</label>
           <input type="text" id="signDate" readonly>
         </div>
       </div>
@@ -142,50 +142,37 @@ canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
         <canvas id="sigPad"></canvas>
       </div>
       <div class="sig-actions">
-        <button class="btn-clear" id="clearSig" data-i18n="consent_clear_sig_btn">서명 지우기</button>
+        <button class="btn-clear" id="clearSig">Clear Signature</button>
       </div>
     </div>
 
-    <button class="btn-submit" id="submitBtn" data-i18n="consent_submit_btn">동의 및 제출</button>
+    <button class="btn-submit" id="submitBtn">Agree &amp; Submit</button>
 
     <div class="error" id="errorMsg"></div>
     <div class="success" id="successMsg"></div>
   </div>
 </div>
 
-<script src="/decision.js"></script>
 <script>
 const params = new URLSearchParams(window.location.search);
 const signupId = params.get('signup_id');
 const mode = params.get('mode') || 'adult';
 
 const modeBanner = document.getElementById('modeBanner');
-function applyModeBanner() {
-  if (mode === 'adult') {
-    modeBanner.className = 'mode-banner adult';
-    modeBanner.innerHTML = t('consent_mode_adult');
-  } else if (mode === 'minor_assent') {
-    modeBanner.className = 'mode-banner minor';
-    modeBanner.innerHTML = t('consent_mode_minor');
-  } else if (mode === 'in_person') {
-    modeBanner.className = 'mode-banner in-person';
-    modeBanner.innerHTML = t('consent_mode_inperson');
-  }
-}
-applyModeBanner();
-
-// 언어 박힐 때 mode banner 자료 재박힘
-const origApplyLang = window.applyLang;
-if (typeof origApplyLang === 'function') {
-  window.applyLang = function() {
-    origApplyLang.apply(this, arguments);
-    applyModeBanner();
-  };
+if (mode === 'adult') {
+  modeBanner.className = 'mode-banner adult';
+  modeBanner.innerHTML = '👤 <strong>Adult Consent:</strong> You sign directly.';
+} else if (mode === 'minor_assent') {
+  modeBanner.className = 'mode-banner minor';
+  modeBanner.innerHTML = '🙋 <strong>Minor Assent:</strong> Your assent + consent form emailed to your parent.';
+} else if (mode === 'in_person') {
+  modeBanner.className = 'mode-banner in-person';
+  modeBanner.innerHTML = '👨‍👧 <strong>In-person Consent:</strong> After your assent, parent signature follows on the same screen.';
 }
 
 async function loadSignup() {
   if (!signupId) {
-    showError(t('consent_err_invalid_access'));
+    showError('Invalid access');
     return;
   }
   try {
@@ -198,9 +185,7 @@ async function loadSignup() {
 }
 loadSignup();
 
-document.getElementById('signDate').value = new Date().toLocaleDateString(
-  getLang() === 'ko' ? 'ko-KR' : 'en-US'
-);
+document.getElementById('signDate').value = new Date().toLocaleDateString('en-US');
 
 const canvas = document.getElementById('sigPad');
 const ctx = canvas.getContext('2d');
@@ -274,18 +259,18 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
   const c3 = document.getElementById('check3').checked;
   const c4 = document.getElementById('check4').checked;
   if (!c1 || !c2 || !c3 || !c4) {
-    showError(t('consent_err_check_all'));
+    showError('Please check all consent items');
     return;
   }
   if (!hasSignature) {
-    showError(t('consent_err_no_sig'));
+    showError('Please sign');
     return;
   }
 
   const sigData = canvas.toDataURL('image/png');
   const submitBtn = document.getElementById('submitBtn');
   submitBtn.disabled = true;
-  submitBtn.textContent = t('consent_submitting');
+  submitBtn.textContent = 'Submitting...';
 
   try {
     const res = await fetch('/api/self_sign', {
@@ -294,27 +279,27 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
       body: JSON.stringify({ signup_id: signupId, signature: sigData, mode: mode })
     });
     const data = await res.json();
-    if (!res.ok || data.error) throw new Error(data.error || t('consent_err_server'));
+    if (!res.ok || data.error) throw new Error(data.error || 'Server error');
 
     const successEl = document.getElementById('successMsg');
     if (mode === 'in_person') {
-      successEl.textContent = t('consent_succ_inperson');
+      successEl.textContent = '✅ Assent complete! Moving to parent signature page...';
       successEl.classList.add('show');
-      setTimeout(() => { window.location.href = `/parent-consent.html?signup_id=${signupId}&mode=in_person`; }, 1500);
+      setTimeout(() => { window.location.href = `/parent-consent-en.html?signup_id=${signupId}&mode=in_person`; }, 1500);
     } else if (mode === 'minor_assent') {
-      successEl.textContent = t('consent_succ_minor');
+      successEl.textContent = '✅ Assent complete! Consent form has been emailed to your parent. You can begin after parent consent.';
       successEl.classList.add('show');
-      setTimeout(() => { window.location.href = `/beta-pending.html?signup_id=${signupId}`; }, 3000);
+      setTimeout(() => { window.location.href = `/beta-pending-en.html?signup_id=${signupId}`; }, 3000);
     } else {
-      // adult: enrollment complete — terminal success, no redirect (avoids loop back to signup form)
-      successEl.textContent = t('consent_succ_adult');
+      // adult: enrollment complete — terminal success, no redirect (avoids loop back to signup)
+      successEl.textContent = '✅ Consent complete! Your beta enrollment is confirmed. Thank you.';
       successEl.classList.add('show');
       submitBtn.style.display = 'none';
     }
   } catch (err) {
-    showError(t('consent_err_prefix') + ' ' + err.message);
+    showError('Error: ' + err.message);
     submitBtn.disabled = false;
-    submitBtn.textContent = t('consent_submit_btn');
+    submitBtn.textContent = 'Agree & Submit';
   }
 });
 </script>

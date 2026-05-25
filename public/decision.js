@@ -534,7 +534,7 @@ const I18N = {
     consent_err_prefix: '오류:',
     consent_succ_inperson: '✅ 본인 Assent 완료! 부모님 서명 페이지로 이동합니다...',
     consent_succ_minor: '✅ Assent 완료! 부모님께 동의서 이메일이 전송되었습니다. 부모님 동의 후 시작할 수 있어요.',
-    consent_succ_adult: '✅ 동의 완료! Decision Catcher로 이동합니다...',
+    consent_succ_adult: '✅ 동의 완료! 베타 참여가 확정되었습니다. 감사합니다.',
 
     // === parent-consent.html ===
     pc_badge: '부모/보호자 동의서',
@@ -1104,7 +1104,7 @@ const I18N = {
     consent_err_prefix: 'Error:',
     consent_succ_inperson: '✅ Assent complete! Moving to parent signature page...',
     consent_succ_minor: '✅ Assent complete! Consent form has been emailed to your parent. You can begin after parent consent.',
-    consent_succ_adult: '✅ Consent complete! Moving to Decision Catcher...',
+    consent_succ_adult: '✅ Consent complete! Your beta enrollment is confirmed. Thank you.',
 
     // === parent-consent.html ===
     pc_badge: 'Parent/Guardian Consent',

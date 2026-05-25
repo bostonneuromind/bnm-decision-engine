@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/bnm-lang-sync.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parent Consent — Decision Catcher</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);color:#2E5A7A;min-height:100vh;padding:40px 20px}
+.container{max-width:780px;margin:0 auto}
+.lang-switch{text-align:right;margin-bottom:20px}
+.lang-switch button{color:#4A90C2;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #BDD7E7;font-size:14px;cursor:pointer;font-family:inherit}
+.head{text-align:center;margin-bottom:30px}
+.badge{display:inline-block;background:#7BAFD0;color:#fff;padding:6px 16px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+h1{font-size:30px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
+.sub{font-size:14px;color:#4A90C2}
+.card{background:#fff;border:2px solid #2E5A7A;border-radius:20px;padding:32px;margin-bottom:20px}
+.minor-info{background:#E8F1F8;border-left:4px solid #7BAFD0;padding:14px 18px;border-radius:8px;margin-bottom:20px;font-size:14px;line-height:1.6}
+.consent-content{font-size:14px;line-height:1.7;color:#2E5A7A;max-height:380px;overflow-y:auto;padding:20px;background:#F5F9FC;border:1.5px solid #e5e5e5;border-radius:12px;margin-bottom:20px}
+.consent-content h3{font-size:16px;font-weight:800;margin:18px 0 10px}
+.consent-content h3:first-child{margin-top:0}
+.consent-content p{margin-bottom:10px}
+.consent-content ul{padding-left:20px;margin-bottom:10px}
+.consent-content li{margin-bottom:6px}
+.checkboxes{margin:20px 0;padding:20px;background:#E8F1F8;border-radius:12px}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;cursor:pointer}
+.check-item input{margin-top:3px;width:18px;height:18px;accent-color:#4A90C2}
+.check-item label{font-size:14px;line-height:1.5;flex:1}
+.signature-section{padding:20px;background:#E8F1F8;border:2px solid #4A90C2;border-radius:12px;margin-top:20px}
+.signature-section h3{font-size:16px;margin-bottom:12px}
+.signature-pad-wrapper{background:#fff;border:2px dashed #4A90C2;border-radius:10px;overflow:hidden}
+canvas{display:block;width:100%;height:180px;cursor:crosshair;touch-action:none}
+.sig-actions{display:flex;gap:10px;margin-top:10px}
+.btn-clear{padding:8px 16px;background:#fff;color:#4A90C2;border:1.5px solid #BDD7E7;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit}
+.sig-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+.field input{width:100%;padding:10px 12px;border:2px solid #BDD7E7;border-radius:8px;font-size:14px;background:#fff;font-family:inherit}
+.btn-submit{display:block;width:100%;padding:16px;background:#4A90C2;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:20px}
+.btn-submit:disabled{background:#BDD7E7;cursor:not-allowed}
+.error{background:#fee2e2;color:#dc2626;padding:10px 14px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.error.show{display:block}
+.success{background:#efe;color:#080;padding:14px 18px;border-radius:8px;font-size:14px;margin-top:10px;display:none}
+.success.show{display:block}
+.expired{text-align:center;padding:40px;color:#dc2626}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lang-switch">
+    <button onclick="location.href='/parent-consent.html'+location.search">한국어</button>
+  </div>
+
+  <div class="head">
+    <div class="badge">Parent/Guardian Consent</div>
+    <h1>Parental Consent Form</h1>
+    <div class="sub">Boston Neuromind LLC · Decision Catcher Beta</div>
+  </div>
+
+  <div class="card" id="mainCard">
+    <div class="minor-info" id="minorInfo">
+      <span>Loading child information...</span>
+    </div>
+
+    <div class="consent-content">
+      <h3>1. About This Form</h3>
+      <p>This form requests parental/legal guardian consent for your child to participate in the <strong>Decision Catcher (CNA v7)</strong> beta program by Boston Neuromind LLC.</p>
+
+      <h3>2. Child's Assent</h3>
+      <p>Your child has already provided their assent. Parental consent is required for participation as a minor under 18.</p>
+
+      <h3>3. Study Procedures</h3>
+      <ul>
+        <li>Total 8 weeks (4-8 week protocol + 4-week outcome)</li>
+        <li>Initial assessment, weekly progress entries</li>
+        <li>Final outcome assessment</li>
+      </ul>
+
+      <h3>4. Data Protection (HIPAA + COPPA)</h3>
+      <p>All your child's information is protected per HIPAA standards. For children under 13, COPPA additionally applies. Data is not shared with third parties.</p>
+
+      <h3>5. Right to Withdraw</h3>
+      <p>You may withdraw your child from this study at any time without penalty. All data will be deleted within 30 days.</p>
+
+      <h3>6. Safety Protocol</h3>
+      <p>Under Mandated Reporter duty, the following will be reported immediately:</p>
+      <ul>
+        <li>Imminent risk of harm to your child</li>
+        <li>Suicidal ideation/attempt</li>
+        <li>Suspected abuse</li>
+      </ul>
+
+      <h3>7. Contact</h3>
+      <p>Boston Neuromind LLC · support@neurocatchers.com</p>
+    </div>
+
+    <div class="checkboxes">
+      <div class="check-item">
+        <input type="checkbox" id="check1">
+        <label for="check1"><strong>I am the parent/legal guardian and have read and understood this consent form.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check2">
+        <label for="check2"><strong>I voluntarily consent to my child's participation in this beta program.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check3">
+        <label for="check3"><strong>I understand I may withdraw my child at any time.</strong></label>
+      </div>
+      <div class="check-item">
+        <input type="checkbox" id="check4">
+        <label for="check4"><strong>I understand my child's data is protected under HIPAA/COPPA.</strong></label>
+      </div>
+    </div>
+
+    <div class="signature-section">
+      <h3>✍️ Parent/Guardian Signature</h3>
+      <div class="sig-info">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="parentName" readonly>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="text" id="signDate" readonly>
+        </div>
+      </div>
+      <div class="signature-pad-wrapper">
+        <canvas id="sigPad"></canvas>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-clear" id="clearSig">Clear Signature</button>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="submitBtn">Agree &amp; Submit</button>
+
+    <div class="error" id="errorMsg"></div>
+    <div class="success" id="successMsg"></div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const signupId = params.get('signup_id');
+const token = params.get('token');
+
+document.getElementById('signDate').value = new Date().toLocaleDateString('en-US');
+
+let signupData = null;
+
+function renderChildInfo() {
+  if (!signupData) return;
+  const infoEl = document.getElementById('minorInfo');
+  const assentTxt = signupData.self_signed_at ? '✅ Completed' : '⏳ Pending';
+  infoEl.innerHTML = `<strong>Child Information:</strong><br>Name: ${signupData.full_name}<br>Age: ${signupData.age}<br>Child's Assent: ${assentTxt}`;
+}
+
+async function loadSignup() {
+  if (!signupId && !token) {
+    document.getElementById('mainCard').innerHTML = `<div class="expired"><h2>⚠️ Invalid access</h2></div>`;
+    return;
+  }
+  try {
+    const queryParam = token ? `token=${token}` : `signup_id=${signupId}`;
+    const res = await fetch(`/api/get_signup?${queryParam}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    signupData = data;
+    renderChildInfo();
+    document.getElementById('parentName').value = data.parent_name || '';
+  } catch(e) {
+    document.getElementById('mainCard').innerHTML = `<div class="expired"><h2>⚠️ ${e.message}</h2><p>Link expired or invalid.</p></div>`;
+  }
+}
+loadSignup();
+
+const canvas = document.getElementById('sigPad');
+const ctx = canvas.getContext('2d');
+let drawing = false, lastX = 0, lastY = 0, hasSignature = false;
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  ctx.strokeStyle = '#2E5A7A';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  if (e.touches) return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+}
+canvas.addEventListener('mousedown', e => { e.preventDefault(); drawing = true; hasSignature = true; const p = getPos(e); lastX = p.x; lastY = p.y; });
+canvas.addEventListener('mousemove', e => { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke(); lastX = p.x; lastY = p.y; });
+canvas.addEventListener('mouseup', () => drawing = false);
+canvas.addEventListener('mouseleave', () => drawing = false);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; hasSignature = true; const p = getPos(e); lastX = p.x; lastY = p.y; });
+canvas.addEventListener('touchmove', e => { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke(); lastX = p.x; lastY = p.y; });
+canvas.addEventListener('touchend', () => drawing = false);
+
+document.getElementById('clearSig').addEventListener('click', e => {
+  e.preventDefault();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  hasSignature = false;
+});
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 5000);
+}
+
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  if (!document.getElementById('check1').checked || !document.getElementById('check2').checked ||
+      !document.getElementById('check3').checked || !document.getElementById('check4').checked) {
+    showError('Please check all consent items');
+    return;
+  }
+  if (!hasSignature) {
+    showError('Please sign');
+    return;
+  }
+
+  const sigData = canvas.toDataURL('image/png');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/parent_sign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ signup_id: signupId, token: token, signature: sigData })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Server error');
+
+    const successEl = document.getElementById('successMsg');
+    successEl.innerHTML = '✅ Consent submitted! Beta enrollment confirmed. Thank you.';
+    successEl.classList.add('show');
+    btn.style.display = 'none';
+  } catch (err) {
+    showError('Error: ' + err.message);
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

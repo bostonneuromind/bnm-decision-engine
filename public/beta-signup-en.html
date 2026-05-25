@@ -331,7 +331,7 @@ form.addEventListener('submit', async (e) => {
         window.location.href = `/consent-en.html?signup_id=${data.signup_id}&mode=minor_assent`;
       } else if (consentDelivery === 'email') {
         successMsg.textContent = '✅ Signup complete! Consent form sent to your email. Please sign from the email.';
-        setTimeout(() => { window.location.href = `/beta-pending.html?signup_id=${data.signup_id}`; }, 2500);
+        setTimeout(() => { window.location.href = `/beta-pending-en.html?signup_id=${data.signup_id}`; }, 2500);
         return;
       } else {
         successMsg.textContent = '✅ Signup complete! Going to consent page...';
