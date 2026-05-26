@@ -92,6 +92,17 @@ h1{font-size:36px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
         <div class="hint">Parent/guardian consent required for under 18</div>
       </div>
 
+      <div class="field">
+        <label>Dominant Hand <span class="required">*</span></label>
+        <select id="dominantHand" required>
+          <option value="">Select...</option>
+          <option value="right">Right-handed</option>
+          <option value="left">Left-handed</option>
+          <option value="ambidextrous">Ambidextrous</option>
+        </select>
+        <div class="hint">Needed for QEEG interpretation (frontal alpha asymmetry, language lateralization)</div>
+      </div>
+
       <!-- Consent delivery method (adult) -->
       <div class="delivery-section" id="deliverySection">
         <h3>📋 Consent Form Delivery</h3>
@@ -255,6 +266,7 @@ form.addEventListener('submit', async (e) => {
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const birth = birthDate.value;
+  const dominantHand = document.getElementById('dominantHand').value;
 
   if (!fullName || !birth) {
     showError('Name and date of birth are required');
@@ -264,6 +276,11 @@ form.addEventListener('submit', async (e) => {
   const age = calculateAge(birth);
   if (age < 0 || age > 120) {
     showError('Please check date of birth');
+    return;
+  }
+
+  if (!dominantHand) {
+    showError('Please select your dominant hand');
     return;
   }
 
@@ -309,7 +326,7 @@ form.addEventListener('submit', async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        fullName, email, phone, birthDate: birth, age, isMinor, language: 'en',
+        fullName, email, phone, birthDate: birth, dominantHand, age, isMinor, language: 'en',
         consentDelivery,
         ...parentData
       })

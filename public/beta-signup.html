@@ -92,6 +92,17 @@ h1{font-size:36px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
         <div class="hint">만 18세 미만은 부모/보호자 동의가 필요합니다</div>
       </div>
 
+      <div class="field">
+        <label>주 사용 손 <span class="required">*</span></label>
+        <select id="dominantHand" required>
+          <option value="">선택...</option>
+          <option value="right">오른손잡이</option>
+          <option value="left">왼손잡이</option>
+          <option value="ambidextrous">양손잡이</option>
+        </select>
+        <div class="hint">QEEG 해석(전두 알파 비대칭·언어 편측화)에 필요합니다</div>
+      </div>
+
       <!-- 동의서 받기 방식 (성인용) -->
       <div class="delivery-section" id="deliverySection">
         <h3>📋 동의서 받기 방식</h3>
@@ -255,6 +266,7 @@ form.addEventListener('submit', async (e) => {
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const birth = birthDate.value;
+  const dominantHand = document.getElementById('dominantHand').value;
 
   if (!fullName || !birth) {
     showError('이름과 생년월일은 필수야');
@@ -264,6 +276,11 @@ form.addEventListener('submit', async (e) => {
   const age = calculateAge(birth);
   if (age < 0 || age > 120) {
     showError('생년월일을 확인해주세요');
+    return;
+  }
+
+  if (!dominantHand) {
+    showError('주 사용 손을 선택해주세요');
     return;
   }
 
@@ -309,7 +326,7 @@ form.addEventListener('submit', async (e) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        fullName, email, phone, birthDate: birth, age, isMinor, language: 'ko',
+        fullName, email, phone, birthDate: birth, dominantHand, age, isMinor, language: 'ko',
         consentDelivery,
         ...parentData
       })

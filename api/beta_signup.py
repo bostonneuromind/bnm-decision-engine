@@ -61,6 +61,7 @@ class handler(BaseHTTPRequestHandler):
                 'birth_date': birth_date,
                 'age': int(age),
                 'is_minor': is_minor,
+                'dominant_hand': (data.get('dominantHand') or '').strip() or None,
                 'language': language,
                 'status': 'pending',
                 'consent_delivery_method': consent_delivery,
