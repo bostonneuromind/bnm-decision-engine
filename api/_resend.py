@@ -14,7 +14,7 @@ RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 FROM_EMAIL = 'Decision Catcher <noreply@neurocatchers.com>'
 
 
-def send_email(to, subject, html, reply_to=None):
+def send_email(to, subject, html, reply_to=None, from_addr=None):
     print(f"[resend] send_email: to={to}", flush=True)
     print(f"[resend] key_present={bool(RESEND_API_KEY)}, key_len={len(RESEND_API_KEY)}", flush=True)
     print(f"[resend] has_requests={HAS_REQUESTS}", flush=True)
@@ -23,7 +23,7 @@ def send_email(to, subject, html, reply_to=None):
         raise RuntimeError("RESEND_API_KEY not configured")
 
     payload = {
-        'from': FROM_EMAIL,
+        'from': from_addr or FROM_EMAIL,
         'to': [to] if isinstance(to, str) else to,
         'subject': subject,
         'html': html,
@@ -195,3 +195,61 @@ def self_consent_email(full_name, email, consent_url, language='ko'):
 </div></body></html>"""
 
     return send_email(email, subject, html)
+
+
+BNM_FROM = 'Boston Neuromind <noreply@neurocatchers.com>'
+
+
+def consent_request_email(to_email, display_name, consent_url, language='ko'):
+    """Boston Neuromind 연구·임상 동의서 서명 링크 이메일 (현장 외 이메일 경로)."""
+    print(f"[resend] consent_request_email: to={to_email}", flush=True)
+    name = display_name or ('보호자/본인' if language == 'ko' else 'Participant')
+
+    if language == 'ko':
+        subject = '[Boston Neuromind] 연구·임상 동의서 서명 요청'
+        html = f"""<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="font-family:system-ui,sans-serif;background:#faf9f7;padding:40px 20px;color:#1a1a1a">
+<div style="max-width:600px;margin:0 auto;background:#fff;border:1px solid #e5e3df;border-radius:16px;padding:40px">
+<div style="text-align:center;margin-bottom:28px">
+<div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:8px">Boston Neuromind</div>
+<h1 style="font-size:24px;margin:0">연구·임상 동의서</h1>
+<p style="color:#666;margin-top:6px;font-size:14px">Boston Neuromind LLC · Canton, MA</p>
+</div>
+<p>안녕하세요, <strong>{name}</strong>님</p>
+<p>Boston Neuromind 동의서 서명이 요청되었습니다. 아래 버튼을 눌러 내용을 확인하고 신원 확인 후 서명해 주세요.</p>
+<div style="text-align:center;margin:30px 0">
+<a href="{consent_url}" style="display:inline-block;background:#1a1a1a;color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px">동의서 확인 및 서명</a>
+</div>
+<p style="font-size:13px;color:#666;margin-top:24px">
+· 본 링크는 7일간 유효합니다.<br>
+· 언제든 동의를 철회하실 수 있습니다.<br>
+· 문의: bostonneuromind@gmail.com
+</p>
+<hr style="border:none;border-top:1px solid #eee;margin:30px 0">
+<p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts · 법률 검토 전 초안</p>
+</div></body></html>"""
+    else:
+        subject = '[Boston Neuromind] Consent Form Signature Request'
+        html = f"""<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="font-family:system-ui,sans-serif;background:#faf9f7;padding:40px 20px;color:#1a1a1a">
+<div style="max-width:600px;margin:0 auto;background:#fff;border:1px solid #e5e3df;border-radius:16px;padding:40px">
+<div style="text-align:center;margin-bottom:28px">
+<div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#888;margin-bottom:8px">Boston Neuromind</div>
+<h1 style="font-size:24px;margin:0">Research &amp; Clinical Consent</h1>
+<p style="color:#666;margin-top:6px;font-size:14px">Boston Neuromind LLC · Canton, MA</p>
+</div>
+<p>Dear <strong>{name}</strong>,</p>
+<p>A Boston Neuromind consent signature has been requested. Please click below to review the terms, confirm your identity, and sign.</p>
+<div style="text-align:center;margin:30px 0">
+<a href="{consent_url}" style="display:inline-block;background:#1a1a1a;color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px">Review &amp; Sign Consent</a>
+</div>
+<p style="font-size:13px;color:#666;margin-top:24px">
+· This link expires in 7 days.<br>
+· You may withdraw consent at any time.<br>
+· Contact: bostonneuromind@gmail.com
+</p>
+<hr style="border:none;border-top:1px solid #eee;margin:30px 0">
+<p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts · Draft pending legal review</p>
+</div></body></html>"""
+
+    return send_email(to_email, subject, html, from_addr=BNM_FROM)

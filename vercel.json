@@ -9,6 +9,9 @@
     { "src": "api/feedback.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "api/admin_beta_list.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "api/admin_resend_email.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/consent_email.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/consent_get.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
+    { "src": "api/consent_sign.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
@@ -19,6 +22,9 @@
     { "src": "/api/feedback", "dest": "/api/feedback.py" },
     { "src": "/api/admin_beta_list", "dest": "/api/admin_beta_list.py" },
     { "src": "/api/admin_resend_email", "dest": "/api/admin_resend_email.py" },
+    { "src": "/api/consent_email", "dest": "/api/consent_email.py" },
+    { "src": "/api/consent_get", "dest": "/api/consent_get.py" },
+    { "src": "/api/consent_sign", "dest": "/api/consent_sign.py" },
     { "src": "/api/(.*)", "dest": "/api/cna.py" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],

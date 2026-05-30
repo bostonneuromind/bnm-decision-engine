@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Consent — Boston Neuromind</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: #faf9f7; color: #1a1a1a; line-height: 1.6; padding: 40px 20px; }
+  .container { max-width: 600px; margin: 0 auto; }
+  .lang-switch { text-align: right; margin-bottom: 10px; }
+  .lang-switch button { background:#fff; border:1px solid #d5d2cc; border-radius:999px; padding:6px 14px; font-size:13px; cursor:pointer; font-family:inherit; }
+  .logo { text-align: center; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+  h1 { text-align: center; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+  .sub { text-align: center; color: #666; font-size: 14px; margin-bottom: 22px; }
+  .draft-note { background:#fff8e1; border:1px solid #f0d98a; color:#7a5b00; border-radius:8px; padding:10px 14px; font-size:12.5px; margin-bottom:18px; text-align:center; }
+  .card { background: #fff; border: 1px solid #e5e3df; border-radius: 14px; padding: 24px; margin-bottom: 18px; }
+  .idrow { font-size: 14px; margin-bottom: 6px; }
+  .idrow b { color:#333; }
+  .consent-box { border:1px solid #d5d2cc; border-radius:8px; padding:16px; height:240px; overflow-y:scroll; font-size:13px; color:#444; background:#fafafa; }
+  .consent-box h3 { font-size:14px; margin:14px 0 6px; color:#1a1a1a; }
+  .consent-box h3:first-child { margin-top:0; }
+  .consent-box p { margin-bottom:8px; }
+  .checkbox-row { display:flex; align-items:flex-start; gap:10px; margin:16px 0; }
+  .checkbox-row input { margin-top:4px; width:16px; height:16px; flex-shrink:0; }
+  .checkbox-row label { font-size:13px; }
+  .sig-wrap { border:1px solid #d5d2cc; border-radius:8px; background:#fff; touch-action:none; }
+  canvas { display:block; width:100%; height:160px; border-radius:8px; }
+  .sig-actions { display:flex; justify-content:flex-end; margin:8px 0 16px; }
+  .btn-clear { background:none; border:none; color:#888; font-size:13px; cursor:pointer; text-decoration:underline; }
+  .btn-submit { width:100%; padding:15px; background:#1a1a1a; color:#fff; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; }
+  .btn-submit:disabled { background:#ccc; cursor:not-allowed; }
+  .msg-error { color:#c0392b; font-size:13px; text-align:center; margin-top:12px; display:none; }
+  .state { text-align:center; padding:48px 20px; }
+  .state svg { margin-bottom:16px; }
+  #signView { display:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="lang-switch"><button type="button" id="langBtn">한국어</button></div>
+  <div class="logo">Boston Neuromind</div>
+  <h1 id="t_title">Sign Consent</h1>
+  <div class="sub">Boston Neuromind LLC · Canton, MA</div>
+  <div class="draft-note" id="t_draft">Draft pending legal review.</div>
+
+  <div class="state" id="loadingView">Loading…</div>
+
+  <div id="signView">
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:12px;" id="t_idTitle">Confirm your identity</div>
+      <div id="idBlock"></div>
+    </div>
+    <div class="card">
+      <div style="font-weight:600;margin-bottom:12px;" id="t_agreeTitle">Consent Agreement</div>
+      <div class="consent-box" id="consentBox"></div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="agreeCheck">
+        <label for="agreeCheck" id="t_agreeText">I have read and agree to the terms above.</label>
+      </div>
+    </div>
+    <div class="card">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;" id="t_sigLabel">Signature</label>
+      <div class="sig-wrap"><canvas id="sigCanvas"></canvas></div>
+      <div class="sig-actions"><button type="button" class="btn-clear" id="clearBtn">Clear</button></div>
+      <button type="button" class="btn-submit" id="submitBtn">Submit Signature</button>
+      <div class="msg-error" id="formError"></div>
+    </div>
+  </div>
+
+  <div class="state" id="doneView" style="display:none;">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+    <h2 id="doneTitle">Consent recorded</h2>
+    <p id="doneMsg">Thank you. Your consent has been securely saved.</p>
+  </div>
+
+  <div class="state" id="errorView" style="display:none;">
+    <p id="errorMsg"></p>
+  </div>
+</div>
+
+<script>
+const PLATFORMS = 'bostonneuromind.com, neurocatchers.com, talkcatcher.com, modalitycatcher.com (incl. decision/learning sub-platforms) and future platforms';
+const PLATFORMS_KO = 'bostonneuromind.com, neurocatchers.com, talkcatcher.com, modalitycatcher.com (decision/learning 하위 플랫폼 포함) 및 향후 추가 플랫폼';
+
+const consentText = {
+  en: `
+<h3>1. Consenting Institution & Parties</h3><p>This consent is between Boston Neuromind LLC (Canton, Massachusetts) and the participant — or, for a minor, the parent/legal guardian acting on the minor's behalf.</p>
+<h3>2. Nature of Service</h3><p>Services are wellness and educational in nature, led by BCN- and PhD-credentialed staff. They are <strong>not medical care</strong> and do not constitute a medical diagnosis or treatment.</p>
+<h3>3. Data Collected</h3><p>We may collect: survey responses, qEEG, HRV, ERP, typing dynamics, AI-conversation logs, assessment/differential outputs, and similar data introduced in the future.</p>
+<h3>4. Scope of Use</h3><p>Data may be used across Boston Neuromind and all of its current and future platforms — ${PLATFORMS}.</p>
+<h3>5. Benefits</h3><p>Personalized insights into cognitive, emotional, and behavioral patterns, and contribution to the improvement of these services.</p>
+<h3>6. Risks & Limitations</h3><p>Risks are minimal (e.g., mild fatigue during measurement). Outputs are <strong>not a medical diagnosis</strong> and must not replace professional medical or mental-health care.</p>
+<h3>7. Voluntariness</h3><p>Participation is entirely voluntary. You may decline any part without coercion, retaliation, or penalty.</p>
+<h3>8. Right to Withdraw</h3><p>You may withdraw at any time, verbally or in writing, without penalty.</p>
+<h3>9. Confidentiality & HIPAA</h3><p>Your information is kept confidential and protected under HIPAA-aligned safeguards. It is not disclosed to third parties except as required by law.</p>
+<h3>10. AI Conversation Processors</h3><p>AI-conversation features may be processed by third-party providers (e.g., Anthropic). Such providers may retain data per their own policies for a limited period.</p>
+<h3>11. Retention & Destruction</h3><p>Data is retained for the consent period and securely destroyed thereafter, or within 30 days of a withdrawal request.</p>
+<h3>12. Validity & Renewal</h3><p>This consent is valid for one (1) year from the date of signing and is renewable.</p>
+<h3>13. Minor — Parent/Guardian Proxy Consent</h3><p>For a minor, the parent/legal guardian provides legally authorized consent on the minor's behalf.</p>
+<h3>14. Contact</h3><p>Questions: bostonneuromind@gmail.com · Boston Neuromind LLC, Canton, Massachusetts.</p>
+`,
+  ko: `
+<h3>1. 동의 기관 및 주체</h3><p>본 동의는 Boston Neuromind LLC(매사추세츠 Canton)와 참여자 — 미성년자의 경우 미성년자를 대리하는 부모/법정 보호자 — 사이에 체결됩니다.</p>
+<h3>2. 서비스의 성격</h3><p>본 서비스는 BCN·PhD 자격 인력이 제공하는 웰니스·교육 목적의 서비스로, <strong>의료 행위가 아니며</strong> 의학적 진단이나 치료를 구성하지 않습니다.</p>
+<h3>3. 수집 데이터</h3><p>설문 응답, qEEG, HRV, ERP, 타이핑 다이내믹스, AI 대화 기록, 평가·감별 결과 및 향후 도입되는 유사 데이터를 수집할 수 있습니다.</p>
+<h3>4. 사용 범위</h3><p>데이터는 Boston Neuromind 및 현재·향후의 모든 플랫폼 — ${PLATFORMS_KO} — 에서 사용될 수 있습니다.</p>
+<h3>5. 이익</h3><p>인지·정서·행동 패턴에 대한 개인화된 통찰과 본 서비스 개선에의 기여.</p>
+<h3>6. 위험 및 한계</h3><p>위험은 최소 수준(예: 측정 중 경미한 피로)입니다. 결과물은 <strong>의학적 진단이 아니며</strong> 전문 의료·정신건강 서비스를 대체하지 않습니다.</p>
+<h3>7. 자발성</h3><p>참여는 전적으로 자발적입니다. 강압·보복·처벌 없이 어떤 부분이든 거부할 수 있습니다.</p>
+<h3>8. 철회권</h3><p>언제든지 구두 또는 서면으로 불이익 없이 철회할 수 있습니다.</p>
+<h3>9. 비밀유지 및 HIPAA</h3><p>귀하의 정보는 비밀로 유지되며 HIPAA에 준한 보호 조치를 받습니다. 법률상 요구되는 경우를 제외하고 제3자에게 공개되지 않습니다.</p>
+<h3>10. AI 대화 처리자</h3><p>AI 대화 기능은 제3자 제공자(예: Anthropic)에 의해 처리될 수 있으며, 해당 제공자는 자체 정책에 따라 일정 기간 데이터를 보관할 수 있습니다.</p>
+<h3>11. 보관기간 및 파기</h3><p>데이터는 동의 유효기간 동안 보관되며 이후 안전하게 파기되거나, 철회 요청 시 30일 이내 삭제됩니다.</p>
+<h3>12. 유효기간 및 갱신</h3><p>본 동의는 서명일로부터 1년간 유효하며 갱신할 수 있습니다.</p>
+<h3>13. 미성년자 — 보호자 법정대리 동의</h3><p>미성년자의 경우 부모/법정 보호자가 미성년자를 대리하여 법적으로 유효한 동의를 제공합니다.</p>
+<h3>14. 문의</h3><p>문의: bostonneuromind@gmail.com · Boston Neuromind LLC, 매사추세츠 Canton.</p>
+`
+};
+
+const params = new URLSearchParams(location.search);
+const token = params.get('token');
+let lang = params.get('lang') === 'en' ? 'en' : 'ko';
+
+const L = {
+  en: {
+    langBtn:'한국어', t_title:'Sign Consent', t_draft:'Draft pending legal review.',
+    t_idTitle:'Confirm your identity', t_agreeTitle:'Consent Agreement',
+    t_agreeText:'I have read and agree to the terms above.', t_sigLabel:'Signature', clearBtn:'Clear',
+    submitBtn:'Submit Signature', doneTitle:'Consent recorded',
+    doneMsg:'Thank you. Your consent has been securely saved.',
+    lblType:'Consenting as', lblName:'Name', lblDob:'Date of birth', lblGender:'Gender',
+    lblGuardian:'Parent/Guardian', lblRestrict:'Restrictions',
+    vAdult:'Adult (self)', vMinor:'Parent/guardian for a minor',
+    errAgree:'Please check the agreement box.', errSig:'Please sign in the signature box.',
+    errSave:'Submission failed. Please try again.', alreadyTitle:'Already signed',
+    alreadyMsg:'This consent has already been signed. No further action is needed.', loading:'Loading…'
+  },
+  ko: {
+    langBtn:'English', t_title:'동의서 서명', t_draft:'법률 검토 전 초안입니다.',
+    t_idTitle:'신원 확인', t_agreeTitle:'동의 내용',
+    t_agreeText:'위 내용을 읽었으며 이에 동의합니다.', t_sigLabel:'서명', clearBtn:'지우기',
+    submitBtn:'서명 제출', doneTitle:'동의가 기록되었습니다',
+    doneMsg:'감사합니다. 동의가 안전하게 저장되었습니다.',
+    lblType:'동의 주체', lblName:'이름', lblDob:'생년월일', lblGender:'성별',
+    lblGuardian:'보호자', lblRestrict:'제한사항',
+    vAdult:'성인 본인', vMinor:'미성년 자녀의 보호자',
+    errAgree:'동의 체크박스를 선택하세요.', errSig:'서명란에 서명해 주세요.',
+    errSave:'제출에 실패했습니다. 다시 시도해 주세요.', alreadyTitle:'이미 서명됨',
+    alreadyMsg:'이 동의서는 이미 서명되었습니다. 추가 조치가 필요하지 않습니다.', loading:'불러오는 중…'
+  }
+};
+
+const $ = id => document.getElementById(id);
+let record = null;
+
+function applyStaticLang() {
+  const d = L[lang];
+  ['langBtn','t_title','t_draft','t_idTitle','t_agreeTitle','t_agreeText','t_sigLabel','clearBtn','submitBtn'].forEach(k => { const el=$(k); if(el) el.textContent=d[k]; });
+  $('loadingView').textContent = d.loading;
+  $('consentBox').innerHTML = consentText[lang];
+  document.documentElement.lang = lang;
+  if (record) renderRecord();
+}
+
+function genderLabel(g) {
+  if (!g) return '—';
+  const map = { male:{en:'Male',ko:'남성'}, female:{en:'Female',ko:'여성'}, nonbinary:{en:'Non-binary',ko:'논바이너리'}, prefer_not_to_say:{en:'Prefer not to say',ko:'응답 안 함'} };
+  return map[g] ? map[g][lang] : g;
+}
+
+function renderRecord() {
+  const d = L[lang], r = record, rows = [];
+  rows.push(`<div class="idrow"><b>${d.lblType}:</b> ${r.consent_type === 'minor' ? d.vMinor : d.vAdult}</div>`);
+  rows.push(`<div class="idrow"><b>${d.lblName}:</b> ${(r.child_name || ((r.child_first_name||'')+' '+(r.child_last_name||''))).trim()}</div>`);
+  rows.push(`<div class="idrow"><b>${d.lblDob}:</b> ${r.child_dob || '—'}</div>`);
+  rows.push(`<div class="idrow"><b>${d.lblGender}:</b> ${genderLabel(r.gender)}</div>`);
+  if (r.consent_type === 'minor') rows.push(`<div class="idrow"><b>${d.lblGuardian}:</b> ${r.parent_name || '—'}</div>`);
+  if (r.restrictions) rows.push(`<div class="idrow"><b>${d.lblRestrict}:</b> ${r.restrictions}</div>`);
+  $('idBlock').innerHTML = rows.join('');
+}
+
+function showError(msg) {
+  $('loadingView').style.display='none'; $('signView').style.display='none';
+  $('errorMsg').textContent = msg; $('errorView').style.display='block';
+}
+
+async function load() {
+  if (!token) { showError(L[lang].errSave); return; }
+  try {
+    const res = await fetch(`/api/consent_get?token=${encodeURIComponent(token)}`);
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'error');
+    record = data;
+    if (data.language === 'en' || data.language === 'ko') lang = data.language;
+    applyStaticLang();
+    renderRecord();
+    $('loadingView').style.display='none';
+    $('signView').style.display='block';
+    resizeCanvas();
+  } catch (e) {
+    showError(e.message || L[lang].errSave);
+  }
+}
+
+const sigCanvas = $('sigCanvas');
+const ctx = sigCanvas.getContext('2d');
+let drawing = false, hasSignature = false;
+function resizeCanvas() { const r = sigCanvas.getBoundingClientRect(); sigCanvas.width = r.width; sigCanvas.height = r.height; }
+window.addEventListener('resize', resizeCanvas);
+function pos(e) { const r = sigCanvas.getBoundingClientRect(); const t = e.touches ? e.touches[0] : e; return { x: t.clientX - r.left, y: t.clientY - r.top }; }
+function start(e) { drawing=true; hasSignature=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault(); }
+function move(e) { if(!drawing) return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.strokeStyle='#1a1a1a'; ctx.lineWidth=2; ctx.stroke(); e.preventDefault(); }
+function end() { drawing=false; }
+sigCanvas.addEventListener('mousedown',start); sigCanvas.addEventListener('mousemove',move);
+sigCanvas.addEventListener('mouseup',end); sigCanvas.addEventListener('mouseleave',end);
+sigCanvas.addEventListener('touchstart',start); sigCanvas.addEventListener('touchmove',move); sigCanvas.addEventListener('touchend',end);
+$('clearBtn').addEventListener('click', () => { ctx.clearRect(0,0,sigCanvas.width,sigCanvas.height); hasSignature=false; });
+$('langBtn').addEventListener('click', () => { lang = lang === 'ko' ? 'en' : 'ko'; applyStaticLang(); });
+
+$('submitBtn').addEventListener('click', async () => {
+  $('formError').style.display='none';
+  if (!$('agreeCheck').checked) { $('formError').textContent=L[lang].errAgree; $('formError').style.display='block'; return; }
+  if (!hasSignature) { $('formError').textContent=L[lang].errSig; $('formError').style.display='block'; return; }
+  const btn = $('submitBtn'); btn.disabled = true;
+  try {
+    const res = await fetch('/api/consent_sign', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ token, signature: sigCanvas.toDataURL('image/png') })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 409) {
+      $('signView').style.display='none';
+      $('doneTitle').textContent = L[lang].alreadyTitle; $('doneMsg').textContent = L[lang].alreadyMsg;
+      $('doneView').style.display='block'; return;
+    }
+    if (!res.ok || data.error) throw new Error(data.error || 'error');
+    $('signView').style.display='none';
+    $('doneTitle').textContent = L[lang].doneTitle; $('doneMsg').textContent = L[lang].doneMsg;
+    $('doneView').style.display='block';
+  } catch (e) {
+    btn.disabled=false; $('formError').textContent = e.message || L[lang].errSave; $('formError').style.display='block';
+  }
+});
+
+applyStaticLang();
+load();
+</script>
+</body>
+</html>
