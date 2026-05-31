@@ -1,4 +1,6 @@
-// bnm-lang-sync.js v4 — strict explicit lang sync (no defaults beyond config)
+// bnm-lang-sync.js v5 — strict explicit lang sync (no defaults beyond config)
+//   v5: also fills body[data-lang] on DOM-ready so a brand-new page needs only
+//       <script src=".../bnm-lang-sync.js"> + <html lang> + ko-text/en-text markers.
 // Decision tree:
 //   URL ?lang=ko|en > localStorage[storageKey] > old-key migration > defaultLang
 // Effect:
@@ -207,10 +209,22 @@ var BNM_LANG_CFG = (function () {
     maybeRedirectVariant(newLang, true);
   };
 
-  // Re-sync links after DOM ready (in case <head> script ran before <body>)
+  // When the <head> script runs before <body>, applyLang() couldn't set
+  // body[data-lang] yet. Fill it on DOM-ready (only if the page hasn't set its
+  // own) so static pages that style via body[data-lang] switch language with
+  // nothing but this one <script> tag. Same value as window.BNM_LANG → no churn.
+  function fillBodyLang() {
+    try {
+      if (document.body && !document.body.getAttribute('data-lang')) {
+        document.body.setAttribute('data-lang', window.BNM_LANG);
+      }
+    } catch(e) {}
+  }
+  // Re-sync links + body[data-lang] after DOM ready (in case <head> script ran before <body>)
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { syncOutboundLinks(window.BNM_LANG); });
+    document.addEventListener('DOMContentLoaded', function() { fillBodyLang(); syncOutboundLinks(window.BNM_LANG); });
   } else {
+    fillBodyLang();
     syncOutboundLinks(window.BNM_LANG);
   }
 
