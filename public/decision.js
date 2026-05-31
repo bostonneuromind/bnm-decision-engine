@@ -591,7 +591,7 @@ const I18N = {
     beta_guide: 'Beta Guide',
     admin: '← Admin',
     logout: 'Logout',
-    lang_toggle: '한국어',
+    lang_toggle: 'KO',
     clinician_manual: 'Clinician Manual',
     btn_start: 'Start',
     btn_next: 'Next',
