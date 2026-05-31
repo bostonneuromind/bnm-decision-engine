@@ -1,0 +1,24 @@
+name: Lang island guard
+
+# Fails (red check on the commit / blocks PR) if any page uses language markers
+# but does NOT load the shared bnm-lang-sync.js — which would break en-default,
+# remembered choice, and cross-domain ?lang= propagation. Vercel deploys static
+# public/ on push; this guard runs in parallel and flags a missing <script> tag
+# so a new page can never silently ship without the lang engine.
+# See tools/check-lang.mjs / LANG_HANDOFF.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check-lang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Lang island guard
+        run: node tools/check-lang.mjs public
