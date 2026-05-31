@@ -7,8 +7,8 @@ const CONFIG = {
   apiBase: '/api',
   passwordKey: 'decisionOK',
   password: 'bnm1#',
-  langKey: 'decisionLang',
-  defaultLang: 'ko',
+  langKey: 'bnm_lang',
+  defaultLang: 'en',
 };
 
 const I18N = {

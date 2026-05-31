@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign Consent — Boston Neuromind</title>
@@ -120,7 +121,7 @@ const consentText = {
 
 const params = new URLSearchParams(location.search);
 const token = params.get('token');
-let lang = params.get('lang') === 'en' ? 'en' : 'ko';
+let lang = (window.bnmGetLang ? window.bnmGetLang() : (params.get('lang') === 'ko' ? 'ko' : 'en'));
 
 const L = {
   en: {
@@ -216,7 +217,7 @@ sigCanvas.addEventListener('mousedown',start); sigCanvas.addEventListener('mouse
 sigCanvas.addEventListener('mouseup',end); sigCanvas.addEventListener('mouseleave',end);
 sigCanvas.addEventListener('touchstart',start); sigCanvas.addEventListener('touchmove',move); sigCanvas.addEventListener('touchend',end);
 $('clearBtn').addEventListener('click', () => { ctx.clearRect(0,0,sigCanvas.width,sigCanvas.height); hasSignature=false; });
-$('langBtn').addEventListener('click', () => { lang = lang === 'ko' ? 'en' : 'ko'; applyStaticLang(); });
+$('langBtn').addEventListener('click', () => { lang = lang === 'ko' ? 'en' : 'ko'; if(window.bnmSetLang)window.bnmSetLang(lang); applyStaticLang(); });
 
 $('submitBtn').addEventListener('click', async () => {
   $('formError').style.display='none';
