@@ -1,6 +1,8 @@
-// bnm-lang-sync.js v5 — strict explicit lang sync (no defaults beyond config)
+// bnm-lang-sync.js v6 — strict explicit lang sync (no defaults beyond config)
 //   v5: also fills body[data-lang] on DOM-ready so a brand-new page needs only
 //       <script src=".../bnm-lang-sync.js"> + <html lang> + ko-text/en-text markers.
+//   v6: doc-only — clarify that each familyDomains entry auto-covers ALL of its
+//       subdomains (*.d), so new subdomains need no config change.
 // Decision tree:
 //   URL ?lang=ko|en > localStorage[storageKey] > old-key migration > defaultLang
 // Effect:
@@ -14,12 +16,19 @@
 // │  BEFORE this script loads (same keys; partial overrides are merged).        │
 // │                                                                             │
 // │  familyDomains : sites that share language across the group via ?lang=.     │
-// │                  Standalone site → keep just your own domain (or []).       │
-// │                  A wrong/empty list never breaks the in-page toggle or      │
-// │                  persistence — only cross-domain propagation is skipped.    │
-// │  wwwCanonical  : apex hosts whose host→www redirect DROPS the query string  │
-// │                  (e.g. S3 website redirect). Links to these are sent        │
-// │                  straight to www.* so ?lang= survives the hop.              │
+// │                  EACH ENTRY AUTO-COVERS ALL ITS SUBDOMAINS (*.d): listing    │
+// │                  'neurocatchers.com' already matches track. / decision. /    │
+// │                  learning. / adhd. / any-new.neurocatchers.com — no edit     │
+// │                  needed for new subdomains. (Lookalikes like                 │
+// │                  evil-neurocatchers.com are NOT matched — the dot prefix.)   │
+// │                  Standalone site → keep just your own domain (or []).        │
+// │                  A wrong/empty list never breaks the in-page toggle or       │
+// │                  persistence — only cross-domain propagation is skipped.     │
+// │  wwwCanonical  : EXACT apex hosts whose host→www redirect DROPS the query    │
+// │                  string (external registrar/S3 forwarding). Links to these   │
+// │                  exact hosts are sent straight to www.* so ?lang= survives.  │
+// │                  Subdomains (track./decision./learning. on Vercel/CF) keep   │
+// │                  the query natively, so they are NOT and need NOT be listed. │
 // │  defaultLang   : last-resort language ('ko'|'en') when none stored / in URL.│
 // │  storageKey    : localStorage key for the remembered language.              │
 // │  oldKeys       : legacy keys migrated into storageKey (ko/en values only).  │
@@ -210,14 +219,15 @@ var BNM_LANG_CFG = (function () {
   };
 
   // When the <head> script runs before <body>, applyLang() couldn't set
-  // body[data-lang] yet. Fill it on DOM-ready (only if the page hasn't set its
-  // own) so static pages that style via body[data-lang] switch language with
-  // nothing but this one <script> tag. Same value as window.BNM_LANG → no churn.
+  // body[data-lang] yet. Set it on DOM-ready to the canonical language so any
+  // static page that styles via body[data-lang] honors first-visit-en / ?lang= /
+  // remembered choice with nothing but this one <script> tag — even legacy pages
+  // whose own inline toggle defaulted to ko. body[data-lang] === current lang is
+  // true by definition, and this runs after in-body inline scripts, so it's the
+  // authoritative first-paint value (v6: set always, not only-if-unset).
   function fillBodyLang() {
     try {
-      if (document.body && !document.body.getAttribute('data-lang')) {
-        document.body.setAttribute('data-lang', window.BNM_LANG);
-      }
+      if (document.body) document.body.setAttribute('data-lang', window.BNM_LANG);
     } catch(e) {}
   }
   // Re-sync links + body[data-lang] after DOM ready (in case <head> script ran before <body>)
