@@ -8,6 +8,34 @@
 <link rel="stylesheet" href="/style.css">
 </head>
 <body data-auth>
+<!-- BNM admin gate (bnm1#) — render-only front door, does not touch data logic -->
+<div id="bnmGate" style="position:fixed;inset:0;z-index:2147483647;background:linear-gradient(135deg,#CC7A55,#993C1D);display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,'Noto Sans KR',sans-serif">
+  <div style="background:#fff;border-radius:20px;padding:36px 40px;max-width:380px;width:100%;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.3)">
+    <div style="font-size:2.4em;margin-bottom:8px">🔒</div>
+    <h2 style="font-size:1.4em;color:#993C1D;margin:0 0 6px">Admin Access</h2>
+    <p style="font-size:0.9em;color:#6B7280;margin:0 0 18px">관리자 비밀번호 입력 / Enter admin password</p>
+    <input id="bnmGatePw" type="password" placeholder="Password" style="width:100%;padding:13px 15px;border:2px solid #E0C9B5;border-radius:10px;font-size:1em;margin-bottom:12px;font-family:inherit;outline:none;box-sizing:border-box">
+    <button id="bnmGateBtn" style="width:100%;padding:13px;background:linear-gradient(135deg,#CC7A55,#B86A45);color:#fff;border:none;border-radius:10px;font-size:1em;font-weight:700;cursor:pointer;font-family:inherit">입력 / Enter</button>
+    <div id="bnmGateErr" style="color:#B91C1C;font-size:0.85em;margin-top:10px;font-weight:600;min-height:1em"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var PW='bnm1#', KEY='bnmAdminOk';
+  function unlock(){ var g=document.getElementById('bnmGate'); if(g&&g.parentNode) g.parentNode.removeChild(g); }
+  try { if(sessionStorage.getItem(KEY)==='1'){ unlock(); return; } } catch(e){}
+  function go(){
+    var i=document.getElementById('bnmGatePw');
+    if(i && i.value===PW){ try{sessionStorage.setItem(KEY,'1');}catch(e){} unlock(); }
+    else { var er=document.getElementById('bnmGateErr'); if(er) er.textContent='비밀번호 틀림 / Wrong password'; }
+  }
+  function wire(){
+    var b=document.getElementById('bnmGateBtn'); if(b) b.addEventListener('click', go);
+    var i=document.getElementById('bnmGatePw'); if(i){ i.addEventListener('keydown', function(e){ if(e.key==='Enter') go(); }); try{i.focus();}catch(e){} }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', wire); else wire();
+})();
+</script>
 
 <header class="header">
   <h1>🩺 <span data-i18n="clinician_page_title">새 클라이언트 평가</span></h1>
