@@ -5,69 +5,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>베타 신청자 관리 — Decision Catcher Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
-body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);color:#2E5A7A;min-height:100vh;padding:30px 20px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Noto Sans KR','Inter',system-ui,-apple-system,sans-serif}
+body{background:#F7F8FA;color:#2A2D34;min-height:100vh;padding:30px 20px;font-size:16px;line-height:1.7}
 .container{max-width:1400px;margin:0 auto}
 .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
-.head h1{font-size:26px;color:#2E5A7A}
-.head .sub{font-size:13px;color:#4A90C2;margin-top:4px}
-.btn-refresh{padding:10px 18px;background:#2E5A7A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.head h1{font-size:26px;color:#46535F}
+.head .sub{font-size:14px;color:#6B7280;margin-top:4px}
+.btn-refresh{padding:10px 18px;background:#46535F;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
 .btn-refresh:hover{background:#000}
 
-.login-card{max-width:420px;margin:80px auto;background:#fff;border:2px solid #2E5A7A;border-radius:20px;padding:32px}
+.login-card{max-width:420px;margin:80px auto;background:#fff;border:2px solid #46535F;border-radius:20px;padding:32px}
 .login-card h2{font-size:20px;margin-bottom:16px;text-align:center}
-.login-card input{width:100%;padding:12px 14px;border:2px solid #BDD7E7;border-radius:10px;font-size:15px;font-family:inherit;margin-bottom:12px}
-.login-card button{width:100%;padding:14px;background:#4A90C2;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
-.login-card .err{background:#fee2e2;color:#dc2626;padding:10px;border-radius:8px;font-size:13px;margin-top:10px;display:none}
+.login-card input{width:100%;min-height:42px;padding:12px 14px;border:2px solid #E3E6EA;border-radius:10px;font-size:16px;font-family:inherit;margin-bottom:12px}
+.login-card button{width:100%;min-height:42px;padding:14px;background:#5B6B7B;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.login-card .err{background:#ECEEF1;color:#46535F;padding:10px;border-radius:8px;font-size:13px;margin-top:10px;display:none}
 .login-card .err.show{display:block}
 
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
-.stat-card{background:#fff;border:2px solid #2E5A7A;border-radius:14px;padding:16px;text-align:center}
-.stat-card .label{font-size:12px;color:#4A90C2;margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
-.stat-card .value{font-size:28px;font-weight:800;color:#2E5A7A}
-.stat-card.total{background:#2E5A7A;color:#fff}
+.stat-card{background:#fff;border:2px solid #46535F;border-radius:14px;padding:16px;text-align:center}
+.stat-card .label{font-size:13px;color:#6B7280;margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.stat-card .value{font-size:28px;font-weight:800;color:#46535F}
+.stat-card.total{background:#46535F;color:#fff}
 .stat-card.total .label{color:#aaa}
 .stat-card.total .value{color:#fff}
 
 .filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.filter-btn{padding:8px 14px;background:#fff;color:#4A90C2;border:1.5px solid #BDD7E7;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600}
-.filter-btn:hover{border-color:#4A90C2}
-.filter-btn.active{background:#2E5A7A;color:#fff;border-color:#2E5A7A}
+.filter-btn{padding:9px 15px;background:#fff;color:#5B6B7B;border:1.5px solid #E3E6EA;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit;font-weight:600}
+.filter-btn:hover{border-color:#5B6B7B}
+.filter-btn.active{background:#46535F;color:#fff;border-color:#46535F}
 
-.table-card{background:#fff;border:2px solid #2E5A7A;border-radius:14px;overflow:hidden}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#E8F1F8;padding:12px 10px;text-align:left;font-weight:800;color:#2E5A7A;border-bottom:2px solid #2E5A7A;font-size:12px;text-transform:uppercase;letter-spacing:0.3px}
-td{padding:12px 10px;border-bottom:1px solid #E8F1F8;vertical-align:top}
-tr:hover{background:#F5F9FC}
+.table-card{background:#fff;border:2px solid #46535F;border-radius:14px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{background:#EEF1F4;padding:13px 12px;text-align:left;font-weight:800;color:#46535F;border-bottom:2px solid #46535F;font-size:12px;text-transform:uppercase;letter-spacing:0.3px}
+td{padding:14px 12px;border-bottom:1px solid #E3E6EA;vertical-align:top}
+tr:hover{background:#F2F4F6}
 
 .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
-.badge-pending{background:#E8F1F8;color:#4A90C2}
-.badge-self_signed{background:#dbeafe;color:#1e40af}
-.badge-parent_email_sent{background:#E8F1F8;color:#2E5A7A}
-.badge-fully_consented{background:#dcfce7;color:#14532d}
-.badge-minor{background:#E8F1F8;color:#4A90C2;margin-left:4px;font-size:10px}
-.badge-adult{background:#e0f2fe;color:#2E5A7A;margin-left:4px;font-size:10px}
+.badge-pending{background:#EEF1F4;color:#5B6B7B}
+.badge-self_signed{background:#EEF1F4;color:#46535F}
+.badge-parent_email_sent{background:#EEF1F4;color:#46535F}
+.badge-fully_consented{background:#EEF1F4;color:#2A2D34}
+.badge-minor{background:#EEF1F4;color:#5B6B7B;margin-left:4px;font-size:10px}
+.badge-adult{background:#ECEEF1;color:#46535F;margin-left:4px;font-size:10px}
 
-.action-btn{padding:5px 10px;background:#fff;color:#4A90C2;border:1.5px solid #4A90C2;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:4px}
-.action-btn:hover{background:#4A90C2;color:#fff}
+.action-btn{padding:7px 12px;background:#fff;color:#5B6B7B;border:1.5px solid #5B6B7B;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:4px}
+.action-btn:hover{background:#5B6B7B;color:#fff}
 .action-btn:disabled{opacity:0.4;cursor:not-allowed}
 
-.empty{padding:60px 20px;text-align:center;color:#7BAFD0}
-.loading{padding:60px 20px;text-align:center;color:#7BAFD0}
+.empty{padding:60px 20px;text-align:center;color:#6B7280}
+.loading{padding:60px 20px;text-align:center;color:#6B7280}
 
 .detail-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px}
 .detail-modal.show{display:flex}
-.detail-modal .modal-body{background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);border-radius:16px;padding:28px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto}
+.detail-modal .modal-body{background:linear-gradient(135deg,#EEF1F4 0%,#E3E6EA 100%);border-radius:16px;padding:28px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto}
 .detail-modal h3{font-size:20px;margin-bottom:16px}
 .detail-row{display:flex;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
-.detail-row .k{flex:0 0 160px;color:#4A90C2;font-weight:700}
+.detail-row .k{flex:0 0 160px;color:#5B6B7B;font-weight:700}
 .detail-row .v{flex:1;word-break:break-all}
-.detail-close{margin-top:16px;padding:10px 18px;background:#2E5A7A;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:700}
+.detail-close{margin-top:16px;padding:10px 18px;background:#46535F;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:700}
 
-.toast{position:fixed;top:20px;right:20px;background:#2E5A7A;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;z-index:2000;display:none;font-weight:600}
+.toast{position:fixed;top:20px;right:20px;background:#46535F;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;z-index:2000;display:none;font-weight:600}
 .toast.show{display:block}
-.toast.err{background:#4A90C2}
+.toast.err{background:#5B6B7B}
 </style>
 </head>
 <body>
@@ -242,8 +245,8 @@ function renderTable() {
       : '<span class="badge badge-adult">성인</span>';
 
     const parentInfo = r.is_minor
-      ? `${escapeHtml(r.parent_name || '?')}<br><span style="color:#7BAFD0;font-size:11px">${escapeHtml(r.parent_email || '이메일 없음')}</span>`
-      : '<span style="color:#BDD7E7">—</span>';
+      ? `${escapeHtml(r.parent_name || '?')}<br><span style="color:#6B7280;font-size:11px">${escapeHtml(r.parent_email || '이메일 없음')}</span>`
+      : '<span style="color:#E3E6EA">—</span>';
 
     let actions = `<button class="action-btn" onclick="showDetail('${r.id}')">상세</button>`;
     if (r.is_minor && r.parent_email && status === 'parent_email_sent') {
@@ -252,7 +255,7 @@ function renderTable() {
 
     return `
       <tr>
-        <td>${date}<br><span style="color:#7BAFD0;font-size:11px">${time}</span></td>
+        <td>${date}<br><span style="color:#6B7280;font-size:11px">${time}</span></td>
         <td><strong>${escapeHtml(r.full_name || '?')}</strong></td>
         <td>${r.age || '?'} ${minorBadge}</td>
         <td>${escapeHtml(r.email || '')}</td>

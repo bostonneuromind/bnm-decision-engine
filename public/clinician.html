@@ -5,18 +5,21 @@
 <meta charset="UTF-8">
 <title>새 클라이언트 평가 - Decision Catcher</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body data-auth>
 <!-- BNM admin gate (bnm1#) — render-only front door, does not touch data logic -->
-<div id="bnmGate" style="position:fixed;inset:0;z-index:2147483647;background:linear-gradient(135deg,#CC7A55,#993C1D);display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,'Noto Sans KR',sans-serif">
+<div id="bnmGate" style="position:fixed;inset:0;z-index:2147483647;background:linear-gradient(135deg,#5B6B7B,#46535F);display:flex;align-items:center;justify-content:center;padding:20px;font-family:'Noto Sans KR','Inter',system-ui,sans-serif">
   <div style="background:#fff;border-radius:20px;padding:36px 40px;max-width:380px;width:100%;text-align:center;box-shadow:0 16px 48px rgba(0,0,0,0.3)">
     <div style="font-size:2.4em;margin-bottom:8px">🔒</div>
-    <h2 style="font-size:1.4em;color:#993C1D;margin:0 0 6px">Admin Access</h2>
+    <h2 style="font-size:1.4em;color:#2A2D34;margin:0 0 6px">Admin Access</h2>
     <p style="font-size:0.9em;color:#6B7280;margin:0 0 18px">관리자 비밀번호 입력 / Enter admin password</p>
-    <input id="bnmGatePw" type="password" placeholder="Password" style="width:100%;padding:13px 15px;border:2px solid #E0C9B5;border-radius:10px;font-size:1em;margin-bottom:12px;font-family:inherit;outline:none;box-sizing:border-box">
-    <button id="bnmGateBtn" style="width:100%;padding:13px;background:linear-gradient(135deg,#CC7A55,#B86A45);color:#fff;border:none;border-radius:10px;font-size:1em;font-weight:700;cursor:pointer;font-family:inherit">입력 / Enter</button>
-    <div id="bnmGateErr" style="color:#B91C1C;font-size:0.85em;margin-top:10px;font-weight:600;min-height:1em"></div>
+    <input id="bnmGatePw" type="password" placeholder="Password" style="width:100%;min-height:42px;padding:13px 15px;border:2px solid #E3E6EA;border-radius:10px;font-size:1em;margin-bottom:12px;font-family:inherit;outline:none;box-sizing:border-box">
+    <button id="bnmGateBtn" style="width:100%;min-height:42px;padding:13px;background:#5B6B7B;color:#fff;border:none;border-radius:10px;font-size:1em;font-weight:700;cursor:pointer;font-family:inherit">입력 / Enter</button>
+    <div id="bnmGateErr" style="color:#46535F;font-size:0.85em;margin-top:10px;font-weight:600;min-height:1em"></div>
   </div>
 </div>
 <script>
@@ -78,7 +81,7 @@
     <!-- Step 2: Fischer 5축 측정 -->
     <div class="section">
       <h2 data-i18n="step2_h">Step 2: Fischer 인지 5축 측정</h2>
-      <p style="color:#5a4a35;margin-bottom:16px;" data-i18n="step2_desc">Entry Protocol 5 측정 결과 → Fischer Level (L7.0-L13.0)</p>
+      <p style="color:#6B7280;margin-bottom:16px;" data-i18n="step2_desc">Entry Protocol 5 측정 결과 → Fischer Level (L7.0-L13.0)</p>
       <div class="form-row">
         <div class="form-group">
           <label><span data-i18n="cog_sustained">지속 주의력 (CPT)</span> *</label>
@@ -130,7 +133,7 @@
     <!-- Step 3: 증상 자료 -->
     <div class="section">
       <h2 data-i18n="step3_h">Step 3: 증상 자료 (0.0 - 1.0)</h2>
-      <p style="color:#5a4a35;margin-bottom:16px;">
+      <p style="color:#6B7280;margin-bottom:16px;">
         <strong data-i18n="step3_desc_part1">중요:</strong>
         <span data-i18n="step3_desc_part2">클라이언트가 호소하는 증상 강도. DDE 입력의 핵심 (40% 가중치).</span>
       </p>
@@ -171,9 +174,9 @@
     </div>
 
     <!-- Step 4: 시간 정보 -->
-    <div class="section" style="border-color:#C9444F;">
-      <h2 style="color:#C9444F;" data-i18n="step4_h">Step 4 (v7 NEW): 시간 정보 인터뷰 ⭐</h2>
-      <p style="color:#5a4a35;margin-bottom:16px;" data-i18n="step4_desc">
+    <div class="section" style="border-color:#46535F;">
+      <h2 style="color:#46535F;" data-i18n="step4_h">Step 4 (v7 NEW): 시간 정보 인터뷰 ⭐</h2>
+      <p style="color:#6B7280;margin-bottom:16px;" data-i18n="step4_desc">
         DDE 정확도의 핵심. 8문항 (감별 진단 30% 가중치). 모르는 항목은 비워두세요 — 부정확보다 빈 자료가 낫습니다.
       </p>
 
@@ -268,7 +271,7 @@
         평가 실행 (DDE + Decomposition + Simulator)
       </button>
       <div id="errMsg" class="alert alert-danger" style="display:none;margin-top:16px;"></div>
-      <div id="loading" style="display:none;margin-top:16px;color:#5a4a35;">
+      <div id="loading" style="display:none;margin-top:16px;color:#6B7280;">
         <strong data-i18n="processing">처리 중...</strong>
         <span data-i18n="processing_desc">CNA v7 자료 분석 중 (보통 2-5초)</span>
       </div>
