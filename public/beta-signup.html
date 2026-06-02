@@ -51,15 +51,18 @@ h1{font-size:36px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
 .ko-text{display:none}.en-text{display:none}
 body[data-lang="ko"] .ko-text{display:inline}
 body[data-lang="en"] .en-text{display:inline}
-.lang-switch button{color:#4A90C2;background:#fff;border:1.5px solid #BDD7E7;padding:8px 14px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit;margin-left:6px}
-body[data-lang="ko"] .lang-switch .lb-ko,body[data-lang="en"] .lang-switch .lb-en{background:#4A90C2;color:#fff;border-color:#4A90C2}
+.lang-switch .lang-pill{display:inline-flex;align-items:center;padding:2px;border-radius:999px;background:#fff;border:1px solid #BDD7E7}
+.lang-switch .lp-btn{padding:4px 12px;border-radius:999px;border:0;cursor:pointer;background:transparent;color:#6B7178;font-weight:700;font-size:13px;font-family:inherit}
+body[data-lang="ko"] .lang-switch .lp-ko,body[data-lang="en"] .lang-switch .lp-en{background:#2A2D34;color:#fff}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="lang-switch">
-    <button type="button" class="lb-ko" onclick="window.bnmSetLang('ko')">한국어</button>
-    <button type="button" class="lb-en" onclick="window.bnmSetLang('en')">EN</button>
+    <span class="lang-pill">
+      <button type="button" class="lp-btn lp-ko" onclick="window.bnmSetLang('ko')">KO</button>
+      <button type="button" class="lp-btn lp-en" onclick="window.bnmSetLang('en')">EN</button>
+    </span>
   </div>
 
   <div class="head">
