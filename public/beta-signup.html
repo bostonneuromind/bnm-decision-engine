@@ -48,127 +48,133 @@ h1{font-size:36px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
 .loading.show{display:block}
 .required{color:#4A90C2}
 .exclusion-note{background:#E8F1F8;border-left:4px solid #4A90C2;padding:14px 18px;border-radius:8px;font-size:13px;color:#4A90C2;margin-bottom:20px;line-height:1.6}
+.ko-text{display:none}.en-text{display:none}
+body[data-lang="ko"] .ko-text{display:inline}
+body[data-lang="en"] .en-text{display:inline}
+.lang-switch button{color:#4A90C2;background:#fff;border:1.5px solid #BDD7E7;padding:8px 14px;border-radius:999px;font-size:14px;cursor:pointer;font-family:inherit;margin-left:6px}
+body[data-lang="ko"] .lang-switch .lb-ko,body[data-lang="en"] .lang-switch .lb-en{background:#4A90C2;color:#fff;border-color:#4A90C2}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="lang-switch">
-    <a href="/beta-signup-en.html">EN</a>
+    <button type="button" class="lb-ko" onclick="window.bnmSetLang('ko')">한국어</button>
+    <button type="button" class="lb-en" onclick="window.bnmSetLang('en')">EN</button>
   </div>
 
   <div class="head">
-    <div class="badge">CNA v7 베타 · 5명 한정</div>
-    <h1>Decision Catcher<br>베타 참여 신청</h1>
-    <div class="sub">감별 진단 + 공존 진단 + 적응적 훈련</div>
+    <div class="badge"><span class="ko-text">CNA v7 베타 · 5명 한정</span><span class="en-text">CNA v7 Beta · Limited to 5</span></div>
+    <h1>Decision Catcher<br><span class="ko-text">베타 참여 신청</span><span class="en-text">Beta Signup</span></h1>
+    <div class="sub"><span class="ko-text">감별 진단 + 공존 진단 + 적응적 훈련</span><span class="en-text">Differential Dx + Comorbidity + Adaptive Training</span></div>
   </div>
 
   <div class="card">
     <div class="exclusion-note">
-      <strong>⚠️ 참여 제외 대상:</strong> 급성 정신증, 활성 자살 위기, 통제되지 않은 양극성 장애, 최근 6개월 자살 시도력, 약물 의존(현재)에 해당하는 경우 참여가 어렵습니다.
+      <span class="ko-text"><strong>⚠️ 참여 제외 대상:</strong> 급성 정신증, 활성 자살 위기, 통제되지 않은 양극성 장애, 최근 6개월 자살 시도력, 약물 의존(현재)에 해당하는 경우 참여가 어렵습니다.</span><span class="en-text"><strong>⚠️ Exclusion Criteria:</strong> Active psychosis, acute suicidal crisis, uncontrolled bipolar disorder, suicide attempt within 6 months, or current substance dependence.</span>
     </div>
 
     <form id="signupForm">
-      <div class="section-title">1. 신청자 기본 정보</div>
+      <div class="section-title"><span class="ko-text">1. 신청자 기본 정보</span><span class="en-text">1. Applicant Information</span></div>
 
       <div class="field">
-        <label>성명 <span class="required">*</span></label>
-        <input type="text" id="fullName" required placeholder="홍길동">
+        <label><span class="ko-text">성명</span><span class="en-text">Full Name</span> <span class="required">*</span></label>
+        <input type="text" id="fullName" required placeholder="Jane Doe" data-ko-ph="홍길동" data-en-ph="Jane Doe">
       </div>
 
       <div class="row">
         <div class="field">
-          <label>이메일 <span class="required" id="emailStar" style="display:none">*</span></label>
-          <input type="email" id="email" placeholder="you@example.com (선택)">
+          <label><span class="ko-text">이메일</span><span class="en-text">Email</span> <span class="required" id="emailStar" style="display:none">*</span></label>
+          <input type="email" id="email" placeholder="you@example.com (optional)" data-ko-ph="you@example.com (선택)" data-en-ph="you@example.com (optional)">
         </div>
         <div class="field">
-          <label>전화번호</label>
-          <input type="tel" id="phone" placeholder="010-0000-0000 (선택)">
+          <label><span class="ko-text">전화번호</span><span class="en-text">Phone</span></label>
+          <input type="tel" id="phone" placeholder="555-0000 (optional)" data-ko-ph="010-0000-0000 (선택)" data-en-ph="555-0000 (optional)">
         </div>
       </div>
 
       <div class="field">
-        <label>생년월일 <span class="required">*</span></label>
+        <label><span class="ko-text">생년월일</span><span class="en-text">Date of Birth</span> <span class="required">*</span></label>
         <input type="date" id="birthDate" required>
-        <div class="hint">만 18세 미만은 부모/보호자 동의가 필요합니다</div>
+        <div class="hint"><span class="ko-text">만 18세 미만은 부모/보호자 동의가 필요합니다</span><span class="en-text">Parent/guardian consent required for under 18</span></div>
       </div>
 
       <div class="field">
-        <label>주 사용 손 <span class="required">*</span></label>
+        <label><span class="ko-text">주 사용 손</span><span class="en-text">Dominant Hand</span> <span class="required">*</span></label>
         <select id="dominantHand" required>
-          <option value="">선택...</option>
-          <option value="right">오른손잡이</option>
-          <option value="left">왼손잡이</option>
-          <option value="ambidextrous">양손잡이</option>
+          <option value="" data-ko="선택..." data-en="Select...">Select...</option>
+          <option value="right" data-ko="오른손잡이" data-en="Right-handed">Right-handed</option>
+          <option value="left" data-ko="왼손잡이" data-en="Left-handed">Left-handed</option>
+          <option value="ambidextrous" data-ko="양손잡이" data-en="Ambidextrous">Ambidextrous</option>
         </select>
-        <div class="hint">QEEG 해석(전두 알파 비대칭·언어 편측화)에 필요합니다</div>
+        <div class="hint"><span class="ko-text">QEEG 해석(전두 알파 비대칭·언어 편측화)에 필요합니다</span><span class="en-text">Needed for QEEG interpretation (frontal alpha asymmetry, language lateralization)</span></div>
       </div>
 
       <!-- 동의서 받기 방식 (성인용) -->
       <div class="delivery-section" id="deliverySection">
-        <h3>📋 동의서 받기 방식</h3>
+        <h3><span class="ko-text">📋 동의서 받기 방식</span><span class="en-text">📋 Consent Form Delivery</span></h3>
         <div class="radio-group">
           <label class="radio-option selected" id="deliveryInPerson">
             <input type="radio" name="consentDelivery" value="in_person" checked>
-            <div class="opt-title">현장에서 서명</div>
-            <div class="opt-desc">바로 다음 화면에서 서명</div>
+            <div class="opt-title"><span class="ko-text">현장에서 서명</span><span class="en-text">Sign in person</span></div>
+            <div class="opt-desc"><span class="ko-text">바로 다음 화면에서 서명</span><span class="en-text">Sign on next screen</span></div>
           </label>
           <label class="radio-option" id="deliveryEmail">
             <input type="radio" name="consentDelivery" value="email">
-            <div class="opt-title">이메일로 받기</div>
-            <div class="opt-desc">이메일 링크로 서명</div>
+            <div class="opt-title"><span class="ko-text">이메일로 받기</span><span class="en-text">Send via email</span></div>
+            <div class="opt-desc"><span class="ko-text">이메일 링크로 서명</span><span class="en-text">Sign via email link</span></div>
           </label>
         </div>
       </div>
 
       <!-- 미성년자 섹션 -->
       <div class="minor-section" id="minorSection">
-        <h3>🛡️ 부모/보호자 동의</h3>
+        <h3><span class="ko-text">🛡️ 부모/보호자 동의</span><span class="en-text">🛡️ Parental/Guardian Consent</span></h3>
 
         <div class="field">
-          <label>부모/보호자가 현재 함께 계신가요? <span class="required">*</span></label>
+          <label><span class="ko-text">부모/보호자가 현재 함께 계신가요?</span><span class="en-text">Is parent/guardian present?</span> <span class="required">*</span></label>
           <div class="radio-group">
             <label class="radio-option" id="parentPresent">
               <input type="radio" name="parentLocation" value="present">
-              <div class="opt-title">네, 현장에 함께 있어요</div>
-              <div class="opt-desc">바로 사인 받을 수 있어요</div>
+              <div class="opt-title"><span class="ko-text">네, 현장에 함께 있어요</span><span class="en-text">Yes, here now</span></div>
+              <div class="opt-desc"><span class="ko-text">바로 사인 받을 수 있어요</span><span class="en-text">Sign in person</span></div>
             </label>
             <label class="radio-option" id="parentRemote">
               <input type="radio" name="parentLocation" value="remote">
-              <div class="opt-title">아니요, 이메일로 보낼게요</div>
-              <div class="opt-desc">부모님 이메일로 동의서 전송</div>
+              <div class="opt-title"><span class="ko-text">아니요, 이메일로 보낼게요</span><span class="en-text">No, send by email</span></div>
+              <div class="opt-desc"><span class="ko-text">부모님 이메일로 동의서 전송</span><span class="en-text">Email consent to parent</span></div>
             </label>
           </div>
         </div>
 
         <div class="field">
-          <label>부모/보호자 성명 <span class="required">*</span></label>
-          <input type="text" id="parentName" placeholder="홍부모">
+          <label><span class="ko-text">부모/보호자 성명</span><span class="en-text">Parent/Guardian Name</span> <span class="required">*</span></label>
+          <input type="text" id="parentName" placeholder="John Doe" data-ko-ph="홍부모" data-en-ph="John Doe">
         </div>
 
         <div class="row">
           <div class="field">
-            <label id="parentEmailLabel">부모/보호자 이메일 <span class="required" id="parentEmailStar">*</span></label>
+            <label id="parentEmailLabel"><span class="ko-text">부모/보호자 이메일</span><span class="en-text">Parent/Guardian Email</span> <span class="required" id="parentEmailStar">*</span></label>
             <input type="email" id="parentEmail" placeholder="parent@example.com">
           </div>
           <div class="field">
-            <label>관계 <span class="required">*</span></label>
+            <label><span class="ko-text">관계</span><span class="en-text">Relationship</span> <span class="required">*</span></label>
             <select id="parentRelationship">
-              <option value="">선택...</option>
-              <option value="mother">어머니</option>
-              <option value="father">아버지</option>
-              <option value="guardian">법정 보호자</option>
-              <option value="other">기타</option>
+              <option value="" data-ko="선택..." data-en="Select...">Select...</option>
+              <option value="mother" data-ko="어머니" data-en="Mother">Mother</option>
+              <option value="father" data-ko="아버지" data-en="Father">Father</option>
+              <option value="guardian" data-ko="법정 보호자" data-en="Legal Guardian">Legal Guardian</option>
+              <option value="other" data-ko="기타" data-en="Other">Other</option>
             </select>
           </div>
         </div>
 
         <div class="field">
-          <label>부모/보호자 전화번호</label>
-          <input type="tel" id="parentPhone" placeholder="010-0000-0000">
+          <label><span class="ko-text">부모/보호자 전화번호</span><span class="en-text">Parent/Guardian Phone</span></label>
+          <input type="tel" id="parentPhone" placeholder="555-0000" data-ko-ph="010-0000-0000" data-en-ph="555-0000">
         </div>
       </div>
 
-      <button type="submit" class="btn primary" id="submitBtn">다음 (동의서 작성)</button>
+      <button type="submit" class="btn primary" id="submitBtn"><span class="ko-text">다음 (동의서 작성)</span><span class="en-text">Next (Sign Consent)</span></button>
 
       <div class="error" id="errorMsg"></div>
       <div class="success" id="successMsg"></div>
@@ -176,6 +182,21 @@ h1{font-size:36px;color:#2E5A7A;margin-bottom:10px;line-height:1.2}
     </form>
   </div>
 </div>
+
+<!-- i18n: placeholder/option 텍스트 swap (bnm-lang-sync 의 bnm-lang-change 이벤트 연동, 폼 로직 무관) -->
+<script>
+(function(){
+  function applyAttrI18n(){
+    var ko = (window.bnmGetLang ? window.bnmGetLang() : 'en') === 'ko';
+    var phs = document.querySelectorAll('[data-ko-ph]');
+    for (var i=0;i<phs.length;i++){ phs[i].setAttribute('placeholder', phs[i].getAttribute(ko?'data-ko-ph':'data-en-ph')); }
+    var ops = document.querySelectorAll('option[data-ko]');
+    for (var j=0;j<ops.length;j++){ ops[j].textContent = ops[j].getAttribute(ko?'data-ko':'data-en'); }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyAttrI18n); else applyAttrI18n();
+  window.addEventListener('bnm-lang-change', applyAttrI18n);
+})();
+</script>
 
 <script>
 const birthDate = document.getElementById('birthDate');
