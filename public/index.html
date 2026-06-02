@@ -18,7 +18,7 @@
           if (s === 'ko' || s === 'en') { lang = s; }
         }
       } catch(e) {}
-      var dest = (lang === 'en') ? '/beta-signup-en.html' : '/beta-signup.html';
+      var dest = '/beta-signup.html';
       window.location.replace(dest + '?lang=' + lang);
     })();
   </script>
@@ -33,7 +33,7 @@
     </div>
     <div style="margin-top:16px;font-size:13px;">
       <a id="manual-link-ko" href="/beta-signup.html" style="color:#4A90C2;text-decoration:underline;display:none;">자동 이동 안 되면 클릭</a>
-      <a id="manual-link-en" href="/beta-signup-en.html" style="color:#4A90C2;text-decoration:underline;">Click if not redirected</a>
+      <a id="manual-link-en" href="/beta-signup.html" style="color:#4A90C2;text-decoration:underline;">Click if not redirected</a>
     </div>
   </div>
 </div>
