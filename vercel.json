@@ -1,4 +1,4 @@
-﻿{
+{
   "version": 2,
   "builds": [
     { "src": "api/cna.py", "use": "@vercel/python", "config": { "includeFiles": "api/**" } },
@@ -26,8 +26,6 @@
     { "src": "/api/consent_get", "dest": "/api/consent_get.py" },
     { "src": "/api/consent_sign", "dest": "/api/consent_sign.py" },
     { "src": "/api/(.*)", "dest": "/api/cna.py" },
-    { "src": "/(.*)/$", "dest": "/public/$1/index.html" },
-    { "src": "/([^.]+)/?$", "dest": "/public/$1/index.html" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
   "env": {
