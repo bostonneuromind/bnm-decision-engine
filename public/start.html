@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Neuromind — Decision</title>
+<style>
+  :root{
+    --page:#FFFFFF;--card:#FFFFFF;--field:#FAFAFA;
+    --ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;
+    --mid:#9AA3AB;
+    --shadow:none;--shadow-lg:0 2px 12px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;
+    font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+
+  .topbar{position:fixed;top:16px;right:16px;z-index:50}
+  .langbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  .hero{padding:84px 0 50px;text-align:center}
+  .hero .brand{font-size:14px;font-weight:800;letter-spacing:.1em;color:var(--ink-sub);text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:40px;font-weight:800;line-height:1.25;max-width:760px;margin:0 auto}
+  .hero p{font-size:19px;color:var(--ink-sub);margin-top:18px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+  .depts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:30px 0 90px}
+  .dept{border:1.5px solid var(--line);border-radius:18px;padding:34px 28px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:.15s;background:#fff;cursor:pointer;position:relative}
+  .dept.live:hover{border-color:var(--line-strong);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .dept.locked{cursor:not-allowed;background:var(--field)}
+  .dept .ic{font-size:34px;margin-bottom:16px}
+  .dept .n{font-size:12px;font-weight:800;color:var(--ink-sub);letter-spacing:.06em;text-transform:uppercase}
+  .dept h2{font-size:24px;font-weight:800;margin:6px 0 10px}
+  .dept p{font-size:15px;color:var(--ink-sub);line-height:1.6;flex:1}
+  .dept .enter{margin-top:20px;font-size:15px;font-weight:800}
+  .dept.live .enter{color:var(--ink)}
+  .dept.locked .enter{color:var(--mid)}
+  .dept .lockb{position:absolute;top:18px;right:18px;font-size:11.5px;font-weight:800;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--ink-sub)}
+
+  .foot{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--ink-sub);font-size:13px;line-height:1.7}
+
+  @media(max-width:760px){.depts{grid-template-columns:1fr}.hero h1{font-size:30px}}
+</style>
+</head>
+<body data-lang="ko">
+
+<div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="brand">Boston Neuromind</div>
+    <h1><span class="ko-text">무엇을 키우고 싶으세요?</span><span class="en-text">What do you want to grow?</span></h1>
+    <p><span class="ko-text">세 가지 영역은 완전히 다른 길을 따릅니다. 당신의 목표에 맞는 분과를 선택하세요. 요구 분석은 무료입니다.</span><span class="en-text">Three domains, three distinct paths. Choose the one that fits your goal. The needs-analysis is free.</span></p>
+  </div>
+
+  <div class="depts">
+    <!-- Peak — live -->
+    <a class="dept live" href="peak/index.html">
+      <div class="ic">🎯</div>
+      <div class="n">Peak Performance</div>
+      <h2><span class="ko-text">최고 수행</span><span class="en-text">Peak Performance</span></h2>
+      <p><span class="ko-text">압박 속에서도 실력을 온전히. 발표·시험·시합·면접에서 무너지지 않도록.</span><span class="en-text">Perform fully under pressure — exams, talks, competition, interviews.</span></p>
+      <div class="enter"><span class="ko-text">들어가기 →</span><span class="en-text">Enter →</span></div>
+    </a>
+
+    <!-- Attention — locked -->
+    <div class="dept locked" onclick="soon()">
+      <span class="lockb"><span class="ko-text">준비 중</span><span class="en-text">Soon</span></span>
+      <div class="ic">🧭</div>
+      <div class="n">Attention</div>
+      <h2><span class="ko-text">주의</span><span class="en-text">Attention</span></h2>
+      <p><span class="ko-text">집중 유지·억제·전환. 산만함을 다스리고 깊은 집중으로.</span><span class="en-text">Sustain, inhibit, shift. Tame distraction for deep focus.</span></p>
+      <div class="enter"><span class="ko-text">곧 오픈</span><span class="en-text">Coming soon</span></div>
+    </div>
+
+    <!-- Learning — locked -->
+    <div class="dept locked" onclick="soon()">
+      <span class="lockb"><span class="ko-text">준비 중</span><span class="en-text">Soon</span></span>
+      <div class="ic">📖</div>
+      <div class="n">Learning</div>
+      <h2><span class="ko-text">학습</span><span class="en-text">Learning</span></h2>
+      <p><span class="ko-text">부호화·파지·이해·메타인지. 더 깊고 오래 가는 배움으로.</span><span class="en-text">Encoding, retention, comprehension, metacognition.</span></p>
+      <div class="enter"><span class="ko-text">곧 오픈</span><span class="en-text">Coming soon</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="wrap">
+    <div><span class="ko-text">Boston Neuromind · 요구 분석은 무료 자기탐색 도구이며 의학적 진단이 아닙니다. 진단·훈련은 자격을 갖춘 임상가(BCN·PhD)가 진행합니다.</span><span class="en-text">Boston Neuromind · The needs-analysis is a free self-exploration tool, not a medical diagnosis. Diagnosis & training by a qualified clinician (BCN·PhD).</span></div>
+  </div>
+</div>
+
+<script>
+function setLang(l){document.body.setAttribute('data-lang',l);}
+function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function soon(){alert(getLang()==='ko'?'이 분과는 준비 중입니다. 곧 오픈합니다.\n\n지금은 Peak Performance를 먼저 경험해 보세요.':'This department is coming soon.\n\nFor now, explore Peak Performance.');}
+</script>
+</body>
+</html>

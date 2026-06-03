@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Neuromind — Peak Performance</title>
+<style>
+  :root{
+    /* ★ 미니멀 표준 (할비 2026-06-02): 색 거의 안 씀 — 무채/뉴트럴, 폼·선·여백으로 구조. 글씨 크게. */
+    --page:#FFFFFF;--card:#FFFFFF;--field:#FAFAFA;--soft:#FAFAFA;
+    --ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;
+    --hue:#2E5A7A;--hue-deep:#1F2225;--hue-dark:#1F2225;--hue-mid:#9AA3AB;--hue-soft:#E6E9EC;--hue-bg:#F4F5F6;
+    --good:#3F6B52;--good-bg:#F0F3F1;--amber:#7A6320;--amber-bg:#F6F4EE;--warn:#8A3A3A;
+    --nf:#3F5870;--qeeg:#5A4A66;--hrv:#3F6B52;--psy:#7A6320;--meas:#5C6166;
+    --orange:#1F2225;
+    --shadow:none;--shadow-lg:0 2px 10px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;
+    font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+
+  /* 상단 네비 */
+  nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1040px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:14px 22px}
+  .logo{font-size:17px;font-weight:800;color:var(--hue-dark);display:flex;align-items:center;gap:8px}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:var(--hue-deep)}
+  .nav-menu{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .nav-menu a{font-size:14px;font-weight:700;color:var(--ink-sub);text-decoration:none;padding:8px 14px;border-radius:9px;cursor:pointer;transition:.12s}
+  .nav-menu a:hover{background:var(--hue-bg);color:var(--hue-deep)}
+  .nav-menu a.cta{background:var(--ink);color:#fff}
+  .langbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit;margin-left:6px}
+
+  .wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .sec-tag{font-size:12px;font-weight:800;color:var(--hue-deep);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+  .sec-title{font-size:28px;font-weight:800;color:var(--ink);line-height:1.3;margin-bottom:12px}
+  .sec-lead{font-size:16px;color:var(--ink-sub);max-width:620px;line-height:1.7}
+
+  /* HERO (광고성 전체그림) */
+  .hero{background:var(--field);padding:78px 0 70px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero::after{content:"";position:absolute;right:-60px;top:-40px;width:340px;height:340px;background:radial-gradient(circle,rgba(74,144,194,.16),transparent 70%);border-radius:50%}
+  .hero h1{font-size:42px;font-weight:800;color:var(--hue-dark);line-height:1.2;max-width:680px}
+  .hero p{font-size:18px;color:var(--hue-dark);opacity:.9;margin-top:16px;max-width:560px;line-height:1.6}
+  .hero .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  .hero .badge{background:rgba(255,255,255,.7);border:1px solid rgba(74,144,194,.25);border-radius:999px;padding:7px 15px;font-size:13px;font-weight:700;color:var(--hue-dark)}
+  .hero-cta{display:inline-block;margin-top:26px;background:var(--ink);color:#fff;text-decoration:none;border-radius:13px;padding:15px 30px;font-size:16px;font-weight:800;box-shadow:var(--shadow-lg);cursor:pointer}
+
+  /* 상단 메뉴 3대 카드 (광고 전체그림) */
+  .menu3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+  .m3{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 24px;box-shadow:var(--shadow);cursor:pointer;transition:.15s;text-decoration:none;color:inherit;display:block}
+  .m3:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--hue)}
+  .m3 .ic{width:48px;height:48px;border-radius:13px;background:var(--hue-bg);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px}
+  .m3 .n{font-size:11px;font-weight:800;color:var(--hue-deep);letter-spacing:.05em}
+  .m3 h3{font-size:18px;font-weight:800;margin:5px 0 7px}
+  .m3 p{font-size:13.5px;color:var(--ink-sub);line-height:1.55}
+  .m3 .go{font-size:13px;font-weight:700;color:var(--hue-deep);margin-top:12px}
+
+  /* Decision/Training 큰 상자 */
+  .bigbox{background:var(--soft);border:1px solid var(--line);border-radius:24px;padding:8px;box-shadow:var(--shadow-lg)}
+  .bb-tabs{display:flex;gap:6px;padding:8px}
+  .bb-tab{flex:1;background:transparent;border:none;border-radius:16px;padding:18px;cursor:pointer;font-family:inherit;text-align:center;transition:.15s}
+  .bb-tab h3{font-size:19px;font-weight:800;color:var(--ink-sub)}
+  .bb-tab .s{font-size:12.5px;color:var(--ink-sub);margin-top:3px}
+  .bb-tab.on{background:#fff;box-shadow:var(--shadow)}
+  .bb-tab.on h3{color:var(--hue-deep)}
+  .bb-tab.on.tx h3{color:var(--orange)}
+  .bb-pane{display:none;padding:26px 28px 30px}
+  .bb-pane.on{display:block;animation:fade .3s}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  .bb-intro{font-size:15px;color:var(--ink);line-height:1.7;margin-bottom:22px}
+  .bb-intro b{color:var(--hue-dark)}
+
+  /* 프로세스 플로우 (그림으로 쉽게) */
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:8px 0 6px}
+  .step{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 15px;position:relative;margin-right:28px;margin-bottom:14px}
+  .step:last-child{margin-right:0}
+  .step::after{content:"→";position:absolute;right:-21px;top:50%;transform:translateY(-50%);color:var(--hue);font-size:20px;font-weight:800}
+  .step:last-child::after{content:""}
+  .step .si{width:38px;height:38px;border-radius:11px;background:var(--hue-bg);display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:9px}
+  .tx .step .si{background:#FCEAE0}
+  .step .st{font-size:11px;font-weight:800;color:var(--hue-deep);letter-spacing:.03em}
+  .tx .step .st{color:var(--orange)}
+  .step h4{font-size:14.5px;font-weight:800;margin:3px 0 5px}
+  .step p{font-size:12.5px;color:var(--ink-sub);line-height:1.5}
+
+  .theory{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+  .th-chip{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 15px;font-size:13px;flex:1;min-width:170px}
+  .th-chip b{color:var(--hue-dark);font-weight:800;display:block;font-size:13.5px;margin-bottom:3px}
+  .tx .th-chip b{color:var(--orange)}
+  .th-chip span{color:var(--ink-sub);font-size:12.5px;line-height:1.45}
+
+  .intake{background:var(--hue-bg);border-radius:16px;padding:22px 24px;margin-top:24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .tx .intake{background:#FCEAE0}
+  .intake .txt{flex:1;min-width:200px}
+  .intake h4{font-size:16px;font-weight:800;color:var(--hue-dark);margin-bottom:4px}
+  .tx .intake h4{color:#C25A28}
+  .intake p{font-size:13px;color:var(--ink-sub);line-height:1.5}
+  .intake a{background:var(--hue-deep);color:#fff;text-decoration:none;border-radius:12px;padding:14px 26px;font-size:15px;font-weight:800;white-space:nowrap;cursor:pointer}
+  .tx .intake a{background:var(--orange)}
+  .intake a.locked{background:var(--hue-mid);cursor:not-allowed;opacity:.85}
+  .tx .intake a.locked{background:var(--hue-mid)}
+  .lockbadge{display:inline-block;font-size:11px;font-weight:800;background:rgba(0,0,0,.12);border-radius:6px;padding:2px 8px;margin-left:6px}
+
+  /* 과학 자료 */
+  .sci-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:30px}
+  .sci{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
+  .sci .ic{font-size:26px;margin-bottom:10px}
+  .sci h4{font-size:15.5px;font-weight:800;margin-bottom:6px}
+  .sci p{font-size:13px;color:var(--ink-sub);line-height:1.55}
+  .sci .cite{font-size:11.5px;color:var(--hue-deep);font-weight:600;margin-top:8px}
+
+  footer{padding:40px 0;text-align:center;color:var(--ink-sub);font-size:12.5px;line-height:1.7;background:var(--soft)}
+
+  @media(max-width:720px){.menu3{grid-template-columns:1fr}.bb-tabs{flex-direction:column}.hero h1{font-size:32px}}
+</style>
+</head>
+<body data-lang="ko">
+
+<!-- 네비 -->
+<nav>
+  <div class="nav-in">
+    <div class="logo"><span class="dot"></span>Boston Neuromind</div>
+    <div class="nav-menu">
+      <a onclick="go('m-needs')"><span class="ko-text">요구 분석</span><span class="en-text">Needs Analysis</span></a>
+      <a onclick="go('m-predict')"><span class="ko-text">예측 진단·치료</span><span class="en-text">Diagnosis·Care</span></a>
+      <a onclick="go('m-science')"><span class="ko-text">과학적 근거</span><span class="en-text">Science</span></a>
+      <a class="cta" onclick="go('m-process')"><span class="ko-text">시작하기</span><span class="en-text">Start</span></a>
+    </div>
+    <button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO/EN</button>
+  </div>
+</nav>
+
+<!-- HERO (광고 전체그림) -->
+<div class="hero">
+  <div class="wrap">
+    <h1><span class="ko-text">당신의 최고 수행을, 뇌과학으로.</span><span class="en-text">Your peak performance, powered by brain science.</span></h1>
+    <p><span class="ko-text">압박 속에서 무너지지 않고 실력을 온전히 발휘하도록. 요구 분석 → 정밀 진단 → 맞춤 훈련을 QEEG·뉴로피드백과 논문 기반으로 설계합니다.</span><span class="en-text">Perform fully without collapsing under pressure. Needs-analysis → precise diagnosis → personalized training, built on QEEG·neurofeedback and the literature.</span></p>
+    <div class="badges">
+      <span class="badge">🧠 19ch QEEG · Neurofeedback</span>
+      <span class="badge">📚 <span class="ko-text">논문 기반</span><span class="en-text">Evidence-based</span></span>
+      <span class="badge">🎯 <span class="ko-text">개인 맞춤</span><span class="en-text">Personalized</span></span>
+    </div>
+    <a class="hero-cta" onclick="go('m-needs')"><span class="ko-text">무료 요구 분석 시작 →</span><span class="en-text">Start free needs-analysis →</span></a>
+  </div>
+</div>
+
+<!-- 상단 메뉴 3대 (광고 전체그림) -->
+<section id="m-top">
+  <div class="wrap">
+    <div class="sec-tag"><span class="ko-text">한눈에</span><span class="en-text">Overview</span></div>
+    <div class="sec-title"><span class="ko-text">세 단계로 만나는 Boston Neuromind</span><span class="en-text">Meet us in three steps</span></div>
+    <div class="menu3">
+      <a class="m3" id="m-needs" onclick="openModule('needs')">
+        <div class="ic">🔎</div><div class="n">STEP 1</div>
+        <h3><span class="ko-text">요구 분석</span><span class="en-text">Needs Analysis</span></h3>
+        <p><span class="ko-text">무료·로그인 없이 15문항. 당신이 무엇을·어떻게 잘하고 싶은지 그래프로 그려드립니다.</span><span class="en-text">Free, no login, 15 questions. We map what & how you want to perform — visually.</span></p>
+        <div class="go"><span class="ko-text">무료로 해보기 →</span><span class="en-text">Try free →</span></div>
+      </a>
+      <a class="m3" id="m-predict" onclick="openModule('predict')">
+        <div class="ic">🩺</div><div class="n">STEP 2</div>
+        <h3><span class="ko-text">예측 진단 · 치료</span><span class="en-text">Diagnosis · Care</span></h3>
+        <p><span class="ko-text">정밀 진단에서 무엇이 당신의 Peak를 막는지, 어떤 훈련 프로토콜이 나오는지 미리 봅니다.</span><span class="en-text">Preview what blocks your Peak and the training protocol you'd receive.</span></p>
+        <div class="go"><span class="ko-text">예시 보고서 보기 →</span><span class="en-text">View sample →</span></div>
+      </a>
+      <a class="m3" id="m-science" onclick="go('sci-sec')">
+        <div class="ic">📚</div><div class="n">STEP 3</div>
+        <h3><span class="ko-text">과학적 근거</span><span class="en-text">The Science</span></h3>
+        <p><span class="ko-text">QEEG·뉴로피드백이 뇌를 바꾼다는 권위 논문들. 우리 방법의 근거를 투명하게 공개합니다.</span><span class="en-text">Authoritative papers on how QEEG·NF change the brain. Our evidence, transparent.</span></p>
+        <div class="go"><span class="ko-text">근거 보기 →</span><span class="en-text">See evidence →</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ★ Decision / Training 큰 상자 (프로세스를 그림으로 쉽게) -->
+<section id="m-process">
+  <div class="wrap">
+    <div class="sec-tag"><span class="ko-text">우리의 방법</span><span class="en-text">How we work</span></div>
+    <div class="sec-title"><span class="ko-text">진단과 훈련, 이렇게 진행됩니다</span><span class="en-text">How diagnosis & training flow</span></div>
+    <p class="sec-lead" style="margin-bottom:26px"><span class="ko-text">광고가 아니라 <b>실제 프로세스</b>입니다. 각 단계가 어떻게 이어지는지 그림으로 보여드립니다.</span><span class="en-text">Not an ad — the <b>actual process</b>. See how each step connects.</span></p>
+
+    <div class="bigbox">
+      <div class="bb-tabs">
+        <button class="bb-tab on" id="t-dx" onclick="bbTab('dx')"><h3>🩺 Decision</h3><div class="s"><span class="ko-text">우리가 진단하는 법</span><span class="en-text">how we diagnose</span></div></button>
+        <button class="bb-tab tx" id="t-tx" onclick="bbTab('tx')"><h3>🎯 Training</h3><div class="s"><span class="ko-text">우리가 훈련하는 법</span><span class="en-text">how we train</span></div></button>
+      </div>
+
+      <!-- Decision -->
+      <div class="bb-pane on" id="bb-dx">
+        <p class="bb-intro"><span class="ko-text">우리는 <b>주관(설문)과 객관(QEEG·HRV)을 함께</b> 봅니다. 한 채널만 보는 곳과 다르게, 두 채널이 수렴하면 신뢰가 올라가고 다르면 그것도 임상 정보가 됩니다. (MSDI · 다중출처 진단)</span><span class="en-text">We read the <b>subjective (survey) and objective (QEEG·HRV) together</b>. Unlike single-channel tools, convergence raises confidence and discordance is itself clinical signal. (MSDI)</span></p>
+        <div class="flow">
+          <div class="step"><div class="si">📝</div><div class="st">STEP 1</div><h4><span class="ko-text">요구 분석</span><span class="en-text">Needs analysis</span></h4><p><span class="ko-text">무엇을·어떻게 잘하고 싶은지 (목표)</span><span class="en-text">your goal: what & how</span></p></div>
+          <div class="step"><div class="si">🧩</div><div class="st">STEP 2</div><h4><span class="ko-text">막는 요인 측정</span><span class="en-text">Measure blockers</span></h4><p><span class="ko-text">목표를 막는 것만 정밀 설문 (불필요한 검사 없이)</span><span class="en-text">only what blocks the goal</span></p></div>
+          <div class="step"><div class="si">🧠</div><div class="st">STEP 3</div><h4><span class="ko-text">QEEG·HRV (선택)</span><span class="en-text">QEEG·HRV (optional)</span></h4><p><span class="ko-text">원하면 객관 뇌·자율신경 측정 추가</span><span class="en-text">add objective brain/autonomic data</span></p></div>
+          <div class="step"><div class="si">📄</div><div class="st">STEP 4</div><h4><span class="ko-text">3+1 보고서</span><span class="en-text">3+1 reports</span></h4><p><span class="ko-text">설문·QEEG·통합 보고서 + 권장 훈련영역</span><span class="en-text">survey·QEEG·integrated + recommended areas</span></p></div>
+        </div>
+        <div class="theory">
+          <div class="th-chip"><b>Flow · IZOF</b><span><span class="ko-text">사람마다 최고로 잘하는 긴장 상태가 다릅니다. 당신의 최적 영역을 찾습니다.</span><span class="en-text">Everyone's optimal arousal differs; we find yours.</span></span></div>
+          <div class="th-chip"><b>MSDI</b><span><span class="ko-text">설문+QEEG+HRV를 한 번의 AI 분석으로 종합 — 두 채널의 수렴으로 신뢰를 높입니다.</span><span class="en-text">Survey+QEEG+HRV synthesized; convergence raises confidence.</span></span></div>
+          <div class="th-chip"><b><span class="ko-text">논문 기반</span><span class="en-text">Evidence</span></b><span><span class="ko-text">모든 해석에 근거 논문을 명시합니다.</span><span class="en-text">Every interpretation cites the literature.</span></span></div>
+        </div>
+        <div class="intake">
+          <div class="txt"><h4><span class="ko-text">진단(Decision) 가입 신청</span><span class="en-text">Apply for Decision intake</span></h4><p><span class="ko-text">정밀 진단 세션을 시작합니다. 요구 분석 결과가 그대로 이어집니다.</span><span class="en-text">Begin a precise-diagnosis session; your needs-analysis carries over.</span></p></div>
+          <a class="locked" onclick="openModule('intake_dx')"><span class="ko-text">진단 intake 신청</span><span class="en-text">Diagnosis intake</span> <span class="lockbadge"><span class="ko-text">🔒 준비 중</span><span class="en-text">🔒 Coming soon</span></span></a>
+        </div>
+      </div>
+
+      <!-- Training -->
+      <div class="bb-pane tx" id="bb-tx">
+        <p class="bb-intro"><span class="ko-text">진단에서 나온 <b>막는 요인</b>을 뚫는 훈련을, <b>당신의 뇌 지표에 맞춰</b> 설계합니다. 뉴로피드백은 매 세션, QEEG 재측정은 주기적으로 — 세션마다 경과를 추적해 방향을 조정합니다.</span><span class="en-text">We design training to break the <b>blockers</b> from diagnosis, <b>matched to your brain markers</b>. Neurofeedback each session, periodic QEEG re-measure — we track progress and re-route per session.</span></p>
+        <div class="flow tx">
+          <div class="step"><div class="si">🎯</div><div class="st">STEP 1</div><h4><span class="ko-text">영역 선택</span><span class="en-text">Pick areas</span></h4><p><span class="ko-text">AI 추천 + 임상가가 훈련 영역 확정</span><span class="en-text">AI-recommended + therapist-confirmed</span></p></div>
+          <div class="step"><div class="si">🗓️</div><div class="st">STEP 2</div><h4><span class="ko-text">세션 설계</span><span class="en-text">Design sessions</span></h4><p><span class="ko-text">5·10·15세션, NF·QEEG 배치를 유연하게</span><span class="en-text">5/10/15, NF·QEEG placed flexibly</span></p></div>
+          <div class="step"><div class="si">🔄</div><div class="st">STEP 3</div><h4><span class="ko-text">세션 진행</span><span class="en-text">Run sessions</span></h4><p><span class="ko-text">뉴로피드백·심리훈련·노출을 단계적으로</span><span class="en-text">NF, psych-skill, exposure in phases</span></p></div>
+          <div class="step"><div class="si">📈</div><div class="st">STEP 4</div><h4><span class="ko-text">경과 추적·조정</span><span class="en-text">Track & re-route</span></h4><p><span class="ko-text">세션마다 변화 측정 → 다음 방향 재조정</span><span class="en-text">measure change → re-route next</span></p></div>
+        </div>
+        <div class="theory tx">
+          <div class="th-chip"><b><span class="ko-text">단계적 scaffold</span><span class="en-text">Scaffolded</span></b><span><span class="ko-text">기초→형성→통합. 무너진 가장 낮은 지점부터 쌓습니다.</span><span class="en-text">Foundation→forming→integration, from the lowest broken point.</span></span></div>
+          <div class="th-chip"><b><span class="ko-text">뉴로피드백</span><span class="en-text">Neurofeedback</span></b><span><span class="ko-text">SMR·베타 등 당신 지표에 맞춘 프로토콜 (100+ 연구 검증).</span><span class="en-text">SMR/beta protocols matched to your markers (100+ studies).</span></span></div>
+          <div class="th-chip"><b><span class="ko-text">경과 기반 조정</span><span class="en-text">Adaptive</span></b><span><span class="ko-text">주관·객관 변화를 함께 추적해 방향을 바꿉니다.</span><span class="en-text">Track subjective+objective change to re-route.</span></span></div>
+        </div>
+        <div class="intake">
+          <div class="txt"><h4><span class="ko-text">훈련(Training) 가입 신청</span><span class="en-text">Apply for Training intake</span></h4><p><span class="ko-text">맞춤 훈련 프로토콜을 시작합니다. 진단 결과가 그대로 이어집니다.</span><span class="en-text">Begin your training protocol; diagnosis carries over.</span></p></div>
+          <a class="locked" onclick="openModule('intake_tx')"><span class="ko-text">훈련 intake 신청</span><span class="en-text">Training intake</span> <span class="lockbadge"><span class="ko-text">🔒 준비 중</span><span class="en-text">🔒 Coming soon</span></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 과학 자료 -->
+<section id="sci-sec">
+  <div class="wrap">
+    <div class="sec-tag"><span class="ko-text">투명한 근거</span><span class="en-text">Transparent evidence</span></div>
+    <div class="sec-title"><span class="ko-text">우리 방법의 과학적 근거</span><span class="en-text">The science behind our method</span></div>
+    <p class="sec-lead"><span class="ko-text">뉴로피드백이 뇌를 바꾼다는 건 고임팩트 저널로 입증됐습니다. 근거 강도는 영역마다 다르며, 우리는 정직하게 공개합니다.</span><span class="en-text">High-impact journals show neurofeedback changes the brain. Evidence strength varies by domain — we disclose it honestly.</span></p>
+    <div class="sci-grid">
+      <div class="sci"><div class="ic">🧠</div><h4><span class="ko-text">NF는 뇌를 바꾼다</span><span class="en-text">NF changes the brain</span></h4><p><span class="ko-text">폐회로 뇌 훈련의 과학 — 분야 최고 권위 리뷰.</span><span class="en-text">The science of closed-loop brain training — the landmark review.</span></p><div class="cite">Sitaram et al., Nature Reviews Neuroscience 2017</div></div>
+      <div class="sci"><div class="ic">📊</div><h4><span class="ko-text">주의력 향상 (메타분석)</span><span class="en-text">Attention gains (meta)</span></h4><p><span class="ko-text">41 RCT → 15 RCT 메타분석, 유의한 주의 향상 (SMD 0.27).</span><span class="en-text">Meta-analysis of 41→15 RCTs; significant attention gains.</span></p><div class="cite">Imaging Neuroscience / MIT Press 2023</div></div>
+      <div class="sci"><div class="ic">🔬</div><h4><span class="ko-text">지속되는 뇌 변화</span><span class="en-text">Lasting brain change</span></h4><p><span class="ko-text">fMRI 뉴로피드백 후 연결성 변화가 추적 시점까지 지속.</span><span class="en-text">fMRI-NF connectivity change persisted into follow-up.</span></p><div class="cite">SeMoLa / Yale 2023</div></div>
+      <div class="sci"><div class="ic">⚖️</div><h4><span class="ko-text">정직한 한계</span><span class="en-text">Honest limits</span></h4><p><span class="ko-text">주의·임상은 입증, sham 대조는 신중, '최고 수행' 직접 증거는 축적 중. 우리는 근거 강한 프로토콜부터 적용합니다.</span><span class="en-text">Attention/clinical proven; sham-control needs caution; peak-direct evidence accumulating. We apply best-evidenced protocols first.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><span class="ko-text">Boston Neuromind · Peak Performance</span><span class="en-text">Boston Neuromind · Peak Performance</span></div>
+    <div style="margin-top:6px"><span class="ko-text">요구 분석은 무료 자기탐색·코칭 도구이며 의학적 진단이 아닙니다. 진단·훈련은 자격을 갖춘 임상가(BCN·PhD)가 진행합니다.</span><span class="en-text">Needs-analysis is a free self-exploration/coaching tool, not a medical diagnosis. Diagnosis & training by a qualified clinician (BCN·PhD).</span></div>
+  </div>
+</footer>
+
+<script>
+function setLang(l){document.body.setAttribute('data-lang',l);}
+function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function go(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+function bbTab(t){
+  document.getElementById('t-dx').classList.toggle('on',t==='dx');
+  document.getElementById('t-tx').classList.toggle('on',t==='tx');
+  document.getElementById('bb-dx').classList.toggle('on',t==='dx');
+  document.getElementById('bb-tx').classList.toggle('on',t==='tx');
+}
+/* ★ 실제 서비스(진단·훈련 intake) 잠금 — 핵심 모듈 완성 시 false로 풀기 (할비 2026-06-02) */
+const SERVICE_LOCKED=true;
+const ROUTES={
+  needs:'needs.html',
+  predict:'admin/report.html',
+  intake_dx:'intake/goal.html',      // 진단 intake = 목표수렴(층B 진입) — 잠금
+  intake_tx:'admin/designer.html', // 훈련 intake = 세션 설계 진입 — 잠금
+};
+const LOCKED_KEYS=['intake_dx','intake_tx'];
+function openModule(k){
+  const l=getLang(); const f=ROUTES[k];
+  if(SERVICE_LOCKED && LOCKED_KEYS.includes(k)){
+    alert(l==='ko'
+      ? '🔒 진단·훈련 서비스는 현재 준비 중입니다.\n\n핵심 모듈을 완벽하게 개발 중이며, 곧 오픈합니다.\n그동안 무료 요구 분석을 먼저 경험해 보세요.'
+      : '🔒 Diagnosis & training are coming soon.\n\nWe\u2019re perfecting the core modules. Meanwhile, try the free needs-analysis.');
+    return;
+  }
+  // ★ 실제 이동 (공개 모듈은 지금도, 잠긴 모듈은 SERVICE_LOCKED=false 후)
+  location.href=f;
+}
+</script>
+</body>
+</html>

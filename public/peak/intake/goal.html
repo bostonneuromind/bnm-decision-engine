@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak Performance과 — 목표 수렴 (Goal-Intake)</title>
+<style>
+  :root{
+    /* ★ 미니멀 표준 (할비 2026-06-02): 색 거의 안 씀 — 무채/뉴트럴, 폼·선·여백으로 구조. 글씨 크게. */
+    --page:#FFFFFF;--card:#FFFFFF;--field:#FAFAFA;--soft:#FAFAFA;
+    --ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;
+    --hue:#2E5A7A;--hue-deep:#1F2225;--hue-dark:#1F2225;--hue-mid:#9AA3AB;--hue-soft:#E6E9EC;--hue-bg:#F4F5F6;
+    --good:#3F6B52;--good-bg:#F0F3F1;--amber:#7A6320;--amber-bg:#F6F4EE;--warn:#8A3A3A;
+    --nf:#3F5870;--qeeg:#5A4A66;--hrv:#3F6B52;--psy:#7A6320;--meas:#5C6166;
+    --orange:#1F2225;
+    --shadow:none;--shadow-lg:0 2px 10px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;
+    font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased;padding:34px 18px 80px;min-height:100vh}
+  .container{max-width:720px;margin:0 auto}
+  .topbar{position:fixed;top:14px;right:14px;display:flex;gap:8px;z-index:50}
+  .pill{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;overflow:hidden;box-shadow:var(--shadow)}
+  .pill button{border:none;background:transparent;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  body[data-lang=ko] .pill.lang button[data-l=ko],body[data-lang=en] .pill.lang button[data-l=en]{background:var(--hue);color:#fff}
+  body[data-view=clinician] .pill.view button[data-v=clinician],body[data-view=patient] .pill.view button[data-v=patient]{background:var(--hue-deep);color:#fff}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+  .clinician-only{display:none}
+  body[data-view=clinician] .clinician-only{display:block}
+
+  .dept-head{background:var(--field);border-radius:22px;padding:28px 30px;margin-bottom:20px;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+  .dept-head::after{content:"";position:absolute;right:-30px;top:-30px;width:160px;height:160px;background:radial-gradient(circle,rgba(74,144,194,.2),transparent 70%);border-radius:50%}
+  .dept-head .tag{display:inline-block;background:var(--hue-deep);color:#fff;font-size:12px;font-weight:700;letter-spacing:.04em;padding:5px 14px;border-radius:999px;margin-bottom:10px}
+  .dept-head h1{font-size:25px;font-weight:800;color:var(--hue-dark);line-height:1.3}
+  .dept-head .sub{font-size:14px;color:var(--hue-dark);opacity:.85;margin-top:8px;line-height:1.55}
+
+  .prog-bar{height:6px;background:var(--line);border-radius:999px;margin:0 0 20px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--hue);border-radius:999px;transition:width .3s;width:0}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:18px;box-shadow:var(--shadow)}
+  .block-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .block-n{flex:none;width:26px;height:26px;border-radius:8px;background:var(--hue-deep);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .block-h h2{font-size:17px;font-weight:800}
+  .block-sub{font-size:13px;color:var(--ink-sub);margin:0 0 16px 36px;line-height:1.5}
+
+  .q{margin-bottom:18px}
+  .q:last-child{margin-bottom:0}
+  .q-text{font-size:16px;font-weight:700;margin-bottom:11px;line-height:1.5}
+  .choices{display:flex;flex-direction:column;gap:8px}
+  .choices.row{flex-direction:row;flex-wrap:wrap}
+  .choice{background:var(--field);border:1px solid var(--line);border-radius:11px;padding:13px 16px;cursor:pointer;font-size:14.5px;font-weight:600;color:var(--ink-sub);transition:all .12s;line-height:1.4}
+  .choices.row .choice{flex:1;min-width:90px;text-align:center;padding:13px 8px}
+  .choice:hover{border-color:var(--hue)}
+  .choice.on{border-color:var(--line-strong);border-width:2.5px;background:var(--field);color:var(--ink);font-weight:800}
+  .multi-hint{font-size:11.5px;color:var(--ink-sub);margin-top:6px;font-style:italic}
+
+  .ref{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--ink-sub);line-height:1.55}
+  .ref b{color:var(--hue-deep)}
+
+  /* 필사 (KSR baseline) */
+  .transcribe{background:var(--hue-bg);border:1px solid var(--hue-soft);border-radius:12px;padding:16px;margin-top:6px}
+  .transcribe .target{font-size:15px;font-weight:700;color:var(--hue-dark);background:#fff;border-radius:9px;padding:12px 14px;margin-bottom:10px;line-height:1.5;border:1px dashed var(--hue)}
+  .transcribe label{font-size:12.5px;color:var(--ink-sub);display:block;margin-bottom:6px}
+  textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;line-height:1.6;resize:vertical;min-height:64px;background:#fff;color:var(--ink)}
+  textarea:focus{outline:none;border-color:var(--hue-deep)}
+  .match{font-size:12px;margin-top:6px;font-weight:700}
+  .match.ok{color:var(--good)}.match.no{color:var(--amber)}
+
+  .ksr-note{font-size:11px;color:var(--ink-sub);margin-top:8px;display:flex;align-items:center;gap:6px}
+  .ksr-dot{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+  .btn{width:100%;background:var(--hue);color:#fff;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:8px}
+  .btn:hover{opacity:.92}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+
+  .result{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-top:18px;box-shadow:var(--shadow);display:none}
+  .result.show{display:block}
+  .result h3{font-size:17px;font-weight:800;margin-bottom:12px;color:var(--hue-dark)}
+  .result .line{font-size:14px;margin-bottom:8px;line-height:1.6}
+  .result .route{background:var(--amber-bg);border-radius:10px;padding:12px 14px;margin-top:10px;font-size:13.5px;color:#7a5210;line-height:1.55}
+  .result .route b{color:var(--amber)}
+  pre.payload{background:var(--field);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:11.5px;overflow-x:auto;margin-top:12px;color:var(--ink-sub);line-height:1.5}
+</style>
+</head>
+<body data-lang="ko" data-view="patient">
+
+<div class="topbar">
+  <span class="pill view">
+    <button data-v="patient" onclick="setView('patient')"><span class="ko-text">환자</span><span class="en-text">Patient</span></button>
+    <button data-v="clinician" onclick="setView('clinician')"><span class="ko-text">임상가</span><span class="en-text">Clinician</span></button>
+  </span>
+  <span class="pill lang">
+    <button data-l="ko" onclick="setLang('ko')">KO</button>
+    <button data-l="en" onclick="setLang('en')">EN</button>
+  </span>
+</div>
+
+<div class="container">
+  <div class="dept-head">
+    <span class="tag">Peak Performance 과 · Goal-Intake</span>
+    <h1><span class="ko-text">무엇을, 어떻게 잘 해내고 싶으세요?</span><span class="en-text">What do you want to perform — and how?</span></h1>
+    <p class="sub"><span class="ko-text">"수행을 잘하고 싶다"는 막연한 바람을 <b>구체적인 목표</b>로 함께 펼쳐봅니다. 답하는 과정에서 본인이 진짜 원하는 게 또렷해질 거예요. 정답은 없습니다.</span><span class="en-text">We'll unfold the vague wish "to perform better" into a <b>concrete goal</b> together. As you answer, what you truly want will come into focus. There are no right answers.</span></p>
+  </div>
+
+  <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+
+  <!-- 관리자(임상가) 전용: 설문 길이 선택 — 환자에겐 안 보임 -->
+  <div class="clinician-only" style="background:var(--amber-bg);border:1px solid #EBD9A8;border-radius:12px;padding:13px 16px;margin-bottom:18px">
+    <div style="font-size:12.5px;font-weight:700;color:#7a5210;margin-bottom:8px"><span class="ko-text">⚙ 관리자 설정 — 설문 길이 (환자에겐 미표시)</span><span class="en-text">⚙ Admin — survey length (hidden from patient)</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="lenbtn on" data-len="standard" onclick="setLen('standard')" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink-sub)"><span class="ko-text">표준 (5블록 전체)</span><span class="en-text">Standard (all 5)</span></button>
+      <button class="lenbtn" data-len="quick" onclick="setLen('quick')" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink-sub)"><span class="ko-text">간단 (핵심 3블록: 무엇·언제·키울능력)</span><span class="en-text">Quick (core 3: what·when·attribute)</span></button>
+    </div>
+    <div style="font-size:11px;color:var(--ink-sub);margin-top:7px"><span class="ko-text">URL <code>?len=quick</code> 또는 <code>?len=standard</code> 로 사전 설정 가능. 11증상 설문 전체 공통 표준.</span><span class="en-text">Preset via URL <code>?len=quick</code>/<code>?len=standard</code>. Shared standard across all 11-symptom surveys.</span></div>
+  </div>
+
+  <!-- 블록1: WHAT -->
+  <div class="block">
+    <div class="block-h"><div class="block-n">1</div><h2><span class="ko-text">어떤 수행인가요?</span><span class="en-text">What performance?</span></h2></div>
+    <p class="block-sub"><span class="ko-text">잘 해내고 싶은 장면을 골라주세요. (여러 개 가능)</span><span class="en-text">Pick the scenes you want to nail. (multiple OK)</span></p>
+    <div class="q">
+      <div class="choices" data-q="domain" data-multi="1">
+        <div class="choice" data-v="exam"><span class="ko-text">시험·평가 (집중력이 결과로)</span><span class="en-text">Exam/test (focus → result)</span></div>
+        <div class="choice" data-v="present"><span class="ko-text">발표·면접·말하기</span><span class="en-text">Presentation/interview/speaking</span></div>
+        <div class="choice" data-v="sport"><span class="ko-text">운동·시합</span><span class="en-text">Sport/competition</span></div>
+        <div class="choice" data-v="perform"><span class="ko-text">연주·공연·예술</span><span class="en-text">Music/performance/art</span></div>
+        <div class="choice" data-v="work"><span class="ko-text">업무 중요 순간 (협상·마감·런칭)</span><span class="en-text">High-stakes work moment</span></div>
+      </div>
+      <div class="multi-hint"><span class="ko-text">↑ 가장 중요한 하나를 마지막에 다시 탭하면 ⭐로 표시돼요</span><span class="en-text">↑ Re-tap your most important one to mark it ⭐</span></div>
+      <div class="ref clinician-only"><b>Ref:</b> domain-specific performance context (Harmison 2011). 도메인 특정성 — Peak는 영역 묶임.</div>
+    </div>
+  </div>
+
+  <!-- 블록2: WHEN — Flow vs Clutch vs Choking -->
+  <div class="block">
+    <div class="block-h"><div class="block-n">2</div><h2><span class="ko-text">언제 가장 안 풀리나요?</span><span class="en-text">When does it break down?</span></h2></div>
+    <p class="block-sub"><span class="ko-text">이게 핵심이에요 — 무엇이 막는지가 여기서 갈립니다.</span><span class="en-text">This is key — what blocks you splits here.</span></p>
+    <div class="q">
+      <div class="q-text"><span class="ko-text">셋 중 내 경험에 가장 가까운 것은?</span><span class="en-text">Which is closest to your experience?</span></div>
+      <div class="choices" data-q="breakdown" data-multi="0">
+        <div class="choice" data-v="choking"><span class="ko-text">평소엔 잘 되는데 <b>본방·중요한 순간에 무너진다</b> (긴장·압박)</span><span class="en-text">Fine usually, but I <b>collapse in the real moment</b> (pressure)</span></div>
+        <div class="choice" data-v="flow_deficit"><span class="ko-text">집중·몰입이 잘 안 되고 <b>딴 생각이 든다</b> (흐름을 못 탐)</span><span class="en-text">I can't get absorbed; <b>my mind wanders</b> (no flow)</span></div>
+        <div class="choice" data-v="clutch_deficit"><span class="ko-text">중요한 순간에 <b>한 단계 끌어올리지를 못한다</b> (에너지·승부욕 부족)</span><span class="en-text">I <b>can't raise my game</b> when it counts (no clutch gear)</span></div>
+        <div class="choice" data-v="consistency"><span class="ko-text">잘할 때와 못할 때 <b>편차가 너무 크다</b> (들쑥날쑥)</span><span class="en-text">My performance is <b>too inconsistent</b></span></div>
+      </div>
+      <div class="ref clinician-only"><b>Ref:</b> Flow vs Clutch (Swann integrated model: "let it happen" vs "make it happen"); Choking (Baumeister; Masters reinvestment). → choking=불안/사회불안 라우팅, flow_deficit=주의/ADHD, clutch_deficit=동기/번아웃, consistency=양극성/정서.</div>
+    </div>
+  </div>
+
+  <!-- 블록3: AROUSAL — IZOF -->
+  <div class="block" id="block-arousal" data-optional="1">
+    <div class="block-h"><div class="block-n">3</div><h2><span class="ko-text">당신의 최적 상태는?</span><span class="en-text">Your optimal state?</span></h2></div>
+    <p class="block-sub"><span class="ko-text">사람마다 가장 잘하는 긴장 수준이 달라요 (IZOF — 개인 최적 영역).</span><span class="en-text">Everyone's best arousal level differs (IZOF — individual optimal zone).</span></p>
+    <div class="q">
+      <div class="q-text"><span class="ko-text">최고로 잘했던 때를 떠올리면, 그때 나는?</span><span class="en-text">Recalling your best moment, I was?</span></div>
+      <div class="choices row" data-q="optimal_arousal" data-multi="0">
+        <div class="choice" data-v="calm"><span class="ko-text">아주 차분</span><span class="en-text">Very calm</span></div>
+        <div class="choice" data-v="moderate"><span class="ko-text">적당히 긴장</span><span class="en-text">Moderate</span></div>
+        <div class="choice" data-v="charged"><span class="ko-text">바짝 들떠</span><span class="en-text">Charged up</span></div>
+      </div>
+    </div>
+    <div class="q">
+      <div class="q-text"><span class="ko-text">지금 실전에서 내 긴장은 그 최적과 비교해?</span><span class="en-text">In real situations now, my arousal vs that optimum?</span></div>
+      <div class="choices row" data-q="current_arousal" data-multi="0">
+        <div class="choice" data-v="too_low"><span class="ko-text">너무 늘어짐</span><span class="en-text">Too flat</span></div>
+        <div class="choice" data-v="just_right"><span class="ko-text">딱 맞음</span><span class="en-text">Just right</span></div>
+        <div class="choice" data-v="too_high"><span class="ko-text">너무 과함</span><span class="en-text">Too high</span></div>
+      </div>
+      <div class="ref clinician-only"><b>Ref:</b> IZOF (Hanin 2000; Ruiz). 개인 최적 각성 영역 + 현재 격차 → s4 정서조절 타겟 방향(낮춤/높임).</div>
+    </div>
+  </div>
+
+  <!-- 블록4: GOAL TYPE -->
+  <div class="block" id="block-goal" data-optional="1">
+    <div class="block-h"><div class="block-n">4</div><h2><span class="ko-text">무엇을 위해 잘하고 싶나요?</span><span class="en-text">Toward what?</span></h2></div>
+    <p class="block-sub"><span class="ko-text">숙달 자체인지, 결과(이김·인정)인지에 따라 길이 달라요.</span><span class="en-text">Mastery itself vs outcome (winning/recognition) — different paths.</span></p>
+    <div class="q">
+      <div class="choices" data-q="goal_orientation" data-multi="0">
+        <div class="choice" data-v="mastery"><span class="ko-text">내 실력을 키우고 <b>스스로 만족</b>하는 것 (숙달)</span><span class="en-text">Growing my skill, <b>self-satisfaction</b> (mastery)</span></div>
+        <div class="choice" data-v="competitive"><span class="ko-text">남을 이기거나 <b>좋은 결과·인정</b>을 얻는 것 (경쟁)</span><span class="en-text">Beating others / <b>results & recognition</b> (competitive)</span></div>
+        <div class="choice" data-v="both"><span class="ko-text">둘 다 — 숙달하면서 결과도</span><span class="en-text">Both — mastery and results</span></div>
+      </div>
+      <div class="ref clinician-only"><b>Ref:</b> mastery vs competitive goal orientation (flow는 mastery 지향과 연관; Jackson). 결과 과집중은 flow·choking 악화 요인.</div>
+    </div>
+  </div>
+
+  <!-- 블록5: STANDARD (Performance Profiling) -->
+  <div class="block">
+    <div class="block-h"><div class="block-n">5</div><h2><span class="ko-text">지금 어디쯤, 어디까지?</span><span class="en-text">Where now, how far?</span></h2></div>
+    <p class="block-sub"><span class="ko-text">최고 수행에 필요한 능력들의 현재 vs 목표 (Performance Profiling).</span><span class="en-text">Current vs target on attributes peak performance needs (Performance Profiling).</span></p>
+    <div class="q">
+      <div class="q-text"><span class="ko-text">가장 끌어올리고 싶은 능력은? (여러 개 가능)</span><span class="en-text">Which to raise most? (multiple OK)</span></div>
+      <div class="choices" data-q="target_attribute" data-multi="1">
+        <div class="choice" data-v="focus"><span class="ko-text">집중 유지 (산만해지지 않기)</span><span class="en-text">Sustained focus</span></div>
+        <div class="choice" data-v="composure"><span class="ko-text">압박 속 침착함</span><span class="en-text">Composure under pressure</span></div>
+        <div class="choice" data-v="confidence"><span class="ko-text">자신감 (의심 줄이기)</span><span class="en-text">Confidence (less doubt)</span></div>
+        <div class="choice" data-v="consistency"><span class="ko-text">일관성 (편차 줄이기)</span><span class="en-text">Consistency</span></div>
+        <div class="choice" data-v="energy"><span class="ko-text">에너지·동기 끌어올리기</span><span class="en-text">Energy/drive</span></div>
+        <div class="choice" data-v="recovery"><span class="ko-text">실수 후 회복 (다시 집중)</span><span class="en-text">Recovery after a mistake</span></div>
+      </div>
+      <div class="ref clinician-only"><b>Ref:</b> Performance Profiling (Butler & Hardy 1992) — 본인이 중요 속성 식별 + 현재/목표 격차. 자기발견 핵심.</div>
+    </div>
+  </div>
+
+  <!-- 층2: 필사 (KSR baseline) -->
+  <div class="block">
+    <div class="block-h"><div class="block-n">★</div><h2><span class="ko-text">내 목표를 손으로 다시 써보기</span><span class="en-text">Re-write your goal by hand</span></h2></div>
+    <p class="block-sub"><span class="ko-text">위 답에서 만든 <b>한 문장</b>입니다. 아래 칸에 <b>그대로</b> 따라 적어주세요. 손으로 다시 쓰면 목표가 내 것이 됩니다.</span><span class="en-text">A <b>sentence</b> built from your answers. Type it <b>exactly</b> below — re-writing makes the goal yours.</span></p>
+    <div class="transcribe">
+      <div class="target" id="targetSentence"><span class="ko-text">(위 문항에 답하면 여기에 목표 문장이 만들어져요)</span><span class="en-text">(Answer above to generate your goal sentence here)</span></div>
+      <label><span class="ko-text">그대로 따라 적기:</span><span class="en-text">Type it exactly:</span></label>
+      <textarea id="transcribeInput" placeholder="..." disabled></textarea>
+      <div class="match" id="matchStatus"></div>
+      <div class="ksr-note clinician-only"><span class="ksr-dot"></span><b>KSR baseline 수집 중</b> — 동일 문장 = 개인 타이핑 기준선 (속도·멈춤·수정). 진단 입구는 KSR(타이핑)만 사용 — VSR(음성)은 어색하여 보류, 추후 말하기 중심 훈련 모듈에서. <span class="ksr-stat" id="ksrStat1"></span></div>
+    </div>
+  </div>
+
+  <!-- 층3: 자유서술 (자기발견 + 언어/KSR 분석) -->
+  <div class="block">
+    <div class="block-h"><div class="block-n">+</div><h2><span class="ko-text">내 생각 한 줄 더하기</span><span class="en-text">Add your own line</span></h2></div>
+    <p class="block-sub"><span class="ko-text">위 목표에 대해 <b>지금 떠오르는 생각</b>을 한 줄 자유롭게 덧붙여 주세요. 무엇이든 좋아요.</span><span class="en-text">Add <b>one line of your own thought</b> about that goal. Anything is fine.</span></p>
+    <div class="transcribe" style="background:var(--field);border-color:var(--line)">
+      <textarea id="freeInput" placeholder="예) 사실 나는 잘하고 싶다기보다 실수가 무서운 것 같다..." disabled></textarea>
+      <div class="ksr-note clinician-only"><span class="ksr-dot"></span><b>자유서술 분석</b> — KSR(기준선 대비 변화: 멈춤=계획·망설임 / 수정=불확실) + 언어내용(1인칭·부정어·인지처리어·정서가, LIWC류). <span class="ksr-stat" id="ksrStat2"></span></div>
+    </div>
+  </div>
+
+  <button class="btn" id="doneBtn" disabled><span class="ko-text">완료 → 무엇이 내 Peak를 막는지 보기</span><span class="en-text">Done → See what blocks my Peak</span></button>
+
+  <!-- 결과 (라우팅) -->
+  <div class="result" id="result">
+    <h3><span class="ko-text">목표 수렴 결과 + 다음 단계</span><span class="en-text">Goal Profile + Next Step</span></h3>
+    <div id="resultBody"></div>
+    <pre class="payload clinician-only" id="payloadView"></pre>
+  </div>
+</div>
+
+<script>
+function setLang(l){document.body.setAttribute('data-lang',l);buildSentence();}
+function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setView(v){document.body.setAttribute('data-view',v);}
+
+// ── 관리자 설정: 설문 길이 (quick=핵심3블록 / standard=전체5블록) ──
+let surveyLen='standard';
+function setLen(mode){
+  surveyLen=mode;
+  document.querySelectorAll('.lenbtn').forEach(b=>b.classList.toggle('on',b.dataset.len===mode));
+  const hide = mode==='quick';
+  document.getElementById('block-arousal').style.display = hide?'none':'';
+  document.getElementById('block-goal').style.display = hide?'none':'';
+  // quick 모드: 접힌 블록 응답 무효화(선택)된 채로 진행 — 필수 아님
+  updateProgress();
+}
+// URL ?len= 사전설정
+(function(){const p=new URLSearchParams(location.search).get('len'); if(p==='quick'||p==='standard')setLen(p);})();
+
+const answers={domain:[],breakdown:null,optimal_arousal:null,current_arousal:null,goal_orientation:null,target_attribute:[]};
+let starDomain=null;
+
+// 멀티/싱글 선택
+document.querySelectorAll('.choices').forEach(grp=>{
+  const q=grp.dataset.q, multi=grp.dataset.multi==='1';
+  grp.querySelectorAll('.choice').forEach(ch=>{
+    ch.onclick=()=>{
+      const v=ch.dataset.v;
+      if(multi){
+        if(ch.classList.contains('on')){
+          if(q==='domain'&&starDomain!==v){ starDomain=v; refreshStars(); }
+          else { ch.classList.remove('on'); answers[q]=answers[q].filter(x=>x!==v); if(starDomain===v){starDomain=null;refreshStars();} }
+        } else { ch.classList.add('on'); answers[q].push(v); }
+      } else {
+        grp.querySelectorAll('.choice').forEach(c=>c.classList.remove('on'));
+        ch.classList.add('on'); answers[q]=v;
+      }
+      buildSentence(); updateProgress();
+    };
+  });
+});
+function refreshStars(){
+  const grp=document.querySelector('[data-q="domain"]');
+  grp.querySelectorAll('.choice').forEach(c=>{
+    const base=c.dataset.v;
+    c.innerHTML=c.innerHTML.replace(/ ⭐$/,'').replace(/⭐$/,'');
+    if(base===starDomain && c.classList.contains('on')) c.innerHTML=c.innerHTML+' ⭐';
+  });
+}
+
+const DOMAIN_KO={exam:'시험',present:'발표·면접',sport:'시합',perform:'공연',work:'중요한 업무 순간'};
+const DOMAIN_EN={exam:'exams',present:'presentations',sport:'competition',perform:'performances',work:'high-stakes work'};
+const BREAK_KO={choking:'압박이 큰 순간에 무너지지 않고',flow_deficit:'딴 생각 없이 몰입해서',clutch_deficit:'중요한 순간에 한 단계 끌어올려서',consistency:'편차 없이 일관되게'};
+const BREAK_EN={choking:'without collapsing under pressure',flow_deficit:'fully absorbed without distraction',clutch_deficit:'raising my game when it counts',consistency:'consistently without big swings'};
+
+function buildSentence(){
+  const l=getLang();
+  const dom=starDomain||answers.domain[0];
+  const t=document.getElementById('targetSentence');
+  const ta=document.getElementById('transcribeInput');
+  if(dom && answers.breakdown){
+    const s = l==='ko'
+      ? `나는 ${DOMAIN_KO[dom]}에서 ${BREAK_KO[answers.breakdown]} 내 실력을 온전히 발휘하고 싶다.`
+      : `I want to fully show my ability in ${DOMAIN_EN[dom]}, ${BREAK_EN[answers.breakdown]}.`;
+    t.textContent=s; ta.disabled=false; ta.dataset.target=s;
+  } else {
+    t.innerHTML = l==='ko'?'(블록 1·2에 답하면 여기에 목표 문장이 만들어져요)':'(Answer blocks 1·2 to generate your goal sentence)';
+    ta.disabled=true;
+  }
+}
+
+// ── KSR: keystroke dynamics 수집 (VSR의 타이핑 자매) ──
+function makeKSR(){return {keys:0,backspaces:0,t0:null,tEnd:null,pauses:[],lastT:null};}
+const ksr1=makeKSR(), ksr2=makeKSR();
+function attachKSR(el,ksr,statEl){
+  el.addEventListener('keydown',e=>{
+    const now=performance.now();
+    if(ksr.t0===null)ksr.t0=now;
+    if(ksr.lastT!==null){const gap=now-ksr.lastT; if(gap>800)ksr.pauses.push(Math.round(gap));}
+    ksr.lastT=now; ksr.tEnd=now;
+    if(e.key==='Backspace')ksr.backspaces++; else if(e.key.length===1)ksr.keys++;
+    if(statEl){const dur=ksr.tEnd-ksr.t0; const spd=dur>0?Math.round(ksr.keys/(dur/1000)*60):0;
+      statEl.textContent=` · ${spd}타/분 · 멈춤 ${ksr.pauses.length} · 수정 ${ksr.backspaces}`;}
+  });
+}
+const tIn=document.getElementById('transcribeInput'), fIn=document.getElementById('freeInput');
+attachKSR(tIn,ksr1,document.getElementById('ksrStat1'));
+attachKSR(fIn,ksr2,document.getElementById('ksrStat2'));
+
+// 필사 일치 확인 → 자유서술·완료 잠금 해제
+tIn.addEventListener('input',()=>{
+  const target=tIn.dataset.target||'';
+  const norm=s=>s.replace(/\s+/g,'').trim();
+  const ms=document.getElementById('matchStatus');
+  const ok = norm(tIn.value).length>0 && norm(tIn.value)===norm(target);
+  const close = norm(tIn.value).length >= norm(target).length*0.8;
+  if(ok){ ms.className='match ok'; ms.textContent=getLang()==='ko'?'✓ 일치 — 잘하셨어요':'✓ Matched'; fIn.disabled=false; }
+  else if(close){ ms.className='match no'; ms.textContent=getLang()==='ko'?'거의 다 됐어요, 그대로 맞춰 주세요':'Almost — match it exactly'; }
+  else { ms.className='match no'; ms.textContent=''; }
+  checkDone();
+});
+fIn.addEventListener('input',checkDone);
+function checkDone(){
+  const target=tIn.dataset.target||'';
+  const norm=s=>s.replace(/\s+/g,'').trim();
+  const matched = norm(tIn.value)===norm(target) && target.length>0;
+  document.getElementById('doneBtn').disabled = !(matched && fIn.value.trim().length>0);
+}
+
+function updateProgress(){
+  const quick = surveyLen==='quick';
+  let done=0, total = quick?4:6;
+  if(answers.domain.length)done++; if(answers.breakdown)done++;
+  if(!quick){ if(answers.optimal_arousal)done++; if(answers.current_arousal)done++; if(answers.goal_orientation)done++; }
+  if(answers.target_attribute.length)done++;
+  // quick 모드는 arousal/goal 2블록 제외, current_arousal는 4개 중 미포함 보정
+  if(quick){ done=0; if(answers.domain.length)done++; if(answers.breakdown)done++; if(answers.target_attribute.length)done++; total=3; }
+  document.getElementById('progFill').style.width=Math.round(done/total*100)+'%';
+}
+
+// ── 언어내용 분석 (LIWC류 간이) ──
+function analyzeText(t){
+  const lower=t.toLowerCase();
+  const firstPerson=(t.match(/나|내|제|저|\bi\b|\bmy\b|\bme\b/gi)||[]).length;
+  const negation=(t.match(/안|못|없|아니|싫|두렵|무섭|not|no|never|can.t/gi)||[]).length;
+  const cognitive=(t.match(/생각|같|왜|때문|아마|모르|think|because|maybe|guess|wonder/gi)||[]).length;
+  const negEmotion=(t.match(/무섭|두렵|불안|싫|화|슬프|afraid|fear|anxious|hate|sad|worry/gi)||[]).length;
+  return {firstPerson,negation,cognitive,negEmotion,len:t.length};
+}
+
+// ── 라우팅: 목표(V2 Desire) → 막는 증상(V1 State) 선택 호출 ──
+const ROUTE={
+  choking:{ko:'불안(수행불안·choking) + 사회불안(평가 두려움)',en:'Anxiety (performance/choking) + Social anxiety',sym:['anxiety','social_anxiety']},
+  flow_deficit:{ko:'주의(집중 유지) — ADHD / 불면(주간 인지) 점검',en:'Attention (focus) — ADHD / Insomnia check',sym:['adhd','sleep']},
+  clutch_deficit:{ko:'동기·에너지 — 번아웃(효능감) / 우울(저동기) 점검',en:'Drive/energy — Burnout / Depression check',sym:['burnout','depression']},
+  consistency:{ko:'정서·기복 — 양극성(삽화) / 정서조절 점검',en:'Mood swings — Bipolar / emotion regulation',sym:['bipolar']},
+};
+
+document.getElementById('doneBtn').addEventListener('click',()=>{
+  const l=getLang();
+  // KSR baseline 대비 자유서술 변화
+  const ksrFeat=k=>{const dur=(k.tEnd-k.t0)||1; return {speed_cpm:Math.round(k.keys/(dur/1000)*60),pauses:k.pauses.length,longest_pause:k.pauses.length?Math.max(...k.pauses):0,revisions:k.backspaces};};
+  const base=ksrFeat(ksr1), free=ksrFeat(ksr2);
+  const lang=analyzeText(fIn.value);
+  const route=ROUTE[answers.breakdown]||ROUTE.choking;
+
+  // 각성 타겟 방향 (IZOF)
+  const arousalDir = answers.current_arousal==='too_high'?'down':answers.current_arousal==='too_low'?'up':'maintain';
+
+  const payload={
+    dept:'peak_performance',
+    survey_length:surveyLen,
+    V2_desire:{
+      domain:answers.domain, primary_domain:starDomain||answers.domain[0],
+      breakdown_type:answers.breakdown,
+      optimal_arousal:answers.optimal_arousal, current_arousal:answers.current_arousal, arousal_target:arousalDir,
+      goal_orientation:answers.goal_orientation,
+      target_attributes:answers.target_attribute,
+      goal_weights_w_j:{peak:1.0} // EFE 실용항: 이 환자의 선호결과 C = Peak
+    },
+    KSR:{ baseline:base, free_text:free, shift:{speed_delta:free.speed_cpm-base.speed_cpm, extra_pauses:free.pauses-base.pauses, extra_revisions:free.revisions-base.revisions} },
+    language:lang,
+    free_text_raw:fIn.value,
+    route_to_symptoms:route.sym
+  };
+
+  const rb=document.getElementById('resultBody');
+  const dom=starDomain||answers.domain[0];
+  rb.innerHTML = l==='ko' ? `
+    <div class="line"><b>당신의 목표:</b> ${DOMAIN_KO[dom]||''}에서 ${BREAK_KO[answers.breakdown]||''} 실력을 온전히 발휘하기</div>
+    <div class="line"><b>최적 각성:</b> ${({calm:'차분',moderate:'적당',charged:'들뜸'})[answers.optimal_arousal]||'-'} · 현재: ${({too_low:'너무 낮음→끌어올리기',just_right:'적정',too_high:'너무 높음→낮추기'})[answers.current_arousal]||'-'}</div>
+    <div class="line"><b>지향:</b> ${({mastery:'숙달',competitive:'경쟁',both:'숙달+경쟁'})[answers.goal_orientation]||'-'} · <b>키울 능력:</b> ${answers.target_attribute.join(', ')||'-'}</div>
+    <div class="route"><b>다음 단계 — 무엇이 당신의 Peak를 막는지 정밀 진단:</b><br>${route.ko}<br><span style="font-size:12px;opacity:.8">목표(원하는 것)를 먼저 잡았으니, 이제 그것을 막는 요인만 골라 측정합니다. (모든 증상을 다 묻지 않아요)</span></div>
+  ` : `
+    <div class="line"><b>Your goal:</b> fully perform in ${DOMAIN_EN[dom]||''}, ${BREAK_EN[answers.breakdown]||''}</div>
+    <div class="line"><b>Optimal arousal:</b> ${({calm:'calm',moderate:'moderate',charged:'charged'})[answers.optimal_arousal]||'-'} · now: ${({too_low:'too low→raise',just_right:'right',too_high:'too high→lower'})[answers.current_arousal]||'-'}</div>
+    <div class="line"><b>Orientation:</b> ${answers.goal_orientation||'-'} · <b>Raise:</b> ${answers.target_attribute.join(', ')||'-'}</div>
+    <div class="route"><b>Next — precisely diagnose what blocks your Peak:</b><br>${route.en}<br><span style="font-size:12px;opacity:.8">Goal first; now we measure only the blockers (not every symptom).</span></div>
+  `;
+  document.getElementById('payloadView').textContent=JSON.stringify(payload,null,2);
+  // ★ 진단 입력 저장 — clinical_report가 이어받음
+  try{ if(window.storage) window.storage.set('peak_goal_payload', JSON.stringify(payload), false); }catch(e){}
+  document.getElementById('result').classList.add('show');
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+});
+
+buildSentence();
+</script>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak Performance — 요구 분석</title>
+<style>
+  :root{
+    /* ★ 미니멀 표준: 색 거의 안 씀 — 무채/뉴트럴, 폼·선·여백으로 구조 */
+    --page:#FFFFFF;--field:#FAFAFA;--card:#FFFFFF;
+    --ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;
+    --accent:#2E5A7A;          /* 강조 1개만, 최소 사용 */
+    --hue:#2E5A7A;--hue-deep:#1F2225;--hue-dark:#1F2225;--hue-mid:#9AA3AB;--hue-soft:#E6E9EC;--hue-bg:#F4F5F6;
+    --good:#3F6B52;--amber:#7A6320;--amber-bg:#F6F4EE;--warn:#8A3A3A;
+    --shadow:none;--shadow-lg:0 2px 10px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;
+    font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;padding:34px 18px 70px;min-height:100vh}
+  .container{max-width:680px;margin:0 auto}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50}
+  .pill{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;overflow:hidden;box-shadow:var(--shadow)}
+  .pill button{border:none;background:transparent;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  body[data-lang=ko] .pill button[data-l=ko],body[data-lang=en] .pill button[data-l=en]{background:var(--hue);color:#fff}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+
+  .hero{background:var(--field);border:1px solid var(--line);padding:40px 32px;border-radius:16px;margin-bottom:22px;position:relative}
+  .hero .tag{display:inline-block;border:1px solid var(--line-strong);color:var(--ink);font-size:12.5px;font-weight:800;letter-spacing:.04em;padding:5px 13px;border-radius:999px;margin-bottom:14px}
+  .hero h1{font-size:30px;font-weight:800;color:var(--ink);line-height:1.3}
+  .hero p{font-size:17px;color:var(--ink-sub);margin-top:12px;line-height:1.7}
+  .hero .free{font-size:14px;color:var(--ink);font-weight:700;margin-top:14px}
+
+  .prog-wrap{position:sticky;top:0;background:var(--page);padding:10px 0;z-index:40;margin-bottom:6px}
+  .prog-bar{height:7px;background:var(--line);border-radius:999px;overflow:hidden}
+  .prog-fill{height:100%;background:var(--hue);border-radius:999px;transition:width .35s;width:0}
+  .prog-txt{font-size:12px;color:var(--ink-sub);text-align:center;margin-top:5px}
+
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 24px;margin-bottom:16px}
+  .q-tag{font-size:12.5px;font-weight:800;color:var(--ink-sub);letter-spacing:.04em;margin-bottom:8px;text-transform:uppercase}
+  .q-text{font-size:20px;font-weight:700;margin-bottom:16px;line-height:1.5}
+  .q-emoji{font-size:20px;margin-right:6px}
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choices.row{flex-direction:row;flex-wrap:wrap}
+  .choice{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:16px 18px;cursor:pointer;font-size:17px;font-weight:600;color:var(--ink);transition:all .12s;line-height:1.45;display:flex;align-items:center;gap:11px}
+  .choices.row .choice{flex:1;min-width:90px;justify-content:center;text-align:center;padding:16px 8px}
+  .choice .ico{font-size:19px;flex:none}
+  .choice:hover{border-color:var(--line-strong)}
+  .choice.on{border-color:var(--line-strong);border-width:2.5px;background:var(--field);font-weight:800}
+  .choice.on::after{content:"✓";margin-left:auto;font-weight:800;font-size:17px}
+  .choices.row .choice.on::after{content:""}
+  .hint{font-size:13px;color:var(--ink-sub);margin-top:8px;font-style:italic}
+
+  /* 능력 슬라이더형 (현재 수준 4단계) */
+  .levelpick{display:flex;gap:6px}
+  .levelpick .lv{flex:1;background:var(--field);border:1px solid var(--line);border-radius:9px;padding:11px 4px;text-align:center;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--ink-sub);transition:all .12s;line-height:1.3}
+  .levelpick .lv:hover{border-color:var(--hue)}
+  .levelpick .lv.on{border-color:var(--line-strong);border-width:2.5px;background:var(--field);color:var(--ink)}
+
+  .btn{width:100%;background:var(--hue);color:#fff;border:none;border-radius:12px;padding:16px;font-size:18px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:6px}
+  .btn:hover{opacity:.92}.btn:disabled{opacity:.4;cursor:not-allowed}
+
+  /* 결과 */
+  .result{display:none}
+  .result.show{display:block;animation:fade .4s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .res-hero{background:var(--field);border:1px solid var(--line-strong);color:var(--ink);border-radius:16px;padding:28px 30px;margin-bottom:16px}
+  .res-hero .tag{display:inline-block;border:1px solid var(--line-strong);font-size:12.5px;font-weight:800;padding:4px 12px;border-radius:999px;margin-bottom:11px}
+  .res-hero h2{font-size:26px;font-weight:800;line-height:1.3}
+  .res-hero .type{font-size:16px;color:var(--ink-sub);margin-top:10px;line-height:1.6}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow)}
+  .card h3{font-size:16px;font-weight:800;color:var(--hue-dark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .radar-wrap{display:flex;justify-content:center;margin:6px 0}
+  .legend{display:flex;justify-content:center;gap:18px;font-size:12.5px;color:var(--ink-sub);margin-top:6px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}
+  th{background:var(--hue-bg);color:var(--hue-dark);font-weight:700;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  td.gap{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+  .gap.big{color:var(--warn)}.gap.mid{color:var(--amber)}.gap.sm{color:var(--good)}
+
+  .block-card{background:var(--hue-bg);border-left:4px solid var(--hue-deep);border-radius:0 12px 12px 0;padding:15px 17px;margin-top:12px;font-size:14px;line-height:1.6;color:var(--hue-dark)}
+  .block-card b{color:var(--hue-deep)}
+
+  .cta{background:var(--field);border:2px solid var(--line-strong);border-radius:18px;padding:24px;text-align:center;box-shadow:var(--shadow-lg);margin-top:18px}
+  .cta h3{font-size:18px;font-weight:800;color:var(--hue-dark);margin-bottom:8px}
+  .cta p{font-size:14px;color:var(--ink-sub);line-height:1.6;margin-bottom:16px}
+  .cta .btn-cta{display:inline-block;background:var(--ink);color:#fff;border:none;border-radius:12px;padding:16px 34px;font-size:17px;font-weight:800;font-family:inherit;cursor:pointer;text-decoration:none}
+  .cta .btn-cta:hover{opacity:.92}
+  .cta .small{font-size:12px;color:var(--ink-sub);margin-top:12px}
+  .cta .retry{background:transparent;border:none;color:var(--hue-deep);font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;font-family:inherit;text-decoration:underline}
+
+  .disclaimer{font-size:11.5px;color:var(--ink-sub);text-align:center;margin-top:18px;line-height:1.6}
+</style>
+</head>
+<body data-lang="ko">
+
+<div class="topbar"><span class="pill">
+  <button data-l="ko" onclick="setLang('ko')">KO</button>
+  <button data-l="en" onclick="setLang('en')">EN</button>
+</span></div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <span class="tag">Peak Performance · 무료 요구 분석</span>
+    <h1><span class="ko-text">당신의 최고 수행, 무엇이 가로막고 있나요?</span><span class="en-text">What's holding back your peak performance?</span></h1>
+    <p><span class="ko-text">15개 질문으로 당신이 <b>무엇을, 어떻게 잘 해내고 싶은지</b> 또렷하게 그려드립니다. 답하는 것만으로 자신의 수행 패턴이 보입니다.</span><span class="en-text">15 questions to map <b>what you want to perform and how</b>. Just answering reveals your performance pattern.</span></p>
+    <p class="free"><span class="ko-text">✓ 무료 · 로그인 없음 · 3분 · 결과 그래프 제공</span><span class="en-text">✓ Free · No login · 3 min · Visual profile</span></p>
+  </div>
+
+  <!-- 진행바 -->
+  <div class="prog-wrap" id="progWrap" style="display:none">
+    <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+    <div class="prog-txt" id="progTxt">0 / 15</div>
+  </div>
+
+  <button class="btn" id="startBtn" onclick="startSurvey()"><span class="ko-text">시작하기 →</span><span class="en-text">Start →</span></button>
+
+  <!-- 설문 -->
+  <div id="surveyArea" style="display:none"></div>
+  <button class="btn" id="doneBtn" style="display:none" disabled onclick="showResult()"><span class="ko-text">내 Peak 프로파일 보기 →</span><span class="en-text">See my Peak profile →</span></button>
+
+  <!-- 결과 -->
+  <div class="result" id="result">
+    <div class="res-hero">
+      <span class="tag"><span class="ko-text">당신의 Peak 프로파일</span><span class="en-text">Your Peak Profile</span></span>
+      <h2 id="resTitle"></h2>
+      <div class="type" id="resType"></div>
+    </div>
+
+    <div class="card">
+      <h3><span class="q-emoji">📊</span><span class="ko-text">능력 프로파일 — 현재 vs 목표</span><span class="en-text">Ability Profile — Now vs Target</span></h3>
+      <div class="radar-wrap" id="radarWrap"></div>
+      <div class="legend">
+        <span><i style="background:var(--hue-mid)"></i><span class="ko-text">현재</span><span class="en-text">Now</span></span>
+        <span><i style="background:var(--hue-dark)"></i><span class="ko-text">목표</span><span class="en-text">Target</span></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span class="q-emoji">🎯</span><span class="ko-text">가장 큰 격차 — 우선 키울 영역</span><span class="en-text">Biggest Gaps — Priorities</span></h3>
+      <table id="gapTable"></table>
+      <div class="block-card" id="blockCard"></div>
+    </div>
+
+    <!-- ★ QEEG / 뉴로피드백 preview — funnel 핵심 (임상 인프라 비주얼) -->
+    <div class="card" style="background:linear-gradient(180deg,#fff,var(--hue-bg))">
+      <h3><span class="q-emoji">🧠</span><span class="ko-text">정밀 진단에서 보게 될 화면 (미리보기)</span><span class="en-text">What you'll see in precise diagnosis (preview)</span></h3>
+      <p style="font-size:13px;color:var(--ink-sub);margin:-6px 0 14px;line-height:1.55"><span class="ko-text">우리는 <b>19채널 QEEG · 뉴로피드백</b> 임상 장비로 뇌 지표를 직접 측정합니다. 당신의 유형에 따라 아래 영역을 정밀 진단 단계에서 측정하게 됩니다. <b>(아래는 예시 화면 — 실제 데이터는 측정 시)</b></span><span class="en-text">We measure brain markers directly with <b>19-channel QEEG · neurofeedback</b> clinical equipment. Based on your type, these are measured in the precise-diagnosis stage. <b>(Example screens — real data comes from measurement)</b></span></p>
+
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px;text-align:center">
+          <div style="font-size:12.5px;font-weight:700;color:var(--hue-dark);margin-bottom:8px"><span class="ko-text">QEEG 뇌 지도 — 주목 영역</span><span class="en-text">QEEG brain map — focus region</span></div>
+          <div id="topoWrap"></div>
+          <div id="topoLabel" style="font-size:11.5px;color:var(--ink-sub);margin-top:6px;line-height:1.4"></div>
+        </div>
+        <div style="flex:1;min-width:200px">
+          <div style="font-size:12.5px;font-weight:700;color:var(--hue-dark);margin-bottom:8px;text-align:center"><span class="ko-text">뉴로피드백 훈련 타겟</span><span class="en-text">Neurofeedback target</span></div>
+          <div id="nfWrap"></div>
+          <div id="nfLabel" style="font-size:11.5px;color:var(--ink-sub);margin-top:8px;line-height:1.45"></div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--ink-sub);margin-top:14px;text-align:center;font-style:italic"><span class="ko-text">＊ 미리보기 화면입니다. 실제 QEEG·HRV 등 객관 지표는 정밀 진단 세션에서 측정·해석됩니다 (Mitsar 19ch · HBImed · Neuroguide).</span><span class="en-text">＊ Preview only. Objective markers (QEEG·HRV) are measured/interpreted in the precise-diagnosis session.</span></div>
+    </div>
+
+    <!-- ★ 과학적 근거 — 권위 논문 (preview를 과학으로 격상) -->
+    <div class="card">
+      <h3><span class="q-emoji">📚</span><span class="ko-text">과학적 근거 — 뉴로피드백은 뇌를 바꾼다</span><span class="en-text">The Science — Neurofeedback Changes the Brain</span></h3>
+      <p style="font-size:13px;color:var(--ink-sub);margin:-6px 0 14px;line-height:1.55"><span class="ko-text">위 미리보기는 그래픽이 아니라 <b>고임팩트 저널의 뇌영상 연구</b>에 기반합니다. 뉴로피드백 훈련이 뇌 활동·연결성을 실제로 변화시킨다는 증거입니다. (근거 강도는 영역마다 다르며, 정직하게 표기합니다.)</span><span class="en-text">The preview above isn't just graphics — it's grounded in <b>high-impact brain-imaging research</b> showing neurofeedback actually changes brain activity and connectivity. (Evidence strength varies by domain; we label it honestly.)</span></p>
+      <div id="evidenceList"></div>
+      <div style="background:var(--amber-bg);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:12px;color:#7a5210;line-height:1.55"><span class="ko-text"><b>정직한 안내:</b> 주의·임상 영역은 메타분석으로 효과가 입증됐고, 뇌의 지속적 가소성 변화도 보고됐습니다. 다만 sham(가짜) 대조 연구에선 더 신중한 해석이 필요하며, '최고 수행' 직접 증거는 아직 축적 중입니다. 우리는 개인 측정(QEEG/HRV) 기반으로 근거가 강한 프로토콜부터 적용합니다.</span><span class="en-text"><b>Honest note:</b> Attention/clinical domains are meta-analytically supported, with lasting plastic brain changes reported; sham-controlled results call for caution, and direct 'peak-performance' evidence is still accumulating. We apply the best-evidenced protocols first, based on your own QEEG/HRV.</span></div>
+    </div>
+
+    <!-- funnel 전환 -->
+    <div class="cta">
+      <h3><span class="ko-text">다음 단계 — 정밀 진단 &amp; 맞춤 훈련</span><span class="en-text">Next — Precise Diagnosis &amp; Training</span></h3>
+      <p><span class="ko-text">요구 분석은 시작일 뿐입니다. 무엇이 당신의 Peak를 막는지 <b>정밀하게 진단</b>하고, 그것을 뚫는 <b>개인 맞춤 훈련</b>은 방문 또는 온라인 세션에서 시작합니다. 오늘 그린 프로파일이 그대로 이어집니다.</span><span class="en-text">This analysis is just the start. <b>Precise diagnosis</b> of what blocks your Peak, and <b>personalized training</b> to break through, begin in an in-person or online session — carrying today's profile forward.</span></p>
+      <a class="btn-cta" id="ctaBtn" href="#"><span class="ko-text">상담·세션 시작하기</span><span class="en-text">Start a session</span></a>
+      <div class="small"><span class="ko-text">진단·치료는 자격을 갖춘 임상가가 진행합니다 (BCN · PhD wellness/coaching scope).</span><span class="en-text">Diagnosis & training are delivered by a qualified clinician (BCN · PhD wellness/coaching).</span></div>
+      <button class="retry" onclick="location.reload()"><span class="ko-text">다시 하기</span><span class="en-text">Retry</span></button>
+    </div>
+
+    <div class="disclaimer"><span class="ko-text">본 요구 분석은 자기 탐색·코칭 목적의 무료 도구이며 의학적 진단이 아닙니다. 결과는 수행심리 프레임(Flow·IZOF·Performance Profiling)에 기반한 프로파일입니다.</span><span class="en-text">This needs-analysis is a free self-exploration/coaching tool, not a medical diagnosis. Results are a profile based on performance-psychology frameworks (Flow·IZOF·Performance Profiling).</span></div>
+  </div>
+</div>
+
+<script>
+function setLang(l){document.body.setAttribute('data-lang',l);if(document.getElementById('surveyArea').style.display!=='none')renderSurvey();if(document.getElementById('result').classList.contains('show'))showResult();}
+function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+
+/* ===== 15문항 정의 ===== (멀티초이스만, 공개·가벼움)
+   block: WHAT/WHEN/AROUSAL/GOAL/PROFILE/PRIORITY/READINESS */
+const Q=[
+  // Q1 WHAT
+  {id:'domain',block:'WHAT',tag:{ko:'어떤 무대',en:'Your stage'},
+   q:{ko:'어떤 수행을 가장 잘 해내고 싶으세요?',en:'Which performance matters most to you?'},type:'single',
+   opts:[['exam','📝',{ko:'시험·평가',en:'Exams'}],['present','🎤',{ko:'발표·면접·말하기',en:'Speaking/interview'}],['sport','🏃',{ko:'운동·시합',en:'Sport'}],['perform','🎭',{ko:'연주·공연·예술',en:'Performance/art'}],['work','💼',{ko:'업무 중요 순간',en:'High-stakes work'}]]},
+  // Q2-4 WHEN (Flow/Clutch/Choking)
+  {id:'breakdown',block:'WHEN',tag:{ko:'언제 무너지나',en:'When it breaks'},
+   q:{ko:'가장 내 경험에 가까운 것은?',en:'Closest to your experience?'},type:'single',
+   opts:[['choking','💥',{ko:'평소엔 되는데 중요한 순간 무너진다',en:'Fine usually, collapse when it counts'}],['flow_deficit','🌫️',{ko:'몰입이 안 되고 딴 생각이 든다',en:"Can't get absorbed, mind wanders"}],['clutch_deficit','🔋',{ko:'결정적 순간 한 단계 못 끌어올린다',en:"Can't raise my game when it counts"}],['consistency','📉',{ko:'잘할 때·못할 때 편차가 크다',en:'Too inconsistent'}]]},
+  {id:'frequency',block:'WHEN',tag:{ko:'얼마나 자주',en:'How often'},
+   q:{ko:'그런 일이 얼마나 자주 일어나나요?',en:'How often does that happen?'},type:'single',
+   opts:[['rare','🟢',{ko:'가끔',en:'Occasionally'}],['often','🟡',{ko:'자주',en:'Often'}],['always','🔴',{ko:'거의 매번',en:'Almost always'}]]},
+  {id:'importance',block:'WHEN',tag:{ko:'얼마나 중요',en:'How important'},
+   q:{ko:'이걸 잘 해내는 게 지금 인생에서 얼마나 중요한가요?',en:'How important is nailing this right now?'},type:'single',
+   opts:[['some','○',{ko:'어느 정도',en:'Somewhat'}],['very','◐',{ko:'매우',en:'Very'}],['critical','●',{ko:'결정적 (진로·인생)',en:'Critical (career/life)'}]]},
+  // Q5-6 AROUSAL (IZOF)
+  {id:'optimal_arousal',block:'AROUSAL',tag:{ko:'최적 상태',en:'Optimal state'},
+   q:{ko:'최고로 잘했던 때, 그때 나는?',en:'At your best, you were?'},type:'single',
+   opts:[['calm','🧊',{ko:'아주 차분',en:'Very calm'}],['moderate','🌤️',{ko:'적당히 긴장',en:'Moderate'}],['charged','🔥',{ko:'바짝 들떠',en:'Charged up'}]]},
+  {id:'current_arousal',block:'AROUSAL',tag:{ko:'현재 격차',en:'Current gap'},
+   q:{ko:'실전에서 지금 내 긴장은 그 최적과 비교해?',en:'Now vs that optimum, your arousal is?'},type:'single',
+   opts:[['too_low','⬇️',{ko:'너무 늘어짐',en:'Too flat'}],['just_right','✅',{ko:'딱 맞음',en:'Just right'}],['too_high','⬆️',{ko:'너무 과함',en:'Too high'}]]},
+  // Q7 GOAL
+  {id:'goal_orientation',block:'GOAL',tag:{ko:'무엇을 위해',en:'Toward what'},
+   q:{ko:'무엇을 위해 잘하고 싶나요?',en:'What are you aiming for?'},type:'single',
+   opts:[['mastery','🌱',{ko:'내 실력 키우고 스스로 만족 (숙달)',en:'Mastery & self-satisfaction'}],['competitive','🏆',{ko:'좋은 결과·인정·이김 (경쟁)',en:'Results/recognition/winning'}],['both','⚖️',{ko:'둘 다',en:'Both'}]]},
+  // Q8-13 PROFILE (6 능력, 현재 수준 — 레이더 재료)
+  {id:'lvl_focus',block:'PROFILE',tag:{ko:'능력 1/6',en:'Ability 1/6'},q:{ko:'🎯 집중 유지 — 지금 내 수준은?',en:'🎯 Sustained focus — current level?'},type:'level'},
+  {id:'lvl_composure',block:'PROFILE',tag:{ko:'능력 2/6',en:'Ability 2/6'},q:{ko:'🧘 압박 속 침착함 — 지금 내 수준은?',en:'🧘 Composure under pressure — level?'},type:'level'},
+  {id:'lvl_confidence',block:'PROFILE',tag:{ko:'능력 3/6',en:'Ability 3/6'},q:{ko:'💪 자신감 — 지금 내 수준은?',en:'💪 Confidence — current level?'},type:'level'},
+  {id:'lvl_consistency',block:'PROFILE',tag:{ko:'능력 4/6',en:'Ability 4/6'},q:{ko:'📏 일관성 — 지금 내 수준은?',en:'📏 Consistency — current level?'},type:'level'},
+  {id:'lvl_energy',block:'PROFILE',tag:{ko:'능력 5/6',en:'Ability 5/6'},q:{ko:'⚡ 에너지·동기 — 지금 내 수준은?',en:'⚡ Energy/drive — current level?'},type:'level'},
+  {id:'lvl_recovery',block:'PROFILE',tag:{ko:'능력 6/6',en:'Ability 6/6'},q:{ko:'🔄 실수 후 회복 — 지금 내 수준은?',en:'🔄 Recovery after a mistake — level?'},type:'level'},
+  // Q14 PRIORITY
+  {id:'priority',block:'PRIORITY',tag:{ko:'1순위',en:'Top priority'},
+   q:{ko:'위 6가지 중 가장 먼저 끌어올리고 싶은 하나는?',en:'Of the 6, which to raise first?'},type:'single',
+   opts:[['focus','🎯',{ko:'집중 유지',en:'Focus'}],['composure','🧘',{ko:'압박 속 침착함',en:'Composure'}],['confidence','💪',{ko:'자신감',en:'Confidence'}],['consistency','📏',{ko:'일관성',en:'Consistency'}],['energy','⚡',{ko:'에너지·동기',en:'Energy'}],['recovery','🔄',{ko:'실수 후 회복',en:'Recovery'}]]},
+  // Q15 READINESS (funnel 신호)
+  {id:'readiness',block:'READINESS',tag:{ko:'준비도',en:'Readiness'},
+   q:{ko:'정밀 진단과 맞춤 훈련을 시작할 의향이 있나요?',en:'Open to starting precise diagnosis & training?'},type:'single',
+   opts:[['ready','🚀',{ko:'네, 지금 알아보고 싶어요',en:'Yes, tell me more now'}],['soon','📅',{ko:'곧, 정보 받아볼게요',en:'Soon, send me info'}],['explore','👀',{ko:'우선 결과만 볼게요',en:'Just exploring'}]]},
+];
+
+const LEVELS=[['0.25',{ko:'많이 약함',en:'Weak'}],['0.5',{ko:'보통',en:'Fair'}],['0.7',{ko:'꽤 좋음',en:'Good'}],['0.9',{ko:'강함',en:'Strong'}]];
+const ABILITIES=['focus','composure','confidence','consistency','energy','recovery'];
+const ABIL_KO={focus:'집중',composure:'침착',confidence:'자신감',consistency:'일관성',energy:'에너지',recovery:'회복'};
+const ABIL_EN={focus:'Focus',composure:'Composure',confidence:'Confidence',consistency:'Consistency',energy:'Energy',recovery:'Recovery'};
+
+const ans={};
+function startSurvey(){
+  document.getElementById('hero').style.display='none';
+  document.getElementById('startBtn').style.display='none';
+  document.getElementById('progWrap').style.display='block';
+  document.getElementById('surveyArea').style.display='block';
+  document.getElementById('doneBtn').style.display='block';
+  renderSurvey();
+}
+function renderSurvey(){
+  const l=getLang(); const area=document.getElementById('surveyArea'); area.innerHTML='';
+  Q.forEach((item,idx)=>{
+    const d=document.createElement('div'); d.className='q';
+    let body='';
+    if(item.type==='level'){
+      body=`<div class="levelpick" data-q="${item.id}">${LEVELS.map(([v,lab])=>`<div class="lv ${ans[item.id]===v?'on':''}" data-v="${v}">${l==='ko'?lab.ko:lab.en}</div>`).join('')}</div>`;
+    } else {
+      const rowCls = item.opts.length<=3?' row':'';
+      body=`<div class="choices${rowCls}" data-q="${item.id}">${item.opts.map(([v,ico,lab])=>`<div class="choice ${ans[item.id]===v?'on':''}" data-v="${v}"><span class="ico">${ico}</span><span>${l==='ko'?lab.ko:lab.en}</span></div>`).join('')}</div>`;
+    }
+    d.innerHTML=`<div class="q-tag">Q${idx+1} · ${l==='ko'?item.tag.ko:item.tag.en}</div><div class="q-text">${l==='ko'?item.q.ko:item.q.en}</div>${body}`;
+    area.appendChild(d);
+  });
+  area.querySelectorAll('[data-q]').forEach(grp=>{
+    grp.querySelectorAll('.choice,.lv').forEach(c=>{
+      c.onclick=()=>{ans[grp.dataset.q]=c.dataset.v;grp.querySelectorAll('.choice,.lv').forEach(x=>x.classList.remove('on'));c.classList.add('on');updateProg();};
+    });
+  });
+  updateProg();
+}
+function updateProg(){
+  const done=Q.filter(i=>ans[i.id]!==undefined).length;
+  document.getElementById('progFill').style.width=Math.round(done/Q.length*100)+'%';
+  document.getElementById('progTxt').textContent=`${done} / ${Q.length}`;
+  document.getElementById('doneBtn').disabled = done<Q.length;
+}
+
+/* breakdown → 유형 라벨 + 막는요인 (층B로 핸드오프) */
+const TYPE={
+  choking:{ko:'압박형 — 본방에서 무너지는 타입',en:'Pressure type — collapses in the moment',block:{ko:'중요한 순간의 <b>긴장·압박</b>이 평소 실력을 가린다. 핵심은 압박 속 침착함과 주의 회복.',en:'<b>Pressure</b> in key moments hides your usual ability. The key is composure and attention recovery.'},route:['anxiety','social_anxiety']},
+  flow_deficit:{ko:'몰입형 — 흐름을 못 타는 타입',en:'Flow type — struggles to get absorbed',block:{ko:'딴 생각으로 <b>몰입(flow)</b>이 끊긴다. 핵심은 명확한 목표·즉각 피드백 구조와 집중 훈련.',en:'Distraction breaks your <b>flow</b>. The key is clear goals, immediate feedback, and focus training.'},route:['adhd','sleep']},
+  clutch_deficit:{ko:'점화형 — 끌어올리지 못하는 타입',en:'Clutch type — can\u2019t shift up a gear',block:{ko:'결정적 순간 <b>한 단계 끌어올림(clutch)</b>이 안 된다. 핵심은 의도적 점화와 에너지·동기.',en:'You can\u2019t hit the <b>clutch gear</b> when it counts. The key is deliberate activation and drive.'},route:['burnout','depression']},
+  consistency:{ko:'기복형 — 편차가 큰 타입',en:'Swing type — high variability',block:{ko:'잘할 때와 못할 때 <b>편차</b>가 크다. 핵심은 상태·정서의 안정화와 루틴.',en:'Big <b>swings</b> between good and bad. The key is state/emotion stabilization and routine.'},route:['bipolar']},
+};
+
+function showResult(){
+  const l=getLang();
+  document.getElementById('surveyArea').style.display='none';
+  document.getElementById('doneBtn').style.display='none';
+  document.getElementById('progWrap').style.display='none';
+  const r=document.getElementById('result'); r.classList.add('show');
+
+  const t=TYPE[ans.breakdown]||TYPE.choking;
+  document.getElementById('resTitle').textContent = l==='ko'?t.ko:t.en;
+  // arousal 한 줄
+  const aro = ans.current_arousal==='too_high'?(l==='ko'?'· 실전 긴장이 최적보다 높아 낮추는 게 도움돼요.':'· Arousal runs above optimum — lowering helps.')
+            : ans.current_arousal==='too_low'?(l==='ko'?'· 실전 긴장이 최적보다 낮아 끌어올리는 게 도움돼요.':'· Arousal runs below optimum — raising helps.')
+            : (l==='ko'?'· 각성 수준은 대체로 적정합니다.':'· Arousal is generally on target.');
+  document.getElementById('resType').innerHTML = (l==='ko'?t.block.ko:t.block.en)+'<br><span style="font-size:13px;opacity:.85">'+aro+'</span>';
+
+  // 레이더 (현재 vs 목표; 목표=현재+격차, priority는 +가중)
+  const now=ABILITIES.map(a=>parseFloat(ans['lvl_'+a]||0.5));
+  const target=ABILITIES.map((a,i)=>Math.min(1, now[i]+ (a===ans.priority?0.35:0.2)));
+  document.getElementById('radarWrap').innerHTML=radarSVG(now,target,l);
+
+  // 격차 표 (큰 순)
+  const gaps=ABILITIES.map((a,i)=>({a,gap:Math.round((target[i]-now[i])*100),now:now[i]})).sort((x,y)=>y.gap-x.gap);
+  let rows=`<tr><th>${l==='ko'?'능력':'Ability'}</th><th>${l==='ko'?'현재':'Now'}</th><th style="text-align:right">${l==='ko'?'목표 격차':'Gap'}</th></tr>`;
+  gaps.forEach(g=>{const cls=g.gap>=30?'big':g.gap>=20?'mid':'sm';
+    rows+=`<tr><td>${l==='ko'?ABIL_KO[g.a]:ABIL_EN[g.a]}${g.a===ans.priority?' ⭐':''}</td><td>${Math.round(g.now*100)}%</td><td class="gap ${cls}">+${g.gap}p</td></tr>`;});
+  document.getElementById('gapTable').innerHTML=rows;
+  document.getElementById('blockCard').innerHTML=(l==='ko'?'<b>당신의 패턴:</b> ':'<b>Your pattern:</b> ')+(l==='ko'?t.block.ko:t.block.en);
+
+  // ★ QEEG/NF preview — 유형별
+  const qeeg=QEEG_PREVIEW[ans.breakdown]||QEEG_PREVIEW.choking;
+  document.getElementById('topoWrap').innerHTML=topoSVG(qeeg.region);
+  document.getElementById('topoLabel').innerHTML=l==='ko'?qeeg.topo_ko:qeeg.topo_en;
+  document.getElementById('nfWrap').innerHTML=nfChartSVG(qeeg.nf);
+  document.getElementById('nfLabel').innerHTML=l==='ko'?qeeg.nf_ko:qeeg.nf_en;
+
+  // ★ 과학적 근거 — 권위 논문
+  renderEvidence(l);
+
+  // CTA 링크 + 핸드오프 데이터 (층 B로)
+  const handoff={dept:'peak_performance',source:'public_needs_analysis',
+    V2_desire:{domain:ans.domain,breakdown_type:ans.breakdown,frequency:ans.frequency,importance:ans.importance,
+      optimal_arousal:ans.optimal_arousal,current_arousal:ans.current_arousal,goal_orientation:ans.goal_orientation,
+      ability_now:Object.fromEntries(ABILITIES.map((a,i)=>[a,now[i]])),priority:ans.priority,readiness:ans.readiness},
+    route_to_symptoms:t.route};
+  // funnel: readiness 따라 CTA 문구
+  const cta=document.getElementById('ctaBtn');
+  // 핸드오프를 URL 해시로 (층 B 진입 시 이어받기). 실제 운영선 토큰/서버 세션 권장.
+  cta.href='#start='+encodeURIComponent(JSON.stringify(handoff.V2_desire));
+  window.__peakHandoff=handoff; // 콘솔/연동용
+  // ★ 핸드오프 저장 — 진단 단계(goal_intake)가 이어받음
+  try{ if(window.storage) window.storage.set('peak_handoff', JSON.stringify(handoff), false); }catch(e){}
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+/* ★ QEEG/뉴로피드백 preview — breakdown 유형별 (정밀진단 미리보기) */
+const QEEG_PREVIEW={
+  choking:{ // 압박형 — 전두 과각성(高베타), 각성 조절
+    region:{x:150,y:78,label:'Fz/F3-F4',hot:0.85},
+    topo_ko:'전두엽 <b>과각성(高베타)</b> 영역 — 압박 시 과활성. 측정 후 각성 조절 타겟.',
+    topo_en:'Frontal <b>hyper-arousal (high beta)</b> — over-activates under pressure. Targeted after measurement.',
+    nf:[['Hi-Beta',0.82,'down'],['SMR',0.40,'up'],['Alpha',0.45,'up']],
+    nf_ko:'타겟: 高베타 ↓ · SMR ↑ · 알파 ↑ (압박 속 침착함 회로). HRV 코히어런스 병행.',
+    nf_en:'Target: high-beta ↓ · SMR ↑ · alpha ↑ (composure circuit). With HRV coherence.'},
+  flow_deficit:{ // 몰입형 — 세타/베타 비율(주의), 집중
+    region:{x:150,y:120,label:'Cz',hot:0.8},
+    topo_ko:'중심부 <b>세타/베타 비율</b> 영역 — 주의 지속 지표(ADHD 관련). 측정 후 집중 타겟.',
+    topo_en:'Central <b>theta/beta ratio</b> — sustained-attention marker (ADHD-related). Focus target.',
+    nf:[['Theta',0.78,'down'],['Beta',0.42,'up'],['SMR',0.5,'up']],
+    nf_ko:'타겟: 세타 ↓ · 베타 ↑ · SMR ↑ (집중·몰입 회로). 명확목표+즉각피드백 구조 병행.',
+    nf_en:'Target: theta ↓ · beta ↑ · SMR ↑ (focus/flow circuit). With clear-goal + feedback structure.'},
+  clutch_deficit:{ // 점화형 — 좌전두 저활성(동기·접근), 활성화
+    region:{x:118,y:88,label:'F3 (좌전두)',hot:0.3},
+    topo_ko:'<b>좌전두 저활성</b> 영역 — 접근 동기·에너지 지표. 측정 후 활성화 타겟.',
+    topo_en:'<b>Left-frontal hypo-activation</b> — approach-motivation/energy marker. Activation target.',
+    nf:[['L-Alpha',0.75,'down'],['Beta',0.40,'up'],['Frontal asym',0.35,'up']],
+    nf_ko:'타겟: 좌전두 알파 ↓ · 베타 ↑ · 전두 비대칭 교정 (점화·동기 회로). 의도적 활성화 훈련.',
+    nf_en:'Target: left alpha ↓ · beta ↑ · frontal-asymmetry correction (clutch/drive circuit).'},
+  consistency:{ // 기복형 — 변산성·각성 안정, 루틴
+    region:{x:150,y:120,label:'Cz/Pz',hot:0.6},
+    topo_ko:'<b>각성 변산성</b> 패턴 — 상태 안정 지표. 측정 후 변동 안정화 타겟.',
+    topo_en:'<b>Arousal variability</b> pattern — state-stability marker. Stabilization target.',
+    nf:[['Variability',0.78,'down'],['SMR',0.48,'up'],['Coherence',0.45,'up']],
+    nf_ko:'타겟: 변산성 ↓ · SMR ↑ · 코히어런스 ↑ (상태 안정 회로). 생활리듬·루틴 병행.',
+    nf_en:'Target: variability ↓ · SMR ↑ · coherence ↑ (stability circuit). With routine/rhythm.'},
+};
+
+/* QEEG 토포맵 SVG (머리 위에서 본 색지도 — 주목 영역 하이라이트) */
+function topoSVG(region){
+  const cx=150,cy=120,R=92;
+  // 색지도: 기본 차분한 파랑/초록, 주목 영역만 따뜻하게(高=빨강)
+  const hot=region.hot;
+  const hotColor = hot>=0.7?'#E8654F':hot>=0.5?'#E8A317':'#5B8FB0'; // 高=빨강, 中=노랑, 低=파랑(저활성)
+  return `<svg width="220" height="200" viewBox="0 0 300 250" style="max-width:100%">
+    <defs>
+      <radialGradient id="scalp" cx="50%" cy="45%"><stop offset="0%" stop-color="#BDD7E7"/><stop offset="70%" stop-color="#7BAFD0"/><stop offset="100%" stop-color="#4A90C2"/></radialGradient>
+      <radialGradient id="focusg" cx="50%" cy="50%"><stop offset="0%" stop-color="${hotColor}" stop-opacity="0.95"/><stop offset="60%" stop-color="${hotColor}" stop-opacity="0.5"/><stop offset="100%" stop-color="${hotColor}" stop-opacity="0"/></radialGradient>
+    </defs>
+    <!-- 머리 윤곽 -->
+    <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#scalp)" stroke="#2E5A7A" stroke-width="2.5"/>
+    <!-- 코 -->
+    <path d="M${cx-13} ${cy-R+4} L${cx} ${cy-R-13} L${cx+13} ${cy-R+4} Z" fill="#7BAFD0" stroke="#2E5A7A" stroke-width="2"/>
+    <!-- 귀 -->
+    <ellipse cx="${cx-R}" cy="${cy}" rx="9" ry="18" fill="#7BAFD0" stroke="#2E5A7A" stroke-width="2"/>
+    <ellipse cx="${cx+R}" cy="${cy}" rx="9" ry="18" fill="#7BAFD0" stroke="#2E5A7A" stroke-width="2"/>
+    <!-- 전극 점 (19ch 느낌) -->
+    ${[[150,70],[118,80],[182,80],[110,120],[150,120],[190,120],[118,160],[182,160],[150,175],[150,95],[134,140],[166,140]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="#2E5A7A" opacity="0.5"/>`).join('')}
+    <!-- 주목 영역 하이라이트 -->
+    <circle cx="${region.x}" cy="${region.y}" r="46" fill="url(#focusg)"/>
+    <circle cx="${region.x}" cy="${region.y}" r="20" fill="none" stroke="${hotColor}" stroke-width="2.5" stroke-dasharray="5 3"/>
+    <text x="${region.x}" y="${region.y+1}" font-size="11" font-weight="800" fill="#2E5A7A" text-anchor="middle" dominant-baseline="middle">${region.label}</text>
+  </svg>`;
+}
+
+/* 뉴로피드백 타겟 막대 차트 SVG (지표별 현재→방향) */
+function nfChartSVG(bars){
+  const w=240,bh=30,gap=12,pad=8;
+  const h=pad*2+bars.length*(bh+gap)-gap;
+  let out=`<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" style="max-width:240px">`;
+  bars.forEach(([name,val,dir],i)=>{
+    const y=pad+i*(bh+gap);
+    const barW=(w-90)*val;
+    const col=dir==='down'?'#E8654F':'#3F9D6B';
+    const arrow=dir==='down'?'▼':'▲';
+    out+=`<text x="0" y="${y+bh/2}" font-size="11" font-weight="700" fill="#2E5A7A" dominant-baseline="middle">${name}</text>
+      <rect x="62" y="${y}" width="${w-90}" height="${bh}" rx="6" fill="#F7F8FA" stroke="#E2E5E9"/>
+      <rect x="62" y="${y}" width="${barW}" height="${bh}" rx="6" fill="${col}" opacity="0.85"/>
+      <text x="${w-20}" y="${y+bh/2}" font-size="13" font-weight="800" fill="${col}" text-anchor="middle" dominant-baseline="middle">${arrow}</text>`;
+  });
+  out+=`</svg>`;
+  return out;
+}
+
+/* ★ 권위 논문 — 뉴로피드백 뇌변화 근거 (실제 검증된 출처, 근거강도 정직 표기) */
+const EVIDENCE=[
+  {strength:'high',jr:'Nature Reviews Neuroscience (2017)',
+   ko:{t:'뉴로피드백의 과학 — 폐회로 뇌 훈련',a:'Sitaram et al.',f:'NF가 뇌 활동을 자발적으로 조절하는 검증된 메커니즘을 종합한 분야 최고 권위 리뷰.'},
+   en:{t:'The science of neurofeedback — closed-loop brain training',a:'Sitaram et al.',f:'The field\u2019s landmark review synthesizing how NF lets people voluntarily regulate brain activity.'}},
+  {strength:'high',jr:'Imaging Neuroscience / MIT Press (2023)',
+   ko:{t:'건강 성인 주의력 향상 — 메타분석',a:'41 RCT 체계적 리뷰',f:'15개 RCT(569명) 메타분석에서 주의 수행 향상 유의(SMD=0.27). 가장 많이 쓰인 프로토콜 = SMR 증강.'},
+   en:{t:'NF for attention in healthy adults — meta-analysis',a:'systematic review, 41 RCTs',f:'Meta-analysis of 15 RCTs (569) showed significant attention gains (SMD=0.27); SMR-up the most-used protocol.'}},
+  {strength:'med',jr:'fMRI 종단 연구 (2023)',
+   ko:{t:'지속주의 fMRI 뉴로피드백 — 장기 뇌 변화',a:'SeMoLa / Yale 공동',f:'훈련 후에도 뇌 영역 자기조절 능력 유지, DMN-후두 연결성 증가가 추적 시점까지 지속.'},
+   en:{t:'fMRI-NF for sustained attention — lasting brain change',a:'SeMoLa / Yale',f:'Self-regulation ability and increased DMN\u2013occipital connectivity persisted into follow-up.'}},
+  {strength:'med',jr:'Neuroscience & Biobehavioral Reviews (2021)',
+   ko:{t:'실시간 fMRI-NF 정신과 — 뇌·행동 메타분석',a:'Dudek & Dodell-Feder',f:'신경 활성 중간 효과크기, 피드백 없는 transfer run에서 큰 효과크기 — 뇌 자기조절 학습 실증.'},
+   en:{t:'RT-fMRI-NF in psychiatry — brain & behavior meta-analysis',a:'Dudek & Dodell-Feder',f:'Medium effect on neural activity, large effect on feedback-absent transfer runs — proof of learned self-regulation.'}},
+];
+function renderEvidence(l){
+  const SB={high:{ko:'근거 강함',en:'Strong',c:'#3F9D6B'},med:{ko:'근거 보통·연구 중',en:'Moderate',c:'#B5791A'}};
+  const html=EVIDENCE.map(e=>{const d=l==='ko'?e.ko:e.en;const s=SB[e.strength];
+    return `<div style="border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--field)">
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:5px">
+        <div style="font-size:14px;font-weight:800;color:var(--hue-dark);line-height:1.35">${d.t}</div>
+        <span style="flex:none;font-size:10.5px;font-weight:700;color:#fff;background:${s.c};border-radius:999px;padding:3px 9px;white-space:nowrap">${l==='ko'?s.ko:s.en}</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--hue-deep);font-weight:600;margin-bottom:6px">${e.jr} · ${d.a}</div>
+      <div style="font-size:12.5px;color:var(--ink-sub);line-height:1.5">${d.f}</div>
+    </div>`;}).join('');
+  document.getElementById('evidenceList').innerHTML=html;
+}
+
+/* 6각 레이더 SVG */
+function radarSVG(now,target,l){
+  const cx=150,cy=140,R=100,n=6;
+  const pt=(val,i)=>{const ang=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(ang)*R*val, cy+Math.sin(ang)*R*val];};
+  const poly=arr=>arr.map((v,i)=>pt(v,i).join(',')).join(' ');
+  let grid='';for(let g=1;g<=4;g++){grid+=`<polygon points="${[...Array(n)].map((_,i)=>pt(g/4,i).join(',')).join(' ')}" fill="none" stroke="#E2E5E9" stroke-width="1"/>`;}
+  let axes='',labels='';
+  for(let i=0;i<n;i++){const[x,y]=pt(1,i);axes+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#E2E5E9" stroke-width="1"/>`;
+    const[lx,ly]=pt(1.18,i);const a=ABILITIES[i];
+    labels+=`<text x="${lx}" y="${ly}" font-size="11" font-weight="700" fill="#2E5A7A" text-anchor="middle" dominant-baseline="middle">${l==='ko'?ABIL_KO[a]:ABIL_EN[a]}</text>`;}
+  return `<svg width="300" height="290" viewBox="0 0 300 290">${grid}${axes}
+    <polygon points="${poly(target)}" fill="rgba(46,90,122,.18)" stroke="#2E5A7A" stroke-width="2"/>
+    <polygon points="${poly(now)}" fill="rgba(0,0,0,.06)" stroke="#9AA3AB" stroke-width="2"/>
+    ${labels}</svg>`;
+}
+</script>
+</body>
+</html>

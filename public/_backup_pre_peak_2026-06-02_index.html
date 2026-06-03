@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <script src="/bnm-lang-sync.js"></script>
+  <meta charset="UTF-8">
+  <title>Decision Catcher - Beta Enrollment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    // Detect language: URL > localStorage > default 'ko'
+    (function() {
+      var lang = 'ko';
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'ko' || q === 'en') { lang = q; }
+        else {
+          var s = localStorage.getItem('bnm_lang');
+          if (s === 'ko' || s === 'en') { lang = s; }
+        }
+      } catch(e) {}
+      var dest = '/beta-signup.html';
+      window.location.replace(dest + '?lang=' + lang);
+    })();
+  </script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#E8F1F8 0%,#BDD7E7 100%);font-family:system-ui,sans-serif;">
+  <div style="text-align:center;color:#2E5A7A;">
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;">Boston Neuromind Decision Engine</div>
+    <div style="font-size:14px;color:#4A90C2;">
+      <span data-lang-ko style="display:none;">베타 신청 페이지로 이동 중...</span>
+      <span data-lang-en>Redirecting to beta signup...</span>
+    </div>
+    <div style="margin-top:16px;font-size:13px;">
+      <a id="manual-link-ko" href="/beta-signup.html" style="color:#4A90C2;text-decoration:underline;display:none;">자동 이동 안 되면 클릭</a>
+      <a id="manual-link-en" href="/beta-signup.html" style="color:#4A90C2;text-decoration:underline;">Click if not redirected</a>
+    </div>
+  </div>
+</div>
+<script>
+  // Show appropriate language text on the loading screen (in case redirect is slow)
+  (function() {
+    var lang = 'ko';
+    try {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'ko' || q === 'en') { lang = q; }
+      else {
+        var s = localStorage.getItem('bnm_lang');
+        if (s === 'ko' || s === 'en') { lang = s; }
+      }
+    } catch(e) {}
+    document.querySelectorAll('[data-lang-ko]').forEach(function(el) {
+      el.style.display = (lang === 'ko') ? '' : 'none';
+    });
+    document.querySelectorAll('[data-lang-en]').forEach(function(el) {
+      el.style.display = (lang === 'en') ? '' : 'none';
+    });
+    var koLink = document.getElementById('manual-link-ko');
+    var enLink = document.getElementById('manual-link-en');
+    if (koLink) koLink.style.display = (lang === 'ko') ? '' : 'none';
+    if (enLink) enLink.style.display = (lang === 'en') ? '' : 'none';
+  })();
+</script>
+</body>
+</html>
