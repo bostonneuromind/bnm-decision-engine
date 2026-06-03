@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Neuromind — 로그인 / 가입</title>
+<script src="/bnm-lang-sync.js"></script>
+<style>
+  :root{--page:#FFFFFF;--field:#FAFAFA;--ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;--accent:#2E5A7A;--good:#3F6B52;--warn:#8A3A3A;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--field);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;font-size:17px;line-height:1.7;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 18px}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50}
+  .langbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+  .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:36px 34px;max-width:440px;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+  .brand{font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--ink-sub);text-transform:uppercase;margin-bottom:14px;text-align:center}
+  h1{font-size:24px;font-weight:800;text-align:center;margin-bottom:6px}
+  .sub{font-size:14px;color:var(--ink-sub);text-align:center;margin-bottom:24px}
+  .tabs{display:flex;gap:6px;margin-bottom:22px;background:var(--field);border-radius:11px;padding:5px}
+  .tab{flex:1;border:none;background:transparent;border-radius:8px;padding:11px;font-size:15px;font-weight:800;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  .tab.on{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink-sub);margin-bottom:6px;margin-top:14px}
+  input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;font-size:16px;font-family:inherit}
+  input:focus{outline:none;border-color:var(--accent)}
+  .btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:11px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:22px}
+  .btn:hover{opacity:.92}.btn:disabled{opacity:.5;cursor:not-allowed}
+  .msg{font-size:14px;margin-top:14px;text-align:center;line-height:1.5;min-height:20px}
+  .msg.err{color:var(--warn)}.msg.ok{color:var(--good)}
+  .field-only{display:none}
+  body[data-mode=signup] .signup-only{display:block}
+  .note{font-size:12px;color:var(--ink-sub);margin-top:20px;text-align:center;line-height:1.6;border-top:1px solid var(--line);padding-top:16px}
+  .config-warn{background:#FBF1F0;border:1px solid var(--warn);border-radius:10px;padding:12px 14px;margin-bottom:18px;font-size:12.5px;color:#6e2a2a;line-height:1.5;display:none}
+</style>
+</head>
+<body data-lang="ko" data-mode="signin">
+<div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
+
+<div class="card">
+  <div class="brand">Boston Neuromind</div>
+  <h1><span class="ko-text">로그인 / 가입</span><span class="en-text">Sign In / Sign Up</span></h1>
+  <p class="sub"><span class="ko-text">한 계정으로 모든 분과(Peak · Attention · Learning) 이용</span><span class="en-text">One account for all departments</span></p>
+
+  <div class="config-warn" id="configWarn">⚠ <span class="ko-text">Supabase 연결 정보 미설정. 아래 두 값을 코드에 넣어야 작동합니다.</span><span class="en-text">Supabase config not set.</span></div>
+
+  <div class="tabs">
+    <button class="tab on" id="tab-in" onclick="setMode('signin')"><span class="ko-text">로그인</span><span class="en-text">Sign In</span></button>
+    <button class="tab" id="tab-up" onclick="setMode('signup')"><span class="ko-text">가입</span><span class="en-text">Sign Up</span></button>
+  </div>
+
+  <div class="signup-only field-only">
+    <label><span class="ko-text">이름 (표시명)</span><span class="en-text">Display name</span></label>
+    <input type="text" id="name" placeholder="예: 홍길동">
+  </div>
+  <label><span class="ko-text">이메일</span><span class="en-text">Email</span></label>
+  <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
+  <label><span class="ko-text">비밀번호</span><span class="en-text">Password</span> <span class="signup-only field-only" style="font-weight:400;color:var(--ink-sub)">(<span class="ko-text">8자 이상</span><span class="en-text">8+ chars</span>)</span></label>
+  <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+
+  <button class="btn" id="submitBtn" onclick="submit()"><span class="ko-text">로그인</span><span class="en-text">Sign In</span></button>
+  <div class="msg" id="msg"></div>
+
+  <p class="note"><span class="ko-text">민감한 임상·코칭 정보를 다룹니다. 계정 보안은 Supabase가 안전하게 관리합니다. 진단·훈련 시작은 결제·관리자 승인 후 가능합니다.</span><span class="en-text">We handle sensitive clinical/coaching data. Account security is managed by Supabase. Diagnosis/training start requires payment & admin approval.</span></p>
+</div>
+
+<!-- Supabase JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============================================================
+   ★★ 할비가 넣을 값 (Supabase 대시보드 → Settings → API)
+   - SUPABASE_URL  = Project URL (https://xxxxx.supabase.co)
+   - SUPABASE_ANON_KEY = anon public key (eyJ... 긴 거; 공개 안전)
+   아래 두 줄만 실제 값으로 바꾸면 작동합니다.
+   ============================================================ */
+const SUPABASE_URL = "__SUPABASE_URL__";
+const SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+
+function setLang(l){document.body.setAttribute('data-lang',l);refreshBtn();}
+function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setMode(m){
+  document.body.setAttribute('data-mode',m);
+  document.getElementById('tab-in').classList.toggle('on',m==='signin');
+  document.getElementById('tab-up').classList.toggle('on',m==='signup');
+  document.getElementById('msg').textContent='';
+  refreshBtn();
+}
+function refreshBtn(){
+  const l=getLang(), m=document.body.getAttribute('data-mode');
+  document.getElementById('submitBtn').innerHTML = m==='signup'
+    ? (l==='ko'?'가입하기':'Create account')
+    : (l==='ko'?'로그인':'Sign In');
+}
+
+// config 미설정 경고
+const configured = SUPABASE_URL.indexOf('__')===-1 && SUPABASE_ANON_KEY.indexOf('__')===-1;
+if(!configured){ document.getElementById('configWarn').style.display='block'; }
+
+let sb=null;
+if(configured && window.supabase){ sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
+
+// 이미 로그인돼 있으면 돌아갈 곳으로
+const params = new URLSearchParams(location.search);
+const redirectTo = params.get('redirect') || '/peak/index.html';
+
+async function submit(){
+  const l=getLang(), m=document.body.getAttribute('data-mode');
+  const msg=document.getElementById('msg'); const btn=document.getElementById('submitBtn');
+  const email=document.getElementById('email').value.trim();
+  const pw=document.getElementById('password').value;
+  msg.className='msg'; msg.textContent='';
+  if(!configured || !sb){ msg.className='msg err'; msg.textContent=(l==='ko'?'Supabase 연결 정보가 설정되지 않았습니다.':'Supabase not configured.'); return; }
+  if(!email || !pw){ msg.className='msg err'; msg.textContent=(l==='ko'?'이메일과 비밀번호를 입력하세요.':'Enter email and password.'); return; }
+
+  btn.disabled=true; btn.textContent=(l==='ko'?'처리 중…':'Working…');
+  try{
+    if(m==='signup'){
+      if(pw.length<8){ throw new Error(l==='ko'?'비밀번호는 8자 이상이어야 합니다.':'Password must be 8+ chars.'); }
+      const { data, error } = await sb.auth.signUp({ email, password: pw });
+      if(error) throw error;
+      // 프로필·역할 생성 (learning과 동일 구조)
+      if(data.user){
+        try{
+          await sb.from('user_profiles').insert({ id:data.user.id, email, display_name:(document.getElementById('name').value.trim()||null), language:l });
+          await sb.from('user_roles').insert({ user_id:data.user.id, role:'user' });
+        }catch(e){ /* RLS/중복 무시 */ }
+      }
+      msg.className='msg ok';
+      msg.textContent=(l==='ko'?'✓ 가입 완료. 이메일 확인 후 로그인하세요.':'✓ Signed up. Verify email, then sign in.');
+      setMode('signin');
+    } else {
+      const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
+      if(error) throw error;
+      msg.className='msg ok'; msg.textContent=(l==='ko'?'✓ 로그인 성공. 이동 중…':'✓ Signed in. Redirecting…');
+      location.href = redirectTo;
+    }
+  }catch(err){
+    msg.className='msg err'; msg.textContent=(err.message||'Error');
+  }
+  btn.disabled=false; refreshBtn();
+}
+
+// 엔터키 제출
+['email','password'].forEach(id=>{
+  document.getElementById(id).addEventListener('keypress',e=>{ if(e.key==='Enter') submit(); });
+});
+
+// 이미 세션 있으면 자동 이동
+(async function(){
+  if(sb){
+    const { data } = await sb.auth.getSession();
+    if(data && data.session){ /* 이미 로그인됨 — 원하면 자동 이동: location.href=redirectTo; */ }
+  }
+})();
+</script>
+</body>
+</html>
