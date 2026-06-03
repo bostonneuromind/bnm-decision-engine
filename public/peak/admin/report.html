@@ -220,6 +220,26 @@
       <div class="sec-h"><div class="sec-n">4</div><h2><span class="ko-text">AI 소견 → 권장 훈련 영역</span><span class="en-text">AI Opinion → Recommended Areas</span></h2></div>
       <div class="callout ai" id="aiOpinion"><span class="ko-text"><b>AI 진단 소견:</b> 압박 상황의 각성 과활성과 의식적 모니터링이 핵심 병목입니다. 기저 인지·주의는 보존되어 있어, <b>각성 조절 → 주의 외부초점 → 압박 노출</b> 순서의 훈련이 가장 효과적일 것으로 추천됩니다. 사회평가 요소가 동반되어 사후반추 관리도 권장합니다. <span style="font-size:12px;color:var(--ink-sub)">(예시 — 아래 "AI 보고서 생성"으로 실제 분석)</span></span><span class="en-text"><b>AI opinion:</b> arousal over-activation and conscious monitoring under pressure are the bottleneck; baseline cognition/attention are intact. Recommended order: <b>arousal regulation → external attention focus → pressure exposure</b>, plus post-event-rumination management. <span style="font-size:12px;color:var(--ink-sub)">(example — generate real analysis below)</span></span></div>
       <div class="btn-row" style="margin-top:10px"><button class="btn" id="genAiBtn" onclick="generateAIReport()"><span class="ko-text">🤖 AI 보고서 생성 (실제 분석)</span><span class="en-text">🤖 Generate AI report</span></button></div>
+
+      <!-- ★ 진짜 엔진(CNA v7) 연결 패널 — Fischer 발달 진단 -->
+      <div class="sec" style="border:1px dashed var(--accent);margin-top:16px;background:var(--field)">
+        <div class="sec-h"><div class="sec-n" style="background:var(--good)">⚙</div><h2><span class="ko-text">CNA v7 발달 엔진 — 실제 진단·훈련·진화</span><span class="en-text">CNA v7 Engine — real diagnosis</span></h2></div>
+        <p class="lead" style="margin-bottom:12px"><span class="ko-text">환자 식별자 + Fischer 5축 발달 레벨(L7~L13)을 입력하면, 진짜 엔진이 진단·발달 시뮬·훈련 프로토콜을 생성하고 <b>케이스를 누적해 진화</b>합니다. (위 AI 소견과 별개 — 이게 핵심 엔진)</span><span class="en-text">Enter patient ID + Fischer levels (L7–L13). The real engine diagnoses, simulates development, generates a protocol, and <b>accumulates cases to evolve</b>.</span></p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+          <label style="font-size:13px"><span class="ko-text">환자 식별자(이니셜)</span><span class="en-text">Patient ID</span><br><input id="eng_pid" type="text" placeholder="예: KSH" style="margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:15px;width:140px"></label>
+          <span style="font-size:12.5px;color:var(--ink-sub)"><span class="ko-text">목표 축: peak_performance (고정)</span><span class="en-text">axis: peak_performance</span></span>
+        </div>
+        <p style="font-size:12.5px;color:var(--ink-sub);margin-bottom:6px"><span class="ko-text">Fischer 발달 레벨 (L7~L13, 측정값):</span><span class="en-text">Fischer levels (L7–L13):</span></p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:12px">
+          <label style="font-size:12.5px"><span class="ko-text">지속주의</span><span class="en-text">sustained_attention</span><input class="eng_lvl" data-axis="sustained_attention" type="number" step="0.1" min="7" max="13" placeholder="L7-13" style="width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit"></label>
+          <label style="font-size:12.5px"><span class="ko-text">작업기억</span><span class="en-text">working_memory</span><input class="eng_lvl" data-axis="working_memory" type="number" step="0.1" min="7" max="13" placeholder="L7-13" style="width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit"></label>
+          <label style="font-size:12.5px"><span class="ko-text">정서조절</span><span class="en-text">emotional_regulation</span><input class="eng_lvl" data-axis="emotional_regulation" type="number" step="0.1" min="7" max="13" placeholder="L7-13" style="width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit"></label>
+          <label style="font-size:12.5px"><span class="ko-text">시간감각</span><span class="en-text">time_awareness</span><input class="eng_lvl" data-axis="time_awareness" type="number" step="0.1" min="7" max="13" placeholder="L7-13" style="width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit"></label>
+          <label style="font-size:12.5px"><span class="ko-text">자기인지</span><span class="en-text">self_awareness</span><input class="eng_lvl" data-axis="self_awareness" type="number" step="0.1" min="7" max="13" placeholder="L7-13" style="width:100%;margin-top:4px;padding:8px;border:1px solid var(--line);border-radius:8px;font-family:inherit"></label>
+        </div>
+        <button class="btn" id="engBtn" onclick="runEngine()" style="background:var(--good)"><span class="ko-text">⚙ 발달 엔진 실행 (진단 + 훈련 + 진화)</span><span class="en-text">⚙ Run engine</span></button>
+        <div id="engResult" style="margin-top:14px"></div>
+      </div>
       <p class="lead" style="margin-top:8px"><span class="ko-text">→ 이 추천이 <b>훈련 프로토콜 탭</b>에 그대로 연동됩니다 (AI 1회 분석, 탭만 분리).</span><span class="en-text">→ This feeds directly into the <b>Training Protocol tab</b> (AI run once, tabs only separate the view).</span></p>
       <div class="btn-row"><button class="btn" onclick="setTab('tx')"><span class="ko-text">훈련 프로토콜 보고서 보기 →</span><span class="en-text">View Training Protocol →</span></button></div>
     </div>
@@ -385,6 +405,57 @@ function exportPlan(){
 
 renderAreas(); buildPlan();
 
+/* ===== ★ 진짜 발달 엔진(CNA v7) 호출 — /api/full-cycle ===== */
+async function runEngine(){
+  const l=getLang(); const btn=document.getElementById('engBtn'); const out=document.getElementById('engResult');
+  const pid=(document.getElementById('eng_pid').value||'').trim();
+  if(!pid){ out.innerHTML=`<div class="callout warn">${l==='ko'?'환자 식별자를 입력하세요.':'Enter patient ID.'}</div>`; return; }
+  const levels={};
+  document.querySelectorAll('.eng_lvl').forEach(i=>{ const v=i.value.trim(); if(v!=='') levels[i.dataset.axis]=parseFloat(v); });
+  if(Object.keys(levels).length<5){ out.innerHTML=`<div class="callout warn">${l==='ko'?'Fischer 5축 레벨을 모두 입력하세요 (L7~13).':'Enter all 5 Fischer levels.'}</div>`; return; }
+  const symptom_vector={ performance_anxiety:0.58, social_anxiety:0.22, anxiety_somatic:0.45 };
+  const biomarkers={};
+  if(typeof qeegData!=='undefined' && qeegData && qeegData.vals){
+    const d=qeegData.vals;
+    const hb=(d.hibeta_ec!==undefined?d.hibeta_ec:d.hibeta_eo);
+    if(hb!==undefined) biomarkers.frontal_hibeta=hb;
+    if(d.rmssd!==undefined) biomarkers.hrv_rmssd=d.rmssd;
+    if(d.coherence!==undefined) biomarkers.hrv_coherence=d.coherence;
+  }
+  btn.disabled=true; btn.innerHTML=l==='ko'?'엔진 실행 중…':'Running…';
+  out.innerHTML=`<div class="callout key">${l==='ko'?'엔진 호출 중 (진단 → 발달 시뮬 → 훈련 → 진화 누적)…':'Calling engine…'}</div>`;
+  try{
+    await fetch('/api/client/create',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({patient_id:pid, beta_cohort:'peak_pilot'})}).catch(()=>{});
+    const res=await fetch('/api/full-cycle',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({patient_id:pid, cognitive_levels:levels, primary_clinical_axis:'peak_performance',
+        symptom_vector:symptom_vector, biomarkers:biomarkers, motivation:0.7, n_sessions:0})});
+    const data=await res.json();
+    if(data.error){ throw new Error(data.error); }
+    const a=data.assessment||{}; const dde=a.differential_diagnosis||{}; const rank=a.intervention_ranking||{};
+    const proto=data.protocol_preview||{};
+    const ep=(data.system_state_snapshot&&data.system_state_snapshot.episode_count);
+    const saved=(data.persistence&&data.persistence.client_id);
+    out.innerHTML=`
+      <div class="callout ai"><b>${l==='ko'?'✓ 발달 엔진 진단 완료':'✓ Engine done'}</b> ${saved?(l==='ko'?`· 저장됨`:`· saved`):''}</div>
+      <table style="margin-top:8px">
+        <tr><th>${l==='ko'?'엔진 산출':'Engine output'}</th><th>${l==='ko'?'값':'Value'}</th></tr>
+        <tr><td>${l==='ko'?'주 진단':'Primary Dx'}</td><td>${dde.primary_diagnosis||'-'}</td></tr>
+        <tr><td>${l==='ko'?'동반 진단':'Secondary'}</td><td>${(dde.secondary_diagnoses||[]).join(', ')||'-'}</td></tr>
+        <tr><td>${l==='ko'?'진단 신뢰도':'Confidence'}</td><td class="num">${dde.diagnostic_confidence!==undefined?Math.round(dde.diagnostic_confidence*100)+'%':'-'}</td></tr>
+        <tr><td>${l==='ko'?'최적 개입(발달 타겟)':'Optimal intervention'}</td><td>${rank.optimal_intervention||'-'}</td></tr>
+        <tr><td>${l==='ko'?'추천 훈련 주수':'Protocol weeks'}</td><td class="num">${proto.target_duration_weeks||'-'}</td></tr>
+        <tr><td>★ ${l==='ko'?'누적 케이스(진화)':'Episodes'}</td><td class="num">${ep!==undefined?ep:'-'}</td></tr>
+      </table>
+      <div class="callout key" style="margin-top:10px">${l==='ko'?'이 케이스가 엔진에 누적되어 다음 진단이 더 정밀해집니다 (variational update + OMR).':'Accumulates; future diagnoses sharpen.'}</div>`;
+    btn.innerHTML=l==='ko'?'✓ 완료 (다시 실행)':'✓ Done (rerun)';
+  }catch(e){
+    out.innerHTML=`<div class="callout warn">${l==='ko'?'⚠ 엔진 호출 실패':'⚠ Engine failed'}: ${e.message}</div>`;
+    btn.innerHTML=l==='ko'?'다시 시도':'Retry';
+  }
+  btn.disabled=false;
+}
+
 /* ===== ★ 실제 AI 보고서 생성 (Claude API) — 진단 소견 + 훈련 영역 추천 ===== */
 async function generateAIReport(){
   const l=getLang(); const btn=document.getElementById('genAiBtn'); const box=document.getElementById('aiOpinion');
@@ -406,18 +477,14 @@ async function generateAIReport(){
 Write in ${l==='ko'?'Korean':'English'}.`;
 
   try{
-    const res = await fetch("https://api.anthropic.com/v1/messages",{
+    // 백엔드(Flask /api/peak_report)가 Anthropic 호출 + Supabase 저장 (정적 배포에서 작동)
+    const res = await fetch("/api/peak_report",{
       method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        model:"claude-sonnet-4-20250514", max_tokens:1000,
-        system: sys,
-        messages:[{role:"user", content:"Case data:\n"+JSON.stringify(caseData,null,2)+"\n\nGenerate the clinical opinion JSON."}]
-      })
+      body: JSON.stringify({ case: caseData, lang: l })
     });
     const data = await res.json();
-    let text = (data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join("\n");
-    text = text.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(text);
+    if(!data.success || !data.report){ throw new Error(data.error||'no report'); }
+    const parsed = data.report;
 
     box.innerHTML = `<span><b>${l==='ko'?'AI 진단 소견':'AI opinion'}:</b> ${parsed.opinion}<br><br><b>${l==='ko'?'권장 순서':'Order'}:</b> ${parsed.order_rationale||''}<br><span class="ref-cite" style="font-size:12.5px">${parsed.evidence||''}</span></span>`;
 
