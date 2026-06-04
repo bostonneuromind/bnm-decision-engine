@@ -156,7 +156,7 @@
   }
 </style>
 </head>
-<body data-lang="ko">
+<body>
 
 <!-- ===================== NAV ===================== -->
 <nav class="nav">
@@ -477,7 +477,7 @@
 function curLang(){ try{ return (window.getLang && getLang()) || document.body.dataset.lang || 'ko'; }catch(e){ return document.body.dataset.lang||'ko'; } }
 function applyLang(l){ document.body.dataset.lang = l; document.documentElement.lang = l; }
 function toggleLang(){ var l = curLang()==='ko'?'en':'ko'; if(window.setLang){ try{ setLang(l); }catch(e){} } applyLang(l); }
-applyLang(curLang());
+applyLang((typeof window.BNM_LANG!=='undefined'&&window.BNM_LANG)||curLang());
 
 /* ---- service gate (login -> consent -> payment). Locked until payment built ---- */
 const SERVICE_LOCKED = true;  /* ★ 결제 완성 후 false */

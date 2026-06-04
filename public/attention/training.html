@@ -65,7 +65,7 @@
 </style>
 </head>
 
-<body data-lang="ko">
+<body>
 
 <nav class="nav"><div class="nav-in">
   <div class="brand">BOSTON NEUROMIND<small>Peak Performance</small></div>
@@ -488,7 +488,7 @@
 function curLang(){try{return(window.getLang&&getLang())||document.body.dataset.lang||'ko';}catch(e){return document.body.dataset.lang||'ko';}}
 function applyLang(l){document.body.dataset.lang=l;document.documentElement.lang=l;}
 function toggleLang(){var l=curLang()==='ko'?'en':'ko';if(window.setLang){try{setLang(l);}catch(e){}}applyLang(l);}
-applyLang(curLang());
+applyLang((typeof window.BNM_LANG!=='undefined'&&window.BNM_LANG)||curLang());
 </script>
 </body>
 </html>
