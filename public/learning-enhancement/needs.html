@@ -101,8 +101,8 @@
 <body>
 
 <div class="topbar"><span class="pill">
-  <button data-l="ko" onclick="setLang('ko')">KO</button>
-  <button data-l="en" onclick="setLang('en')">EN</button>
+  <button data-l="ko" onclick="window.bnmSetLang('ko')">KO</button>
+  <button data-l="en" onclick="window.bnmSetLang('en')">EN</button>
 </span></div>
 
 <div class="container">
@@ -193,7 +193,7 @@
 
 <script>
 function setLang(l){document.body.setAttribute('data-lang',l);if(document.getElementById('surveyArea').style.display!=='none')renderSurvey();if(document.getElementById('result').classList.contains('show'))showResult();}
-function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function getLang(){return (window.bnmGetLang?window.bnmGetLang():document.body.getAttribute('data-lang'))||'en';}
 
 /* ===== 15문항 정의 ===== (멀티초이스만, 공개·가벼움)
    block: WHAT/WHEN/AROUSAL/GOAL/PROFILE/PRIORITY/READINESS */
@@ -443,5 +443,6 @@ function radarSVG(now,target,l){
     ${labels}</svg>`;
 }
 </script>
+<script>window.addEventListener('bnm-lang-change',function(){try{if(typeof renderSurvey==='function'&&document.getElementById('surveyArea')&&document.getElementById('surveyArea').style.display!=='none')renderSurvey();if(typeof showResult==='function'&&document.getElementById('result')&&document.getElementById('result').classList.contains('show'))showResult();}catch(e){}});</script>
 </body>
 </html>

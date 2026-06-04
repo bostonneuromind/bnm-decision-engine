@@ -71,7 +71,7 @@
   <div class="nlinks">
     <a href="index.html">&larr; <span class="ko-text">메인</span><span class="en-text">Home</span></a>
     <a href="diagnosis.html"><span class="ko-text">진단</span><span class="en-text">Diagnosis</span></a>
-    <button class="lang" onclick="toggleLang()"><span class="ko-text">EN</span><span class="en-text">한국어</span></button>
+    <button class="lang" onclick="window.bnmSetLang(window.bnmGetLang&&window.bnmGetLang()==='ko'?'en':'ko')"><span class="ko-text">EN</span><span class="en-text">한국어</span></button>
   </div>
 </div></nav>
 
@@ -562,9 +562,9 @@
 </div></section>
 
 <script>
-function curLang(){try{return(window.getLang&&getLang())||document.body.dataset.lang||'ko';}catch(e){return document.body.dataset.lang||'ko';}}
-function applyLang(l){document.body.dataset.lang=l;document.documentElement.lang=l;}
-function toggleLang(){var l=curLang()==='ko'?'en':'ko';if(window.setLang){try{setLang(l);}catch(e){}}applyLang(l);}
+
+
+
 applyLang((typeof window.BNM_LANG!=='undefined'&&window.BNM_LANG)||curLang());
 </script>
 </body>
