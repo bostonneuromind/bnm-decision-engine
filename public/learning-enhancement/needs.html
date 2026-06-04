@@ -110,7 +110,7 @@
   <div class="hero" id="hero">
     <span class="tag">Peak Performance · 무료 요구 분석</span>
     <h1><span class="ko-text">당신의 최고 수행, 무엇이 가로막고 있나요?</span><span class="en-text">What's holding back your peak performance?</span></h1>
-    <p><span class="ko-text">15개 질문으로 당신이 <b>무엇을, 어떻게 잘 해내고 싶은지</b> 또렷하게 그려드립니다. 답하는 것만으로 자신의 수행 패턴이 보입니다.</span><span class="en-text">15 questions to map <b>what you want to perform and how</b>. Just answering reveals your performance pattern.</span></p>
+    <p><span class="ko-text">15개 질문으로 당신의 <b>학습을 어디서 더 끌어올릴 수 있는지</b> 또렷하게 그려드립니다. 답하는 것만으로 자신의 향상 레버가 보입니다.</span><span class="en-text">15 questions to map <b>where your learning can be lifted higher</b>. Just answering reveals your enhancement lever.</span></p>
     <p class="free"><span class="ko-text">✓ 무료 · 로그인 없음 · 3분 · 결과 그래프 제공</span><span class="en-text">✓ Free · No login · 3 min · Visual profile</span></p>
   </div>
 
@@ -129,7 +129,7 @@
   <!-- 결과 -->
   <div class="result" id="result">
     <div class="res-hero">
-      <span class="tag"><span class="ko-text">당신의 학습향상 프로파일</span><span class="en-text">Your Learning Enhancement Profile</span></span>
+      <span class="tag"><span class="ko-text">당신의 학습향상 프로파일</span><span class="en-text">Your Enhancement Profile</span></span>
       <h2 id="resTitle"></h2>
       <div class="type" id="resType"></div>
     </div>
@@ -186,7 +186,7 @@
       <button class="retry" onclick="location.reload()"><span class="ko-text">다시 하기</span><span class="en-text">Retry</span></button>
     </div>
 
-    <div class="disclaimer"><span class="ko-text">본 요구 분석은 자기 탐색·코칭 목적의 무료 도구이며 의학적 진단이 아닙니다. 결과는 수행심리 프레임(Flow·IZOF·Performance Profiling)에 기반한 프로파일입니다.</span><span class="en-text">This needs-analysis is a free self-exploration/coaching tool, not a medical diagnosis. Results are a profile based on performance-psychology frameworks (Flow·IZOF·Performance Profiling).</span></div>
+    <div class="disclaimer"><span class="ko-text">본 요구 분석은 자기 탐색·코칭 목적의 무료 도구이며 의학적 진단이 아닙니다. 결과는 인지 능력 + 자기조절학습 프레임(CHC · Zimmerman SRL)에 기반한 프로파일입니다.</span><span class="en-text">This needs-analysis is a free self-exploration/coaching tool, not a medical diagnosis. Results are a profile based on cognitive-ability + self-regulated-learning framework (CHC · Zimmerman SRL).</span></div>
   </div>
 </div>
 
@@ -204,7 +204,7 @@ const Q=[
   // Q2-4 WHEN (Flow/Clutch/Choking)
   {id:'breakdown',block:'WHEN',tag:{ko:'언제 무너지나',en:'When it breaks'},
    q:{ko:'가장 내 경험에 가까운 것은?',en:'Closest to your experience?'},type:'single',
-   opts:[['choking','💥',{ko:'평소엔 되는데 중요한 순간 무너진다',en:'Fine usually, collapse when it counts'}],['flow_deficit','🌫️',{ko:'몰입이 안 되고 딴 생각이 든다',en:"Can't get absorbed, mind wanders"}],['clutch_deficit','🔋',{ko:'결정적 순간 한 단계 못 끌어올린다',en:"Can't raise my game when it counts"}],['consistency','📉',{ko:'잘할 때·못할 때 편차가 크다',en:'Too inconsistent'}]]},
+   opts:[['wm','🧠',{ko:'더 복잡한 걸 동시에 다루고 싶다 (작업기억 확장)',en:'Handle more at once (WM expansion)'}],['speed','⏱️',{ko:'같은 이해를 더 빠르게 (처리속도)',en:'Same understanding, faster (speed)'}],['srl','🧭',{ko:'공부를 더 효율적으로 운영하고 싶다 (자기조절)',en:'Run studying more efficiently (self-regulation)'}],['reason','🧩',{ko:'분야를 잇고 고차 사고로 (심화추론)',en:'Connect fields, higher-order thinking (reasoning)'}]]},
   {id:'frequency',block:'WHEN',tag:{ko:'얼마나 자주',en:'How often'},
    q:{ko:'그런 일이 얼마나 자주 일어나나요?',en:'How often does that happen?'},type:'single',
    opts:[['rare','🟢',{ko:'가끔',en:'Occasionally'}],['often','🟡',{ko:'자주',en:'Often'}],['always','🔴',{ko:'거의 매번',en:'Almost always'}]]},
@@ -223,16 +223,16 @@ const Q=[
    q:{ko:'무엇을 위해 잘하고 싶나요?',en:'What are you aiming for?'},type:'single',
    opts:[['mastery','🌱',{ko:'내 실력 키우고 스스로 만족 (숙달)',en:'Mastery & self-satisfaction'}],['competitive','🏆',{ko:'좋은 결과·인정·이김 (경쟁)',en:'Results/recognition/winning'}],['both','⚖️',{ko:'둘 다',en:'Both'}]]},
   // Q8-13 PROFILE (6 능력, 현재 수준 — 레이더 재료)
-  {id:'lvl_focus',block:'PROFILE',tag:{ko:'능력 1/6',en:'Ability 1/6'},q:{ko:'🎯 집중 유지 — 지금 내 수준은?',en:'🎯 Sustained focus — current level?'},type:'level'},
-  {id:'lvl_composure',block:'PROFILE',tag:{ko:'능력 2/6',en:'Ability 2/6'},q:{ko:'🧘 압박 속 침착함 — 지금 내 수준은?',en:'🧘 Composure under pressure — level?'},type:'level'},
-  {id:'lvl_confidence',block:'PROFILE',tag:{ko:'능력 3/6',en:'Ability 3/6'},q:{ko:'💪 자신감 — 지금 내 수준은?',en:'💪 Confidence — current level?'},type:'level'},
-  {id:'lvl_consistency',block:'PROFILE',tag:{ko:'능력 4/6',en:'Ability 4/6'},q:{ko:'📏 일관성 — 지금 내 수준은?',en:'📏 Consistency — current level?'},type:'level'},
-  {id:'lvl_energy',block:'PROFILE',tag:{ko:'능력 5/6',en:'Ability 5/6'},q:{ko:'⚡ 에너지·동기 — 지금 내 수준은?',en:'⚡ Energy/drive — current level?'},type:'level'},
-  {id:'lvl_recovery',block:'PROFILE',tag:{ko:'능력 6/6',en:'Ability 6/6'},q:{ko:'🔄 실수 후 회복 — 지금 내 수준은?',en:'🔄 Recovery after a mistake — level?'},type:'level'},
+  {id:'lvl_wm',block:'PROFILE',tag:{ko:'능력 1/6',en:'Ability 1/6'},q:{ko:'🧠 작업기억 용량 — 지금 내 수준은?',en:'🧠 Working-memory capacity — level?'},type:'level'},
+  {id:'lvl_speed',block:'PROFILE',tag:{ko:'능력 2/6',en:'Ability 2/6'},q:{ko:'⏱️ 처리속도 — 지금 내 수준은?',en:'⏱️ Processing speed — level?'},type:'level'},
+  {id:'lvl_plan',block:'PROFILE',tag:{ko:'능력 3/6',en:'Ability 3/6'},q:{ko:'🧭 계획·전략 (SRL) — 지금 내 수준은?',en:'🧭 Planning/strategy (SRL) — level?'},type:'level'},
+  {id:'lvl_monitor',block:'PROFILE',tag:{ko:'능력 4/6',en:'Ability 4/6'},q:{ko:'🔎 자기점검 (SRL) — 지금 내 수준은?',en:'🔎 Self-monitoring (SRL) — level?'},type:'level'},
+  {id:'lvl_reflect',block:'PROFILE',tag:{ko:'능력 5/6',en:'Ability 5/6'},q:{ko:'🪞 자기성찰·조정 (SRL) — 지금 내 수준은?',en:'🪞 Self-reflection (SRL) — level?'},type:'level'},
+  {id:'lvl_reason',block:'PROFILE',tag:{ko:'능력 6/6',en:'Ability 6/6'},q:{ko:'🧩 심화추론·통합 — 지금 내 수준은?',en:'🧩 Higher reasoning — level?'},type:'level'},
   // Q14 PRIORITY
   {id:'priority',block:'PRIORITY',tag:{ko:'1순위',en:'Top priority'},
    q:{ko:'위 6가지 중 가장 먼저 끌어올리고 싶은 하나는?',en:'Of the 6, which to raise first?'},type:'single',
-   opts:[['focus','🎯',{ko:'집중 유지',en:'Focus'}],['composure','🧘',{ko:'압박 속 침착함',en:'Composure'}],['confidence','💪',{ko:'자신감',en:'Confidence'}],['consistency','📏',{ko:'일관성',en:'Consistency'}],['energy','⚡',{ko:'에너지·동기',en:'Energy'}],['recovery','🔄',{ko:'실수 후 회복',en:'Recovery'}]]},
+   opts:[['wm','🧠',{ko:'작업기억 확장',en:'WM expansion'}],['speed','⏱️',{ko:'처리속도',en:'Speed'}],['plan','🧭',{ko:'계획·전략',en:'Planning'}],['monitor','🔎',{ko:'자기점검',en:'Monitoring'}],['reflect','🪞',{ko:'자기성찰',en:'Reflection'}],['reason','🧩',{ko:'심화추론',en:'Reasoning'}]]},
   // Q15 READINESS (funnel 신호)
   {id:'readiness',block:'READINESS',tag:{ko:'준비도',en:'Readiness'},
    q:{ko:'정밀 진단과 맞춤 훈련을 시작할 의향이 있나요?',en:'Open to starting precise diagnosis & training?'},type:'single',
@@ -240,9 +240,9 @@ const Q=[
 ];
 
 const LEVELS=[['0.25',{ko:'많이 약함',en:'Weak'}],['0.5',{ko:'보통',en:'Fair'}],['0.7',{ko:'꽤 좋음',en:'Good'}],['0.9',{ko:'강함',en:'Strong'}]];
-const ABILITIES=['focus','composure','confidence','consistency','energy','recovery'];
-const ABIL_KO={focus:'집중',composure:'침착',confidence:'자신감',consistency:'일관성',energy:'에너지',recovery:'회복'};
-const ABIL_EN={focus:'Focus',composure:'Composure',confidence:'Confidence',consistency:'Consistency',energy:'Energy',recovery:'Recovery'};
+const ABILITIES=['wm','speed','plan','monitor','reflect','reason'];
+const ABIL_KO={wm:'작업기억',speed:'처리속도',plan:'계획',monitor:'자기점검',reflect:'성찰',reason:'심화추론'};
+const ABIL_EN={wm:'Working mem',speed:'Speed',plan:'Planning',monitor:'Monitoring',reflect:'Reflection',reason:'Reasoning'};
 
 const ans={};
 function startSurvey(){
@@ -283,10 +283,10 @@ function updateProg(){
 
 /* breakdown → 유형 라벨 + 막는요인 (층B로 핸드오프) */
 const TYPE={
-  choking:{ko:'압박형 — 본방에서 무너지는 타입',en:'Pressure type — collapses in the moment',block:{ko:'중요한 순간의 <b>긴장·압박</b>이 평소 실력을 가린다. 핵심은 압박 속 침착함과 주의 회복.',en:'<b>Pressure</b> in key moments hides your usual ability. The key is composure and attention recovery.'},route:['anxiety','social_anxiety']},
-  flow_deficit:{ko:'몰입형 — 흐름을 못 타는 타입',en:'Flow type — struggles to get absorbed',block:{ko:'딴 생각으로 <b>몰입(flow)</b>이 끊긴다. 핵심은 명확한 목표·즉각 피드백 구조와 집중 훈련.',en:'Distraction breaks your <b>flow</b>. The key is clear goals, immediate feedback, and focus training.'},route:['adhd','sleep']},
-  clutch_deficit:{ko:'점화형 — 끌어올리지 못하는 타입',en:'Clutch type — can\u2019t shift up a gear',block:{ko:'결정적 순간 <b>한 단계 끌어올림(clutch)</b>이 안 된다. 핵심은 의도적 점화와 에너지·동기.',en:'You can\u2019t hit the <b>clutch gear</b> when it counts. The key is deliberate activation and drive.'},route:['burnout','depression']},
-  consistency:{ko:'기복형 — 편차가 큰 타입',en:'Swing type — high variability',block:{ko:'잘할 때와 못할 때 <b>편차</b>가 크다. 핵심은 상태·정서의 안정화와 루틴.',en:'Big <b>swings</b> between good and bad. The key is state/emotion stabilization and routine.'},route:['bipolar']},
+  wm:{ko:'작업기억 확장형',en:'WM-expansion type',block:{ko:'이미 높은 작업기억을 <b>한 단계 더 확장</b>해 더 복잡한 과제를 다룬다. 핵심은 적응형 고부하 훈련.',en:'Expand an already-high WM <b>one level further</b>. Key: adaptive high-load training.'},route:[]},
+  speed:{ko:'처리속도 가속형',en:'Speed-acceleration type',block:{ko:'정확도는 충분하니 <b>같은 이해를 더 빠르게</b>. 핵심은 자동화 심화와 최적 각성 재현.',en:'<b>Same understanding, faster</b>. Key: deeper automation and optimal arousal.'},route:[]},
+  srl:{ko:'자기조절·전략형 ★',en:'Self-regulation type ★',block:{ko:'인지 능력은 충분한데 <b>학습 운영(계획·점검·성찰)</b>이 비효율적이다. 향상에서 가장 큰 레버.',en:'Ample ability but inefficient <b>running of learning</b>. Often the largest lever.'},route:[]},
+  reason:{ko:'심화추론·통합형',en:'Higher-reasoning type',block:{ko:'개별 지식을 넘어 <b>분야를 잇고 새 문제에 적용</b>한다. 핵심은 작업기억·자기조절 토대 위 단계적 추론.',en:'<b>Connect fields, apply to novel problems</b>. Key: scaffolded reasoning on WM/SRL base.'},route:[]},
 };
 
 function showResult(){
@@ -328,7 +328,7 @@ function showResult(){
   renderEvidence(l);
 
   // CTA 링크 + 핸드오프 데이터 (층 B로)
-  const handoff={dept:'peak_performance',source:'public_needs_analysis',
+  const handoff={dept:'learning_enhancement',source:'public_needs_analysis',
     V2_desire:{domain:ans.domain,breakdown_type:ans.breakdown,frequency:ans.frequency,importance:ans.importance,
       optimal_arousal:ans.optimal_arousal,current_arousal:ans.current_arousal,goal_orientation:ans.goal_orientation,
       ability_now:Object.fromEntries(ABILITIES.map((a,i)=>[a,now[i]])),priority:ans.priority,readiness:ans.readiness},
@@ -337,42 +337,18 @@ function showResult(){
   const cta=document.getElementById('ctaBtn');
   // 핸드오프를 URL 해시로 (층 B 진입 시 이어받기). 실제 운영선 토큰/서버 세션 권장.
   cta.href='index.html';
-  window.__peakHandoff=handoff; // 콘솔/연동용
+  window.__learning_enhancementHandoff=handoff; // 콘솔/연동용
   // ★ 핸드오프 저장 — 진단 단계(goal_intake)가 이어받음
-  try{ if(window.storage) window.storage.set('peak_handoff', JSON.stringify(handoff), false); }catch(e){}
+  try{ if(window.storage) window.storage.set('learning_enhancement_handoff', JSON.stringify(handoff), false); }catch(e){}
   r.scrollIntoView({behavior:'smooth'});
 }
 
 /* ★ QEEG/뉴로피드백 preview — breakdown 유형별 (정밀진단 미리보기) */
 const QEEG_PREVIEW={
-  choking:{ // 압박형 — 전두 과각성(高베타), 각성 조절
-    region:{x:150,y:78,label:'Fz/F3-F4',hot:0.85},
-    topo_ko:'전두엽 <b>과각성(高베타)</b> 영역 — 압박 시 과활성. 측정 후 각성 조절 타겟.',
-    topo_en:'Frontal <b>hyper-arousal (high beta)</b> — over-activates under pressure. Targeted after measurement.',
-    nf:[['Hi-Beta',0.82,'down'],['SMR',0.40,'up'],['Alpha',0.45,'up']],
-    nf_ko:'타겟: 高베타 ↓ · SMR ↑ · 알파 ↑ (압박 속 침착함 회로). HRV 코히어런스 병행.',
-    nf_en:'Target: high-beta ↓ · SMR ↑ · alpha ↑ (composure circuit). With HRV coherence.'},
-  flow_deficit:{ // 몰입형 — 세타/베타 비율(주의), 집중
-    region:{x:150,y:120,label:'Cz',hot:0.8},
-    topo_ko:'중심부 <b>세타/베타 비율</b> 영역 — 주의 지속 지표(ADHD 관련). 측정 후 집중 타겟.',
-    topo_en:'Central <b>theta/beta ratio</b> — sustained-attention marker (ADHD-related). Focus target.',
-    nf:[['Theta',0.78,'down'],['Beta',0.42,'up'],['SMR',0.5,'up']],
-    nf_ko:'타겟: 세타 ↓ · 베타 ↑ · SMR ↑ (집중·몰입 회로). 명확목표+즉각피드백 구조 병행.',
-    nf_en:'Target: theta ↓ · beta ↑ · SMR ↑ (focus/flow circuit). With clear-goal + feedback structure.'},
-  clutch_deficit:{ // 점화형 — 좌전두 저활성(동기·접근), 활성화
-    region:{x:118,y:88,label:'F3 (좌전두)',hot:0.3},
-    topo_ko:'<b>좌전두 저활성</b> 영역 — 접근 동기·에너지 지표. 측정 후 활성화 타겟.',
-    topo_en:'<b>Left-frontal hypo-activation</b> — approach-motivation/energy marker. Activation target.',
-    nf:[['L-Alpha',0.75,'down'],['Beta',0.40,'up'],['Frontal asym',0.35,'up']],
-    nf_ko:'타겟: 좌전두 알파 ↓ · 베타 ↑ · 전두 비대칭 교정 (점화·동기 회로). 의도적 활성화 훈련.',
-    nf_en:'Target: left alpha ↓ · beta ↑ · frontal-asymmetry correction (clutch/drive circuit).'},
-  consistency:{ // 기복형 — 변산성·각성 안정, 루틴
-    region:{x:150,y:120,label:'Cz/Pz',hot:0.6},
-    topo_ko:'<b>각성 변산성</b> 패턴 — 상태 안정 지표. 측정 후 변동 안정화 타겟.',
-    topo_en:'<b>Arousal variability</b> pattern — state-stability marker. Stabilization target.',
-    nf:[['Variability',0.78,'down'],['SMR',0.48,'up'],['Coherence',0.45,'up']],
-    nf_ko:'타겟: 변산성 ↓ · SMR ↑ · 코히어런스 ↑ (상태 안정 회로). 생활리듬·루틴 병행.',
-    nf_en:'Target: variability ↓ · SMR ↑ · coherence ↑ (stability circuit). With routine/rhythm.'},
+  wm:{region:{x:150,y:120,label:'Fz/P3-P4',hot:0.6},topo_ko:'전두-두정 <b>세타 효율</b> — 고부하 효율 유지가 표적.',topo_en:'Fronto-parietal <b>theta efficiency</b> — high-load efficiency target.',nf:[['Theta-reg',0.65,'down'],['SMR',0.52,'up'],['Beta',0.48,'up']],nf_ko:'타겟: 전두 세타 조절 · SMR ↑ · 베타 ↑ (고부하 효율).',nf_en:'Target: frontal-theta · SMR up · beta up (high-load efficiency).'},
+  speed:{region:{x:150,y:120,label:'Cz',hot:0.55},topo_ko:'중심부 <b>최적 각성대</b> — 속도 최고점 재현이 표적.',topo_en:'Central <b>optimal-arousal band</b> — reproduce peak-speed arousal.',nf:[['Slow',0.6,'down'],['Beta',0.5,'up'],['SMR',0.48,'up']],nf_ko:'타겟: 서파 ↓ · 베타 ↑ · SMR ↑ (최적 각성 재현).',nf_en:'Target: slow down · beta up · SMR up (reproduce optimal arousal).'},
+  srl:{region:{x:150,y:78,label:'Fz (전전두)',hot:0.5},topo_ko:'<b>전전두(자기조절)</b> — 계획·점검·성찰. 명시적 전략 교수가 핵심, NF는 보조.',topo_en:'<b>Prefrontal (self-regulation)</b> — plan/monitor/reflect. Explicit strategy core; NF adjunct.',nf:[['Theta-reg',0.5,'down'],['SMR',0.5,'up'],['Coherence',0.48,'up']],nf_ko:'타겟: 전두 조절 · SMR ↑ — 보조. 계획·점검·성찰 루틴 교수가 일차.',nf_en:'Target: frontal regulation · SMR up — adjunct. Plan/monitor/reflect routines primary.'},
+  reason:{region:{x:150,y:78,label:'Fz/P4',hot:0.5},topo_ko:'<b>전전두-두정 통합</b> — 고차 추론. 작업기억·자기조절 토대 위 단계적.',topo_en:'<b>Prefrontal-parietal integration</b> — higher reasoning. Scaffold on WM/SRL.',nf:[['Theta-reg',0.5,'down'],['SMR',0.5,'up'],['Coherence',0.48,'up']],nf_ko:'타겟: 전두 세타 조절 · SMR ↑ · 코히어런스 ↑ — 보조.',nf_en:'Target: frontal-theta · SMR up · coherence up — adjunct.'},
 };
 
 /* QEEG 토포맵 SVG (머리 위에서 본 색지도 — 주목 영역 하이라이트) */
