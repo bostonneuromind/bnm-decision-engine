@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak 운영 매뉴얼 (임상가용 · 기밀)</title>
@@ -34,7 +35,7 @@
   th{background:var(--field);font-weight:800;font-size:13px}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 <div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
 <div class="container">
   <div class="secret"><span class="tag">CONFIDENTIAL</span><span class="ko-text">기밀 — 임상가 전용 운영 매뉴얼. 외부 공유 금지.</span><span class="en-text">Confidential — clinician operations manual. No external sharing.</span></div>
@@ -98,6 +99,6 @@
 
   <p style="margin-top:26px;font-size:13.5px;color:var(--ink-sub);border-top:1px solid var(--line);padding-top:14px">Boston Neuromind LLC · Peak Operations · <span class="ko-text">기밀</span><span class="en-text">Confidential</span> · 2026</p>
 </div>
-<script>function setLang(l){document.body.setAttribute('data-lang',l);}function getLang(){return document.body.getAttribute('data-lang')||'ko';}</script>
+<script>function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}</script>
 </body>
 </html>

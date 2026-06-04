@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak Performance — 임상 보고서 (진단 · 훈련 프로토콜)</title>
@@ -107,7 +108,7 @@
   .gz .l{font-size:11.5px;color:var(--ink-sub);margin-top:32px}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 
 <div class="topbar"><span class="pill">
   <button data-l="ko" onclick="setLang('ko')">KO</button>
@@ -309,8 +310,8 @@
 </div>
 
 <script>
-function setLang(l){document.body.setAttribute('data-lang',l);renderAreas();buildPlan();if(qeegData){buildQEEG();buildInteg();}else{clearQEEG();}}
-function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}renderAreas();buildPlan();if(qeegData){buildQEEG();buildInteg();}else{clearQEEG();}}
+function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}
 function setTab(t){
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===t));
   document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));

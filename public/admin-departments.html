@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>분과 관리자 (기밀)</title>
@@ -40,7 +41,7 @@
   .lockb{position:absolute;top:16px;right:16px;font-size:11px;font-weight:800;border:1px solid var(--border);border-radius:999px;padding:2px 9px;color:var(--ink-sub)}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 <div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
 <div class="container">
 
@@ -107,8 +108,8 @@
 </div>
 
 <script>
-function setLang(l){document.body.setAttribute('data-lang',l);}
-function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}
+function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}
 var pw=document.getElementById('pw'),lb=document.getElementById('loginBox'),ab=document.getElementById('adminBox'),er=document.getElementById('err');
 function go(){if(pw.value==='bnm1#'){sessionStorage.setItem('bnmAdminOK','1');lb.style.display='none';ab.className='box show';}else{er.textContent='Wrong password';}}
 document.getElementById('goBtn').addEventListener('click',go);

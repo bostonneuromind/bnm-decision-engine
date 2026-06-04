@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak 훈련 — 세션 설계기 (관리자)</title>
@@ -82,7 +83,7 @@
   .callout.ai{background:var(--good-bg);border-left:4px solid var(--good);color:#2c7a52}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 
 <div class="topbar"><span class="pill">
   <button data-l="ko" onclick="setLang('ko')">KO</button>
@@ -145,8 +146,8 @@
 </div>
 
 <script>
-function setLang(l){document.body.setAttribute('data-lang',l);render();}
-function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}render();}
+function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}
 
 const COMPS={
   nf:{ko:'NF',en:'NF',cls:'nf'},

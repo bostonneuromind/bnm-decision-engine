@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak — 진행 안내 (고객용)</title>
@@ -31,7 +32,7 @@
   .note{font-size:14px;color:var(--ink-sub);margin-top:28px;border-top:1px solid var(--line);padding-top:16px;line-height:1.7}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 <div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
 <div class="container">
   <div class="adminonly"><span class="ko-text">관리자 화면 — 상담 시 고객에게 보여주는 진행 안내</span><span class="en-text">Admin — onboarding shown to clients</span></div>
@@ -69,6 +70,6 @@
 
   <p class="note"><span class="ko-text">Boston Neuromind · Peak Performance. 본 안내는 코칭 진행 설명이며 의학적 진단·치료가 아닙니다.</span><span class="en-text">Boston Neuromind · Peak Performance. An onboarding guide, not medical diagnosis/treatment.</span></p>
 </div>
-<script>function setLang(l){document.body.setAttribute('data-lang',l);}function getLang(){return document.body.getAttribute('data-lang')||'ko';}</script>
+<script>function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}</script>
 </body>
 </html>

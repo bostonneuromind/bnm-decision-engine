@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak 훈련 — 세션 진행 보고서</title>
@@ -75,7 +76,7 @@
   .disclaimer{font-size:11.5px;color:var(--ink-sub);text-align:center;margin-top:16px;line-height:1.6}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 
 <div class="topbar"><span class="pill">
   <button data-l="ko" onclick="setLang('ko')">KO</button>
@@ -157,8 +158,8 @@
 </div>
 
 <script>
-function setLang(l){document.body.setAttribute('data-lang',l);if(document.getElementById('report').classList.contains('show'))generate();}
-function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}if(document.getElementById('report').classList.contains('show'))generate();}
+function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}
 
 /* 기저값 (진단 보고서에서 이어받음 — 압박형 예시; QEEG는 EC 기준) */
 const BASELINE={ nf_success:35, nf_smr:5.0, qeeg_hibeta_ec:18.5, qeeg_hibeta_eo:14.0, qeeg_tbr_ec:2.8, hrv_rmssd:28, hrv_coh:0.30, meas_composure:40, meas_confidence:42 };

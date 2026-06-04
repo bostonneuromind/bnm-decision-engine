@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak 알고리즘 (임상가용 · 기밀)</title>
@@ -44,7 +45,7 @@
   .cite{color:var(--accent);font-weight:600;font-size:14px}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 <div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
 <div class="container">
 
@@ -128,6 +129,6 @@
 
   <p style="margin-top:30px;font-size:13.5px;color:var(--ink-sub);border-top:1px solid var(--line);padding-top:14px"><span class="ko-text">Boston Neuromind LLC · CNA v7 · 기밀 임상가 문서 · 2026. 故 Kurt Fischer (Harvard GSE) Dynamic Skill Theory 기반.</span><span class="en-text">Boston Neuromind LLC · CNA v7 · Confidential · 2026. Based on the late Kurt Fischer's Dynamic Skill Theory (Harvard GSE).</span></p>
 </div>
-<script>function setLang(l){document.body.setAttribute('data-lang',l);}function getLang(){return document.body.getAttribute('data-lang')||'ko';}</script>
+<script>function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}</script>
 </body>
 </html>

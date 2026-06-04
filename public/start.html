@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boston Neuromind — Decision</title>
@@ -45,7 +46,7 @@
   @media(max-width:760px){.depts{grid-template-columns:1fr}.hero h1{font-size:30px}}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 
 <div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
 
@@ -95,8 +96,8 @@
 </div>
 
 <script>
-function setLang(l){document.body.setAttribute('data-lang',l);}
-function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}
+function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}
 function soon(){alert(getLang()==='ko'?'이 분과는 준비 중입니다. 곧 오픈합니다.\n\n지금은 Peak Performance를 먼저 경험해 보세요.':'This department is coming soon.\n\nFor now, explore Peak Performance.');}
 </script>
 </body>

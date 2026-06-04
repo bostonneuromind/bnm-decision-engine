@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
+<script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Peak — 우리가 당신을 분석하는 방법 (고객용)</title>
@@ -27,7 +28,7 @@
   .note{font-size:14px;color:var(--ink-sub);margin-top:28px;border-top:1px solid var(--line);padding-top:16px;line-height:1.7}
 </style>
 </head>
-<body data-lang="ko">
+<body>
 <div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
 <div class="container">
   <div class="adminonly"><span class="ko-text">관리자 화면 — 상담 시 고객에게 보여주는 설명 자료</span><span class="en-text">Admin — explainer shown to clients during consultation</span></div>
@@ -53,6 +54,6 @@
 
   <p class="note"><span class="ko-text">Boston Neuromind · Peak Performance. 본 설명은 자기탐색·코칭 안내이며 의학적 진단이 아닙니다. · 故 Kurt Fischer 발달이론 기반.</span><span class="en-text">Boston Neuromind · Peak Performance. An informational coaching explainer, not a medical diagnosis. · Based on Kurt Fischer's developmental theory.</span></p>
 </div>
-<script>function setLang(l){document.body.setAttribute('data-lang',l);}function getLang(){return document.body.getAttribute('data-lang')||'ko';}</script>
+<script>function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}</script>
 </body>
 </html>
