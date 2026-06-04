@@ -21,6 +21,8 @@
     --accent-ink:#2E5A7A;
     /* data-only colors (QEEG bands) */
     --delta:#3f6fb0; --theta:#4a9c8c; --alpha:#5aa84a; --beta:#d68a2e; --hibeta:#c0504d;
+    /* pill segment toggle vars (needs.html과 동일값) */
+    --hue:#2E5A7A; --shadow:none; --ink-sub:#5C6166;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -154,6 +156,9 @@
     .dd{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;min-width:0;padding:0}
     .menu > div:not(.has-dd){display:none}
   }
+  .pill{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;overflow:hidden;box-shadow:var(--shadow)}
+  .pill button{border:none;background:transparent;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  body[data-lang=ko] .pill button[data-l=ko],body[data-lang=en] .pill button[data-l=en]{background:var(--hue);color:#fff}
 </style>
 </head>
 <body>
@@ -183,7 +188,10 @@
           </a>
         </div>
       </div>
-      <button class="lang" onclick="window.bnmSetLang(window.bnmGetLang&&window.bnmGetLang()==='ko'?'en':'ko')"><span class="ko-text">EN</span><span class="en-text">한국어</span></button>
+      <span class="pill">
+        <button data-l="ko" onclick="window.bnmSetLang('ko')">KO</button>
+        <button data-l="en" onclick="window.bnmSetLang('en')">EN</button>
+      </span>
     </div>
   </div>
 </nav>
