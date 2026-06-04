@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Neuromind — Learning Enhancement (학습향상)</title>
+<script src="/bnm-lang-sync.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/bnm-auth.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1d21;        /* near-black text */
+    --ink-2:#454b52;      /* secondary text */
+    --ink-3:#6b727a;      /* muted */
+    --line:#d9dde1;       /* hairlines */
+    --line-2:#e8ebee;     /* faint lines */
+    --bg:#ffffff;
+    --bg-2:#f7f8f9;       /* faint panel */
+    --accent:#2E5A7A;     /* deep slate-blue, used sparingly for action only */
+    --accent-ink:#2E5A7A;
+    /* data-only colors (QEEG bands) */
+    --delta:#3f6fb0; --theta:#4a9c8c; --alpha:#5aa84a; --beta:#d68a2e; --hibeta:#c0504d;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Serif KR","Pretendard",Georgia,serif;
+    font-size:18.5px;line-height:1.9;letter-spacing:.005em;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.brand,.eyebrow,.nav,.menu,.lang,.tag,.flow .n,.cta,.sub,table.typ th{font-family:"Pretendard","Noto Sans KR",system-ui,sans-serif}
+  .en-text{display:none}
+  body[data-lang=en] .en-text{display:inline}
+  body[data-lang=en] .ko-text{display:none}
+  body[data-lang=en] .ko-blk{display:none}
+  .en-blk{display:none}
+  body[data-lang=en] .en-blk{display:block}
+
+  /* ---------- top nav ---------- */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);
+    backdrop-filter:saturate(160%) blur(6px);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:0 28px;height:64px;
+    display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:800;letter-spacing:.04em;font-size:15px;color:var(--ink)}
+  .brand small{display:block;font-weight:600;font-size:11px;letter-spacing:.18em;
+    color:var(--ink-3);text-transform:uppercase;margin-top:1px}
+  .menu{display:flex;align-items:center;gap:4px}
+  .menu > div{position:relative}
+  .menu a.top{display:inline-block;padding:10px 14px;color:var(--ink-2);
+    text-decoration:none;font-size:14px;font-weight:600;border-radius:6px}
+  .menu a.top:hover{color:var(--ink);background:var(--bg-2)}
+  .dd{position:absolute;top:100%;left:0;min-width:300px;background:#fff;
+    border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 40px rgba(20,25,30,.10);
+    padding:6px;opacity:0;visibility:hidden;transform:translateY(6px);
+    transition:.16s ease}
+  .menu > div:hover .dd{opacity:1;visibility:visible;transform:translateY(4px)}
+  .dd a{display:block;padding:11px 13px;border-radius:7px;text-decoration:none;color:var(--ink)}
+  .dd a:hover{background:var(--bg-2)}
+  .dd a b{display:block;font-size:14.5px;font-weight:700}
+  .dd a span{display:block;font-size:12.5px;color:var(--ink-3);margin-top:2px;line-height:1.5}
+  .lang{border:1px solid var(--line);background:#fff;border-radius:7px;
+    padding:7px 11px;font-size:12.5px;font-weight:700;color:var(--ink-2);cursor:pointer;font-family:inherit}
+  .lang:hover{border-color:var(--ink-3)}
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  section{padding:78px 0;border-bottom:1px solid var(--line-2)}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:18px;font-family:"Pretendard","Noto Sans KR",sans-serif}
+  h1{font-size:46px;line-height:1.18;letter-spacing:-.02em;font-weight:800;margin:0 0 22px}
+  h2{font-size:30px;line-height:1.25;letter-spacing:-.015em;font-weight:800;margin:0 0 14px}
+  h3{font-size:18px;font-weight:700;margin:0 0 6px}
+  .lead{font-size:21px;color:var(--ink-2);max-width:700px;margin:0 0 30px;line-height:1.75}
+  .muted{color:var(--ink-3)}
+  .small{font-size:14px}
+
+  /* hero */
+  .hero{padding-top:70px}
+  .hero .tags{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 34px}
+  .tag{border:1px solid var(--line);border-radius:999px;padding:7px 15px;
+    font-size:13px;font-weight:600;color:var(--ink-2)}
+  .tag b{color:var(--ink);font-weight:800}
+  .cta{display:inline-flex;align-items:center;gap:9px;background:var(--accent);
+    color:#fff;text-decoration:none;font-weight:700;font-size:16px;
+    padding:15px 26px;border-radius:10px;border:0;cursor:pointer;font-family:inherit}
+  .cta:hover{background:#264a64}
+  .cta.ghost{background:#fff;color:var(--accent);border:1.5px solid var(--accent)}
+  .cta.ghost:hover{background:var(--bg-2)}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+  /* process diagram strip */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:18px;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .flow .st{padding:22px 18px;border-right:1px solid var(--line-2);position:relative}
+  .flow .st:last-child{border-right:0}
+  .flow .n{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--ink-3)}
+  .flow .st h3{font-size:16px;margin:8px 0 6px}
+  .flow .st p{font-size:13px;color:var(--ink-3);margin:0;line-height:1.55}
+  .flow .opt{display:inline-block;font-size:11px;font-weight:700;color:var(--ink-3);
+    border:1px solid var(--line);border-radius:5px;padding:1px 7px;margin-top:9px}
+
+  /* two-column */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+  .panel{border:1px solid var(--line);border-radius:14px;padding:28px}
+  .panel h3{font-size:19px;margin-bottom:4px}
+  .panel .sub{font-size:13px;color:var(--ink-3);letter-spacing:.04em;margin-bottom:18px}
+  .steps{list-style:none;margin:0;padding:0}
+  .steps li{display:flex;gap:13px;padding:11px 0;border-top:1px solid var(--line-2)}
+  .steps li:first-child{border-top:0}
+  .steps .k{flex:0 0 26px;font-size:12px;font-weight:800;color:var(--ink-3);padding-top:2px}
+  .steps .v b{font-size:15px;font-weight:700;display:block}
+  .steps .v span{font-size:13px;color:var(--ink-3)}
+
+  /* gated action box */
+  .intake{margin-top:22px;border-top:1px solid var(--line);padding-top:20px}
+  .intake p{font-size:14px;color:var(--ink-3);margin:0 0 14px}
+  .lockmsg{font-size:12.5px;color:var(--ink-3);margin-top:10px}
+
+  /* figure caption */
+  figure{margin:0}
+  figcaption{font-size:13px;color:var(--ink-3);margin-top:12px;line-height:1.6}
+  .fig-wrap{border:1px solid var(--line);border-radius:14px;padding:26px;background:#fff}
+  .resgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 30px}
+  .rescard{border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+  .rescard .rk{font-size:20px;font-weight:800;color:var(--ink-3);display:block}
+  .rescard b{display:block;font-size:15px;margin:6px 0 3px}
+  .rescard span:last-child{font-size:13px;color:var(--ink-3)}
+  @media(max-width:820px){.resgrid{grid-template-columns:1fr}}
+
+  /* type table */
+  table.typ{width:100%;border-collapse:collapse;margin-top:8px}
+  table.typ th,table.typ td{text-align:left;padding:14px 14px;border-bottom:1px solid var(--line-2);
+    font-size:14.5px;vertical-align:top}
+  table.typ th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:700;border-bottom:1px solid var(--line)}
+  table.typ td b{font-weight:700}
+  table.typ td .term{font-size:12px;color:var(--ink-3);font-style:italic}
+
+  /* evidence */
+  .ev{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .ev .e{border:1px solid var(--line);border-radius:12px;padding:20px}
+  .ev .e h3{font-size:15.5px}
+  .ev .e p{font-size:13.5px;color:var(--ink-2);margin:6px 0 10px;line-height:1.6}
+  .ev .e cite{font-size:12px;color:var(--ink-3);font-style:normal;display:block;
+    border-top:1px solid var(--line-2);padding-top:9px}
+
+  footer{padding:46px 0 70px}
+  footer p{font-size:13px;color:var(--ink-3);max-width:720px;line-height:1.7}
+
+  @media(max-width:820px){
+    h1{font-size:34px}h2{font-size:25px}
+    .flow{grid-template-columns:1fr 1fr}
+    .cols,.ev{grid-template-columns:1fr}
+    .menu a.top{padding:10px 9px}
+    .nav-in{padding:0 18px}.wrap{padding:0 18px}
+    .dd{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;min-width:0;padding:0}
+    .menu > div:not(.has-dd){display:none}
+  }
+</style>
+</head>
+<body data-lang="ko">
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav">
+  <div class="nav-in">
+    <div class="brand">BOSTON NEUROMIND<small>Peak Performance</small></div>
+    <div class="menu">
+      <div class="has-dd">
+        <a class="top" href="#top">Learning Enhancement ▾</a>
+        <div class="dd">
+          <a href="#start">
+            <b><span class="ko-text">분석 시작하기</span><span class="en-text">Start your analysis</span></b>
+            <span class="ko-text">요구분석 → 진단 → 훈련. 무료 요구분석부터.</span>
+            <span class="en-text">Needs-analysis → diagnosis → training. Start free.</span>
+          </a>
+          <a href="le_diagnosis.html">
+            <b><span class="ko-text">향상 평가 — 두 축의 레버</span><span class="en-text">Enhancement assessment</span></b>
+            <span class="ko-text">인지 능력·자기조절 중 어디를 강화할지 통합 모델로 규명.</span>
+            <span class="en-text">Which lever to strengthen — an integrative model.</span>
+          </a>
+          <a href="le_training.html">
+            <b><span class="ko-text">훈련 — 세션 프로토콜</span><span class="en-text">Training protocol</span></b>
+            <span class="ko-text">평가된 향상 레버를 발달 단계에 맞춰 회기 단위로 설계.</span>
+            <span class="en-text">Session-level protocols along developmental levels.</span>
+          </a>
+        </div>
+      </div>
+      <button class="lang" onclick="toggleLang()"><span class="ko-text">EN</span><span class="en-text">한국어</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">QEEG · Neurofeedback · Developmental Assessment</div>
+    <h1>
+      <span class="ko-text">이미 되는 학습을<br>한 단계 더 위로.</span>
+      <span class="en-text">Learning that works,<br>lifted one level higher.</span>
+    </h1>
+    <p class="lead">
+      <span class="ko-text">대부분의 한계는 실력 부족이 아니라, 압박이 잠시 실력을 가리는 데서 옵니다.
+        19채널 QEEG와 뉴로피드백, 발달 평가로 무엇이 수행을 막는지 정밀하게 찾아 훈련을 설계합니다.</span>
+      <span class="en-text">Most ceilings aren't skill gaps — pressure briefly masks ability.
+        Using 19-channel QEEG, neurofeedback, and developmental assessment, we pinpoint what blocks performance and design the training.</span>
+    </p>
+    <div class="tags">
+      <span class="tag"><b>19ch</b> QEEG · ERP</span>
+      <span class="tag"><b>SMR / β</b> Neurofeedback</span>
+      <span class="tag"><b>HRV</b> Autonomic</span>
+      <span class="tag"><b>Fischer</b> <span class="ko-text">발달 5축</span><span class="en-text">5-axis development</span></span>
+    </div>
+    <div class="cta-row">
+      <a class="cta" href="#start"><span class="ko-text">무료 요구분석 시작</span><span class="en-text">Start free needs-analysis</span> →</a>
+      <a class="cta ghost" href="how.html"><span class="ko-text">진행 과정 보기</span><span class="en-text">See the process</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROCESS FLOW ===================== -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Workflow</div>
+    <h2><span class="ko-text">측정에서 훈련까지, 하나의 흐름</span><span class="en-text">One continuous flow, measure to training</span></h2>
+    <p class="lead small"><span class="ko-text">광고가 아니라 실제 임상 프로세스입니다. 각 단계의 산출물이 다음 단계로 이어집니다.</span><span class="en-text">Not marketing — the actual clinical process. Each step's output feeds the next.</span></p>
+    <div class="flow">
+      <div class="st"><div class="n">01</div><h3><span class="ko-text">요구분석</span><span class="en-text">Needs-analysis</span></h3><p><span class="ko-text">목표를 측정 가능하게. 무료·15문항.</span><span class="en-text">Goal made measurable. Free, 15 items.</span></p></div>
+      <div class="st"><div class="n">02</div><h3><span class="ko-text">정밀 진단</span><span class="en-text">Diagnosis</span></h3><p><span class="ko-text">무엇이 수행을 막는지 변별.</span><span class="en-text">Differentiate what blocks performance.</span></p></div>
+      <div class="st"><div class="n">03</div><h3>QEEG · HRV</h3><p><span class="ko-text">객관 뇌·자율신경 지표.</span><span class="en-text">Objective brain & autonomic markers.</span></p><span class="opt"><span class="ko-text">선택</span><span class="en-text">optional</span></span></div>
+      <div class="st"><div class="n">04</div><h3><span class="ko-text">보고서</span><span class="en-text">Reports</span></h3><p><span class="ko-text">진단·훈련 보고서, 논문 근거 포함.</span><span class="en-text">Diagnosis & training reports, cited.</span></p></div>
+      <div class="st"><div class="n">05</div><h3><span class="ko-text">훈련·추적</span><span class="en-text">Train · track</span></h3><p><span class="ko-text">NF 매 세션, 경과 재측정·조정.</span><span class="en-text">NF each session; re-measure & re-route.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SAMPLE OUTPUT (DATA FIGURES, color allowed) ===================== -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Sample analysis output</div>
+    <h2><span class="ko-text">분석은 이렇게 나옵니다</span><span class="en-text">What your analysis looks like</span></h2>
+    <p class="lead small"><span class="ko-text">기본은 설문입니다. 원하시면 QEEG·HRV·뉴로피드백 측정값을 더해, AI 분석이 <b>① 설문 결과 · ② 객관(QEEG 등) 결과 · ③ 통합 결과</b> 세 가지를 함께 보여줍니다. 모든 해석은 Peak 전용 알고리즘(수행 중심)으로 계산됩니다 — 같은 화면이라도 증상 진단과는 고려하는 기준이 전혀 다릅니다.</span><span class="en-text">The baseline is a survey. Optionally add QEEG·HRV·neurofeedback data, and the AI shows <b>① survey · ② objective (QEEG etc.) · ③ integrated</b> results together. Every interpretation is computed by the Peak-specific algorithm (performance-centered) — the same layout, but reasoned on entirely different criteria than symptom diagnosis.</span></p>
+    <div class="resgrid">
+      <div class="rescard"><span class="rk">①</span><b><span class="ko-text">설문 결과</span><span class="en-text">Survey</span></b><span class="ko-text">수행 유형 · 발달 격차</span><span class="en-text">type · developmental gap</span></div>
+      <div class="rescard"><span class="rk">②</span><b><span class="ko-text">객관 결과</span><span class="en-text">Objective</span></b><span class="ko-text">QEEG(좌·우뇌)·HRV·NF</span><span class="en-text">QEEG (L·R) · HRV · NF</span></div>
+      <div class="rescard"><span class="rk">③</span><b><span class="ko-text">통합 결과 (MSDI)</span><span class="en-text">Integrated (MSDI)</span></b><span class="ko-text">두 채널 수렴 = 신뢰↑</span><span class="en-text">convergence = confidence↑</span></div>
+    </div>
+
+    <div class="cols" style="align-items:start">
+      <!-- QEEG topomap figure -->
+      <figure class="fig-wrap">
+        <svg viewBox="0 0 380 250" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="QEEG topographic preview">
+          <defs>
+            <radialGradient id="tp1" cx="38%" cy="40%" r="62%">
+              <stop offset="0%" stop-color="var(--hibeta)"/><stop offset="35%" stop-color="var(--beta)"/>
+              <stop offset="62%" stop-color="var(--alpha)"/><stop offset="100%" stop-color="var(--delta)"/>
+            </radialGradient>
+            <radialGradient id="tp2" cx="55%" cy="58%" r="60%">
+              <stop offset="0%" stop-color="var(--theta)"/><stop offset="45%" stop-color="var(--alpha)"/>
+              <stop offset="100%" stop-color="var(--delta)"/>
+            </radialGradient>
+          </defs>
+          <!-- head EO -->
+          <g transform="translate(95,118)">
+            <path d="M0,-66 L8,-74 L-8,-74 Z" fill="none" stroke="var(--ink-3)" stroke-width="1.4"/>
+            <circle r="66" fill="url(#tp1)" stroke="var(--ink-2)" stroke-width="1.6"/>
+            <circle r="66" fill="none" stroke="#fff" stroke-width="1" opacity=".25"/>
+            <g fill="#fff" opacity=".55">
+              <circle cx="-30" cy="-26" r="2"/><circle cx="30" cy="-26" r="2"/>
+              <circle cx="0" cy="-38" r="2"/><circle cx="-38" cy="6" r="2"/>
+              <circle cx="38" cy="6" r="2"/><circle cx="0" cy="0" r="2"/>
+              <circle cx="-26" cy="34" r="2"/><circle cx="26" cy="34" r="2"/><circle cx="0" cy="44" r="2"/>
+            </g>
+            <text y="92" text-anchor="middle" font-size="12" fill="var(--ink-2)" font-weight="700">EO · Eyes Open</text>
+          </g>
+          <!-- head EC -->
+          <g transform="translate(285,118)">
+            <path d="M0,-66 L8,-74 L-8,-74 Z" fill="none" stroke="var(--ink-3)" stroke-width="1.4"/>
+            <circle r="66" fill="url(#tp2)" stroke="var(--ink-2)" stroke-width="1.6"/>
+            <g fill="#fff" opacity=".55">
+              <circle cx="-30" cy="-26" r="2"/><circle cx="30" cy="-26" r="2"/>
+              <circle cx="0" cy="-38" r="2"/><circle cx="-38" cy="6" r="2"/>
+              <circle cx="38" cy="6" r="2"/><circle cx="0" cy="0" r="2"/>
+              <circle cx="-26" cy="34" r="2"/><circle cx="26" cy="34" r="2"/><circle cx="0" cy="44" r="2"/>
+            </g>
+            <text y="92" text-anchor="middle" font-size="12" fill="var(--ink-2)" font-weight="700">EC · Eyes Closed</text>
+          </g>
+        </svg>
+        <!-- legend -->
+        <svg viewBox="0 0 380 26" width="100%" style="margin-top:6px" xmlns="http://www.w3.org/2000/svg">
+          <g font-size="10.5" fill="var(--ink-3)" font-weight="600">
+            <rect x="6" y="6" width="13" height="13" fill="var(--delta)"/><text x="23" y="16">Delta</text>
+            <rect x="70" y="6" width="13" height="13" fill="var(--theta)"/><text x="87" y="16">Theta</text>
+            <rect x="135" y="6" width="13" height="13" fill="var(--alpha)"/><text x="152" y="16">Alpha</text>
+            <rect x="200" y="6" width="13" height="13" fill="var(--beta)"/><text x="217" y="16">Beta</text>
+            <rect x="258" y="6" width="13" height="13" fill="var(--hibeta)"/><text x="275" y="16">Hi-Beta</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="ko-text"><b>19채널 QEEG 미리보기 — 좌·우뇌 모두 측정.</b> 손잡이(오른손/왼손/양손)를 먼저 입력해야 전두 알파 비대칭을 정확히 해석합니다. EC(눈감음)/EO(눈뜸)는 따로 입력합니다. (예시 데이터)</span>
+          <span class="en-text"><b>19-channel QEEG preview — both hemispheres measured.</b> Handedness (R/L/ambi) is entered first so frontal alpha asymmetry is interpreted correctly. EC/EO are entered separately. (illustrative)</span>
+        </figcaption>
+      </figure>
+
+      <!-- Fischer 5-axis developmental bars -->
+      <figure class="fig-wrap">
+        <svg viewBox="0 0 380 250" width="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fischer 5-axis developmental levels">
+          <!-- grid L7..L13 -->
+          <g font-size="9.5" fill="var(--ink-3)">
+            <line x1="120" y1="14" x2="120" y2="214" stroke="var(--line)" stroke-width="1"/>
+            <line x1="360" y1="14" x2="360" y2="214" stroke="var(--line-2)" stroke-width="1"/>
+            <text x="120" y="232" text-anchor="middle">L7</text>
+            <text x="360" y="232" text-anchor="middle">L13</text>
+            <text x="240" y="232" text-anchor="middle"><tspan>developmental level</tspan></text>
+          </g>
+          <!-- 5 axes -->
+          <g font-size="11.5" fill="var(--ink-2)" font-weight="600">
+            <!-- each bar: x from 120, width scaled to level. current vs target marker -->
+            <!-- s1 -->
+            <text x="112" y="36" text-anchor="end">s1 <tspan fill="var(--ink-3)" font-size="9.5">주의</tspan></text>
+            <rect x="120" y="27" width="240" height="11" rx="3" fill="var(--bg-2)"/>
+            <rect x="120" y="27" width="150" height="11" rx="3" fill="var(--accent)"/>
+            <line x1="300" y1="24" x2="300" y2="41" stroke="var(--ink)" stroke-width="2"/>
+            <!-- s2 -->
+            <text x="112" y="74" text-anchor="end">s2 <tspan fill="var(--ink-3)" font-size="9.5">작업기억</tspan></text>
+            <rect x="120" y="65" width="240" height="11" rx="3" fill="var(--bg-2)"/>
+            <rect x="120" y="65" width="120" height="11" rx="3" fill="var(--accent)"/>
+            <line x1="270" y1="62" x2="270" y2="79" stroke="var(--ink)" stroke-width="2"/>
+            <!-- s3 -->
+            <text x="112" y="112" text-anchor="end">s3 <tspan fill="var(--ink-3)" font-size="9.5">정서조절</tspan></text>
+            <rect x="120" y="103" width="240" height="11" rx="3" fill="var(--bg-2)"/>
+            <rect x="120" y="103" width="96" height="11" rx="3" fill="var(--accent)"/>
+            <line x1="240" y1="100" x2="240" y2="117" stroke="var(--ink)" stroke-width="2"/>
+            <!-- s4 -->
+            <text x="112" y="150" text-anchor="end">s4 <tspan fill="var(--ink-3)" font-size="9.5">시간감각</tspan></text>
+            <rect x="120" y="141" width="240" height="11" rx="3" fill="var(--bg-2)"/>
+            <rect x="120" y="141" width="186" height="11" rx="3" fill="var(--accent)"/>
+            <line x1="318" y1="138" x2="318" y2="155" stroke="var(--ink)" stroke-width="2"/>
+            <!-- s5 -->
+            <text x="112" y="188" text-anchor="end">s5 <tspan fill="var(--ink-3)" font-size="9.5">자기인지</tspan></text>
+            <rect x="120" y="179" width="240" height="11" rx="3" fill="var(--bg-2)"/>
+            <rect x="120" y="179" width="132" height="11" rx="3" fill="var(--accent)"/>
+            <line x1="282" y1="176" x2="282" y2="193" stroke="var(--ink)" stroke-width="2"/>
+          </g>
+          <g font-size="9.5" fill="var(--ink-3)">
+            <rect x="120" y="205" width="11" height="9" fill="var(--accent)"/><text x="136" y="213">현재 current</text>
+            <line x1="210" y1="205" x2="210" y2="214" stroke="var(--ink)" stroke-width="2"/><text x="216" y="213">목표 target</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="ko-text"><b>Fischer 발달 5축.</b> 능력을 점수가 아니라 발달 단계(L7–L13)로 봅니다. 현재 단계와 목표 단계의 격차가 훈련 우선순위가 됩니다. (예시)</span>
+          <span class="en-text"><b>Fischer 5-axis development.</b> Ability is read as developmental levels (L7–L13), not scores. The gap between current and target sets training priority. (illustrative)</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PERFORMANCE TYPES ===================== -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Performance profile</div>
+    <h2><span class="ko-text">학습향상의 네 가지 레버</span><span class="en-text">Four levers of learning enhancement</span></h2>
+    <p class="lead small"><span class="ko-text">요구분석은 당신의 향상 레버를 가려냅니다. 레버마다 강화 방법과 우선 훈련이 다릅니다.</span><span class="en-text">The needs-analysis identifies your enhancement lever. Each has a distinct method and first-line training.</span></p>
+    <table class="typ">
+      <thead><tr>
+        <th><span class="ko-text">유형</span><span class="en-text">Type</span></th>
+        <th><span class="ko-text">막는 요인</span><span class="en-text">Blocker</span></th>
+        <th><span class="ko-text">우선 훈련</span><span class="en-text">First-line training</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><b><span class="ko-text">작업기억 확장</span><span class="en-text">WM expansion</span></b><div class="term">Gwm</div></td>
+          <td><span class="ko-text">더 많은 정보를 동시에 — 도달 복잡성 상한 확장</span><span class="en-text">handle more at once — raise the complexity ceiling</span></td>
+          <td><span class="ko-text">적응형 고부하 + 전두-두정 효율</span><span class="en-text">adaptive high-load + efficiency</span></td></tr>
+        <tr><td><b><span class="ko-text">처리속도 가속</span><span class="en-text">Speed acceleration</span></b><div class="term">Gs</div></td>
+          <td><span class="ko-text">같은 이해를 더 빠르게 — 산출·실전 경쟁력</span><span class="en-text">same understanding, faster — output edge</span></td>
+          <td><span class="ko-text">자동화 심화 + 최적 각성</span><span class="en-text">deeper automation + arousal</span></td></tr>
+        <tr><td><b><span class="ko-text">자기조절·전략</span><span class="en-text">Self-regulation</span></b><div class="term">SRL ★</div></td>
+          <td><span class="ko-text">학습을 스스로 운영 — 계획·수행·성찰 순환</span><span class="en-text">run learning yourself — forethought/performance/reflection</span></td>
+          <td><span class="ko-text">명시적 전략 교수 + 코칭</span><span class="en-text">explicit strategy + coaching</span></td></tr>
+        <tr><td><b><span class="ko-text">심화추론·통합</span><span class="en-text">Higher reasoning</span></b><div class="term">Gf / integration</div></td>
+          <td><span class="ko-text">분야를 잇고 새 문제에 원리를 적용 — 고차 사고</span><span class="en-text">connect fields, apply principles to novel problems</span></td>
+          <td><span class="ko-text">토대 위 단계적 추론</span><span class="en-text">scaffolded reasoning</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== START: needs + gated diagnosis/training ===================== -->
+<section>
+  <a id="start"></a>
+  <div class="wrap">
+    <div class="eyebrow">Start</div>
+    <h2><span class="ko-text">요구분석으로 시작합니다</span><span class="en-text">Begin with the needs-analysis</span></h2>
+    <p class="lead small"><span class="ko-text">먼저 무료 요구분석으로 목표와 수행 유형을 봅니다. 그 결과가 진단·훈련으로 그대로 이어집니다.</span><span class="en-text">First, a free needs-analysis maps your goal and type. That result carries into diagnosis and training.</span></p>
+    <div class="cta-row" style="margin-bottom:40px">
+      <a class="cta" href="needs.html"><span class="ko-text">무료 요구분석 (3분)</span><span class="en-text">Free needs-analysis (3 min)</span> →</a>
+    </div>
+
+    <div class="cols">
+      <!-- Diagnosis -->
+      <div class="panel">
+        <h3><span class="ko-text">향상 평가 (Assessment)</span><span class="en-text">Assessment</span></h3>
+        <div class="sub">MSDI · <span class="ko-text">다중출처 진단</span><span class="en-text">multi-source</span></div>
+        <p style="font-size:14px;color:var(--ink-2);margin:0 0 16px">
+          <span class="ko-text">불안·우울·주의 같은 요인이 <b>당신의 수행에 어떻게 영향을 미치는지</b> 분석해, <b>어느 부분을 중심으로 다뤄야 하는지</b>를 가려냅니다. 진단명이 목적이 아니라, 훈련의 방향을 정하는 수단입니다.</span>
+          <span class="en-text">We analyze <b>how factors like anxiety, mood, or attention affect your performance</b>, and identify <b>which area to focus on</b>. A label isn't the goal — it sets the training direction.</span>
+        </p>
+        <ul class="steps">
+          <li><span class="k">01</span><span class="v"><b><span class="ko-text">막는 요인 변별</span><span class="en-text">Differentiate blockers</span></b><span class="ko-text">목표를 막는 것만 정밀 측정</span><span class="en-text">Measure only what blocks the goal</span></span></li>
+          <li><span class="k">02</span><span class="v"><b>QEEG · HRV<span class="ko-text"> (선택)</span><span class="en-text"> (optional)</span></b><span class="ko-text">좌·우뇌 + 손잡이 선입력, 주관·객관 수렴</span><span class="en-text">L·R brain + handedness first; convergence</span></span></li>
+          <li><span class="k">03</span><span class="v"><b><span class="ko-text">발달 단계 보고서</span><span class="en-text">Developmental report</span></b><span class="ko-text">Fischer 5축 + 논문 근거</span><span class="en-text">Fischer 5-axis + citations</span></span></li>
+        </ul>
+        <div class="intake">
+          <p><span class="ko-text">진단 세션은 결제 후 진행됩니다. 요구분석 결과가 그대로 이어집니다.</span><span class="en-text">Diagnosis begins after payment; your needs-analysis carries over.</span></p>
+          <a class="cta" id="btn-dx" onclick="openModule('intake_dx')"><span class="ko-text">진단 신청</span><span class="en-text">Apply — Diagnosis</span></a>
+          <div class="lockmsg" id="lock-dx"></div>
+        </div>
+      </div>
+
+      <!-- Training -->
+      <div class="panel">
+        <h3><span class="ko-text">맞춤 훈련 (Training)</span><span class="en-text">Training</span></h3>
+        <div class="sub">Neurofeedback · <span class="ko-text">발달 scaffold</span><span class="en-text">developmental scaffold</span></div>
+        <p style="font-size:14px;color:var(--ink-2);margin:0 0 16px">
+          <span class="ko-text">진단에서 정한 방향을 바탕으로 <b>훈련 프로토콜</b>을 만들고, <b>정해진 세션 안에서 무엇을 할지</b>를 회기별로 설계합니다. 뉴로피드백은 매 세션, 측정은 주기적으로.</span>
+          <span class="en-text">From the diagnosis direction we build a <b>training protocol</b> and design <b>what each session covers</b> within a fixed count. Neurofeedback every session; measurement periodically.</span>
+        </p>
+        <ul class="steps">
+          <li><span class="k">01</span><span class="v"><b><span class="ko-text">영역 선택</span><span class="en-text">Pick areas</span></b><span class="ko-text">AI 추천 + 임상가 확정</span><span class="en-text">AI-recommended + clinician-confirmed</span></span></li>
+          <li><span class="k">02</span><span class="v"><b><span class="ko-text">세션 설계</span><span class="en-text">Design sessions</span></b><span class="ko-text">5·10·15회기, NF·QEEG 배치</span><span class="en-text">5/10/15 sessions; NF·QEEG placement</span></span></li>
+          <li><span class="k">03</span><span class="v"><b><span class="ko-text">경과 추적·조정</span><span class="en-text">Track & re-route</span></b><span class="ko-text">세션마다 변화 측정 → 방향 재조정</span><span class="en-text">Measure each session → re-route</span></span></li>
+        </ul>
+        <div class="intake">
+          <p><span class="ko-text">훈련은 결제 후 진행됩니다. 진단 결과가 그대로 이어집니다.</span><span class="en-text">Training begins after payment; your diagnosis carries over.</span></p>
+          <a class="cta" id="btn-tx" onclick="openModule('intake_tx')"><span class="ko-text">훈련 신청</span><span class="en-text">Apply — Training</span></a>
+          <div class="lockmsg" id="lock-tx"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EVIDENCE ===================== -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Evidence</div>
+    <h2><span class="ko-text">우리 방법의 과학적 근거</span><span class="en-text">The science behind our method</span></h2>
+    <p class="lead small"><span class="ko-text">뉴로피드백이 뇌를 바꾼다는 것은 고임팩트 저널로 입증되어 있습니다. 근거 강도는 영역마다 다르며, 우리는 그것을 정직하게 공개합니다.</span><span class="en-text">High-impact journals show neurofeedback changes the brain. Evidence strength varies by domain — we disclose it honestly.</span></p>
+    <div class="ev">
+      <div class="e"><h3><span class="ko-text">뉴로피드백은 뇌를 바꾼다</span><span class="en-text">NF changes the brain</span></h3>
+        <p><span class="ko-text">폐회로 뇌 훈련의 작동 원리를 정리한 분야 최고 권위 리뷰.</span><span class="en-text">The landmark review of closed-loop brain training.</span></p>
+        <cite>Sitaram et al., Nature Reviews Neuroscience, 2017</cite></div>
+      <div class="e"><h3><span class="ko-text">주의력 향상 (메타분석)</span><span class="en-text">Attention gains (meta-analysis)</span></h3>
+        <p><span class="ko-text">무선통제연구 메타분석에서 유의한 주의 향상.</span><span class="en-text">Significant attention gains across randomized trials.</span></p>
+        <cite>Imaging Neuroscience (MIT Press), 2023</cite></div>
+      <div class="e"><h3><span class="ko-text">지속되는 뇌 변화</span><span class="en-text">Lasting brain change</span></h3>
+        <p><span class="ko-text">fMRI 뉴로피드백 후 연결성 변화가 추적 시점까지 지속.</span><span class="en-text">Connectivity change persisted into follow-up.</span></p>
+        <cite>Yale, 2023</cite></div>
+      <div class="e"><h3><span class="ko-text">정직한 한계</span><span class="en-text">Honest limits</span></h3>
+        <p><span class="ko-text">주의·임상은 입증, sham 대조는 신중, '최고 수행' 직접 증거는 축적 중. 근거가 강한 프로토콜부터 적용합니다.</span><span class="en-text">Attention/clinical proven; sham-control needs caution; peak-direct evidence is accumulating. We apply best-evidenced protocols first.</span></p>
+        <cite><span class="ko-text">근거 등급 공개 원칙</span><span class="en-text">Transparent evidence-grading</span></cite></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="margin-bottom:14px">BOSTON NEUROMIND<small>Peak Performance</small></div>
+    <p>
+      <span class="ko-text">요구분석은 무료 자기탐색·코칭 도구이며 의학적 진단이 아닙니다. 진단·훈련은 자격을 갖춘 임상가(BCN·PhD)가 진행하는 웰니스·코칭 서비스로, 질병의 진단이나 치료를 대체하지 않습니다. · 故 Kurt Fischer(Harvard GSE) 발달이론 기반.</span>
+      <span class="en-text">The needs-analysis is a free self-exploration/coaching tool, not a medical diagnosis. Diagnosis & training are wellness/coaching services delivered by a qualified clinician (BCN·PhD) and do not replace medical diagnosis or treatment. · Based on the late Kurt Fischer's developmental theory (Harvard GSE).</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ---- language toggle (bnm-lang-sync.js provides getLang/setLang; fallback here) ---- */
+function curLang(){ try{ return (window.getLang && getLang()) || document.body.dataset.lang || 'ko'; }catch(e){ return document.body.dataset.lang||'ko'; } }
+function applyLang(l){ document.body.dataset.lang = l; document.documentElement.lang = l; }
+function toggleLang(){ var l = curLang()==='ko'?'en':'ko'; if(window.setLang){ try{ setLang(l); }catch(e){} } applyLang(l); }
+applyLang(curLang());
+
+/* ---- service gate (login -> consent -> payment). Locked until payment built ---- */
+const SERVICE_LOCKED = true;  /* ★ 결제 완성 후 false */
+const ROUTES = { intake_dx:'result.html', intake_tx:'training.html' };
+const AUTH_PAGE = 'auth.html';                                  /* same-domain peak login */
+const CONSENT_URL = 'https://bostonneuromind.com/consent.html'; /* shared consent (home) */
+
+function lockNotice(){
+  const l=curLang();
+  return l==='ko'
+   ? '진단·훈련은 현재 준비 중입니다. 핵심 모듈을 완성하는 중이며 곧 오픈합니다. 그동안 무료 요구분석을 먼저 경험해 보세요.'
+   : 'Diagnosis & training are coming soon. We are completing the core modules. Meanwhile, try the free needs-analysis.';
+}
+async function gateThen(targetFile){
+  const l=curLang();
+  if(!window.BNMAuth){ alert(l==='ko'?'로그인 모듈 로딩 중입니다. 잠시 후 다시 시도하세요.':'Auth loading, try again.'); return; }
+  const user = await BNMAuth.getUserRetry(4);
+  if(!user){
+    const back = location.origin + location.pathname + '?from=auth';
+    location.href = AUTH_PAGE + '?redirect=' + encodeURIComponent(back); return;
+  }
+  const ok = await BNMAuth.hasConsent(user.id);
+  if(!ok){
+    const back = encodeURIComponent(location.origin + location.pathname);
+    location.href = CONSENT_URL + '?redirect=' + back; return;
+  }
+  /* TODO(gate 3): hasApproval(user.id, 'peak') — payment/admin grant. Until built: */
+  location.href = targetFile;
+}
+function openModule(k){
+  if(SERVICE_LOCKED){ alert(lockNotice()); return; }
+  gateThen(ROUTES[k]);
+}
+/* show small lock hint under buttons while locked */
+(function(){
+  if(SERVICE_LOCKED){
+    const t = curLang()==='ko' ? '🔒 준비 중' : '🔒 Coming soon';
+    var a=document.getElementById('lock-dx'), b=document.getElementById('lock-tx');
+    if(a)a.textContent=t; if(b)b.textContent=t;
+  }
+})();
+</script>
+</body>
+</html>
