@@ -1,3 +1,569 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Learning — 준비 중</title>
-<style>body{{font-family:'Noto Sans KR',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;color:#1F2225;background:#fff;text-align:center}}div{{max-width:440px;padding:30px}}h1{{font-size:26px;font-weight:800}}p{{color:#5C6166;font-size:17px;margin-top:12px;line-height:1.6}}a{{display:inline-block;margin-top:24px;color:#1F2225;font-weight:800;text-decoration:none;border:1.5px solid #1F2225;border-radius:10px;padding:12px 22px}}</style></head>
-<body><div><h1>Learning — <span style="color:#5C6166">준비 중</span></h1><p>이 분과는 완전히 다른 길을 따릅니다. 곧 오픈합니다.<br>지금은 Peak Performance를 먼저 경험해 보세요.</p><a href="../peak/index.html">← Peak Performance</a></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning — 한 걸음씩, 모두의 배움</title>
+<script src="../bnm-lang-sync.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../tc-auth.js?v=1"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,12..72,400;0,12..72,500;0,12..72,600;1,12..72,400&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f2f4ee; --paper2:#e9ede4; --ink:#1d231d; --muted:#5f685c; --line:#dde2d6;
+    --accent:#2f7a5e; --accentSoft:#cfe3d8;
+    --serif:"Newsreader","Georgia",serif;
+    --sans:"Pretendard","Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
+  body[data-lang="ko"] .en{display:none}
+  body[data-lang="en"] .ko{display:none}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+  header{position:sticky;top:0;z-index:40;background:rgba(242,244,238,0);transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(242,244,238,.92);backdrop-filter:blur(8px);border-color:var(--line)}
+  .nav{display:flex;align-items:center;height:78px;gap:30px}
+  .brand{font-family:var(--serif);font-size:20px;font-weight:600;display:flex;align-items:center;gap:10px}
+  .brand .mk{width:11px;height:11px;border-radius:3px;background:var(--accent)}
+  .nav .links{display:flex;gap:30px;margin-left:14px;font-size:14px;color:var(--muted)}
+  .nav .links a:hover{color:var(--ink)}
+  .dd{position:relative;display:inline-flex;align-items:center}
+  .dd .dd-t{cursor:pointer;display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:14px}
+  .dd:hover .dd-t{color:var(--ink)}
+  .dd .dd-t .car{font-size:10px;opacity:.7}
+  .dd .dd-panel{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 46px rgba(40,50,30,.16);padding:8px;min-width:216px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;z-index:50}
+  .dd:hover .dd-panel{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .dd-panel a{padding:11px 14px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+  .dd-panel a small{font-size:12px;font-weight:500;color:var(--muted)}
+  .dd-panel a:hover{background:var(--paper2)}
+  .nav .right{margin-left:auto;display:flex;align-items:center;gap:18px}
+  .lang{display:flex;gap:2px;font-size:12px}
+  .lang button{background:none;border:0;cursor:pointer;color:var(--muted);font-family:var(--sans);font-weight:600;padding:4px 6px;border-radius:6px}
+  .lang button.on{color:var(--ink);background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .cta{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;cursor:pointer;border:0;font-family:var(--sans);transition:transform .15s}
+  .cta:hover{transform:translateY(-2px)}
+  .cta.line{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+  .cta.line:hover{background:var(--ink);color:#fff}
+  .cta.accent{background:var(--accent);color:#fff}
+  /* hero — centered title then full-width painting */
+  .hero{padding:54px 0 0;text-align:center}
+  .label{font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+  h1{font-family:var(--serif);font-weight:500;font-size:58px;line-height:1.1;letter-spacing:-.02em;max-width:880px;margin:0 auto}
+  h1 em{font-style:italic;color:var(--accent)}
+  .hero p.lead{margin:26px auto 34px;font-size:18px;line-height:1.7;color:var(--muted);max-width:560px}
+  .hero .row{display:flex;gap:22px;justify-content:center;align-items:center;margin-bottom:62px}
+  .hero .row a.more{white-space:nowrap;font-size:14.5px;font-weight:600;border-bottom:1px solid var(--accent);padding-bottom:3px}
+  .banner{position:relative;width:100%;max-width:440px;margin:0 auto;padding:0 24px}
+  .banner .art{display:block;width:100%;height:auto;border-radius:6px;border:10px solid #fff;box-shadow:0 40px 90px rgba(40,50,30,.22)}
+  .banner .plate{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--muted);text-align:center}
+  /* statement */
+  .statement{padding:104px 0}
+  .statement p{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1.34;letter-spacing:-.015em;max-width:840px;margin:0 auto;text-align:center;text-wrap:balance}
+  .statement .q{color:var(--accent)}
+  /* two paths */
+  .paths{padding:20px 0 104px}
+  .paths .head{text-align:center;margin-bottom:54px}
+  .paths h2,.who h2,.pricing h2,.closing h2{font-family:var(--serif);font-weight:500;font-size:38px;letter-spacing:-.02em}
+  .paths .head p{color:var(--muted);font-size:16.5px;margin-top:14px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:40px 38px}
+  .pcard .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .pcard h3{font-family:var(--serif);font-size:27px;font-weight:500;margin-bottom:12px}
+  .pcard p{font-size:15px;color:var(--muted);line-height:1.65;margin-bottom:20px}
+  .pcard .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .pcard .tags span{font-size:13px;font-weight:600;color:var(--ink);background:var(--accentSoft);padding:6px 13px;border-radius:999px}
+  /* steps */
+  .steps{padding:0 0 104px}
+  .steps .st{display:grid;grid-template-columns:90px 1fr auto;gap:30px;align-items:baseline;padding:34px 0;border-top:1px solid var(--line)}
+  .steps .st:last-child{border-bottom:1px solid var(--line)}
+  .steps .no{font-family:var(--serif);font-size:30px;color:var(--accent)}
+  .steps h3{font-family:var(--serif);font-size:26px;font-weight:500}
+  .steps .st p{font-size:15.5px;color:var(--muted);max-width:430px;text-align:right}
+  /* who */
+  .who{padding:96px 0;background:var(--paper2)}
+  .who .sub{text-align:center;color:var(--muted);font-size:16.5px;margin:16px auto 50px;max-width:520px}
+  .who h2{text-align:center}
+  .wholist{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .wholist div{background:var(--paper);padding:32px 28px}
+  .wholist .t{font-family:var(--serif);font-size:22px;margin-bottom:8px}
+  .wholist .d{font-size:13.5px;color:var(--muted);line-height:1.55}
+  /* pricing */
+  .pricing{padding:104px 0;text-align:center}
+  .pricing .sub{color:var(--muted);font-size:16.5px;margin:16px auto 50px;max-width:520px}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:780px;margin:0 auto;text-align:left}
+  .plan{border:1px solid var(--line);border-radius:18px;padding:38px 36px;background:#fff}
+  .plan.f{border-color:var(--accent);box-shadow:0 24px 56px rgba(47,122,94,.14)}
+  .plan .pn{font-family:var(--serif);font-size:22px}
+  .plan .pr{font-family:var(--serif);font-size:42px;margin:12px 0 22px}
+  .plan .pr small{font-size:15px;color:var(--muted)}
+  .plan ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:30px}
+  .plan li{font-size:14.5px;color:var(--muted);display:flex;gap:10px}
+  .plan li::before{content:"—";color:var(--accent)}
+  .plan .cta{width:100%;justify-content:center}
+  .closing{padding:120px 0;text-align:center;border-top:1px solid var(--line)}
+  .closing p{color:var(--muted);font-size:17px;margin:18px auto 34px;max-width:480px}
+  footer{padding:46px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  .frow{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .frow .links{display:flex;gap:22px}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(max-width:880px){
+    .two,.plans,.wholist{grid-template-columns:1fr}.nav .links{display:none}
+    h1{font-size:40px}.statement p{font-size:28px}
+    .steps .st{grid-template-columns:56px 1fr;gap:14px}.steps .st p{text-align:left;grid-column:2}
+  }
+
+  /* full-bleed hero override */
+  header{background:var(--paper)!important;border-bottom:1px solid var(--line)!important}
+  .hero{position:relative;min-height:84vh;display:flex;align-items:center;overflow:hidden;padding:0;text-align:left}
+  .hero .bg{position:absolute;inset:0;z-index:0}
+  .hero .bg img{width:100%;height:100%;object-fit:cover;object-position:55% center}
+  .hero .scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(8,12,16,.84) 0%,rgba(8,12,16,.56) 34%,rgba(8,12,16,.12) 60%,rgba(8,12,16,0) 100%)}
+  .hero .inner{position:relative;z-index:2;width:100%}
+  .hero .col{max-width:560px;color:#fff;margin:0}
+  .hero h1{color:#fff}
+  .hero h1 em{color:#9fd0b6}
+  .hero .label{color:#9fd0b6}
+  .hero p.lead{color:rgba(255,255,255,.9);margin:26px 0 36px;max-width:460px}
+  .hero .row{justify-content:flex-start}
+  .hero .row a.more{white-space:nowrap;color:#fff;border-bottom-color:#9fd0b6}
+  .hero .cta.line{color:#fff;border-color:rgba(255,255,255,.6)}
+  .hero .cta.line:hover{background:#fff;color:var(--ink)}
+  .hero .plate{position:absolute;right:26px;bottom:22px;z-index:2;color:rgba(255,255,255,.82);text-align:right;margin:0;font-family:var(--serif);font-style:italic;font-size:13px}
+
+
+  .nav{gap:8px}
+  .mainnav{display:flex;gap:4px;margin-left:6px}
+  .navitem{position:relative}
+  .navitem>a{display:inline-flex;padding:6px 7px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+  .navitem>a:hover{color:var(--ink);background:rgba(0,0,0,.045)}
+  .np{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 46px rgba(40,40,40,.16);padding:8px;min-width:212px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;z-index:60}
+  .navitem:hover .np{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+  .np a{padding:10px 13px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--ink)}
+  .np a:hover{background:var(--paper2)}
+  .right{margin-left:auto;display:flex;align-items:center;gap:7px}
+  .util{font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+  .util:hover{color:var(--ink)}
+  @media(max-width:560px){.mainnav,.util{display:none}}
+
+  .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(20,24,20,.5)}
+  .modal.on{display:flex}
+  .sheet{background:#fff;border-radius:20px;width:380px;max-width:92vw;padding:34px 32px;position:relative;box-shadow:0 30px 70px rgba(20,30,20,.3)}
+  .sheet h3{font-family:var(--serif);font-size:26px;font-weight:600;margin-bottom:6px}
+  .sheet .sub{color:var(--muted);font-size:14px;margin-bottom:22px}
+  .sheet form{display:flex;flex-direction:column;gap:12px}
+  .sheet input{padding:13px 15px;border:1px solid var(--line);border-radius:11px;font-size:14.5px;font-family:var(--sans);outline:none}
+  .sheet input:focus{border-color:var(--accent)}
+  .sheet .cta{width:100%;justify-content:center;margin-top:6px}
+  .sheet .x{position:absolute;top:14px;right:18px;background:none;border:0;font-size:24px;color:var(--muted);cursor:pointer;line-height:1}
+  .sheet .alt{margin-top:18px;font-size:13.5px;color:var(--muted);text-align:center}
+  .sheet .alt a{color:var(--accent);font-weight:600;cursor:pointer}
+  .sheet .ok{display:none;margin-top:14px;padding:12px 14px;border-radius:11px;background:var(--paper2);color:var(--ink);font-size:14px}
+  .dash{position:fixed;inset:0;z-index:150;background:var(--paper);display:none;flex-direction:column;overflow:auto}
+  .dash.on{display:flex}
+  .dbar{display:flex;align-items:center;height:72px;padding:0 40px;border-bottom:1px solid var(--line)}
+  .dbar .brand{font-family:var(--serif);font-size:21px;font-weight:600;display:flex;align-items:center;gap:9px}
+  .dbar .brand .mk{width:11px;height:11px;border-radius:3px;background:var(--accent)}
+  .dbar .out{margin-left:auto;font-size:13.5px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);padding:8px 16px;border-radius:999px;cursor:pointer}
+  .dmain{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px}
+  .dmain h2{font-family:var(--serif);font-weight:500;font-size:38px;letter-spacing:-.02em;margin-bottom:8px;text-align:center;white-space:nowrap}
+  .dmain .ds{color:var(--muted);font-size:16px;margin-bottom:46px;text-align:center}
+  .dcards{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:860px;width:100%}
+  .dcard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:38px 34px;box-shadow:0 16px 40px rgba(40,50,30,.06)}
+  .dcard .k{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .dcard h3{font-family:var(--serif);font-size:30px;font-weight:500;margin-bottom:10px}
+  .dcard p{color:var(--muted);font-size:14.5px;line-height:1.6;margin-bottom:26px}
+  .acts{display:flex;gap:12px}
+  .acts button{flex:1;padding:15px 0;border-radius:13px;border:0;cursor:pointer;font-family:var(--sans);font-size:15px;font-weight:700;transition:transform .15s}
+  .acts button:hover{transform:translateY(-2px)}
+  .acts .diag{background:var(--accent);color:#fff}
+  .acts .train{background:var(--paper2);color:var(--ink);border:1px solid var(--line)}
+  @media(max-width:760px){.dcards{grid-template-columns:1fr}}
+  .right .cta,.right .util{flex:none;white-space:nowrap}
+  .lang{flex:none}
+
+  /* two-tier nav — matches existing TalkCatcher sites */
+  header{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line)}
+  .util-bar{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:7px 30px 0;font-size:11px}
+  .util-bar>a{color:var(--muted);font-weight:600;padding:3px 6px}
+  .util-bar>a:hover{color:var(--ink)}
+  .util-bar .sep{width:1px;height:12px;background:var(--line)}
+  .util-bar .lang{display:flex;gap:2px}
+  .util-bar .lang button{background:none;border:0;cursor:pointer;color:var(--muted);font-weight:700;font-size:11px;padding:3px 7px;border-radius:999px}
+  .util-bar .lang button.on{background:var(--ink);color:#fff}
+  .util-bar .admin{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted);font-weight:700}
+  .util-bar .admin .d{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+  .mainrow{display:flex;align-items:center;flex-wrap:wrap;padding:12px 30px 14px;gap:10px 14px}
+  .mainrow .brand{flex:0 0 auto;font-family:var(--serif);font-size:22px;font-weight:600;display:flex;align-items:center;gap:9px}
+  .mainrow .brand .mk{width:12px;height:12px;border-radius:50%;background:var(--accent)}
+  .cologo{color:var(--accent);display:inline-flex;align-items:center}
+  .co-logo-img{height:30px;width:auto;display:block}
+  .cobrand{font-size:14px;font-weight:700;color:var(--muted);letter-spacing:-.01em}
+  .codiv{width:1px;height:16px;background:var(--line);margin:0 2px}
+  .pills{display:flex;gap:4px;align-items:center;justify-content:center;flex:1 1 100%;order:3;flex-wrap:nowrap}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:12.5px;font-weight:700;color:var(--ink);white-space:nowrap;transition:border-color .15s}
+  .pill:hover{border-color:var(--accent)}
+  .navcta{flex:1 1 auto;display:flex;align-items:center;justify-content:flex-end;gap:10px}
+  .navcta .cta{white-space:nowrap}
+  @media(max-width:720px){.pills{display:none}.util-bar{display:none}}
+
+  /* 본 서비스 = 우측 풀다운, 나머지 = 링크만 */
+  .pills{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:nowrap}
+  .h1{}
+  .hero h1 em{white-space:nowrap}
+  .navlink{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+  .navlink:hover{color:var(--ink)}
+  .ownsvc{position:relative}
+  .own-t{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:var(--sans);font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .own-t .car{font-size:10px;opacity:.85}
+  .own-panel{position:absolute;top:calc(100% + 12px);right:0;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 46px rgba(40,40,40,.16);padding:8px;min-width:226px;display:flex;flex-direction:column;gap:2px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s;z-index:60}
+  .ownsvc:hover .own-panel{opacity:1;visibility:visible;transform:translateY(0)}
+  .own-panel a{padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--ink)}
+  .own-panel a:hover{background:var(--paper2)}
+  @media(max-width:760px){.pills{display:none}.util-bar{display:none}}
+  .picks{display:flex;gap:16px;margin-top:6px;flex-wrap:wrap}
+  .pick{background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3);border-radius:18px;padding:18px 20px;min-width:210px}
+  .pick .pk-h{font-family:var(--serif);font-size:23px;font-weight:500;color:#fff;margin-bottom:12px}
+  .pick .pk-b{display:flex;gap:10px}
+  .pick .pk-b a{flex:1;text-align:center;padding:11px 0;border-radius:11px;font-size:14px;font-weight:700;transition:transform .15s}
+  .pick .pk-b a:first-child{background:var(--accent);color:#fff}
+  .pick .pk-b a:last-child{background:#fff;color:var(--ink)}
+  .pick .pk-b a:hover{transform:translateY(-2px)}
+  .own-panel .grp{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:8px 14px 4px}
+.tc-modal-bg{ position:fixed; inset:0; z-index:9999; display:none;
+      background:rgba(20,15,30,0.5); backdrop-filter:blur(6px);
+      align-items:center; justify-content:center; }
+    .tc-modal-bg.open{ display:flex; }
+    .tc-flow{ position:relative; width:420px; max-width:92vw; background:#fffdf6;
+      border:2px solid #2a2018; border-radius:20px; padding:26px 26px 22px;
+      box-shadow:0 24px 60px rgba(80,50,10,0.28); font-family:'Pretendard','Inter',sans-serif; color:#2a2018; }
+    .tc-flow h2{ font-size:19px; font-weight:800; margin:0 0 4px; }
+    .tc-flow .sub{ font-size:12.5px; color:#6b5d50; margin-bottom:16px; }
+    .tc-x{ position:absolute; top:14px; right:14px; width:28px; height:28px; border-radius:999px;
+      background:#f4ede0; border:1.5px solid rgba(42,32,24,0.13); color:#2a2018; font-size:14px;
+      font-weight:800; cursor:pointer; line-height:1; }
+    .tc-tabs{ display:flex; gap:6px; margin-bottom:16px; background:#f4ede0; padding:4px; border-radius:10px; }
+    .tc-tabs button{ flex:1; padding:9px; border:0; border-radius:7px; background:transparent;
+      color:#6b5d50; font-weight:700; font-size:13px; cursor:pointer; font-family:inherit; }
+    .tc-tabs button.on{ background:var(--tc-accent,#e8702a); color:#fff; }
+    .tc-field{ margin-bottom:13px; }
+    .tc-field label{ display:block; font-size:12px; font-weight:700; color:#6b5d50; margin-bottom:5px; }
+    .tc-field input{ width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid rgba(42,32,24,0.15);
+      background:#fff; color:#2a2018; font-family:inherit; font-size:14px; }
+    .tc-field input:focus{ outline:none; border-color:var(--tc-accent,#e8702a); }
+    .tc-btn{ width:100%; padding:14px; border:0; border-radius:11px; cursor:pointer; font-family:inherit;
+      font-weight:800; font-size:14.5px; background:var(--tc-accent,#e8702a); color:#fff;
+      transition:transform .12s; }
+    .tc-btn:hover{ transform:translateY(-1px); }
+    .tc-btn.ghost{ background:transparent; color:#2a2018; border:1.5px solid rgba(42,32,24,0.18); }
+    .tc-price{ text-align:center; margin-bottom:18px; }
+    .tc-price .amt{ font-size:38px; font-weight:800; }
+    .tc-price .per{ font-size:13px; color:#6b5d50; }
+    .tc-note{ font-size:11.5px; color:#6b5d50; text-align:center; margin-top:12px; line-height:1.5; }
+    .tc-row{ display:flex; gap:10px; margin-top:10px; }
+    .tc-row .tc-btn{ width:auto; flex:1; }
+    .tc-who{ font-size:12px; color:#6b5d50; text-align:center; margin-bottom:14px; }
+    .tc-who b{ color:#2a2018; }
+  .navcta{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-left:auto}
+  .ownsvc{position:relative;flex:0 0 auto}
+  .consent-btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 16px;border-radius:999px;border:1.8px solid var(--accent);background:#fff;color:var(--accent);font-family:var(--sans);font-size:12.5px;font-weight:800;white-space:nowrap;text-decoration:none}
+  .consent-btn:hover{background:var(--accent);color:#fff}
+</style>
+</head>
+<body data-lang="en">
+<div class="tc-modal-bg" id="tcModal">
+    <div class="tc-flow" id="flow" style="--tc-accent:#3f7a52"></div>
+  </div>
+<header id="hdr"><div class="util-bar"><a href="#about"><span class="ko">소개</span><span class="en">About</span></a><a href="#contact"><span class="ko">문의</span><span class="en">Contact</span></a><span class="sep"></span><div class="lang"><button data-l="ko" onclick="window.bnmSetLang&&window.bnmSetLang('ko')">KO</button><button data-l="en" class="on" onclick="window.bnmSetLang&&window.bnmSetLang('en')">EN</button></div><a class="admin" href="admin.html"><span class="d"></span><span class="ko">관리자</span><span class="en">Admin</span></a></div><div class="mainrow"><div class="brand"><a href="https://bostonneuromind.com" style="display:inline-flex;align-items:center"><img class="co-logo-img" src="../assets/logo.svg" alt="Boston Neuromind" /></a><span class="codiv"></span>LearningCatcher</div><nav class="pills"><a class="navlink" href="#top"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2,7 L8,2 L14,7 L14,14 L10,14 L10,10 L6,10 L6,14 L2,14 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span class="ko">홈</span><span class="en">Home</span></a><a class="navlink" href="attention/index.html"><span class="ko">주의력</span><span class="en">Attention</span></a><a class="navlink" href="peak/index.html"><span class="ko">최고수행</span><span class="en">Peak</span></a><a class="navlink" href="https://talkcatcher.com"><span class="ko">상담봇캐쳐</span><span class="en">TalkCatcher</span></a><a class="navlink" href="https://neurocatchers.com/symptomcatcher.html"><span class="ko">증상판별캐쳐</span><span class="en">SymptomCatcher</span></a><a class="navlink" href="https://neurocatchers.com/track"><span class="ko">개별증상캐쳐</span><span class="en">TrackCatcher</span></a><a class="navlink" href="https://modalitycatcher.com"><span class="ko">치료방법캐쳐</span><span class="en">ModalityCatcher</span></a></nav><div class="navcta"><button class="cta line" onclick="window.TC_openFlow&&window.TC_openFlow('login')"><span class="ko">로그인</span><span class="en">Sign in</span></button><button class="cta accent" onclick="window.TC_openFlow&&window.TC_openFlow('signup')"><span class="ko">회원가입</span><span class="en">Sign up</span></button><a class="cta consent-btn" href="https://bostonneuromind.com/auth.html?redirect=https%3A%2F%2Fbostonneuromind.com%2Fconsent.html%3Ffrom%3Dauth"><span class="ko">동의서</span><span class="en">Consent</span></a><div class="ownsvc"><button class="own-t" type="button"><span class="ko">학습 메뉴</span><span class="en">Learning</span> <span class="car">▾</span></button><div class="own-panel"><div class="grp"><span class="ko">학습장애</span><span class="en">Learning difficulties</span></div><a href="#diag-diff"><span class="ko">진단</span><span class="en">Assessment</span></a><a href="#train-diff"><span class="ko">훈련</span><span class="en">Training</span></a><div class="grp"><span class="ko">학습향상</span><span class="en">Learning growth</span></div><a href="#diag-grow"><span class="ko">진단</span><span class="en">Assessment</span></a><a href="#train-grow"><span class="ko">훈련</span><span class="en">Training</span></a></div></div></div></div></header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="bg"><img src="read.png" alt="" /></div>
+  <div class="scrim"></div>
+  <div class="inner wrap"><div class="col">
+    <div class="label"><span class="ko">배움 · 학습</span><span class="en">Learning</span></div>
+    <h1><span class="ko">막막한 공부도,<br><em>한 걸음씩.</em></span><span class="en">Even the hard parts,<br><em>one step at a time.</em></span></h1>
+    <p class="lead"><span class="ko">학습이 더딘 아이도, 더 나아가고 싶은 학생도 — 각자의 속도로 이해하고 성장하도록 돕습니다.</span><span class="en">For learners who struggle and those who want more — grow at your own pace.</span></p>
+    <div class="picks">
+      <div class="pick">
+        <div class="pk-h"><span class="ko">학습장애</span><span class="en">Learning difficulties</span></div>
+        <div class="pk-b">
+          <a href="#diag-diff"><span class="ko">진단</span><span class="en">Assessment</span></a>
+          <a href="#train-diff"><span class="ko">훈련</span><span class="en">Training</span></a>
+        </div>
+      </div>
+      <div class="pick">
+        <div class="pk-h"><span class="ko">학습향상</span><span class="en">Learning growth</span></div>
+        <div class="pk-b">
+          <a href="#diag-grow"><span class="ko">진단</span><span class="en">Assessment</span></a>
+          <a href="#train-grow"><span class="ko">훈련</span><span class="en">Training</span></a>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <div class="plate">J.-H. Fragonard, <span class="ko">『책 읽는 소녀』</span><span class="en">A Young Girl Reading</span></div>
+</section>
+
+<section class="statement">
+  <div class="wrap">
+    <p class="reveal"><span class="ko">한 교실 안에서도 배움의 속도는 저마다 다릅니다. <span class="q">그 다름을 존중하며 함께 나아가요.</span></span><span class="en">In one classroom, every pace of learning differs. <span class="q">We honor that — and move forward together.</span></span></p>
+  </div>
+</section>
+
+<section class="paths" id="paths">
+  <div class="wrap">
+    <div class="head reveal">
+      <h2><span class="ko">두 갈래, 한 동반자</span><span class="en">Two paths, one companion</span></h2>
+      <p><span class="ko">학습 지원이 필요한 길과, 더 높이 가고 싶은 길 — 모두를 위해.</span><span class="en">A path for support, a path for growth — for both.</span></p>
+    </div>
+    <div class="two">
+      <div class="pcard reveal">
+        <div class="k"><span class="ko">학습 지원</span><span class="en">Learning support</span></div>
+        <h3><span class="ko">학습이 더딘 아이에게</span><span class="en">For learners who struggle</span></h3>
+        <p><span class="ko">난독·난산·학습 차이를 위해 — 부드럽고, 적응형이며, 아이의 속도에 맞춰요. 부담은 덜고 이해는 깊게.</span><span class="en">For dyslexia, dyscalculia and learning differences — gentle, adaptive, paced to the child. Less pressure, deeper understanding.</span></p>
+        <div class="tags"><span class="ko">적응형 단계</span><span class="en">Adaptive steps</span><span class="ko">다감각 도구</span><span class="en">Multi-sensory</span><span class="ko">부담 없이</span><span class="en">No pressure</span></div>
+      </div>
+      <div class="pcard reveal">
+        <div class="k"><span class="ko">학습 향상</span><span class="en">Learning growth</span></div>
+        <h3><span class="ko">더 나아가고 싶은 학생에게</span><span class="en">For learners who want more</span></h3>
+        <p><span class="ko">학습 계획·집중·기억으로 진짜 탄력을 만들어요. 오늘의 노력이 내일의 실력으로 쌓이도록.</span><span class="en">Study plans, focus and memory that build real momentum — today's effort compounding into tomorrow's skill.</span></p>
+        <div class="tags"><span class="ko">학습 계획</span><span class="en">Study plans</span><span class="ko">집중 블록</span><span class="en">Focus blocks</span><span class="ko">기억 도구</span><span class="en">Memory aids</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="how">
+  <div class="wrap">
+    <div class="st reveal"><div class="no">01</div><h3><span class="ko">진단</span><span class="en">Assessment</span></h3><p><span class="ko">지금의 출발점과 학습 방식을 차분히 파악해요.</span><span class="en">Understand your starting point and how you learn.</span></p></div>
+    <div class="st reveal"><div class="no">02</div><h3><span class="ko">계획</span><span class="en">Plan</span></h3><p><span class="ko">나에게 맞는, 해낼 만한 주간 계획을 세워요.</span><span class="en">A weekly plan that fits you and feels doable.</span></p></div>
+    <div class="st reveal"><div class="no">03</div><h3><span class="ko">이해</span><span class="en">Understand</span></h3><p><span class="ko">부담 없이 한 걸음씩, 진짜 이해로 쌓아가요.</span><span class="en">Step by step, building real understanding.</span></p></div>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap">
+    <h2 class="reveal"><span class="ko">학교 안과 밖, 모두의 배움</span><span class="en">Learning, in school and beyond</span></h2>
+    <p class="sub reveal"><span class="ko">교실에서, 집에서, 각자의 자리에서 차분히.</span><span class="en">In the classroom, at home, wherever you learn.</span></p>
+    <div class="wholist reveal">
+      <div><div class="t"><span class="ko">학생</span><span class="en">Students</span></div><div class="d"><span class="ko">막힌 부분을 넘어 진짜 이해로.</span><span class="en">Get past the blocks into real understanding.</span></div></div>
+      <div><div class="t"><span class="ko">학부모</span><span class="en">Parents</span></div><div class="d"><span class="ko">아이의 성장을 곁에서 보고 응원해요.</span><span class="en">See and support your child's growth.</span></div></div>
+      <div><div class="t"><span class="ko">교사</span><span class="en">Teachers</span></div><div class="d"><span class="ko">학생별 진도를 한눈에 살펴요.</span><span class="en">Track each learner at a glance.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <h2 class="reveal"><span class="ko">오늘, 한 걸음 시작해요</span><span class="en">Take the first step today</span></h2>
+    <p class="sub reveal"><span class="ko">부담 없이 무료로 시작하고, 필요할 때 더 깊이.</span><span class="en">Start free, go deeper when you're ready.</span></p>
+    <div class="plans">
+      <div class="plan reveal">
+        <div class="pn">Free</div>
+        <div class="pr">₩0</div>
+        <ul><li><span class="ko">학습 진단</span><span class="en">Learning assessment</span></li><li><span class="ko">기본 학습 계획</span><span class="en">Core study plan</span></li><li><span class="ko">진도 기록</span><span class="en">Progress tracking</span></li></ul>
+        <button class="cta line"><span class="ko">무료 시작</span><span class="en">Start free</span></button>
+      </div>
+      <div class="plan f reveal">
+        <div class="pn">Plus</div>
+        <div class="pr">₩14,900<small> / <span class="ko">월</span><span class="en">mo</span></small></div>
+        <ul><li><span class="ko">맞춤 적응형 학습</span><span class="en">Adaptive learning</span></li><li><span class="ko">다감각 도구 · 기억 보조</span><span class="en">Multi-sensory & memory aids</span></li><li><span class="ko">학부모 · 교사 리포트</span><span class="en">Parent & teacher reports</span></li></ul>
+        <button class="cta accent"><span class="ko">Plus 시작</span><span class="en">Go Plus</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2 class="reveal"><span class="ko">배움은 속도가 아니라 방향이에요</span><span class="en">Learning is direction, not speed</span></h2>
+    <p class="reveal"><span class="ko">각자의 속도로, 함께 나아가요. 오늘 첫 진단을 해보세요.</span><span class="en">At your own pace, together. Take your first assessment today.</span></p>
+    <button class="cta accent reveal"><span class="ko">무료로 시작하기</span><span class="en">Start free</span></button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap frow">
+    <a class="brand" href="#top"><span class="mk"></span>Learning</a>
+    <nav class="links">
+      <a href="#paths"><span class="ko">대상</span><span class="en">Who</span></a>
+      <a href="#pricing"><span class="ko">요금</span><span class="en">Pricing</span></a>
+      <a href="#"><span class="ko">문의</span><span class="en">Contact</span></a>
+    </nav>
+    <div>© 2026 Learning</div>
+  </div>
+</footer>
+
+<script>
+  var body=document.body;
+  /* lang via bnm-lang-sync */
+  var hdr=document.getElementById('hdr');var onS=function(){hdr.classList.toggle('scrolled',window.scrollY>30)};onS();
+  window.addEventListener('scroll',onS,{passive:true});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+</script>
+<div class="modal" id="m-signin"><div class="sheet"><button class="x" data-close>&times;</button><h3><span class="ko">로그인</span><span class="en">Sign in</span></h3><div class="sub"><span class="ko">학습 여정을 이어가세요.</span><span class="en">Continue your journey.</span></div><form data-go="dash"><input type="email" placeholder="이메일 / Email" required><input type="password" placeholder="비밀번호 / Password" required><button class="cta accent" type="submit"><span class="ko">로그인</span><span class="en">Sign in</span></button></form><div class="alt"><a data-m="forgot"><span class="ko">비밀번호 찾기</span><span class="en">Forgot password</span></a> · <a data-m="signup"><span class="ko">회원가입</span><span class="en">Sign up</span></a></div></div></div><div class="modal" id="m-signup"><div class="sheet"><button class="x" data-close>&times;</button><h3><span class="ko">회원가입</span><span class="en">Sign up</span></h3><div class="sub"><span class="ko">몇 초면 시작할 수 있어요.</span><span class="en">Start in seconds.</span></div><form data-go="dash"><input type="text" placeholder="이름 / Name" required><input type="email" placeholder="이메일 / Email" required><input type="password" placeholder="비밀번호 / Password" required><button class="cta accent" type="submit"><span class="ko">가입하고 시작</span><span class="en">Create account</span></button></form><div class="alt"><span class="ko">이미 회원이신가요?</span><span class="en">Already a member?</span> <a data-m="signin"><span class="ko">로그인</span><span class="en">Sign in</span></a></div></div></div><div class="modal" id="m-forgot"><div class="sheet"><button class="x" data-close>&times;</button><h3><span class="ko">비밀번호 찾기</span><span class="en">Reset password</span></h3><div class="sub"><span class="ko">가입한 이메일로 재설정 링크를 보내드려요.</span><span class="en">We will email you a reset link.</span></div><form data-go="sent"><input type="email" placeholder="이메일 / Email" required><button class="cta accent" type="submit"><span class="ko">재설정 링크 받기</span><span class="en">Send reset link</span></button></form><div class="ok" id="forgot-ok"><span class="ko">재설정 메일을 보냈어요. 받은편지함을 확인하세요.</span><span class="en">Reset email sent. Check your inbox.</span></div><div class="alt"><a data-m="signin"><span class="ko">로그인으로</span><span class="en">Back to sign in</span></a></div></div></div><div class="dash" id="dash"><div class="dbar"><span class="brand"><span class="mk"></span>Learning</span><button class="out" id="logout"><span class="ko">로그아웃</span><span class="en">Sign out</span></button></div><div class="dmain"><h2><span class="ko">무엇부터 시작할까요?</span><span class="en">Where would you like to begin?</span></h2><div class="ds"><span class="ko">두 갈래 중 선택하고, 진단 또는 훈련을 시작하세요.</span><span class="en">Pick a path, then start an assessment or training.</span></div><div class="dcards"><div class="dcard"><div class="k"><span class="ko">학습 지원</span><span class="en">Support</span></div><h3><span class="ko">학습장애</span><span class="en">Learning difficulties</span></h3><p><span class="ko">난독·난산·학습 차이를 위한 진단과 맞춤 훈련.</span><span class="en">Assessment and adaptive training for learning differences.</span></p><div class="acts"><button class="diag" data-go="학습장애 · 진단|Learning difficulties · Assessment"><span class="ko">진단</span><span class="en">Assessment</span></button><button class="train" data-go="학습장애 · 훈련|Learning difficulties · Training"><span class="ko">훈련</span><span class="en">Training</span></button></div></div><div class="dcard"><div class="k"><span class="ko">학습 향상</span><span class="en">Growth</span></div><h3><span class="ko">학습향상</span><span class="en">Learning growth</span></h3><p><span class="ko">더 나아가고 싶은 학생을 위한 진단과 향상 훈련.</span><span class="en">Assessment and training to push further.</span></p><div class="acts"><button class="diag" data-go="학습향상 · 진단|Learning growth · Assessment"><span class="ko">진단</span><span class="en">Assessment</span></button><button class="train" data-go="학습향상 · 훈련|Learning growth · Training"><span class="ko">훈련</span><span class="en">Training</span></button></div></div></div></div></div><script>(function(){function open(id){document.querySelectorAll(".modal").forEach(function(m){m.classList.remove("on")});var el=document.getElementById("m-"+id);if(el)el.classList.add("on");}function closeAll(){document.querySelectorAll(".modal").forEach(function(m){m.classList.remove("on")});}document.querySelectorAll(".authopen").forEach(function(b){b.addEventListener("click",function(){open(b.getAttribute("data-m"))});});document.querySelectorAll("[data-m]").forEach(function(a){if(a.classList.contains("authopen"))return;a.addEventListener("click",function(e){e.preventDefault();open(a.getAttribute("data-m"));});});document.querySelectorAll("[data-close]").forEach(function(x){x.addEventListener("click",closeAll);});document.querySelectorAll(".modal").forEach(function(m){m.addEventListener("click",function(e){if(e.target===m)closeAll();});});document.querySelectorAll("form[data-go]").forEach(function(f){f.addEventListener("submit",function(e){e.preventDefault();var g=f.getAttribute("data-go");if(g==="dash"){closeAll();document.getElementById("dash").classList.add("on");}else if(g==="sent"){var ok=document.getElementById("forgot-ok");if(ok)ok.style.display="block";}});});var lo=document.getElementById("logout");if(lo)lo.addEventListener("click",function(){document.getElementById("dash").classList.remove("on");});document.querySelectorAll(".acts button").forEach(function(b){b.addEventListener("click",function(){var v=(b.getAttribute("data-go")||"").split("|");var en=document.documentElement.lang==="en";alert((en?"Starting: ":"시작합니다: ")+(en?(v[1]||v[0]):v[0]));});});})();</script>
+<script>
+
+  // ── 인증(TCAuth/Supabase) + 결제(Stripe 구독) + 시작 ── 라이브 adhd.html에서 복사
+  const KEY='learning', START_URL='';
+  const CHECK_ACCESS='https://sepierapapsansprurpr.supabase.co/functions/v1/check-access';
+  const CREATE_CHECKOUT='https://sepierapapsansprurpr.supabase.co/functions/v1/create-checkout';
+  const $ = s => document.querySelector(s);
+  const flow = document.getElementById('flow');
+  const modal = document.getElementById('tcModal');
+  const errHtml = (m) => '<span style="color:#c0392b">'+m+'</span>';
+
+  // Log in / Sign up 버튼이 부르는 전역 함수 (service.jsx → window.TC_openFlow)
+  window.TC_openFlow = function(mode){ modal.classList.add('open'); render(undefined, mode); };
+  function closeFlow(){ modal.classList.remove('open'); }
+  modal.addEventListener('click', (e)=>{ if(e.target===modal) closeFlow(); });
+
+  // Start tracking 버튼 → 메인 서비스 진입. 지금은 START_URL 있으면 이동, 없으면 안내.
+  // 나중에 각 봇 메인 서비스 만들면 START_URL 경로만 채우면 연결됨.
+  window.TC_startService = function(){
+    const ko = document.body.dataset.lang==='ko';
+    if(START_URL){ window.location.href = START_URL; }
+    else { alert(ko ? '메인 서비스는 준비 중입니다.' : 'Main service is coming soon.'); }
+  };
+
+  async function checkAccess(){
+    try {
+      const s = await TCAuth.getSession();
+      if(!s || !s.access_token) return { access:false, reason:'no-session' };
+      const res = await fetch(CHECK_ACCESS, {
+        method:'POST',
+        headers:{ 'Authorization':'Bearer '+s.access_token, 'Content-Type':'application/json' },
+        body: JSON.stringify({ bot: KEY }),
+      });
+      if(!res.ok) return { access:false, reason:'err-'+res.status };
+      return await res.json();
+    } catch(e){ return { access:false, reason:'error' }; }
+  }
+  const emailRe = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+  async function render(notice, mode){
+    let u = null;
+    try { u = (window.TCAuth && TCAuth.configured()) ? await TCAuth.getUser() : null; } catch(e) { u = null; }
+    if(!u || !TCAuth.isVerified(u)) return viewAuth(mode || (u ? 'login' : 'signup'), notice);
+    let acc = await checkAccess();
+    if(!acc.access && /checkout=success/.test(location.search)){
+      await new Promise(r=>setTimeout(r, 2000));
+      acc = await checkAccess();
+    }
+    if(!acc.access) return viewPay(u, acc);
+    return viewStart(u, acc);
+  }
+
+  function viewAuth(mode, notice){
+    mode = mode||'signup';
+    flow.innerHTML = `
+      <button class="tc-x" id="tcClose">×</button>
+      <div class="tc-tabs">
+        <button id="tLogin" class="${mode==='login'?'on':''}"><span class="ko">로그인</span><span class="en">Log in</span></button>
+        <button id="tSignup" class="${mode==='signup'?'on':''}"><span class="ko">회원가입</span><span class="en">Sign up</span></button>
+      </div>
+      <div class="tc-field"><label>Email</label><input id="email" type="email" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="tc-field"><label><span class="ko">비밀번호</span><span class="en">Password</span></label><input id="pw" type="password" placeholder="••••••••" autocomplete="${mode==='signup'?'new-password':'current-password'}"></div>
+      <button class="tc-btn" id="authBtn">${mode==='signup'?'<span class="ko">가입하고 계속 →</span><span class="en">Create account →</span>':'<span class="ko">로그인 →</span><span class="en">Log in →</span>'}</button>
+      <div class="tc-note" id="authMsg">${notice||(mode==='signup'?'<span class="ko">가입 후 확인 메일의 링크를 눌러야 로그인됩니다.</span><span class="en">After signing up, click the link in your email to enable login.</span>':'')}</div>`;
+    $('#tcClose').onclick = closeFlow;
+    $('#tSignup').onclick = ()=>viewAuth('signup');
+    $('#tLogin').onclick = ()=>viewAuth('login');
+    const submit = async ()=>{
+      const ko = document.body.dataset.lang==='ko';
+      const email = $('#email').value.trim().toLowerCase();
+      const pw = $('#pw').value;
+      const msg = $('#authMsg');
+      if(!emailRe.test(email)){ $('#email').focus(); msg.innerHTML = errHtml(ko?'유효한 이메일을 입력해주세요.':'A valid email is required.'); return; }
+      if(!pw || pw.length < 8){ $('#pw').focus(); msg.innerHTML = errHtml(ko?'비밀번호는 8자 이상이어야 해요.':'Password must be at least 8 characters.'); return; }
+      if(!window.TCAuth || !TCAuth.configured()){ msg.innerHTML = errHtml(ko?'인증이 아직 설정되지 않았어요.':'Auth is not configured yet.'); return; }
+      const btn = $('#authBtn'); btn.disabled = true;
+      if(mode==='signup'){
+        const { data, error } = await TCAuth.signUp({ email, password:pw, lang:document.body.dataset.lang });
+        btn.disabled = false;
+        if(error){ msg.innerHTML = errHtml(error.message); return; }
+        if(data && data.session){ render(); return; }
+        viewAuth('login', '<span class="ko">'+email+' 로 확인 메일을 보냈어요. 메일의 링크를 누르면 가입이 완료돼요. 그다음 여기서 로그인하세요.</span><span class="en">We sent a confirmation link to '+email+'. Click it to finish signing up, then log in here.</span>');
+      } else {
+        const { data, error } = await TCAuth.signIn({ email, password:pw });
+        btn.disabled = false;
+        if(error){
+          const notConfirmed = /not confirmed|confirm/i.test(error.message||'');
+          msg.innerHTML = errHtml(notConfirmed
+            ? (ko?'이메일 검증이 아직 안 됐어요. 메일의 링크를 먼저 눌러주세요.':'Email not verified yet — click the link in your email first.')
+            : (ko?'이메일 또는 비밀번호가 맞지 않아요.':'Email or password is incorrect.'));
+          return;
+        }
+        render();
+      }
+    };
+    $('#authBtn').onclick = submit;
+    $('#pw').addEventListener('keypress', e=>{ if(e.key==='Enter') submit(); });
+  }
+
+  function viewPay(u, acc){
+    const ko = document.body.dataset.lang==='ko';
+    const back = /checkout=cancel/.test(location.search)
+      ? '<span class="ko">결제를 취소했어요. 다시 시도할 수 있어요.</span><span class="en">Checkout canceled. You can try again.</span>'
+      : (/checkout=success/.test(location.search)
+          ? '<span class="ko">구독 활성화 중이에요. 잠시 후 새로고침 해주세요.</span><span class="en">Activating your subscription… please refresh in a moment.</span>'
+          : '');
+    flow.innerHTML = `
+      <button class="tc-x" id="tcClose">×</button>
+      <h2><span class="ko">시작하기</span><span class="en">Get started</span></h2>
+      <div class="sub"><span class="ko">월 구독 · 24시간 무료체험</span><span class="en">Monthly subscription · 24-hour free trial</span></div>
+      <div class="tc-price"><span class="amt">$10</span> <span class="per"><span class="ko">/ 월</span><span class="en">/ mo</span></span></div>
+      <button class="tc-btn" id="payBtn"><span class="ko">무료체험 시작 →</span><span class="en">Start free trial →</span></button>
+      <div class="tc-row"><button class="tc-btn ghost" id="logout"><span class="ko">로그아웃</span><span class="en">Log out</span></button></div>
+      <div class="tc-note"><span class="ko">24시간 무료 후 월 $10. 언제든 해지.</span><span class="en">Free for 24h, then $10/mo. Cancel anytime.</span> ${back}</div>`;
+    $('#tcClose').onclick = closeFlow;
+    $('#payBtn').onclick = async ()=>{
+      const btn = $('#payBtn'); btn.disabled = true;
+      btn.innerHTML = ko?'결제 페이지로 이동 중…':'Redirecting to checkout…';
+      try {
+        const s = await TCAuth.getSession();
+        const res = await fetch(CREATE_CHECKOUT, {
+          method:'POST',
+          headers:{ 'Authorization':'Bearer '+((s&&s.access_token)||''), 'Content-Type':'application/json' },
+          body: JSON.stringify({ bot: KEY, return_url: location.href.split('?')[0] }),
+        });
+        const data = await res.json().catch(()=>({}));
+        if(data && data.url){ location.href = data.url; return; }
+        btn.disabled = false; btn.innerHTML = '<span class="ko">무료체험 시작 →</span><span class="en">Start free trial →</span>';
+        $('.tc-note').innerHTML = errHtml(ko?'결제 세션 생성 실패. 다시 시도해주세요.':'Could not start checkout. Please try again.');
+      } catch(e){
+        btn.disabled = false; btn.innerHTML = '<span class="ko">무료체험 시작 →</span><span class="en">Start free trial →</span>';
+      }
+    };
+    $('#logout').onclick = async ()=>{ if(window.TCAuth) await TCAuth.signOut(); render(); };
+  }
+
+  function viewStart(u, acc){
+    acc = acc || {};
+    const RL = { admin:['관리자','Admin'], comp:['무료 제공','Comp'], trialing:['무료체험 중','Trial'], active:['구독 중','Subscribed'] };
+    const r = RL[acc.reason] || ['이용 중','Active'];
+    flow.innerHTML = `
+      <button class="tc-x" id="tcClose">×</button>
+      <div class="tc-who"><span class="ko">로그인됨</span><span class="en">Signed in</span> · <b>${u.email}</b> · <span style="color:#e8702a">✓ <span class="ko">${r[0]}</span><span class="en">${r[1]}</span></span></div>
+      <h2><span class="ko">시작하기</span><span class="en">Start</span></h2>
+      <div class="sub"><span class="ko">측정·추적 화면으로 이동합니다.</span><span class="en">Open the measurement & tracking screen.</span></div>
+      <button class="tc-btn" id="startBtn"><span class="ko">시작 →</span><span class="en">Start →</span></button>
+      <div class="tc-row"><button class="tc-btn ghost" id="logout"><span class="ko">로그아웃</span><span class="en">Log out</span></button></div>`;
+    $('#tcClose').onclick = closeFlow;
+    $('#startBtn').onclick = ()=>{
+      if(START_URL){ window.location.href = START_URL; }
+      else { alert(document.body.dataset.lang==='ko' ? '실행 화면은 준비 중입니다.' : 'Session is coming soon.'); }
+    };
+    $('#logout').onclick = async ()=>{ if(window.TCAuth) await TCAuth.signOut(); render(); };
+  }
+
+  if(window.TCAuth && TCAuth.configured()) TCAuth.onChange(()=>{ if(modal.classList.contains('open')) render(); });
+  
+</script>
+</body>
+</html>

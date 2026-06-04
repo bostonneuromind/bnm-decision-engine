@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분과 관리자 (기밀)</title>
+<style>
+  :root{--bg:#FAFAFA;--card:#FFFFFF;--ink:#1F2225;--ink-sub:#5C6166;--border:#D9DDE1;--point:#2E5A7A;--point-dark:#1F2225;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;font-size:17px;line-height:1.7;min-height:100vh;padding:40px 20px 80px}
+  .container{max-width:880px;margin:0 auto}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50}
+  .langbtn{border:1px solid var(--border);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+  .login{max-width:400px;margin:120px auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:34px}
+  .login h2{font-size:20px;font-weight:800;margin-bottom:16px}
+  .login input{width:100%;padding:13px;border:1px solid var(--border);border-radius:10px;font-size:16px;font-family:inherit;margin-bottom:12px}
+  .login button{width:100%;min-height:42px;padding:14px;background:var(--point);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+  .login button:hover{background:var(--point-dark)}
+  .err{color:var(--point);font-size:14px;margin-top:8px}
+  .box{display:none}.box.show{display:block}
+  .back{display:inline-block;color:var(--ink-sub);text-decoration:none;font-weight:700;font-size:14px;margin-bottom:16px}
+  h1{font-size:28px;font-weight:800;margin-bottom:6px}
+  .sub{font-size:15px;color:var(--ink-sub);margin-bottom:26px}
+  .secret{background:#F4F5F6;border:1px solid var(--point);border-radius:10px;padding:11px 16px;margin-bottom:22px;font-size:13.5px;font-weight:700;color:var(--point-dark)}
+  .group-t{font-size:14px;font-weight:800;color:var(--ink-sub);letter-spacing:.04em;text-transform:uppercase;margin:24px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .card{background:#fff;border:1.5px solid var(--point);border-radius:16px;padding:22px;text-decoration:none;color:inherit;transition:.15s;display:block;position:relative}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(46,90,122,.10)}
+  .card.soon{border-color:var(--border);opacity:.7;cursor:not-allowed}
+  .card .ic{width:50px;height:50px;border-radius:13px;background:var(--point);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px}
+  .card.soon .ic{background:#B7BCC2}
+  .card h3{font-size:18px;font-weight:800;margin-bottom:5px}
+  .card p{font-size:13px;color:var(--ink-sub);line-height:1.55}
+  .card .ar{margin-top:12px;font-size:13px;font-weight:800;color:var(--point)}
+  .card.soon .ar{color:#9AA3AB}
+  .lockb{position:absolute;top:16px;right:16px;font-size:11px;font-weight:800;border:1px solid var(--border);border-radius:999px;padding:2px 9px;color:var(--ink-sub)}
+</style>
+<script src="/bnm-lang-sync.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../tc-auth.js?v=1"></script>
+<script src="../service-admin.js?v=2"></script>
+</head>
+<body data-lang="ko">
+<div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
+<div class="container">
+  <div class="login" id="loginBox">
+    <h2><span class="ko-text">분과 관리자</span><span class="en-text">Department Admin</span></h2>
+    <input type="password" id="pw" placeholder="Password">
+    <button id="goBtn"><span class="ko-text">들어가기</span><span class="en-text">Enter</span></button>
+    <div class="err" id="err"></div>
+  </div>
+  <div class="box" id="adminBox">
+    <a class="back" href="/admin.html">← <span class="ko-text">관리자 홈</span><span class="en-text">Admin home</span></a>
+    <div class="secret">🔒 <span class="ko-text">기밀 — 임상가 전용. 분과별 진단·훈련·알고리즘·매뉴얼 + 사용자 관리.</span><span class="en-text">Confidential — clinicians only.</span></div>
+    <h1><span class="ko-text">분과 관리자</span><span class="en-text">Department Admin</span></h1>
+    <p class="sub"><span class="ko-text">Attention 분과 — 집중·주의 발달. CNA v7 엔진.</span><span class="en-text">Attention department — focus & attention. CNA v7.</span></p>
+    <div class="group-t"><span class="ko-text">분과</span><span class="en-text">Department</span></div>
+    <div class="grid"><a class="card" href="https://decision.neurocatchers.com/attention/admin/index.html"><div class="ic">🧭</div><h3>Attention</h3><p><span class="ko-text">주의 — 집중·억제·전환</span><span class="en-text">attention — focus, inhibition, shifting</span></p><div class="ar">Open →</div></a></div>
+    <div class="group-t"><span class="ko-text">사용자 관리</span><span class="en-text">Users</span></div>
+    <div id="adminMount" style="margin-bottom:18px"></div>
+    <div class="grid">
+      <a class="card" href="https://decision.neurocatchers.com/api/health" target="_blank">
+        <div class="ic">📊</div>
+        <h3><span class="ko-text">엔진 상태 · 진화</span><span class="en-text">Engine status</span></h3>
+        <p><span class="ko-text">episode_count(누적 케이스) · cna/persistence 작동 확인</span><span class="en-text">episode_count · health</span></p>
+        <div class="ar">Open →</div>
+      </a>
+      <div class="card soon">
+        <span class="lockb"><span class="ko-text">준비 중</span><span class="en-text">Soon</span></span>
+        <div class="ic">👥</div>
+        <h3><span class="ko-text">케이스·환자 목록</span><span class="en-text">Cases / Clients</span></h3>
+        <p><span class="ko-text">cna_clients · outcomes 목록 (엔진 데이터 연결 후)</span><span class="en-text">after data wiring</span></p>
+        <div class="ar"><span class="ko-text">곧 오픈</span><span class="en-text">Coming soon</span></div>
+      </div>
+    </div>
+    <p style="margin-top:30px;font-size:13px;color:var(--ink-sub);border-top:1px solid var(--border);padding-top:14px">Boston Neuromind LLC · <span class="ko-text">분과 관리자 · 기밀</span><span class="en-text">Department Admin · Confidential</span> · 2026</p>
+  </div>
+</div>
+<script>
+function setLang(l){document.body.setAttribute('data-lang',l);}
+function getLang(){return document.body.getAttribute('data-lang')||'ko';}
+var pw=document.getElementById('pw'),lb=document.getElementById('loginBox'),ab=document.getElementById('adminBox'),er=document.getElementById('err');
+function go(){if(pw.value==='bnm1#'){sessionStorage.setItem('bnmAdminOK','1');lb.style.display='none';ab.className='box show';mountUsers();}else{er.textContent='Wrong password';}}
+function mountUsers(){ if(window.TCAdmin) window.TCAdmin.init({ botKey:'attention', mount:document.getElementById('adminMount') }); }
+document.getElementById('goBtn').addEventListener('click',go);
+pw.addEventListener('keypress',function(e){if(e.key==='Enter')go();});
+if(sessionStorage.getItem('bnmAdminOK')==='1'){lb.style.display='none';ab.className='box show';mountUsers();}
+pw.focus();
+</script>
+</body>
+</html>
