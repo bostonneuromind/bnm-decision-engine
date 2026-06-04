@@ -33,6 +33,7 @@
   .en-text{display:none}
   body[data-lang=en] .en-text{display:inline}
   body[data-lang=en] .ko-text{display:none}
+  tspan.en-text{display:none}tspan.ko-text{display:inline}body[data-lang=en] tspan.en-text{display:inline}body[data-lang=en] tspan.ko-text{display:none}
   body[data-lang=en] .ko-blk{display:none}
   .en-blk{display:none}
   body[data-lang=en] .en-blk{display:block}
@@ -349,8 +350,8 @@
             <line x1="282" y1="176" x2="282" y2="193" stroke="var(--ink)" stroke-width="2"/>
           </g>
           <g font-size="9.5" fill="var(--ink-3)">
-            <rect x="120" y="205" width="11" height="9" fill="var(--accent)"/><text x="136" y="213">현재 current</text>
-            <line x1="210" y1="205" x2="210" y2="214" stroke="var(--ink)" stroke-width="2"/><text x="216" y="213">목표 target</text>
+            <rect x="120" y="205" width="11" height="9" fill="var(--accent)"/><text x="136" y="213"><tspan class="ko-text">현재</tspan><tspan class="en-text">current</tspan></text>
+            <line x1="210" y1="205" x2="210" y2="214" stroke="var(--ink)" stroke-width="2"/><text x="216" y="213"><tspan class="ko-text">목표</tspan><tspan class="en-text">target</tspan></text>
           </g>
         </svg>
         <figcaption>

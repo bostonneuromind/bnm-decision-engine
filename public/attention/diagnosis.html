@@ -17,6 +17,7 @@
   body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif KR","Pretendard",Georgia,serif;font-size:20px;line-height:1.92;letter-spacing:.005em}
   h1,h2,h3,.brand,.eyebrow,.sec-no,.nlinks,.lang,.lab,.toc,table.dt th,.legend{font-family:"Pretendard","Noto Sans KR",system-ui,sans-serif;letter-spacing:0}
   .en-text{display:none}body[data-lang=en] .en-text{display:inline}body[data-lang=en] .ko-text{display:none}
+  tspan.en-text{display:none}tspan.ko-text{display:inline}body[data-lang=en] tspan.en-text{display:inline}body[data-lang=en] tspan.ko-text{display:none}
   body[data-lang=en] .ko-blk{display:none}.en-blk{display:none}body[data-lang=en] .en-blk{display:block}
   .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(7px);border-bottom:1px solid var(--line)}
   .nav-in{max-width:1020px;margin:0 auto;padding:0 30px;height:62px;display:flex;align-items:center;justify-content:space-between}
@@ -126,22 +127,22 @@
     <svg viewBox="0 0 920 230" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <g font-family="Pretendard,system-ui" font-size="12.5">
         <rect x="20" y="40" width="270" height="150" rx="12" fill="#fff" stroke="#185fa5" stroke-width="1.4"/>
-        <text x="155" y="68" text-anchor="middle" font-size="14" fill="#185fa5" font-weight="500">경계 Alerting</text>
-        <text x="155" y="94" text-anchor="middle" font-size="12" fill="#454b52">각성 상태 유지</text>
-        <text x="155" y="116" text-anchor="middle" font-size="11" fill="#6b727a">노르에피네프린 (NE)</text>
-        <text x="155" y="136" text-anchor="middle" font-size="11" fill="#6b727a">전두–두정–시상</text>
+        <text x="155" y="68" text-anchor="middle" font-size="14" fill="#185fa5" font-weight="500"><tspan class="ko-text">경계</tspan><tspan class="en-text">Alerting</tspan></text>
+        <text x="155" y="94" text-anchor="middle" font-size="12" fill="#454b52"><tspan class="ko-text">각성 상태 유지</tspan><tspan class="en-text">Maintaining arousal</tspan></text>
+        <text x="155" y="116" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">노르에피네프린 (NE)</tspan><tspan class="en-text">Norepinephrine (NE)</tspan></text>
+        <text x="155" y="136" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">전두–두정–시상</tspan><tspan class="en-text">Frontal–parietal–thalamic</tspan></text>
         <text x="155" y="166" text-anchor="middle" font-size="11" fill="#6b727a">tonic / phasic alertness</text>
         <rect x="325" y="40" width="270" height="150" rx="12" fill="#fff" stroke="#1d9e75" stroke-width="1.4"/>
-        <text x="460" y="68" text-anchor="middle" font-size="14" fill="#0f6e56" font-weight="500">지향 Orienting</text>
-        <text x="460" y="94" text-anchor="middle" font-size="12" fill="#454b52">자극 선택·전환</text>
-        <text x="460" y="116" text-anchor="middle" font-size="11" fill="#6b727a">아세틸콜린 (ACh)</text>
-        <text x="460" y="136" text-anchor="middle" font-size="11" fill="#6b727a">두정엽·상구·전두안구야</text>
+        <text x="460" y="68" text-anchor="middle" font-size="14" fill="#0f6e56" font-weight="500"><tspan class="ko-text">지향</tspan><tspan class="en-text">Orienting</tspan></text>
+        <text x="460" y="94" text-anchor="middle" font-size="12" fill="#454b52"><tspan class="ko-text">자극 선택·전환</tspan><tspan class="en-text">Stimulus selection / shifting</tspan></text>
+        <text x="460" y="116" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">아세틸콜린 (ACh)</tspan><tspan class="en-text">Acetylcholine (ACh)</tspan></text>
+        <text x="460" y="136" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">두정엽·상구·전두안구야</tspan><tspan class="en-text">Parietal · superior colliculus · FEF</tspan></text>
         <text x="460" y="166" text-anchor="middle" font-size="11" fill="#6b727a">disengage–move–engage</text>
         <rect x="630" y="40" width="270" height="150" rx="12" fill="#fff" stroke="#534ab7" stroke-width="1.4"/>
-        <text x="765" y="68" text-anchor="middle" font-size="14" fill="#3c3489" font-weight="500">집행 통제 Executive</text>
-        <text x="765" y="94" text-anchor="middle" font-size="12" fill="#454b52">갈등 해소·목표 유지</text>
-        <text x="765" y="116" text-anchor="middle" font-size="11" fill="#6b727a">도파민 (DA)</text>
-        <text x="765" y="136" text-anchor="middle" font-size="11" fill="#6b727a">전대상회(ACC)·전전두</text>
+        <text x="765" y="68" text-anchor="middle" font-size="14" fill="#3c3489" font-weight="500"><tspan class="ko-text">집행 통제</tspan><tspan class="en-text">Executive</tspan></text>
+        <text x="765" y="94" text-anchor="middle" font-size="12" fill="#454b52"><tspan class="ko-text">갈등 해소·목표 유지</tspan><tspan class="en-text">Conflict resolution / goal maintenance</tspan></text>
+        <text x="765" y="116" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">도파민 (DA)</tspan><tspan class="en-text">Dopamine (DA)</tspan></text>
+        <text x="765" y="136" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">전대상회(ACC)·전전두</tspan><tspan class="en-text">ACC · prefrontal</tspan></text>
         <text x="765" y="166" text-anchor="middle" font-size="11" fill="#6b727a">conflict resolution</text>
       </g>
     </svg>
@@ -152,20 +153,20 @@
     <div class="lab">Figure 2 · 주의 네트워크 검사(ANT) — 세 네트워크의 효율은 독립적으로 측정된다</div>
     <svg viewBox="0 0 900 230" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <g font-family="Pretendard,system-ui" font-size="12" fill="#1a1d21">
-        <text x="0" y="14" font-size="11" fill="#6b727a">ANT 네트워크 점수 (반응시간 차이, ms) — 값이 클수록 그 네트워크 효율이 낮음 · 두 사례 비교</text>
+        <text x="0" y="14" font-size="11" fill="#6b727a"><tspan class="ko-text">ANT 네트워크 점수 (반응시간 차이, ms) — 값이 클수록 그 네트워크 효율이 낮음 · 두 사례 비교</tspan><tspan class="en-text">ANT network scores (RT difference, ms) — higher = lower efficiency · two cases compared</tspan></text>
         <line x1="160" y1="40" x2="160" y2="200" stroke="#d9dde1"/>
         <line x1="160" y1="200" x2="860" y2="200" stroke="#d9dde1"/>
         <!-- alerting -->
-        <text x="150" y="70" text-anchor="end" font-size="12.5">경계 Alerting</text>
-        <rect x="160" y="58" width="120" height="18" rx="3" fill="#185fa5"/><text x="290" y="72" font-size="11" fill="#185fa5">사례A 42</text>
-        <rect x="160" y="80" width="320" height="18" rx="3" fill="#85B7EB"/><text x="490" y="94" font-size="11" fill="#185fa5">사례B 112</text>
+        <text x="150" y="70" text-anchor="end" font-size="12.5"><tspan class="ko-text">경계</tspan><tspan class="en-text">Alerting</tspan></text>
+        <rect x="160" y="58" width="120" height="18" rx="3" fill="#185fa5"/><text x="290" y="72" font-size="11" fill="#185fa5"><tspan class="ko-text">사례A 42</tspan><tspan class="en-text">Case A 42</tspan></text>
+        <rect x="160" y="80" width="320" height="18" rx="3" fill="#85B7EB"/><text x="490" y="94" font-size="11" fill="#185fa5"><tspan class="ko-text">사례B 112</tspan><tspan class="en-text">Case B 112</tspan></text>
         <!-- orienting -->
-        <text x="150" y="130" text-anchor="end" font-size="12.5">지향 Orienting</text>
-        <rect x="160" y="118" width="300" height="18" rx="3" fill="#1d9e75"/><text x="470" y="132" font-size="11" fill="#0f6e56">사례A 98</text>
-        <rect x="160" y="140" width="130" height="18" rx="3" fill="#5DCAA5"/><text x="300" y="154" font-size="11" fill="#0f6e56">사례B 46</text>
+        <text x="150" y="130" text-anchor="end" font-size="12.5"><tspan class="ko-text">지향</tspan><tspan class="en-text">Orienting</tspan></text>
+        <rect x="160" y="118" width="300" height="18" rx="3" fill="#1d9e75"/><text x="470" y="132" font-size="11" fill="#0f6e56"><tspan class="ko-text">사례A 98</tspan><tspan class="en-text">Case A 98</tspan></text>
+        <rect x="160" y="140" width="130" height="18" rx="3" fill="#5DCAA5"/><text x="300" y="154" font-size="11" fill="#0f6e56"><tspan class="ko-text">사례B 46</tspan><tspan class="en-text">Case B 46</tspan></text>
         <!-- executive -->
-        <text x="150" y="190" text-anchor="end" font-size="12.5">집행 Executive</text>
-        <rect x="160" y="178" width="150" height="14" rx="3" fill="#534ab7"/><text x="320" y="190" font-size="11" fill="#3c3489">사례A 70</text>
+        <text x="150" y="190" text-anchor="end" font-size="12.5"><tspan class="ko-text">집행</tspan><tspan class="en-text">Executive</tspan></text>
+        <rect x="160" y="178" width="150" height="14" rx="3" fill="#534ab7"/><text x="320" y="190" font-size="11" fill="#3c3489"><tspan class="ko-text">사례A 70</tspan><tspan class="en-text">Case A 70</tspan></text>
         <rect x="160" y="178" width="150" height="14" rx="3" fill="#534ab7" opacity="0"/>
       </g>
     </svg>
@@ -204,8 +205,8 @@
         <path d="M0,-92 L11,-104 L-11,-104 Z" fill="none" stroke="#6b727a" stroke-width="1.3"/>
         <circle r="92" fill="#fafbfb" stroke="#454b52" stroke-width="1.6"/>
         <line x1="-92" y1="0" x2="92" y2="0" stroke="#e8ebee"/><line x1="0" y1="-92" x2="0" y2="92" stroke="#e8ebee"/>
-        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8">전두 anterior</text>
-        <text x="-72" y="4" font-size="9" fill="#9aa1a8">좌 L</text><text x="60" y="4" font-size="9" fill="#9aa1a8">R 우</text>
+        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8"><tspan class="ko-text">전두</tspan><tspan class="en-text">anterior</tspan></text>
+        <text x="-72" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">좌</tspan><tspan class="en-text">L</tspan></text><text x="60" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">우</tspan><tspan class="en-text">R</tspan></text>
         <circle cx="-36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-44" r="2.4" fill="#c2c7cc"/><circle cx="-46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="0" r="2.4" fill="#c2c7cc"/><circle cx="-30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="52" r="2.4" fill="#c2c7cc"/><circle cx="-22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-58" r="13" fill="#3f6fb0" opacity="0.22" stroke="#3f6fb0" stroke-width="1.6"/><text x="0" y="-75" text-anchor="middle" font-size="11" fill="#3f6fb0" font-weight="700">Fz &uarr;</text><circle cx="0" cy="0" r="13" fill="#3f6fb0" opacity="0.22" stroke="#3f6fb0" stroke-width="1.6"/><text x="0" y="-17" text-anchor="middle" font-size="11" fill="#3f6fb0" font-weight="700">Cz &uarr;</text>
       </g>
       <g font-family="Pretendard,system-ui"><text x="300" y="96" font-size="13.5" fill="#1a1d21" font-weight="500"><tspan class="ko-text">소견: 저각성 (전두 서파↑)</tspan><tspan class="en-text">Finding: under-arousal</tspan></text></g>
@@ -245,8 +246,8 @@
         <path d="M0,-92 L11,-104 L-11,-104 Z" fill="none" stroke="#6b727a" stroke-width="1.3"/>
         <circle r="92" fill="#fafbfb" stroke="#454b52" stroke-width="1.6"/>
         <line x1="-92" y1="0" x2="92" y2="0" stroke="#e8ebee"/><line x1="0" y1="-92" x2="0" y2="92" stroke="#e8ebee"/>
-        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8">전두 anterior</text>
-        <text x="-72" y="4" font-size="9" fill="#9aa1a8">좌 L</text><text x="60" y="4" font-size="9" fill="#9aa1a8">R 우</text>
+        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8"><tspan class="ko-text">전두</tspan><tspan class="en-text">anterior</tspan></text>
+        <text x="-72" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">좌</tspan><tspan class="en-text">L</tspan></text><text x="60" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">우</tspan><tspan class="en-text">R</tspan></text>
         <circle cx="-36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-44" r="2.4" fill="#c2c7cc"/><circle cx="-46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="0" r="2.4" fill="#c2c7cc"/><circle cx="-30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="52" r="2.4" fill="#c2c7cc"/><circle cx="-22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="-30" cy="40" r="13" fill="#4a9c8c" opacity="0.22" stroke="#4a9c8c" stroke-width="1.6"/><text x="-30" y="23" text-anchor="middle" font-size="11" fill="#4a9c8c" font-weight="700">P3 &uarr;</text><circle cx="30" cy="40" r="13" fill="#4a9c8c" opacity="0.22" stroke="#4a9c8c" stroke-width="1.6"/><text x="30" y="23" text-anchor="middle" font-size="11" fill="#4a9c8c" font-weight="700">P4 &uarr;</text>
       </g>
       <g font-family="Pretendard,system-ui"><text x="300" y="96" font-size="13.5" fill="#1a1d21" font-weight="500"><tspan class="ko-text">소견: 두정 알파 반응성 이상</tspan><tspan class="en-text">Finding: parietal alpha dysregulation</tspan></text></g>
@@ -286,8 +287,8 @@
         <path d="M0,-92 L11,-104 L-11,-104 Z" fill="none" stroke="#6b727a" stroke-width="1.3"/>
         <circle r="92" fill="#fafbfb" stroke="#454b52" stroke-width="1.6"/>
         <line x1="-92" y1="0" x2="92" y2="0" stroke="#e8ebee"/><line x1="0" y1="-92" x2="0" y2="92" stroke="#e8ebee"/>
-        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8">전두 anterior</text>
-        <text x="-72" y="4" font-size="9" fill="#9aa1a8">좌 L</text><text x="60" y="4" font-size="9" fill="#9aa1a8">R 우</text>
+        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8"><tspan class="ko-text">전두</tspan><tspan class="en-text">anterior</tspan></text>
+        <text x="-72" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">좌</tspan><tspan class="en-text">L</tspan></text><text x="60" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">우</tspan><tspan class="en-text">R</tspan></text>
         <circle cx="-36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-44" r="2.4" fill="#c2c7cc"/><circle cx="-46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="0" r="2.4" fill="#c2c7cc"/><circle cx="-30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="52" r="2.4" fill="#c2c7cc"/><circle cx="-22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-58" r="13" fill="#534ab7" opacity="0.22" stroke="#534ab7" stroke-width="1.6"/><text x="0" y="-75" text-anchor="middle" font-size="11" fill="#534ab7" font-weight="700">Fz &uarr;</text><circle cx="-46" cy="-44" r="13" fill="#534ab7" opacity="0.22" stroke="#534ab7" stroke-width="1.6"/><text x="-46" y="-61" text-anchor="middle" font-size="11" fill="#534ab7" font-weight="700">F3 &uarr;</text>
       </g>
       <g font-family="Pretendard,system-ui"><text x="300" y="96" font-size="13.5" fill="#1a1d21" font-weight="500"><tspan class="ko-text">소견: 전두 세타·억제기능</tspan><tspan class="en-text">Finding: frontal theta / inhibition</tspan></text></g>
@@ -326,8 +327,8 @@
         <path d="M0,-92 L11,-104 L-11,-104 Z" fill="none" stroke="#6b727a" stroke-width="1.3"/>
         <circle r="92" fill="#fafbfb" stroke="#454b52" stroke-width="1.6"/>
         <line x1="-92" y1="0" x2="92" y2="0" stroke="#e8ebee"/><line x1="0" y1="-92" x2="0" y2="92" stroke="#e8ebee"/>
-        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8">전두 anterior</text>
-        <text x="-72" y="4" font-size="9" fill="#9aa1a8">좌 L</text><text x="60" y="4" font-size="9" fill="#9aa1a8">R 우</text>
+        <text x="0" y="-78" text-anchor="middle" font-size="9.5" fill="#9aa1a8"><tspan class="ko-text">전두</tspan><tspan class="en-text">anterior</tspan></text>
+        <text x="-72" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">좌</tspan><tspan class="en-text">L</tspan></text><text x="60" y="4" font-size="9" fill="#9aa1a8"><tspan class="ko-text">우</tspan><tspan class="en-text">R</tspan></text>
         <circle cx="-36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="36" cy="-30" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-44" r="2.4" fill="#c2c7cc"/><circle cx="-46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="46" cy="8" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="0" r="2.4" fill="#c2c7cc"/><circle cx="-30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="30" cy="40" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="52" r="2.4" fill="#c2c7cc"/><circle cx="-22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="22" cy="-52" r="2.4" fill="#c2c7cc"/><circle cx="0" cy="-58" r="13" fill="#534ab7" opacity="0.22" stroke="#534ab7" stroke-width="1.6"/><text x="0" y="-75" text-anchor="middle" font-size="11" fill="#534ab7" font-weight="700">Fz &#8645;</text><circle cx="-30" cy="40" r="13" fill="#4a9c8c" opacity="0.22" stroke="#4a9c8c" stroke-width="1.6"/><text x="-30" y="23" text-anchor="middle" font-size="11" fill="#4a9c8c" font-weight="700">P3 &#8645;</text><circle cx="0" cy="0" r="13" fill="#3f6fb0" opacity="0.22" stroke="#3f6fb0" stroke-width="1.6"/><text x="0" y="-17" text-anchor="middle" font-size="11" fill="#3f6fb0" font-weight="700">Cz &#8645;</text>
       </g>
       <g font-family="Pretendard,system-ui"><text x="300" y="96" font-size="13.5" fill="#1a1d21" font-weight="500"><tspan class="ko-text">소견: 네트워크 간 변동</tspan><tspan class="en-text">Finding: cross-network variability</tspan></text></g>
@@ -384,11 +385,11 @@
     <div class="lab">Figure 12 · do(경계 강화↑)의 반사실 예측</div>
     <svg viewBox="0 0 900 175" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <g font-family="Pretendard,system-ui" font-size="12.5" fill="#1a1d21">
-        <text x="0" y="13" font-size="10.5" fill="#6b727a">옅은막대 현재 · 진한선 예측</text>
-        <text x="0" y="42">정서조절 s4</text><rect x="120" y="32" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="32" width="186" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="32" width="496" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="42" font-size="11" fill="#A32D2D">개입축</text>
-        <text x="0" y="78">지속주의 s1</text><rect x="120" y="68" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="68" width="242" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="68" width="415" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="78" font-size="11" fill="#3B6D11">+28%</text>
-        <text x="0" y="114">수행 s3</text><rect x="120" y="104" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="104" width="260" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="104" width="440" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="114" font-size="11" fill="#3B6D11">+29%</text>
-        <text x="0" y="150">작업기억 s2</text><rect x="120" y="140" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="140" width="310" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="140" width="388" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="150" font-size="11" fill="#3B6D11">+14%</text>
+        <text x="0" y="13" font-size="10.5" fill="#6b727a"><tspan class="ko-text">옅은막대 현재 · 진한선 예측</tspan><tspan class="en-text">Light bar: current · Dark line: predicted</tspan></text>
+        <text x="0" y="42"><tspan class="ko-text">정서조절 s4</tspan><tspan class="en-text">Emotion reg. s4</tspan></text><rect x="120" y="32" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="32" width="186" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="32" width="496" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="42" font-size="11" fill="#A32D2D"><tspan class="ko-text">개입축</tspan><tspan class="en-text">Intervention axis</tspan></text>
+        <text x="0" y="78"><tspan class="ko-text">지속주의 s1</tspan><tspan class="en-text">Sustained attention s1</tspan></text><rect x="120" y="68" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="68" width="242" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="68" width="415" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="78" font-size="11" fill="#3B6D11">+28%</text>
+        <text x="0" y="114"><tspan class="ko-text">수행 s3</tspan><tspan class="en-text">Performance s3</tspan></text><rect x="120" y="104" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="104" width="260" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="104" width="440" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="114" font-size="11" fill="#3B6D11">+29%</text>
+        <text x="0" y="150"><tspan class="ko-text">작업기억 s2</tspan><tspan class="en-text">Working memory s2</tspan></text><rect x="120" y="140" width="620" height="11" rx="3" fill="#eef0f2"/><rect x="120" y="140" width="310" height="11" rx="3" fill="#BDD7E7"/><rect x="120" y="140" width="388" height="5.5" rx="3" fill="#2E5A7A"/><text x="752" y="150" font-size="11" fill="#3B6D11">+14%</text>
       </g>
     </svg>
     <figcaption><span class="ko-text">정서조절 한 축의 개입이 주의·수행을 함께 끌어올린다는 예측 → 정서조절이 사례 B의 제약 요인(레버)임을 시사. (예시 수치)</span><span class="en-text">Intervening on emotion regulation alone is projected to lift attention and performance → it is Case B's rate-limiting lever. (Illustrative.)</span></figcaption>
@@ -405,11 +406,11 @@
     <div class="lab">Figure 13 · Fischer 발달 5축 — 현재 단계와 목표</div>
     <svg viewBox="0 0 900 180" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <g font-family="Pretendard,system-ui" font-size="12.5" fill="#1a1d21">
-        <text x="0" y="13" font-size="10.5" fill="#6b727a">옅은막대 현재 단계 · ┃ 목표 · 굵은테두리 우선 축</text>
-        <text x="0" y="44">정서조절 s4</text><rect x="124" y="34" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="34" width="206" height="13" rx="3" fill="#7BAFD0"/><line x1="556" y1="30" x2="556" y2="51" stroke="#1a1d21" stroke-width="2"/><rect x="120" y="30" width="730" height="21" rx="5" fill="none" stroke="#2E5A7A" stroke-width="2"/>
-        <text x="0" y="82">지속주의 s1</text><rect x="124" y="72" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="72" width="386" height="13" rx="3" fill="#7BAFD0"/><line x1="582" y1="68" x2="582" y2="89" stroke="#1a1d21" stroke-width="2"/>
-        <text x="0" y="120">작업기억 s2</text><rect x="124" y="110" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="110" width="308" height="13" rx="3" fill="#7BAFD0"/><line x1="535" y1="106" x2="535" y2="127" stroke="#1a1d21" stroke-width="2"/>
-        <text x="0" y="158">수행 s3</text><rect x="124" y="148" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="148" width="340" height="13" rx="3" fill="#7BAFD0"/><line x1="668" y1="144" x2="668" y2="165" stroke="#1a1d21" stroke-width="2"/>
+        <text x="0" y="13" font-size="10.5" fill="#6b727a"><tspan class="ko-text">옅은막대 현재 단계 · ┃ 목표 · 굵은테두리 우선 축</tspan><tspan class="en-text">Light bar: current · ┃ Goal · Bold border: priority axis</tspan></text>
+        <text x="0" y="44"><tspan class="ko-text">정서조절 s4</tspan><tspan class="en-text">Emotion reg. s4</tspan></text><rect x="124" y="34" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="34" width="206" height="13" rx="3" fill="#7BAFD0"/><line x1="556" y1="30" x2="556" y2="51" stroke="#1a1d21" stroke-width="2"/><rect x="120" y="30" width="730" height="21" rx="5" fill="none" stroke="#2E5A7A" stroke-width="2"/>
+        <text x="0" y="82"><tspan class="ko-text">지속주의 s1</tspan><tspan class="en-text">Sustained attention s1</tspan></text><rect x="124" y="72" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="72" width="386" height="13" rx="3" fill="#7BAFD0"/><line x1="582" y1="68" x2="582" y2="89" stroke="#1a1d21" stroke-width="2"/>
+        <text x="0" y="120"><tspan class="ko-text">작업기억 s2</tspan><tspan class="en-text">Working memory s2</tspan></text><rect x="124" y="110" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="110" width="308" height="13" rx="3" fill="#7BAFD0"/><line x1="535" y1="106" x2="535" y2="127" stroke="#1a1d21" stroke-width="2"/>
+        <text x="0" y="158"><tspan class="ko-text">수행 s3</tspan><tspan class="en-text">Performance s3</tspan></text><rect x="124" y="148" width="720" height="13" rx="3" fill="#eef0f2"/><rect x="124" y="148" width="340" height="13" rx="3" fill="#7BAFD0"/><line x1="668" y1="144" x2="668" y2="165" stroke="#1a1d21" stroke-width="2"/>
         <g font-size="10" fill="#9aa1a8"><text x="124" y="176">L7</text><text x="844" y="176" text-anchor="end">L13</text></g>
       </g>
     </svg>
@@ -488,15 +489,15 @@
           <circle cx="260" cy="225" r="13" fill="#fff" stroke="#bcc2c8"/><text x="260" y="228">O2</text>
         </g>
         <g font-size="12.5" fill="#1a1d21">
-          <text x="430" y="40" font-weight="500">주요 부위와 기능 연관</text>
-          <text x="430" y="68" font-size="12.5" fill="#454b52">Fz·F3·F4 — 정서조절·집행기능·접근동기</text>
-          <text x="430" y="92" font-size="12.5" fill="#454b52">Cz — 감각운동리듬(SMR), 주의 안정</text>
-          <text x="430" y="116" font-size="12.5" fill="#454b52">C3·C4 — 운동·주의 네트워크</text>
-          <text x="430" y="140" font-size="12.5" fill="#454b52">Pz·P3·P4 — 작업기억·주의 배분</text>
-          <text x="430" y="164" font-size="12.5" fill="#454b52">O1·O2 — 알파 리듬 기준(후두)</text>
+          <text x="430" y="40" font-weight="500"><tspan class="ko-text">주요 부위와 기능 연관</tspan><tspan class="en-text">Key sites and functional associations</tspan></text>
+          <text x="430" y="68" font-size="12.5" fill="#454b52"><tspan class="ko-text">Fz·F3·F4 — 정서조절·집행기능·접근동기</tspan><tspan class="en-text">Fz·F3·F4 — Emotion reg., executive, approach motivation</tspan></text>
+          <text x="430" y="92" font-size="12.5" fill="#454b52"><tspan class="ko-text">Cz — 감각운동리듬(SMR), 주의 안정</tspan><tspan class="en-text">Cz — Sensorimotor rhythm (SMR), attention stability</tspan></text>
+          <text x="430" y="116" font-size="12.5" fill="#454b52"><tspan class="ko-text">C3·C4 — 운동·주의 네트워크</tspan><tspan class="en-text">C3·C4 — Motor / attention network</tspan></text>
+          <text x="430" y="140" font-size="12.5" fill="#454b52"><tspan class="ko-text">Pz·P3·P4 — 작업기억·주의 배분</tspan><tspan class="en-text">Pz·P3·P4 — Working memory, attention allocation</tspan></text>
+          <text x="430" y="164" font-size="12.5" fill="#454b52"><tspan class="ko-text">O1·O2 — 알파 리듬 기준(후두)</tspan><tspan class="en-text">O1·O2 — Alpha rhythm baseline (occipital)</tspan></text>
           <g font-size="11" fill="#6b727a">
-            <rect x="430" y="186" width="12" height="12" fill="#E8F1F8" stroke="#7BAFD0"/><text x="450" y="196">전두 (압박·정서) </text>
-            <rect x="600" y="186" width="12" height="12" fill="#FBEAF0" stroke="#D4537E"/><text x="620" y="196">Cz (SMR 훈련 핵심)</text>
+            <rect x="430" y="186" width="12" height="12" fill="#E8F1F8" stroke="#7BAFD0"/><text x="450" y="196"><tspan class="ko-text">전두 (압박·정서) </tspan><tspan class="en-text">Frontal (pressure / emotion) </tspan></text>
+            <rect x="600" y="186" width="12" height="12" fill="#FBEAF0" stroke="#D4537E"/><text x="620" y="196"><tspan class="ko-text">Cz (SMR 훈련 핵심)</tspan><tspan class="en-text">Cz (SMR training core)</tspan></text>
           </g>
         </g>
       </g>
@@ -544,14 +545,14 @@
     <svg viewBox="0 0 900 180" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <g font-family="Pretendard,system-ui" font-size="12.5" fill="#1a1d21">
         <rect x="0" y="20" width="270" height="50" rx="9" fill="#f7f8f9" stroke="#bcc2c8"/>
-        <text x="135" y="42" text-anchor="middle">동일 주관 호소</text><text x="135" y="60" text-anchor="middle" font-size="11" fill="#6b727a">"결정적 순간에 잘 안 된다"</text>
+        <text x="135" y="42" text-anchor="middle"><tspan class="ko-text">동일 주관 호소</tspan><tspan class="en-text">Same subjective complaint</tspan></text><text x="135" y="60" text-anchor="middle" font-size="11" fill="#6b727a"><tspan class="ko-text">"결정적 순간에 잘 안 된다"</tspan><tspan class="en-text">"I fail at the decisive moment"</tspan></text>
         <path d="M270,45 C320,45 330,60 380,60" stroke="#9aa1a8" stroke-width="1.5" fill="none" marker-end="url(#aq)"/>
         <path d="M270,45 C320,45 330,118 380,118" stroke="#9aa1a8" stroke-width="1.5" fill="none" marker-end="url(#aq)"/>
         <defs><marker id="aq" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 Z" fill="#9aa1a8"/></marker></defs>
         <rect x="384" y="36" width="510" height="48" rx="9" fill="#fff" stroke="#2E5A7A"/>
-        <text x="400" y="58">QEEG: 전두 고베타 &uarr;&uarr;, 알파 &darr;</text><text x="400" y="75" font-size="11" fill="#A32D2D">→ 압박형 (각성 ↓ 개입)</text>
+        <text x="400" y="58"><tspan class="ko-text">QEEG: 전두 고베타 &uarr;&uarr;, 알파 &darr;</tspan><tspan class="en-text">QEEG: frontal hi-beta &uarr;&uarr;, alpha &darr;</tspan></text><text x="400" y="75" font-size="11" fill="#A32D2D"><tspan class="ko-text">→ 압박형 (각성 ↓ 개입)</tspan><tspan class="en-text">→ Pressure type (lower arousal)</tspan></text>
         <rect x="384" y="96" width="510" height="48" rx="9" fill="#fff" stroke="#2E5A7A"/>
-        <text x="400" y="118">QEEG: 좌측 전두 활성 &darr; (저각성)</text><text x="400" y="135" font-size="11" fill="#3B6D11">→ 점화형 (각성 ↑ 개입)</text>
+        <text x="400" y="118"><tspan class="ko-text">QEEG: 좌측 전두 활성 &darr; (저각성)</tspan><tspan class="en-text">QEEG: left frontal activity &darr; (low arousal)</tspan></text><text x="400" y="135" font-size="11" fill="#3B6D11"><tspan class="ko-text">→ 점화형 (각성 ↑ 개입)</tspan><tspan class="en-text">→ Clutch type (raise arousal)</tspan></text>
       </g>
     </svg>
     <figcaption><span class="ko-text">호소는 같아도 QEEG 패턴이 정반대이므로 개입 방향이 갈립니다. QEEG 없이 주관 설문만으로는 두 유형을 혼동하기 쉽습니다. (개념적 예시)</span><span class="en-text">Same complaint, opposite QEEG patterns, opposite intervention directions. Without QEEG, the two types are easily confused on self-report alone. (Conceptual.)</span></figcaption>
@@ -569,16 +570,16 @@
     <svg viewBox="0 0 900 160" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <defs><marker id="a11" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 Z" fill="#2E5A7A"/></marker></defs>
       <g font-family="Pretendard,system-ui" font-size="12.5" fill="#1a1d21">
-        <rect x="20" y="28" width="150" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="95" y="48" text-anchor="middle">현재 상태</text>
-        <rect x="20" y="66" width="150" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="95" y="86" text-anchor="middle">발달 궤적</text>
-        <rect x="20" y="104" width="150" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="95" y="124" text-anchor="middle">목표 수행</text>
+        <rect x="20" y="28" width="150" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="95" y="48" text-anchor="middle"><tspan class="ko-text">현재 상태</tspan><tspan class="en-text">Current state</tspan></text>
+        <rect x="20" y="66" width="150" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="95" y="86" text-anchor="middle"><tspan class="ko-text">발달 궤적</tspan><tspan class="en-text">Developmental trajectory</tspan></text>
+        <rect x="20" y="104" width="150" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="95" y="124" text-anchor="middle"><tspan class="ko-text">목표 수행</tspan><tspan class="en-text">Target performance</tspan></text>
         <g stroke="#9aa1a8" stroke-width="1.4" fill="none"><line x1="170" y1="44" x2="330" y2="74"/><line x1="170" y1="82" x2="330" y2="82"/><line x1="170" y1="120" x2="330" y2="90"/></g>
         <rect x="334" y="52" width="210" height="60" rx="11" fill="#f7f8f9" stroke="#2E5A7A" stroke-width="1.6"/>
-        <text x="439" y="78" text-anchor="middle" font-size="13.5" fill="#2E5A7A" font-weight="500">통합 결정 함수</text>
-        <text x="439" y="97" text-anchor="middle" font-size="10.5" fill="#6b727a">실용가치 ⟷ 인식가치</text>
+        <text x="439" y="78" text-anchor="middle" font-size="13.5" fill="#2E5A7A" font-weight="500"><tspan class="ko-text">통합 결정 함수</tspan><tspan class="en-text">Integrated decision function</tspan></text>
+        <text x="439" y="97" text-anchor="middle" font-size="10.5" fill="#6b727a"><tspan class="ko-text">실용가치 ⟷ 인식가치</tspan><tspan class="en-text">Pragmatic value ⟷ Epistemic value</tspan></text>
         <path d="M544,82 L600,82" stroke="#2E5A7A" stroke-width="2" marker-end="url(#a11)"/>
-        <rect x="604" y="42" width="276" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="620" y="63">불확실 → 추가 변별 측정</text>
-        <rect x="604" y="90" width="276" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="620" y="111">확신 → 개입 단계로 이행</text>
+        <rect x="604" y="42" width="276" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="620" y="63"><tspan class="ko-text">불확실 → 추가 변별 측정</tspan><tspan class="en-text">Uncertain → further differential testing</tspan></text>
+        <rect x="604" y="90" width="276" height="32" rx="8" fill="#fff" stroke="#d9dde1"/><text x="620" y="111"><tspan class="ko-text">확신 → 개입 단계로 이행</tspan><tspan class="en-text">Confident → proceed to intervention</tspan></text>
       </g>
     </svg>
     <figcaption><span class="ko-text">단일 기준이 "더 잴지, 다룰지"를 자동으로 균형 잡습니다. 결정 함수의 수리적 구현은 영업비밀로 비공개합니다.</span><span class="en-text">One criterion auto-balances "measure vs. treat." The mathematical implementation is withheld as a trade secret.</span></figcaption>
@@ -596,13 +597,13 @@
     <svg viewBox="0 0 900 96" width="100%" xmlns="http://www.w3.org/2000/svg" role="img">
       <defs><marker id="a12" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 Z" fill="#2E5A7A"/></marker></defs>
       <g font-family="Pretendard,system-ui" font-size="12.5">
-        <rect x="0" y="28" width="200" height="44" rx="10" fill="#fff" stroke="#d9dde1"/><text x="100" y="48" text-anchor="middle" fill="#1a1d21">기여 분해</text><text x="100" y="64" text-anchor="middle" font-size="10" fill="#6b727a">attribution</text>
+        <rect x="0" y="28" width="200" height="44" rx="10" fill="#fff" stroke="#d9dde1"/><text x="100" y="48" text-anchor="middle" fill="#1a1d21"><tspan class="ko-text">기여 분해</tspan><tspan class="en-text">Attribution</tspan></text><text x="100" y="64" text-anchor="middle" font-size="10" fill="#6b727a">attribution</text>
         <path d="M200,50 L248,50" stroke="#2E5A7A" stroke-width="2" marker-end="url(#a12)"/>
-        <rect x="252" y="28" width="200" height="44" rx="10" fill="#fff" stroke="#d9dde1"/><text x="352" y="48" text-anchor="middle" fill="#1a1d21">제약 요인 식별</text><text x="352" y="64" text-anchor="middle" font-size="10" fill="#6b727a">rate-limiting constraint</text>
+        <rect x="252" y="28" width="200" height="44" rx="10" fill="#fff" stroke="#d9dde1"/><text x="352" y="48" text-anchor="middle" fill="#1a1d21"><tspan class="ko-text">제약 요인 식별</tspan><tspan class="en-text">Rate-limiting constraint</tspan></text><text x="352" y="64" text-anchor="middle" font-size="10" fill="#6b727a">rate-limiting constraint</text>
         <path d="M452,50 L500,50" stroke="#2E5A7A" stroke-width="2" marker-end="url(#a12)"/>
-        <rect x="504" y="28" width="200" height="44" rx="10" fill="#fff" stroke="#d9dde1"/><text x="604" y="48" text-anchor="middle" fill="#1a1d21">반사실 예측</text><text x="604" y="64" text-anchor="middle" font-size="10" fill="#6b727a">counterfactual</text>
+        <rect x="504" y="28" width="200" height="44" rx="10" fill="#fff" stroke="#d9dde1"/><text x="604" y="48" text-anchor="middle" fill="#1a1d21"><tspan class="ko-text">반사실 예측</tspan><tspan class="en-text">Counterfactual</tspan></text><text x="604" y="64" text-anchor="middle" font-size="10" fill="#6b727a">counterfactual</text>
         <path d="M704,50 L752,50" stroke="#2E5A7A" stroke-width="2" marker-end="url(#a12)"/>
-        <rect x="756" y="28" width="144" height="44" rx="10" fill="#f7f8f9" stroke="#454b52" stroke-width="1.3"/><text x="828" y="48" text-anchor="middle" fill="#1a1d21" font-weight="500">개입 우선순위</text><text x="828" y="64" text-anchor="middle" font-size="10" fill="#6b727a">→ 훈련</text>
+        <rect x="756" y="28" width="144" height="44" rx="10" fill="#f7f8f9" stroke="#454b52" stroke-width="1.3"/><text x="828" y="48" text-anchor="middle" fill="#1a1d21" font-weight="500"><tspan class="ko-text">개입 우선순위</tspan><tspan class="en-text">Intervention priority</tspan></text><text x="828" y="64" text-anchor="middle" font-size="10" fill="#6b727a"><tspan class="ko-text">→ 훈련</tspan><tspan class="en-text">→ Training</tspan></text>
       </g>
     </svg>
   </div>
