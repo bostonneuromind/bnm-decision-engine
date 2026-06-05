@@ -172,11 +172,19 @@ class handler(BaseHTTPRequestHandler):
                 self._handle_measurement_save(body)
             elif path == '/temporal-history/save':
                 self._handle_temporal_history_save(body)
+            elif path == '/presession/levels':
+                self._handle_presession_levels(body)
             else:
                 self._send_error(404, f'Not found: {path}')
         except Exception as e:
             import traceback
             self._send_error(500, f'{type(e).__name__}: {e}\n{traceback.format_exc()}')
+
+    def _handle_presession_levels(self, body):
+        # pre-session raw 측정 → Fischer 5축 + biomarkers (cna_core 불요, mappings만).
+        from measurement_mappings import measurements_to_levels
+        result = measurements_to_levels(body)
+        self._send_json(200, result)
 
     # ============================================================
     # CNA Core Handlers (Supabase 영구 저장 박힘)
