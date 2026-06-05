@@ -110,6 +110,34 @@
 </head>
 <body>
 
+<!-- 관리자 게이트 (학생 데이터 화면 — 관리자 전용). 통과 시 admin_pw 세팅 → report/source 호출. -->
+<div id="bnmGate" style="position:fixed;inset:0;z-index:9999;background:#faf7f2;display:flex;align-items:center;justify-content:center;padding:20px;font-family:'Noto Sans KR',system-ui,sans-serif">
+  <div style="max-width:380px;width:100%;background:#fff;border:1px solid #e2dccf;border-radius:18px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,.08)">
+    <h2 style="font-size:19px;font-weight:800;margin:0 0 6px;color:#2a2018">Learning 진단 보고서</h2>
+    <p style="font-size:13px;color:#6b6256;margin:0 0 16px">관리자 전용 — 학생 데이터 / Clinicians only</p>
+    <input id="bnmGatePw" type="password" placeholder="Password" style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:10px;font-size:15px;box-sizing:border-box;outline:none;font-family:inherit">
+    <button id="bnmGateBtn" style="width:100%;margin-top:10px;padding:13px;background:#2a2018;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">들어가기 / Enter</button>
+    <div id="bnmGateErr" style="color:#b54;font-size:13px;margin-top:8px"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var PW='bnm1#', KEY='bnmAdminOK';
+  function unlock(){ var g=document.getElementById('bnmGate'); if(g) g.parentNode.removeChild(g); }
+  try{ if(sessionStorage.getItem(KEY)==='1'){ document.addEventListener('DOMContentLoaded',unlock); return; } }catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.getElementById('bnmGateBtn'), inp=document.getElementById('bnmGatePw'), err=document.getElementById('bnmGateErr');
+    function go(){
+      if(inp.value===PW){ try{ sessionStorage.setItem(KEY,'1'); sessionStorage.setItem('admin_pw',PW); }catch(e){} location.reload(); }
+      else { err.textContent='Wrong password'; }
+    }
+    btn.addEventListener('click',go);
+    inp.addEventListener('keypress',function(e){ if(e.key==='Enter') go(); });
+    inp.focus();
+  });
+})();
+</script>
+
 <div class="topbar"><span class="pill">
   <button data-l="ko" onclick="setLang('ko')">KO</button>
   <button data-l="en" onclick="setLang('en')">EN</button>
@@ -650,7 +678,7 @@ async function loadReportSource(){
   const cid=new URLSearchParams(location.search).get('cid');
   if(!cid) return;  // cid 없으면 예시 표 유지
   let pw=null; try{ pw=sessionStorage.getItem('admin_pw'); }catch(e){}
-  if(!pw){ pw=window.prompt(getLang()==='ko'?'관리자 비밀번호':'Admin password')||''; }
+  if(!pw) return;  // 게이트 미통과 — 호출 안 함 (게이트가 admin_pw 세팅)
   try{
     const res=await fetch('/api/v1/report/source?cid='+encodeURIComponent(cid),{headers:{'X-Admin-Password':pw}});
     if(!res.ok){ console.warn('report/source', res.status); return; }
