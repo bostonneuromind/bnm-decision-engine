@@ -197,7 +197,9 @@
     <div class="sec">
       <div class="sec-h"><div class="sec-n">2</div><h2><span class="ko-text">무엇이 학습을 막나 — 정밀 진단</span><span class="en-text">What Blocks Learning — Precise Diagnosis</span></h2></div>
       <p class="lead"><span class="ko-text">인출형 → 막는 요인 정밀 측정 (요구분석이 라우팅한 증상만 측정):</span><span class="en-text">Retrieval type → measured blockers (only symptoms routed by needs-analysis):</span></p>
-      <table>
+      <!-- ?cid= 진입 시 실데이터(assessment→symptom_vector)로 교체, 없으면 아래 예시 표 -->
+      <div id="blockerLive" style="display:none"></div>
+      <table id="blockerDemo">
         <tr><th><span class="ko-text">막는 요인</span><span class="en-text">Blocker</span></th><th><span class="ko-text">기여도</span><span class="en-text">Share</span></th><th><span class="ko-text">기전 (논문 근거)</span><span class="en-text">Mechanism (evidence)</span></th></tr>
         <tr><td><b><span class="ko-text">인출 실패 (retrieval)</span><span class="en-text">Retrieval failure</span></b></td><td class="num">0.45</td><td><span class="ko-text">부호화는 됐으나 꺼내기 경로 약함 → 시험 약함 (테스트 효과 부재)</span><span class="en-text">encoded but weak retrieval path → poor on tests</span></td></tr>
         <tr><td><span class="ko-text">얕은 부호화 (encoding)</span><span class="en-text">Shallow encoding</span></td><td class="num">0.32</td><td><span class="ko-text">재독 위주, 정교화·자기설명 부족</span><span class="en-text">re-reading; little elaboration/self-explanation</span></td></tr>
@@ -414,8 +416,14 @@ async function runEngine(){
   const levels={};
   document.querySelectorAll('.eng_lvl').forEach(i=>{ const v=i.value.trim(); if(v!=='') levels[i.dataset.axis]=parseFloat(v); });
   if(Object.keys(levels).length<5){ out.innerHTML=`<div class="callout warn">${l==='ko'?'Fischer 5축 레벨을 모두 입력하세요 (L7~13).':'Enter all 5 Fischer levels.'}</div>`; return; }
-  const symptom_vector={ learning_difficulty:0.45, working_memory:0.32, retention:0.40 };
+  // symptom_vector: ?cid= 실데이터(assessment→S1 계수) 우선, 없으면 예시.
+  const src=window.REPORT_SOURCE||{};
+  const symptom_vector=(src.symptom_vector&&Object.keys(src.symptom_vector).length)
+    ? src.symptom_vector
+    : { learning_difficulty:0.45, working_memory:0.32, retention:0.40 };
+  // biomarkers: pre-session 변환(raw, HRV mock 이미 차단됨) + QEEG 입력 병합.
   const biomarkers={};
+  if(src.levels && src.levels.biomarkers){ Object.assign(biomarkers, src.levels.biomarkers); }
   if(typeof qeegData!=='undefined' && qeegData && qeegData.vals){
     const d=qeegData.vals;
     const hb=(d.hibeta_ec!==undefined?d.hibeta_ec:d.hibeta_eo);
@@ -464,11 +472,15 @@ async function generateAIReport(){
   btn.innerHTML = l==='ko'?'분석 중…':'Analyzing…';
 
   // 현재 케이스 데이터 수집 (요구분석 V2 + 막는요인 + QEEG 있으면)
+  const aiSrc=window.REPORT_SOURCE||{};
   const caseData = {
     dept:'learning',
     goal: l==='ko'?'공부한 내용을 오래 기억하고 시험·실전에서 꺼내 쓰기 (인출형)':'retain and retrieve what was studied (retrieval type)',
     breakdown_type:'retrieval',
-    blockers:{retrieval:0.45, shallow_encoding:0.32, working_memory:0.23},
+    // 실데이터 symptom_vector 우선, 없으면 예시 blockers.
+    blockers:(aiSrc.symptom_vector&&Object.keys(aiSrc.symptom_vector).length)
+      ? aiSrc.symptom_vector
+      : {retrieval:0.45, shallow_encoding:0.32, working_memory:0.23},
     qeeg: (typeof qeegData!=='undefined' && qeegData) ? qeegData : null,
     target_areas: Array.from(selected||[]),
   };
@@ -616,6 +628,44 @@ function buildInteg(){
 
 // 초기: QEEG 미입력 상태 안내
 clearQEEG();
+
+/* ===== ?cid= 실데이터 로드 (assessment+pre-session → symptom_vector/Fischer) ===== */
+const SYMPTOM_LABEL_KO={inattention:'주의력결핍',distractibility:'산만성',executive_dysfunction:'실행기능 저하',anxiety_somatic:'신체 불안',anxiety_cognitive:'인지 불안',low_mood:'우울',low_motivation:'동기 저하',social_withdrawal:'사회적 위축'};
+function renderBlockerLive(sv){
+  const l=getLang(); const live=document.getElementById('blockerLive'); const demo=document.getElementById('blockerDemo');
+  if(!sv||!Object.keys(sv).length){ return; }
+  const rows=Object.entries(sv).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+    `<tr><td><b>${l==='ko'?(SYMPTOM_LABEL_KO[k]||k):k}</b></td><td class="num">${Number(v).toFixed(2)}</td><td>${l==='ko'?'assessment 점수 × S1 계수':'assessment × S1 coefficient'}</td></tr>`).join('');
+  live.innerHTML=`<table><tr><th>${l==='ko'?'증상(엔진 입력)':'Symptom (engine input)'}</th><th>${l==='ko'?'값':'Value'}</th><th>${l==='ko'?'출처':'Source'}</th></tr>${rows}</table>`;
+  live.style.display='block'; if(demo) demo.style.display='none';
+}
+function fillEngineFromLevels(lv){
+  if(!lv||!lv.cognitive_levels) return;
+  document.querySelectorAll('.eng_lvl').forEach(i=>{
+    const v=lv.cognitive_levels[i.dataset.axis];
+    if(v!==undefined){ i.value=Number(v).toFixed(1); }
+  });
+}
+async function loadReportSource(){
+  const cid=new URLSearchParams(location.search).get('cid');
+  if(!cid) return;  // cid 없으면 예시 표 유지
+  let pw=null; try{ pw=sessionStorage.getItem('admin_pw'); }catch(e){}
+  if(!pw){ pw=window.prompt(getLang()==='ko'?'관리자 비밀번호':'Admin password')||''; }
+  try{
+    const res=await fetch('/api/v1/report/source?cid='+encodeURIComponent(cid),{headers:{'X-Admin-Password':pw}});
+    if(!res.ok){ console.warn('report/source', res.status); return; }
+    const src=await res.json();
+    window.REPORT_SOURCE=src;
+    if(src.symptom_vector) renderBlockerLive(src.symptom_vector);
+    if(src.levels) fillEngineFromLevels(src.levels);
+    if(src.engine_patient_id){ const e=document.getElementById('eng_pid'); if(e){ e.value=src.engine_patient_id; e.readOnly=true; } }
+    if(Array.isArray(src.warnings) && src.warnings.length){
+      const out=document.getElementById('engResult');
+      if(out) out.innerHTML=`<div class="callout warn" style="font-size:12px">${getLang()==='ko'?'데이터 안내':'data notes'}: ${src.warnings.join(', ')}</div>`;
+    }
+  }catch(e){ console.warn('report/source load failed', e); }
+}
+loadReportSource();
 </script>
 </body>
 </html>
