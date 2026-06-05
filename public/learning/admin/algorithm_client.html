@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/bnm-lang-sync.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning — 우리가 당신을 분석하는 방법 (고객용)</title>
+<style>
+  :root{--page:#FFFFFF;--field:#FAFAFA;--ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;--accent:#2E5A7A;--good:#3F6B52;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;font-size:18px;line-height:1.8;padding:34px 22px 80px}
+  .container{max-width:760px;margin:0 auto}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50}
+  .langbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  .adminonly{background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px 14px;margin-bottom:22px;font-size:13px;color:var(--ink-sub);font-weight:700}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+  h1{font-size:30px;font-weight:800;line-height:1.3;margin-bottom:10px}
+  .sub{font-size:18px;color:var(--ink-sub);margin-bottom:30px;line-height:1.7}
+  .step{display:flex;gap:18px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px}
+  .step .n{flex:none;width:42px;height:42px;border-radius:11px;border:2px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800}
+  .step h3{font-size:19px;font-weight:800;margin-bottom:6px}
+  .step p{font-size:16px;color:var(--ink-sub);line-height:1.7}
+  .big{background:var(--field);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:24px 0;font-size:17px;line-height:1.75}
+  .big b{color:var(--ink)}
+  h2{font-size:22px;font-weight:800;margin:34px 0 14px}
+  .note{font-size:14px;color:var(--ink-sub);margin-top:28px;border-top:1px solid var(--line);padding-top:16px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
+<div class="container">
+  <div class="adminonly"><span class="ko-text">관리자 화면 — 상담 시 고객에게 보여주는 설명 자료</span><span class="en-text">Admin — explainer shown to clients during consultation</span></div>
+
+  <h1><span class="ko-text">우리는 당신을 이렇게 분석합니다</span><span class="en-text">How we analyze you</span></h1>
+  <p class="sub"><span class="ko-text">막연한 "공부가 안 된다"를 <b>측정 가능한 목표</b>로 바꾸고, 무엇이 당신의 학습을 가로막는지 찾아, 학습과학으로 검증된 훈련을 설계합니다.</span><span class="en-text">We turn a vague "I can't study well" into a <b>measurable goal</b>, find what blocks your learning, and design learning-science-backed training.</span></p>
+
+  <div class="step"><div class="n">1</div><div><h3><span class="ko-text">목표를 또렷하게</span><span class="en-text">Clarify the goal</span></h3><p><span class="ko-text">"어떤 상황에서, 무엇을, 어느 수준까지" 잘하고 싶은지 함께 펼칩니다. 답하는 것만으로 자신의 패턴이 보입니다.</span><span class="en-text">We unfold what, where, and how well you want to perform. Answering itself reveals your pattern.</span></p></div></div>
+
+  <div class="step"><div class="n">2</div><div><h3><span class="ko-text">무엇이 막는지 찾기</span><span class="en-text">Find what blocks you</span></h3><p><span class="ko-text">공부가 안 되는 이유는 사람마다 다릅니다 — 부호화가 얕거나, 외운 걸 꺼내지 못하거나(인출 실패), 작업기억이 버겁거나, 자기점검(메타인지)이 약하거나. 어디서 막히는지 정확히 짚습니다.</span><span class="en-text">Learning struggles have different causes — shallow encoding, weak retrieval, working-memory overload, or poor metacognition. We pinpoint where it breaks.</span></p></div></div>
+
+  <div class="step"><div class="n">3</div><div><h3><span class="ko-text">뇌·몸 신호로 확인</span><span class="en-text">Confirm with brain/body signals</span></h3><p><span class="ko-text">원하시면 QEEG(뇌파)·HRV(심박변이) 측정을 더합니다. 본인이 느끼는 것과 객관 신호를 함께 보면 훨씬 정확합니다.</span><span class="en-text">Optionally we add QEEG (brainwaves) and HRV. Pairing your sense with objective signals is far more accurate.</span></p></div></div>
+
+  <div class="step"><div class="n">4</div><div><h3><span class="ko-text">발달 단계로 본다</span><span class="en-text">Read it as development stages</span></h3><p><span class="ko-text">능력을 "있다/없다"가 아니라 <b>발달 단계</b>로 봅니다. 지금 어느 단계인지, 다음 단계로 어떻게 올라가는지를 그립니다. (Harvard Fischer 발달이론)</span><span class="en-text">We see ability as <b>developmental stages</b>, not all-or-nothing — where you are now and how to reach the next stage. (Fischer's theory, Harvard)</span></p></div></div>
+
+  <div class="step"><div class="n">5</div><div><h3><span class="ko-text">맞춤 훈련 + 추적</span><span class="en-text">Tailored training + tracking</span></h3><p><span class="ko-text">막는 요인을 뚫는 훈련을 세션별로 설계하고, 회기마다 변화를 측정해 방향을 조정합니다.</span><span class="en-text">We design session-by-session training and adjust by measuring change each visit.</span></p></div></div>
+
+  <div class="big"><span class="ko-text"><b>우리가 다른 점:</b> 일반 검사는 "당신은 ○○입니다"로 끝납니다. 우리는 <b>주관(당신의 느낌)과 객관(뇌·심박)을 함께</b> 보고, <b>케이스가 쌓일수록 더 정확해지는</b> 시스템입니다. 그리고 모든 해석에 <b>논문 근거</b>를 댑니다.</span><span class="en-text"><b>What's different:</b> ordinary tests end at "you are X." We combine <b>your felt sense with objective brain/heart signals</b>, in a system that <b>grows more accurate as cases accumulate</b> — and we cite the <b>literature</b> for every interpretation.</span></div>
+
+  <h2><span class="ko-text">자주 묻는 것</span><span class="en-text">Common questions</span></h2>
+  <p><b><span class="ko-text">Q. 이건 치료인가요?</span><span class="en-text">Q. Is this treatment?</span></b><br><span class="ko-text">아니요. 질병 진단·치료가 아니라 <b>기술 발달 코칭</b>입니다 (BCN·PhD wellness/coaching).</span><span class="en-text">No — it's <b>skill-development coaching</b>, not medical diagnosis/treatment (BCN·PhD wellness/coaching).</span></p>
+  <p><b><span class="ko-text">Q. QEEG를 꼭 해야 하나요?</span><span class="en-text">Q. Is QEEG required?</span></b><br><span class="ko-text">아니요. 설문만으로도 충분한 분석이 나옵니다. QEEG는 더 정밀하게 보고 싶을 때 선택입니다.</span><span class="en-text">No. The survey alone gives a full analysis; QEEG is optional for more precision.</span></p>
+
+  <p class="note"><span class="ko-text">Boston Neuromind · Learning. 본 설명은 자기탐색·코칭 안내이며 의학적 진단이 아닙니다. · 故 Kurt Fischer 발달이론 기반.</span><span class="en-text">Boston Neuromind · Learning. An informational coaching explainer, not a medical diagnosis. · Based on Kurt Fischer's developmental theory.</span></p>
+</div>
+<script>function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}</script>
+</body>
+</html>

@@ -29,7 +29,7 @@
     return { ok: res.ok, data: await res.json().catch(() => ({})) };
   }
 
-  const BOT_OPTIONS = ['anxiety','sleep','burnout','ptsd','ocd','bipolar','autism','depression','learning','peak'];
+  const BOT_OPTIONS = ['attention','adhd','anxiety','sleep','burnout','ptsd','ocd','bipolar','autism','depression','learning','peak'];
 
   function shell(botKey) {
     // botKey 봇을 첫 옵션으로, 나머지는 ALL + 10개

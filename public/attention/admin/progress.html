@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/bnm-lang-sync.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attention 훈련 — 세션 진행 보고서</title>
+<style>
+  :root{
+    /* ★ 미니멀 표준 (할비 2026-06-02): 색 거의 안 씀 — 무채/뉴트럴, 폼·선·여백으로 구조. 글씨 크게. */
+    --page:#FFFFFF;--card:#FFFFFF;--field:#FAFAFA;--soft:#FAFAFA;
+    --ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;
+    --hue:#2E5A7A;--hue-deep:#1F2225;--hue-dark:#1F2225;--hue-mid:#9AA3AB;--hue-soft:#E6E9EC;--hue-bg:#F4F5F6;
+    --good:#3F6B52;--good-bg:#F0F3F1;--amber:#7A6320;--amber-bg:#F6F4EE;--warn:#8A3A3A;
+    --nf:#3F5870;--qeeg:#5A4A66;--hrv:#3F6B52;--psy:#7A6320;--meas:#5C6166;
+    --orange:#1F2225;
+    --shadow:none;--shadow-lg:0 2px 10px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;
+    font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;padding:28px 16px 70px;min-height:100vh}
+  .container{max-width:900px;margin:0 auto}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50}
+  .pill{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;overflow:hidden;box-shadow:var(--shadow)}
+  .pill button{border:none;background:transparent;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  body[data-lang=ko] .pill button[data-l=ko],body[data-lang=en] .pill button[data-l=en]{background:var(--hue);color:#fff}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+
+  .head{background:var(--field);color:#fff;border-radius:18px;padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow-lg)}
+  .head .tag{display:inline-block;background:rgba(255,255,255,.2);font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:8px}
+  .head h1{font-size:21px;font-weight:800}
+  .head p{font-size:13px;opacity:.9;margin-top:6px;line-height:1.5}
+
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow)}
+  .sec h2{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .lead{font-size:13.5px;color:var(--ink-sub);margin-bottom:12px;line-height:1.55}
+
+  .ctrl-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .field-lbl{font-size:12.5px;color:var(--ink-sub);font-weight:700}
+  select,input{border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14px;font-family:inherit;color:var(--ink);background:#fff}
+
+  /* 채널 입력 카드 */
+  .channels{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .ch{border:1px solid var(--line);border-radius:12px;padding:15px;background:var(--field)}
+  .ch.off{opacity:.45}
+  .ch-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .ch-h .sw{width:11px;height:11px;border-radius:3px}
+  .ch-h h3{font-size:14px;font-weight:800}
+  .ch-h .toggle{margin-left:auto;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:3px 9px;background:#fff;color:var(--ink-sub)}
+  .ch-h .toggle.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .ch label{display:block;font-size:12px;color:var(--ink-sub);margin-bottom:8px}
+  .ch label input,.ch label select{width:100%;margin-top:4px}
+
+  .btn{background:var(--hue);color:#fff;border:none;border-radius:11px;padding:13px 18px;font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer}
+  .btn.ghost{background:#fff;border:1px solid var(--hue-deep);color:var(--hue-deep)}
+  .btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+
+  /* 경과 리포트 */
+  .report{display:none}.report.show{display:block;animation:fade .3s}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--hue-bg);color:var(--hue-dark);font-weight:700;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  td.num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .delta.up{color:var(--good)}.delta.down{color:var(--warn)}.delta.flat{color:var(--ink-sub)}
+  .callout{border-radius:11px;padding:14px 16px;margin:10px 0;font-size:13.5px;line-height:1.6}
+  .callout.ai{background:var(--good-bg);border-left:4px solid var(--good);color:#2c7a52}
+  .callout.warn{background:#FCEEF0;border-left:4px solid var(--warn);color:#8A2A33}
+  .callout.key{background:var(--hue-bg);border-left:4px solid var(--hue-deep);color:var(--hue-dark)}
+  .callout b{font-weight:800}
+  .badge{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px;margin-left:6px}
+  .badge.nf{background:var(--nf);color:#fff}.badge.qeeg{background:var(--qeeg);color:#fff}.badge.hrv{background:var(--hrv);color:#fff}.badge.meas{background:var(--meas);color:#fff}
+  .disclaimer{font-size:11.5px;color:var(--ink-sub);text-align:center;margin-top:16px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span class="pill">
+  <button data-l="ko" onclick="setLang('ko')">KO</button>
+  <button data-l="en" onclick="setLang('en')">EN</button>
+</span></div>
+
+<div class="container">
+  <div class="head">
+    <span class="tag">Attention 훈련 · 세션 진행 보고서 · ④ Adaptive Re-routing</span>
+    <h1><span class="ko-text">세션 진행 보고서</span><span class="en-text">Per-Session Progress Report</span></h1>
+    <p><span class="ko-text">각 세션에서 실제로 한 것만 입력합니다. 설문·QEEG·NF·HRV를 <b>채널별로 따로</b> 고려해 경과 보고서를 생성합니다. 기저(baseline) 대비 변화를 추적해 훈련 방향을 재조정합니다.</span><span class="en-text">Enter only what was actually done this session. Survey·QEEG·NF·HRV are considered <b>per channel</b> to generate a progress report — tracking change vs baseline to re-route training.</span></p>
+  </div>
+
+  <div class="sec">
+    <h2><span class="ko-text">📍 이번 세션</span><span class="en-text">📍 This session</span></h2>
+    <div class="ctrl-row">
+      <span class="field-lbl"><span class="ko-text">세션 번호:</span><span class="en-text">Session #:</span></span>
+      <select id="sesNo">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option selected>5</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+        <option>12</option><option>15</option><option>20</option>
+      </select>
+      <span class="field-lbl" style="margin-left:8px"><span class="ko-text">손잡이:</span><span class="en-text">Hand:</span></span>
+      <select id="handSel">
+        <option value="right" selected><span class="ko-text">오른손</span>Right</option>
+        <option value="left">Left / <span class="ko-text">왼손</span></option>
+        <option value="ambi">Mixed / <span class="ko-text">양손</span></option>
+      </select>
+    </div>
+    <div class="lead"><span class="ko-text">이번 세션에서 한 채널만 켜고 값을 입력하세요. QEEG는 <b>EC(눈 감음)/EO(눈 뜸)를 따로</b> — 하나만 있어도 OK.</span><span class="en-text">Turn on only channels done this session. QEEG: <b>EC/EO separately</b> — one is enough.</span></div>
+
+    <div class="channels">
+      <!-- NF -->
+      <div class="ch" id="ch-nf">
+        <div class="ch-h"><span class="sw" style="background:var(--nf)"></span><h3>NF <span class="ko-text">뉴로피드백</span><span class="en-text">Neurofeedback</span></h3><span class="toggle on" onclick="toggleCh('nf')"><span class="ko-text">함</span><span class="en-text">done</span></span></div>
+        <label><span class="ko-text">주의 NF 조절 성공률 (%)</span><span class="en-text">Attention NF success (%)</span><input type="number" data-c="nf_success" placeholder="예 62"></label>
+        <label><span class="ko-text">SMR 진폭 (μV)</span><span class="en-text">SMR amplitude</span><input type="number" step="0.1" data-c="nf_smr" placeholder="예 6.8"></label>
+      </div>
+      <!-- QEEG -->
+      <div class="ch off" id="ch-qeeg">
+        <div class="ch-h"><span class="sw" style="background:var(--qeeg)"></span><h3>QEEG <span class="ko-text">재측정</span><span class="en-text">re-measure</span></h3><span class="toggle" onclick="toggleCh('qeeg')"><span class="ko-text">안함</span><span class="en-text">no</span></span></div>
+        <div style="font-size:11px;color:var(--ink-sub);margin-bottom:6px"><span class="ko-text">EC(눈감음)/EO(눈뜸) 따로 — 하나만 OK</span><span class="en-text">EC/EO separate — one is OK</span></div>
+        <label><span class="ko-text">Fz 高베타 — EC</span><span class="en-text">Fz hi-beta — EC</span><input type="number" step="0.1" data-c="qeeg_hibeta_ec" placeholder="EC"></label>
+        <label><span class="ko-text">Fz 高베타 — EO</span><span class="en-text">Fz hi-beta — EO</span><input type="number" step="0.1" data-c="qeeg_hibeta_eo" placeholder="EO"></label>
+        <label>Theta/Beta — EC<input type="number" step="0.1" data-c="qeeg_tbr_ec" placeholder="EC"></label>
+      </div>
+      <!-- HRV -->
+      <div class="ch" id="ch-hrv">
+        <div class="ch-h"><span class="sw" style="background:var(--hrv)"></span><h3>HRV</h3><span class="toggle on" onclick="toggleCh('hrv')"><span class="ko-text">함</span><span class="en-text">done</span></span></div>
+        <label>RMSSD (ms)<input type="number" data-c="hrv_rmssd" placeholder="예 34"></label>
+        <label><span class="ko-text">코히어런스 (0-1)</span><span class="en-text">Coherence</span><input type="number" step="0.01" data-c="hrv_coh" placeholder="예 0.45"></label>
+      </div>
+      <!-- 설문 재측정 -->
+      <div class="ch off" id="ch-meas">
+        <div class="ch-h"><span class="sw" style="background:var(--meas)"></span><h3><span class="ko-text">설문 재측정</span><span class="en-text">Survey</span></h3><span class="toggle" onclick="toggleCh('meas')"><span class="ko-text">안함</span><span class="en-text">no</span></span></div>
+        <label><span class="ko-text">집중 지속 자가평정 (0-100)</span><span class="en-text">Sustained focus self-rating (0-100)</span><input type="number" data-c="meas_composure" placeholder="예 55"></label>
+        <label><span class="ko-text">주의 유지 자신감 (0-100)</span><span class="en-text">Attention confidence</span><input type="number" data-c="meas_confidence" placeholder="예 48"></label>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="generate()"><span class="ko-text">경과 보고서 생성</span><span class="en-text">Generate progress report</span></button>
+      <button class="btn ghost" onclick="loadDemo()"><span class="ko-text">예시 값 채우기</span><span class="en-text">Fill demo values</span></button>
+    </div>
+  </div>
+
+  <!-- 경과 보고서 -->
+  <div class="report" id="report">
+    <div class="sec">
+      <h2><span class="ko-text">📈 채널별 경과 (기저 대비)</span><span class="en-text">📈 Per-channel progress (vs baseline)</span></h2>
+      <p class="lead"><span class="ko-text">이번 세션에 입력된 <b>채널만</b> 따로 평가합니다. 안 한 채널은 보고서에 안 나옵니다.</span><span class="en-text">Only channels entered this session are evaluated, each separately.</span></p>
+      <div id="channelReports"></div>
+    </div>
+    <div class="sec">
+      <h2><span class="ko-text">🔀 재조정 권고 (Adaptive Re-routing)</span><span class="en-text">🔀 Re-routing recommendation</span></h2>
+      <div id="rerouting"></div>
+    </div>
+    <div class="disclaimer"><span class="ko-text">세션 진행 보고서 (④ Adaptive Re-routing). 각 채널 실측 데이터로 기저 대비 변화를 추적하며, 입력된 채널만 평가합니다. 임상가가 다음 세션 방향을 최종 결정합니다.</span><span class="en-text">Per-session progress report. Tracks change vs baseline per entered channel; therapist decides next-session direction.</span></div>
+  </div>
+</div>
+
+<script>
+function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}if(document.getElementById('report').classList.contains('show'))generate();}
+function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}
+
+/* 기저값 (진단 보고서에서 이어받음 — 주의 프로파일 예시; QEEG는 EC 기준) */
+const BASELINE={ nf_success:35, nf_smr:5.0, qeeg_hibeta_ec:18.5, qeeg_hibeta_eo:14.0, qeeg_tbr_ec:2.8, hrv_rmssd:28, hrv_coh:0.30, meas_composure:40, meas_confidence:42 };
+const DIR={ nf_success:'up', nf_smr:'up', qeeg_hibeta_ec:'down', qeeg_hibeta_eo:'down', qeeg_tbr_ec:'flat', hrv_rmssd:'up', hrv_coh:'up', meas_composure:'up', meas_confidence:'up' };
+const LBL={
+ nf_success:{ko:'高베타 조절 성공률',en:'Hi-beta-down success'},nf_smr:{ko:'SMR 진폭',en:'SMR amplitude'},
+ qeeg_hibeta_ec:{ko:'Fz 高베타 (EC)',en:'Fz hi-beta (EC)'},qeeg_hibeta_eo:{ko:'Fz 高베타 (EO)',en:'Fz hi-beta (EO)'},qeeg_tbr_ec:{ko:'Theta/Beta (EC)',en:'Theta/Beta (EC)'},
+ hrv_rmssd:{ko:'HRV RMSSD',en:'HRV RMSSD'},hrv_coh:{ko:'HRV 코히어런스',en:'HRV coherence'},
+ meas_composure:{ko:'집중 지속',en:'Sustained focus'},meas_confidence:{ko:'주의 유지 자신감',en:'Attention confidence'},
+};
+const CHANNELS={nf:['nf_success','nf_smr'],qeeg:['qeeg_hibeta_ec','qeeg_hibeta_eo','qeeg_tbr_ec'],hrv:['hrv_rmssd','hrv_coh'],meas:['meas_composure','meas_confidence']};
+const CHLBL={nf:{ko:'뉴로피드백',en:'Neurofeedback',cls:'nf'},qeeg:{ko:'QEEG 재측정',en:'QEEG',cls:'qeeg'},hrv:{ko:'HRV',en:'HRV',cls:'hrv'},meas:{ko:'설문 재측정',en:'Survey',cls:'meas'}};
+
+const chOn={nf:true,qeeg:false,hrv:true,meas:false};
+function toggleCh(c){chOn[c]=!chOn[c];const el=document.getElementById('ch-'+c);el.classList.toggle('off',!chOn[c]);el.querySelector('.toggle').classList.toggle('on',chOn[c]);
+  const t=el.querySelector('.toggle');t.innerHTML=chOn[c]?'<span class="ko-text">함</span><span class="en-text">done</span>':'<span class="ko-text">안함</span><span class="en-text">no</span>';}
+
+function loadDemo(){
+  const v={nf_success:62,nf_smr:6.8,hrv_rmssd:34,hrv_coh:0.45,qeeg_hibeta_ec:15.2};
+  document.querySelectorAll('[data-c]').forEach(i=>{if(v[i.dataset.c]!==undefined)i.value=v[i.dataset.c];});
+}
+
+function readInputs(){
+  const d={};document.querySelectorAll('[data-c]').forEach(i=>{if(i.value.trim()!=='')d[i.dataset.c]=parseFloat(i.value);});return d;
+}
+
+function generate(){
+  const l=getLang(); const d=readInputs();
+  const cr=document.getElementById('channelReports');cr.innerHTML='';
+  let anyImprove=false, anyWorse=false, hrvImprove=false, composureLow=false, hibetaStill=false;
+
+  Object.keys(CHANNELS).forEach(ch=>{
+    if(!chOn[ch])return;
+    const keys=CHANNELS[ch].filter(k=>d[k]!==undefined);
+    if(!keys.length)return;
+    let rows=`<tr><th>${l==='ko'?'지표':'Metric'}</th><th>${l==='ko'?'기저':'Baseline'}</th><th>${l==='ko'?'이번':'Now'}</th><th style="text-align:right">${l==='ko'?'변화':'Change'}</th></tr>`;
+    keys.forEach(k=>{
+      const base=BASELINE[k], now=d[k], dir=DIR[k];
+      const diff=now-base;
+      let cls='flat',sym='→';
+      if(dir!=='flat'){const better=(dir==='up'&&diff>0)||(dir==='down'&&diff<0);
+        if(Math.abs(diff)<base*0.03){cls='flat';sym='→';}
+        else if(better){cls='up';sym='✓';anyImprove=true;}
+        else{cls='down';sym='⚠';anyWorse=true;}}
+      if(k==='hrv_coh'&&diff>0)hrvImprove=true;
+      if(k==='meas_composure'&&now<50)composureLow=true;
+      if(k==='qeeg_hibeta_ec'&&now>16)hibetaStill=true;
+      const pct=base!==0?Math.round(diff/base*100):0;
+      rows+=`<tr><td>${l==='ko'?LBL[k].ko:LBL[k].en}</td><td class="num">${base}</td><td class="num">${now}</td><td class="num delta ${cls}">${sym} ${diff>0?'+':''}${Math.round(diff*10)/10} (${pct>0?'+':''}${pct}%)</td></tr>`;
+    });
+    cr.innerHTML+=`<div style="margin-bottom:16px"><div style="font-size:14px;font-weight:800;color:var(--hue-dark);margin-bottom:6px"><span class="badge ${CHLBL[ch].cls}">${l==='ko'?CHLBL[ch].ko:CHLBL[ch].en}</span></div><table>${rows}</table></div>`;
+  });
+  if(cr.innerHTML===''){cr.innerHTML=`<div class="callout warn">${l==='ko'?'입력된 채널이 없습니다. 채널을 켜고 값을 입력하세요.':'No channel entered.'}</div>`;}
+
+  // ④ Re-routing 권고 (채널 종합)
+  const rr=document.getElementById('rerouting'); let html='';
+  if(anyImprove&&!anyWorse){
+    html+=`<div class="callout ai"><b>${l==='ko'?'경과 양호':'On track'}</b> — ${l==='ko'?'입력된 채널에서 기저 대비 개선이 확인됩니다. 현재 프로토콜 유지 권고.':'Improvement vs baseline on entered channels. Continue current protocol.'}</div>`;
+  }
+  if(hrvImprove){html+=`<div class="callout key">${l==='ko'?'HRV 코히어런스 상승 — 자율신경 안정이 주의 지속을 받쳐줌. 지속주의 과제 난이도를 한 단계 올릴 시점.':'HRV coherence rising — autonomic stability supports sustained attention. Time to raise sustained-attention task difficulty.'}</div>`;}
+  if(hibetaStill){html+=`<div class="callout warn">${l==='ko'?'⚠ 전두 주의 지표(高베타/TBR)가 여전히 높음 — 지속주의·억제 NF(Theta↓/Beta·SMR↑)에 세션 비중을 더 둘 것.':'⚠ Frontal attention markers (hi-beta/TBR) still high — weight more sessions on sustained/inhibition NF (Theta↓/Beta·SMR↑).'}</div>`;}
+  if(composureLow){html+=`<div class="callout warn">${l==='ko'?'⚠ 집중 지속 자가평정 여전히 낮음(<50) — 객관(NF/QEEG)은 좋아져도 주관 체감이 따라오지 않으면, 행동·환경 전략(방해자극 차단·과제 분할) 비중 강화.':'⚠ Subjective focus still low (<50) — if objective improves but subjective lags, add behavioral/environmental strategies (distraction control, task chunking).'}</div>`;}
+  if(!anyImprove&&anyWorse){html+=`<div class="callout warn"><b>${l==='ko'?'주의':'Caution'}</b> — ${l==='ko'?'개선 신호가 약함. 프로토콜·세션 구성 재검토 권고 (설계기에서 조정).':'Weak improvement. Review protocol/session design.'}</div>`;}
+  if(!html)html=`<div class="callout key">${l==='ko'?'변화가 미미합니다. 다음 세션 데이터 누적 후 재평가.':'Minimal change; re-evaluate after more sessions.'}</div>`;
+  const hand=(document.getElementById('handSel')||{}).value||'right';
+  if(hand==='left'||hand==='ambi'){html+=`<div class="callout key" style="font-size:12.5px">${l==='ko'?'＊ '+(hand==='left'?'왼손잡이':'양손')+' — 전두 알파 비대칭 기반 해석은 편측화 패턴이 다르므로 normative 비교에 주의.':'＊ '+(hand==='left'?'Left-handed':'Mixed')+' — frontal-asymmetry interpretation needs caution (different lateralization).'}</div>`;}
+  html+=`<div style="font-size:12px;color:var(--ink-sub);margin-top:10px;font-style:italic">${l==='ko'?'＊ 이번 세션 입력 채널만 반영. 설문 미입력 시 주관 평가는 생략됨. 임상가가 설계기에서 다음 세션을 조정합니다.':'＊ Only entered channels reflected. Therapist adjusts next session in the designer.'}</div>`;
+  rr.innerHTML=html;
+
+  document.getElementById('report').classList.add('show');
+  document.getElementById('report').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/bnm-lang-sync.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning 관리자 허브 (기밀)</title>
+<style>
+  :root{--page:#FFFFFF;--field:#FAFAFA;--ink:#1F2225;--ink-sub:#5C6166;--line:#D9DDE1;--line-strong:#1F2225;--red:#2E5A7A;--red-dark:#1F2225;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;font-size:17px;line-height:1.7;padding:36px 22px 80px}
+  .container{max-width:880px;margin:0 auto}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50}
+  .langbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+  .secret{background:var(--field);border:1.5px solid var(--red);border-radius:10px;padding:11px 16px;margin-bottom:20px;font-size:13.5px;font-weight:700;color:var(--red-dark)}
+  h1{font-size:28px;font-weight:800;margin-bottom:6px}
+  .sub{font-size:15px;color:var(--ink-sub);margin-bottom:26px}
+  .group-t{font-size:14px;font-weight:800;color:var(--ink-sub);letter-spacing:.04em;text-transform:uppercase;margin:26px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px;text-decoration:none;color:inherit;transition:.15s;display:block}
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.08);border-color:var(--line-strong)}
+  .card.live{border-color:var(--red);border-width:1.5px}
+  .card .ic{font-size:26px;margin-bottom:10px}
+  .card h3{font-size:17px;font-weight:800;margin-bottom:5px}
+  .card p{font-size:13px;color:var(--ink-sub);line-height:1.55}
+  .card .ar{margin-top:12px;font-size:13px;font-weight:800;color:var(--red)}
+  .conf{display:inline-block;font-size:10.5px;font-weight:800;color:#fff;background:var(--red);border-radius:5px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+  .back{display:inline-block;color:var(--ink-sub);text-decoration:none;font-weight:700;font-size:14px;margin-bottom:18px}
+</style>
+</head>
+<body>
+<div class="topbar"><button class="langbtn" onclick="setLang(getLang()==='ko'?'en':'ko')">KO / EN</button></div>
+<div class="container">
+  <a class="back" href="https://www.bostonneuromind.com/admin.html">← <span class="ko-text">관리자 홈</span><span class="en-text">Admin home</span></a>
+  <div class="secret">🔒 <span class="ko-text">기밀 — 임상가 전용. 모든 항목 관리자 비번 뒤. 외부 공유 금지.</span><span class="en-text">Confidential — clinicians only. No external sharing.</span></div>
+
+  <h1>📖 Learning <span class="ko-text">관리자</span><span class="en-text">Admin</span></h1>
+  <p class="sub"><span class="ko-text">학습 효율 진단·훈련 운영 + 알고리즘·매뉴얼 문서. 모두 한 자리.</span><span class="en-text">Learning-efficiency diagnosis/training tools + algorithm/manual docs.</span></p>
+
+  <!-- 운영 도구 -->
+  <div class="group-t"><span class="ko-text">운영 도구</span><span class="en-text">Operations</span></div>
+  <div class="grid">
+    <a class="card live" href="report.html"><div class="ic">🩺</div><h3><span class="ko-text">진단·훈련 보고서</span><span class="en-text">Report</span></h3><p><span class="ko-text">CNA v7 엔진 · 진단·훈련·QEEG·통합 4탭</span><span class="en-text">CNA v7 engine · 4 tabs</span></p><div class="ar">Open →</div></a>
+    <a class="card live" href="designer.html"><div class="ic">🗓️</div><h3><span class="ko-text">세션 설계기</span><span class="en-text">Session Designer</span></h3><p><span class="ko-text">5/10/15 · NF·QEEG 유연 배치</span><span class="en-text">5/10/15 · flexible</span></p><div class="ar">Open →</div></a>
+    <a class="card live" href="progress.html"><div class="ic">📈</div><h3><span class="ko-text">세션 경과</span><span class="en-text">Progress</span></h3><p><span class="ko-text">채널별 입력 · Adaptive Re-routing</span><span class="en-text">per-channel · re-routing</span></p><div class="ar">Open →</div></a>
+  </div>
+
+  <!-- 알고리즘 -->
+  <div class="group-t"><span class="ko-text">알고리즘 문서</span><span class="en-text">Algorithm Docs</span></div>
+  <div class="grid">
+    <a class="card" href="algorithm_clinician.html"><div class="ic">⚙️</div><h3><span class="ko-text">알고리즘 — 임상가용</span><span class="en-text">Algorithm — Clinician</span><span class="conf">CONF</span></h3><p><span class="ko-text">CNA v7 풀: EFE·4모듈·Fischer·진화·MSDI</span><span class="en-text">Full CNA v7</span></p><div class="ar">Open →</div></a>
+    <a class="card" href="algorithm_client.html"><div class="ic">💡</div><h3><span class="ko-text">알고리즘 — 고객용</span><span class="en-text">Algorithm — Client</span></h3><p><span class="ko-text">쉽게 · 상담 시 보여줌</span><span class="en-text">simple · for sessions</span></p><div class="ar">Open →</div></a>
+  </div>
+
+  <!-- 매뉴얼 -->
+  <div class="group-t"><span class="ko-text">매뉴얼</span><span class="en-text">Manuals</span></div>
+  <div class="grid">
+    <a class="card" href="manual_clinician.html"><div class="ic">📘</div><h3><span class="ko-text">매뉴얼 — 임상가용</span><span class="en-text">Manual — Clinician</span><span class="conf">CONF</span></h3><p><span class="ko-text">운영 워크플로우 전체</span><span class="en-text">full workflow</span></p><div class="ar">Open →</div></a>
+    <a class="card" href="manual_client.html"><div class="ic">📗</div><h3><span class="ko-text">매뉴얼 — 고객용</span><span class="en-text">Manual — Client</span></h3><p><span class="ko-text">진행 안내 · 상담 시 보여줌</span><span class="en-text">onboarding · for sessions</span></p><div class="ar">Open →</div></a>
+  </div>
+
+  <p style="margin-top:30px;font-size:13px;color:var(--ink-sub);border-top:1px solid var(--line);padding-top:14px">Boston Neuromind LLC · Learning Admin · <span class="ko-text">기밀</span><span class="en-text">Confidential</span> · 2026</p>
+</div>
+<script>function setLang(l){if(window.bnmSetLang){bnmSetLang(l);}else{document.body.setAttribute('data-lang',l);}}function getLang(){return (window.bnmGetLang&&bnmGetLang())||document.body.getAttribute('data-lang')||'en';}</script>
+</body>
+</html>
