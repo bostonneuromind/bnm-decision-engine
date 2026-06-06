@@ -173,11 +173,15 @@
   .own-panel a{padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--ink)}
   .own-panel a:hover{background:var(--paper2)}
   @media(max-width:760px){.pills{display:none}.util-bar{display:none}}
-  .picks2{display:flex;gap:14px;margin-top:6px}
-  .picks2 .pk2{padding:14px 34px;border-radius:12px;font-size:16px;font-weight:700;transition:transform .15s}
-  .picks2 .pk2:hover{transform:translateY(-2px)}
-  .picks2 .diag{background:var(--accent);color:#fff}
-  .picks2 .train{background:#fff;color:var(--ink)}
+  .picks{display:flex;gap:16px;margin-top:6px;flex-wrap:wrap}
+  .pick{background:rgba(255,255,255,.14);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.34);border-radius:16px;padding:16px 18px;min-width:236px}
+  .pick .pk-h{font-family:var(--serif);font-size:21px;font-weight:500;color:#fff;margin-bottom:11px}
+  .pick .pk-b{display:flex;gap:7px}
+  .pick .pk-b a{flex:1;text-align:center;padding:8px 4px;border-radius:9px;font-size:12.5px;font-weight:600;transition:transform .15s,box-shadow .15s;white-space:nowrap}
+  .pick .pk-b a:first-child{background:var(--accent);color:#fff}
+  .pick .pk-b a:nth-child(2){background:#fff;color:var(--ink)}
+  .pick .pk-b a:last-child{background:rgba(192,87,31,.30);color:#fff;border:1px solid rgba(255,255,255,.5)}
+  .pick .pk-b a:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.14)}
 .tc-modal-bg{ position:fixed; inset:0; z-index:9999; display:none;
       background:rgba(20,15,30,0.5); backdrop-filter:blur(6px);
       align-items:center; justify-content:center; }
@@ -238,7 +242,7 @@
     <div class="label"><span class="ko">집중 · 학습</span><span class="en">Focus · Learning</span></div>
     <h1><span class="ko">집중은 가장 조용할 때 <em>깊어집니다.</em></span><span class="en">Focus runs deepest <em>in the quiet.</em></span></h1>
     <p class="lead"><span class="ko">산만함을 걷어내고, 매일 조금씩 집중을 길러요. 학생부터 어른까지 — 한 페이지에 온전히 머무는 힘을 훈련합니다.</span><span class="en">Clear the noise and grow your focus a little each day — from students to adults.</span></p>
-    <div class="picks2"><a class="pk2 diag" href="#diagnose"><span class="ko">진단</span><span class="en">Assessment</span></a><a class="pk2 train" href="#train"><span class="ko">훈련</span><span class="en">Training</span></a></div>
+    <div class="picks"><div class="pick"><div class="pk-h"><span class="ko">집중력</span><span class="en">Focus</span></div><div class="pk-b"><a href="#screen"><span class="ko">점검</span><span class="en">Screening</span></a><a href="#diagnose"><span class="ko">진단</span><span class="en">Assessment</span></a><a href="#train"><span class="ko">훈련</span><span class="en">Training</span></a></div></div></div>
   </div></div>
   <div class="plate">J.-B.-S. Chardin, <span class="ko">『비눗방울』</span><span class="en">Soap Bubbles</span></div>
 </section>
