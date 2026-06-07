@@ -4,7 +4,7 @@
 <script src="/bnm-lang-sync.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peak Performance — 임상 보고서 (진단 · 훈련 프로토콜)</title>
+<title>Learning Disability — 임상 보고서 (진단 · 훈련 프로토콜)</title>
 <style>
   :root{
     /* ★ 미니멀 표준 (할비 2026-06-02): 색 거의 안 씀 — 무채/뉴트럴, 폼·선·여백으로 구조. 글씨 크게. */
@@ -110,10 +110,10 @@
 </head>
 <body>
 
-<!-- 관리자 게이트 (학생 데이터 화면 — 관리자 전용). 통과 시 admin_pw 세팅 → report/source 호출. learning report.html 패턴. -->
+<!-- 관리자 게이트 (학생 데이터 화면 — 관리자 전용). 통과 시 admin_pw 세팅 → report/source 호출. -->
 <div id="bnmGate" style="position:fixed;inset:0;z-index:9999;background:#faf7f2;display:flex;align-items:center;justify-content:center;padding:20px;font-family:'Noto Sans KR',system-ui,sans-serif">
   <div style="max-width:380px;width:100%;background:#fff;border:1px solid #e2dccf;border-radius:18px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,.08)">
-    <h2 style="font-size:19px;font-weight:800;margin:0 0 6px;color:#2a2018">Peak 진단 보고서</h2>
+    <h2 style="font-size:19px;font-weight:800;margin:0 0 6px;color:#2a2018">학습장애 진단 보고서</h2>
     <p style="font-size:13px;color:#6b6256;margin:0 0 16px">관리자 전용 — 학생 데이터 / Clinicians only</p>
     <input id="bnmGatePw" type="password" placeholder="Password" style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:10px;font-size:15px;box-sizing:border-box;outline:none;font-family:inherit">
     <button id="bnmGateBtn" style="width:100%;margin-top:10px;padding:13px;background:#2a2018;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">들어가기 / Enter</button>
@@ -146,9 +146,9 @@
 <div class="container">
 
   <div class="rpt-head">
-    <span class="tag">Peak Performance 과 · 임상 보고서</span>
-    <h1><span class="ko-text">최고 수행 임상 보고서</span><span class="en-text">Peak Performance Clinical Report</span></h1>
-    <div class="meta"><span class="ko-text">예시 사례 · 압박형(choking) · 요구분석 + 정밀진단 + QEEG/HRV 통합</span><span class="en-text">Illustrative · Pressure type (choking) · Needs-analysis + diagnosis + QEEG/HRV</span></div>
+    <span class="tag">학습장애 과 · 임상 보고서</span>
+    <h1><span class="ko-text">학습장애 임상 보고서</span><span class="en-text">Learning Disability Clinical Report</span></h1>
+    <div class="meta"><span class="ko-text">예시 사례 · 인출형(retrieval) · 요구분석 + 정밀진단 + QEEG/HRV 통합</span><span class="en-text">Illustrative · Retrieval type · Needs-analysis + diagnosis + QEEG/HRV</span></div>
     <div class="ai-badge"><span class="ko-text">⚙ AI 1회 분석 → 진단·훈련 동시 산출 (탭으로 분리 표시)</span><span class="en-text">⚙ AI run once → diagnosis + training, shown as separate tabs</span></div>
   </div>
 
@@ -218,38 +218,38 @@
   <div class="pane on" id="pane-dx">
     <div class="sec">
       <div class="sec-h"><div class="sec-n">1</div><h2><span class="ko-text">목표 (요구분석에서 이어받음)</span><span class="en-text">Goal (carried from needs-analysis)</span></h2></div>
-      <div class="lead"><span class="ko-text"><b>호소 목표:</b> 발표·면접에서 <b>압박이 큰 순간에 무너지지 않고</b> 실력을 온전히 발휘하기. 지향: 숙달+결과. 최적 각성: 적당 / 현재: 과함(낮추기).</span><span class="en-text"><b>Stated goal:</b> in presentations/interviews, fully perform <b>without collapsing under pressure</b>. Orientation: mastery+result. Optimal arousal: moderate / now: too high (lower).</span></div>
+      <div class="lead"><span class="ko-text"><b>호소 목표:</b> 공부한 내용을 <b>오래 기억하고 시험·실전에서 꺼내 쓰기</b>. 학습 유형: 인출형(외운 걸 꺼내기 약함). 핵심 약점: 인출·정교화.</span><span class="en-text"><b>Stated goal:</b> <b>retain what's studied and retrieve it on tests/in practice</b>. Learning type: retrieval (weak at pulling memory back). Key weakness: retrieval & elaboration.</span></div>
       <div class="callout key"><span class="ko-text">요구분석(층A)의 V2 Desire가 그대로 진단 입구로 이어집니다 — 무료 분석에서 답한 것이 버려지지 않고 임상의 시작점이 됩니다.</span><span class="en-text">The needs-analysis V2 Desire carries straight into diagnosis — nothing from the free analysis is lost; it becomes the clinical starting point.</span></div>
     </div>
 
     <div class="sec">
-      <div class="sec-h"><div class="sec-n">2</div><h2><span class="ko-text">무엇이 Peak를 막나 — 정밀 진단</span><span class="en-text">What Blocks Peak — Precise Diagnosis</span></h2></div>
-      <p class="lead"><span class="ko-text">압박형 → 막는 요인 정밀 측정 (요구분석이 라우팅한 증상만 측정):</span><span class="en-text">Pressure type → measured blockers (only symptoms routed by needs-analysis):</span></p>
-      <!-- ?cid= 진입 시 실데이터(assessment 프로파일)로 교체, 없으면 아래 예시 표 -->
+      <div class="sec-h"><div class="sec-n">2</div><h2><span class="ko-text">무엇이 학습을 막나 — 정밀 진단</span><span class="en-text">What Blocks Learning — Precise Diagnosis</span></h2></div>
+      <p class="lead"><span class="ko-text">인출형 → 막는 요인 정밀 측정 (요구분석이 라우팅한 증상만 측정):</span><span class="en-text">Retrieval type → measured blockers (only symptoms routed by needs-analysis):</span></p>
+      <!-- ?cid= 진입 시 실데이터(assessment→symptom_vector)로 교체, 없으면 아래 예시 표 -->
       <div id="blockerLive" style="display:none"></div>
       <table id="blockerDemo">
         <tr><th><span class="ko-text">막는 요인</span><span class="en-text">Blocker</span></th><th><span class="ko-text">기여도</span><span class="en-text">Share</span></th><th><span class="ko-text">기전 (논문 근거)</span><span class="en-text">Mechanism (evidence)</span></th></tr>
-        <tr><td><b><span class="ko-text">수행불안 (choking)</span><span class="en-text">Performance anxiety</span></b></td><td class="num">0.58</td><td><span class="ko-text">압박이 자동기술의 의식적 모니터링 유발 → 유창성 붕괴</span><span class="en-text">pressure → conscious monitoring of automated skill → fluency collapse</span></td></tr>
-        <tr><td><span class="ko-text">사회불안 (평가 두려움)</span><span class="en-text">Social anxiety</span></td><td class="num">0.22</td><td><span class="ko-text">자기초점 주의 + 사후반추</span><span class="en-text">self-focused attention + post-event rumination</span></td></tr>
-        <tr><td><span class="ko-text">각성 조절 (IZOF 초과)</span><span class="en-text">Arousal (above IZOF)</span></td><td class="num">0.20</td><td><span class="ko-text">현재 각성이 개인 최적 영역 초과</span><span class="en-text">arousal exceeds individual optimal zone</span></td></tr>
+        <tr><td><b><span class="ko-text">인출 실패 (retrieval)</span><span class="en-text">Retrieval failure</span></b></td><td class="num">0.45</td><td><span class="ko-text">부호화는 됐으나 꺼내기 경로 약함 → 시험 약함 (테스트 효과 부재)</span><span class="en-text">encoded but weak retrieval path → poor on tests</span></td></tr>
+        <tr><td><span class="ko-text">얕은 부호화 (encoding)</span><span class="en-text">Shallow encoding</span></td><td class="num">0.32</td><td><span class="ko-text">재독 위주, 정교화·자기설명 부족</span><span class="en-text">re-reading; little elaboration/self-explanation</span></td></tr>
+        <tr><td><span class="ko-text">작업기억 부하 (WM)</span><span class="en-text">Working-memory load</span></td><td class="num">0.23</td><td><span class="ko-text">WM 한계로 이해·통합 저하</span><span class="en-text">WM limit weakens comprehension/integration</span></td></tr>
       </table>
-      <div class="callout key"><span class="ko-text"><b>핵심:</b> 실력이 부족한 게 아니라 <b>압박 속 의식적 모니터링(reinvestment)</b>이 평소 실력을 가립니다. <span class="ref-cite">(Masters &amp; Maxwell, 2008 reinvestment; Eysenck &amp; Derakshan, 2011 ACT)</span></span><span class="en-text"><b>Key:</b> not a skill deficit — <b>conscious monitoring under pressure (reinvestment)</b> masks your usual ability. <span class="ref-cite">(Masters &amp; Maxwell, 2008; Eysenck &amp; Derakshan, 2011)</span></span></div>
+      <div class="callout key"><span class="ko-text"><b>핵심:</b> 머리가 나쁜 게 아니라 <b>학습 전략(인출·분산·정교화)</b>이 안 맞춰진 것입니다. 인출연습·분산학습은 가장 강한 증거를 가진 전략입니다. <span class="ref-cite">(Roediger &amp; Karpicke, 2006 testing effect; Cepeda et al., 2006 spacing; Dunlosky et al., 2013)</span></span><span class="en-text"><b>Key:</b> not about ability — <b>learning strategy (retrieval, spacing, elaboration)</b> isn't dialed in. Retrieval practice & spacing are the strongest-evidence strategies. <span class="ref-cite">(Roediger &amp; Karpicke, 2006; Cepeda et al., 2006; Dunlosky et al., 2013)</span></span></div>
     </div>
 
     <div class="sec">
       <div class="sec-h"><div class="sec-n">3</div><h2><span class="ko-text">QEEG / HRV 객관 측정 (실측)</span><span class="en-text">QEEG / HRV (measured)</span></h2></div>
       <table>
         <tr><th><span class="ko-text">지표</span><span class="en-text">Marker</span></th><th><span class="ko-text">측정값</span><span class="en-text">Value</span></th><th><span class="ko-text">해석</span><span class="en-text">Interpretation</span></th></tr>
-        <tr><td>전두 高베타 (Fz/F3-F4)</td><td class="num">↑ 높음</td><td><span class="ko-text">압박 시 과각성 — 의식적 모니터링 신경 상관</span><span class="en-text">hyper-arousal under pressure</span></td></tr>
-        <tr><td>HRV coherence</td><td class="num">0.30 ↓</td><td><span class="ko-text">자율신경 각성 조절 저하 (IZOF 초과 일치)</span><span class="en-text">low autonomic regulation (matches above-IZOF)</span></td></tr>
-        <tr><td>Theta/Beta ratio</td><td class="num">2.8 (정상)</td><td><span class="ko-text">기저 주의결손 아님 → ADHD 배제, 압박 특이</span><span class="en-text">no baseline attention deficit → not ADHD, pressure-specific</span></td></tr>
+        <tr><td>Theta/Beta ratio (Cz)</td><td class="num">3.2 ↑</td><td><span class="ko-text">학습 중 주의 안정 저하 표지 (높을수록 산만)</span><span class="en-text">attention stability during study (higher = more distractible)</span></td></tr>
+        <tr><td><span class="ko-text">전두-중심 세타 (Fz)</span><span class="en-text">Frontal-midline theta (Fz)</span></td><td class="num">측정</td><td><span class="ko-text">부호화·작업기억 활성 상관 (Klimesch)</span><span class="en-text">encoding/working-memory activity</span></td></tr>
+        <tr><td>HRV coherence</td><td class="num">0.40 ↓</td><td><span class="ko-text">인지부하 하 자율 안정 저하 — 지속 학습 방해</span><span class="en-text">low autonomic stability under load — hinders sustained study</span></td></tr>
       </table>
-      <div class="callout key"><span class="ko-text">객관 지표가 자가응답과 수렴 — 高베타↑ + HRV↓는 "압박 과각성", TBR 정상은 "기저 주의는 멀쩡, 문제는 압박". 7-pillar MSDI(다중 출처 진단)가 자가응답·QEEG·HRV를 통합한 결과.</span><span class="en-text">Objective markers converge with self-report — high-beta↑ + HRV↓ = pressure hyper-arousal; normal TBR = baseline attention intact, the issue is pressure. MSDI integrates self-report·QEEG·HRV.</span></div>
+      <div class="callout key"><span class="ko-text">객관 지표는 학습을 <b>지지하는 조건</b>(주의 안정·인지부하)을 봅니다 — TBR↑·HRV↓는 "학습 중 주의·자율 안정이 약함". 학습 효과의 핵심은 전략(인출·분산)이며, 객관 지표는 그 전략이 잘 작동할 환경을 점검합니다. 7-pillar MSDI가 자가응답·QEEG·HRV를 통합.</span><span class="en-text">Objective markers check the <b>conditions that support learning</b> (attention stability, cognitive load) — TBR↑/HRV↓ = weak attention/autonomic stability during study. The core of learning is strategy (retrieval/spacing); objective markers check the environment for those strategies. MSDI integrates self-report·QEEG·HRV.</span></div>
     </div>
 
     <div class="sec">
       <div class="sec-h"><div class="sec-n">4</div><h2><span class="ko-text">AI 소견 → 권장 훈련 영역</span><span class="en-text">AI Opinion → Recommended Areas</span></h2></div>
-      <div class="callout ai" id="aiOpinion"><span class="ko-text"><b>AI 진단 소견:</b> 압박 상황의 각성 과활성과 의식적 모니터링이 핵심 병목입니다. 기저 인지·주의는 보존되어 있어, <b>각성 조절 → 주의 외부초점 → 압박 노출</b> 순서의 훈련이 가장 효과적일 것으로 추천됩니다. 사회평가 요소가 동반되어 사후반추 관리도 권장합니다. <span style="font-size:12px;color:var(--ink-sub)">(예시 — 아래 "AI 보고서 생성"으로 실제 분석)</span></span><span class="en-text"><b>AI opinion:</b> arousal over-activation and conscious monitoring under pressure are the bottleneck; baseline cognition/attention are intact. Recommended order: <b>arousal regulation → external attention focus → pressure exposure</b>, plus post-event-rumination management. <span style="font-size:12px;color:var(--ink-sub)">(example — generate real analysis below)</span></span></div>
+      <div class="callout ai" id="aiOpinion"><span class="ko-text"><b>AI 진단 소견:</b> 인출 경로 약화와 얕은 부호화가 핵심 병목입니다. 학습 능력 자체는 보존되어 있어, <b>인출연습 → 분산복습 → 정교화 → 작업기억</b> 순서의 훈련이 가장 효과적일 것으로 추천됩니다. 학습 중 주의 안정(SMR·집중 환경)도 병행 권장합니다. <span style="font-size:12px;color:var(--ink-sub)">(예시 — 아래 "AI 보고서 생성"으로 실제 분석)</span></span><span class="en-text"><b>AI opinion:</b> weak retrieval paths and shallow encoding are the bottleneck; learning ability itself is intact. Recommended order: <b>retrieval practice → spaced review → elaboration → working memory</b>, plus attention stability during study (SMR/focus environment). <span style="font-size:12px;color:var(--ink-sub)">(example — generate real analysis below)</span></span></div>
       <div class="btn-row" style="margin-top:10px"><button class="btn" id="genAiBtn" onclick="generateAIReport()"><span class="ko-text">🤖 AI 보고서 생성 (실제 분석)</span><span class="en-text">🤖 Generate AI report</span></button></div>
 
       <!-- ★ 진짜 엔진(CNA v7) 연결 패널 — Fischer 발달 진단 -->
@@ -258,7 +258,7 @@
         <p class="lead" style="margin-bottom:12px"><span class="ko-text">환자 식별자 + Fischer 5축 발달 레벨(L7~L13)을 입력하면, 진짜 엔진이 진단·발달 시뮬·훈련 프로토콜을 생성하고 <b>케이스를 누적해 진화</b>합니다. (위 AI 소견과 별개 — 이게 핵심 엔진)</span><span class="en-text">Enter patient ID + Fischer levels (L7–L13). The real engine diagnoses, simulates development, generates a protocol, and <b>accumulates cases to evolve</b>.</span></p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
           <label style="font-size:13px"><span class="ko-text">환자 식별자(이니셜)</span><span class="en-text">Patient ID</span><br><input id="eng_pid" type="text" placeholder="예: KSH" style="margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:15px;width:140px"></label>
-          <span style="font-size:12.5px;color:var(--ink-sub)"><span class="ko-text">목표 축: peak_performance (고정)</span><span class="en-text">axis: peak_performance</span></span>
+          <span style="font-size:12.5px;color:var(--ink-sub)"><span class="ko-text">목표 축: learning (고정)</span><span class="en-text">axis: learning</span></span>
         </div>
         <p style="font-size:12.5px;color:var(--ink-sub);margin-bottom:6px"><span class="ko-text">Fischer 발달 레벨 (L7~L13, 측정값):</span><span class="en-text">Fischer levels (L7–L13):</span></p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:12px">
@@ -307,7 +307,7 @@
 
     <div class="sec">
       <div class="sec-h"><div class="sec-n">4</div><h2><span class="ko-text">근거 + 예상 경과</span><span class="en-text">Evidence + Expected Course</span></h2></div>
-      <div class="callout ai"><span class="ko-text"><b>이 프로토콜의 근거:</b> 압박형은 각성 조절(HRV 바이오피드백) + reinvestment 차단(주의 외부초점)이 핵심 — Masters reinvestment 이론. NF는 SMR↑/高베타↓로 압박 속 침착 회로를 훈련 (SMR은 100+ 연구 검증). 5–10세션에 주관적 개선, 15세션부터 측정 가능한 EEG 변화 시작. <span class="ref-cite">(Masters &amp; Maxwell 2008; SMR meta — 100+ studies; Sitaram et al. 2017)</span></span><span class="en-text"><b>Protocol basis:</b> for pressure type, arousal regulation (HRV biofeedback) + reinvestment blocking (external focus) are key (Masters). NF trains the composure circuit via SMR↑/high-beta↓ (SMR: 100+ studies). Subjective gains by 5–10, measurable EEG change from ~15. <span class="ref-cite">(Masters &amp; Maxwell 2008; SMR meta; Sitaram et al. 2017)</span></span></div>
+      <div class="callout ai"><span class="ko-text"><b>이 프로토콜의 근거:</b> 인출형은 인출연습(테스트 효과) + 분산복습(간격 효과)이 핵심 — Roediger & Karpicke, Cepeda. 정교화·자기설명으로 부호화를 강화하고, 학습 중 주의 안정(SMR)을 보조. 5–10세션에 주관적 개선, 분산 간격 확대로 장기 파지 강화. <span class="ref-cite">(Roediger &amp; Karpicke 2006; Cepeda et al. 2006; Dunlosky et al. 2013)</span></span><span class="en-text"><b>Protocol basis:</b> for the retrieval type, retrieval practice (testing effect) + spaced review (spacing effect) are key — Roediger & Karpicke, Cepeda. Elaboration/self-explanation strengthen encoding; SMR supports attention during study. Subjective gains by 5–10; expanding spacing builds long-term retention. <span class="ref-cite">(Roediger &amp; Karpicke 2006; Cepeda 2006; Dunlosky 2013)</span></span></div>
       <div class="btn-row">
         <button class="btn ghost" onclick="setTab('dx')"><span class="ko-text">← 진단 보고서</span><span class="en-text">← Diagnosis</span></button>
         <button class="btn" onclick="exportPlan()"><span class="ko-text">계획 내보내기 (요약)</span><span class="en-text">Export plan</span></button>
@@ -349,29 +349,29 @@ function setTab(t){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ===== AI 1회 산출물 (진단+훈련 동시) — 압박형 예시 ===== */
+/* ===== AI 1회 산출물 (진단+훈련 동시) — 인출형 예시 ===== */
 // 훈련 영역: ai=AI추천(자동선택), 나머지=임상가 임의 추가 가능
 const AREAS=[
-  {id:'arousal',ai:true,ko:'각성 조절 (HRV·이완)',en:'Arousal regulation (HRV)',icon:'🫁'},
-  {id:'external_focus',ai:true,ko:'주의 외부초점 (reinvestment 차단)',en:'External attention focus',icon:'🎯'},
-  {id:'exposure',ai:true,ko:'압박 노출 (점진)',en:'Pressure exposure (graded)',icon:'📈'},
-  {id:'post_event',ai:true,ko:'사후반추 관리',en:'Post-event rumination mgmt',icon:'🔁'},
-  {id:'confidence',ai:false,ko:'자신감·자기효능',en:'Confidence/self-efficacy',icon:'💪'},
-  {id:'routine',ai:false,ko:'수행 전 루틴',en:'Pre-performance routine',icon:'📋'},
-  {id:'imagery',ai:false,ko:'심상 훈련 (imagery)',en:'Mental imagery',icon:'🧠'},
+  {id:'retrieval',ai:true,ko:'인출 연습 (Active Recall)',en:'Retrieval practice',icon:'🔁'},
+  {id:'spacing',ai:true,ko:'분산 학습 (Spaced Repetition)',en:'Spaced repetition',icon:'📅'},
+  {id:'elaboration',ai:true,ko:'정교화 (자기 말로 연결)',en:'Elaboration',icon:'🔗'},
+  {id:'working_memory',ai:true,ko:'작업기억 훈련 (N-back)',en:'Working memory (N-back)',icon:'🧠'},
+  {id:'metacognition',ai:false,ko:'메타인지 (자기점검)',en:'Metacognition',icon:'🪞'},
+  {id:'comprehension',ai:false,ko:'이해·구조화 (Feynman)',en:'Comprehension (Feynman)',icon:'💡'},
+  {id:'pretest',ai:false,ko:'사전테스트 (Pre-test)',en:'Pre-testing',icon:'📝'},
 ];
 const selected=new Set(AREAS.filter(a=>a.ai).map(a=>a.id));
 let sessions=10, nfOn=true;
 
 // 영역별 세션 내용 템플릿 (phase: 기초→형성→통합)
 const CONTENT={
-  arousal:{ko:['호흡·점진이완 기초 + HRV 바이오피드백 도입','HRV 코히어런스 목표 설정·자기조절 연습','압박 상상 중 각성 유지 연습'],en:['Breathing/relaxation + HRV intro','HRV coherence targets, self-reg','Maintain arousal under imagined pressure'],nf:'SMR↑ / 高베타↓'},
-  external_focus:{ko:['자기초점→외부초점 전환 훈련','수행 중 외부 단서 포착 연습','reinvestment 차단 (자동기술 신뢰)'],en:['Shift self→external focus','Catch external cues during task','Block reinvestment (trust automaticity)'],nf:'베타 안정 / 주의'},
-  exposure:{ko:['낮은 압박 상황 노출 + 안전행동 제거','중간 압박 행동실험','실전 수준 압박 노출·통합'],en:['Low-pressure exposure, drop safety behaviors','Mid-pressure behavioral test','Real-level pressure exposure'],nf:'각성 유지 모니터'},
-  post_event:{ko:['사후반추 인식·기록','곱씹기 차단 기법','수행 후 균형 재평가'],en:['Notice/log post-event rumination','Block brooding','Balanced post-performance review'],nf:'알파 ↑ (이완)'},
-  confidence:{ko:['성공 경험 재구축','자기효능 진술·증거 수집','압박 속 자신감 유지'],en:['Rebuild success experiences','Self-efficacy evidence','Confidence under pressure'],nf:'좌전두 활성'},
-  routine:{ko:['수행 전 루틴 설계','루틴 자동화 연습','실전 루틴 적용'],en:['Design pre-performance routine','Automate routine','Apply in real settings'],nf:'각성 정렬'},
-  imagery:{ko:['심상 선명도 훈련','수행 시나리오 심상','압박 극복 심상 리허설'],en:['Imagery vividness','Performance scenario imagery','Pressure-coping imagery rehearsal'],nf:'알파/세타 심상'},
+  retrieval:{ko:['읽기→덮고 핵심 다시쓰기','빈칸 채우기·자기퀴즈','간격 두고 반복 인출'],en:['Read→close→rewrite key points','Cloze/self-quiz','Spaced retrieval'],nf:'전두 세타 (부호화)'},
+  spacing:{ko:['새 자료 학습 + 24h 후 복습','복습 간격 점증(1→3→7일)','분산 스케줄 자동화'],en:['Learn + review at 24h','Expanding intervals (1→3→7d)','Automate spaced schedule'],nf:'각성 안정'},
+  elaboration:{ko:['새 개념 자기 말로 5문장','기존 지식과 연결','왜?-어떻게? 자문'],en:['Explain in 5 sentences','Link to prior knowledge','Ask why/how'],nf:'전두 세타'},
+  working_memory:{ko:['N-back 1단계 + 정확도','난이도 적응(2→3-back)','이중과제 부하'],en:['N-back level 1 + accuracy','Adaptive (2→3-back)','Dual-task load'],nf:'전두 세타 조절'},
+  metacognition:{ko:['학습 전 목표·전략 계획','학습 중 이해도 자기점검','학습 후 모르는 것 정리'],en:['Plan goals/strategy','Monitor comprehension','Identify gaps after'],nf:'알파/세타'},
+  comprehension:{ko:['12세에게 설명하듯 단순화(Feynman)','개념 지도 그리기','막히는 부분 재학습'],en:['Feynman: explain simply','Concept mapping','Re-study sticking points'],nf:'행동 전략'},
+  pretest:{ko:['공부 전 5문제(틀려도 OK)','공부 후 같은 문제 재시험','격차 추적'],en:['Pre-test 5 items','Re-test after study','Track the gap'],nf:'행동 전략'},
 };
 const PHASE={ko:['기초','형성','통합'],en:['Foundation','Forming','Integration']};
 
@@ -428,7 +428,7 @@ function buildPlan(){
 function exportPlan(){
   const l=getLang();
   const areas=[...selected];
-  const plan={dept:'peak_performance',report:'training_protocol',sessions,nf:nfOn,
+  const plan={dept:'learning-disability',report:'training_protocol',sessions,nf:nfOn,
     areas_selected:areas, ai_recommended:AREAS.filter(a=>a.ai).map(a=>a.id),
     weeks_at_2per:Math.ceil(sessions/2)};
   alert((l==='ko'?'훈련 계획 요약 (엔진/기록용):\n\n':'Training plan summary:\n\n')+JSON.stringify(plan,null,2));
@@ -444,11 +444,11 @@ async function runEngine(){
   const levels={};
   document.querySelectorAll('.eng_lvl').forEach(i=>{ const v=i.value.trim(); if(v!=='') levels[i.dataset.axis]=parseFloat(v); });
   if(Object.keys(levels).length<5){ out.innerHTML=`<div class="callout warn">${l==='ko'?'Fischer 5축 레벨을 모두 입력하세요 (L7~13).':'Enter all 5 Fischer levels.'}</div>`; return; }
-  // symptom_vector: ?cid= 실데이터 우선(peak은 S1 매핑 없음 — source가 null이면 예시 유지).
+  // symptom_vector: ?cid= 실데이터(assessment→S1 계수) 우선, 없으면 예시.
   const src=window.REPORT_SOURCE||{};
   const symptom_vector=(src.symptom_vector&&Object.keys(src.symptom_vector).length)
     ? src.symptom_vector
-    : { performance_anxiety:0.58, social_anxiety:0.22, anxiety_somatic:0.45 };
+    : { learning_difficulty:0.45, working_memory:0.32, retention:0.40 };
   // biomarkers: pre-session 변환(raw, HRV mock 이미 차단됨) + QEEG 입력 병합.
   const biomarkers={};
   if(src.levels && src.levels.biomarkers){ Object.assign(biomarkers, src.levels.biomarkers); }
@@ -463,9 +463,9 @@ async function runEngine(){
   out.innerHTML=`<div class="callout key">${l==='ko'?'엔진 호출 중 (진단 → 발달 시뮬 → 훈련 → 진화 누적)…':'Calling engine…'}</div>`;
   try{
     await fetch('/api/client/create',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({patient_id:pid, beta_cohort:'peak_pilot'})}).catch(()=>{});
+      body:JSON.stringify({patient_id:pid, beta_cohort:'learning_disability_pilot'})}).catch(()=>{});
     const res=await fetch('/api/full-cycle',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({patient_id:pid, cognitive_levels:levels, primary_clinical_axis:'peak_performance',
+      body:JSON.stringify({patient_id:pid, cognitive_levels:levels, primary_clinical_axis:'learning',
         symptom_vector:symptom_vector, biomarkers:biomarkers, motivation:0.7, n_sessions:0})});
     const data=await res.json();
     if(data.error){ throw new Error(data.error); }
@@ -502,24 +502,24 @@ async function generateAIReport(){
   // 현재 케이스 데이터 수집 (요구분석 V2 + 막는요인 + QEEG 있으면)
   const aiSrc=window.REPORT_SOURCE||{};
   const caseData = {
-    dept:'peak_performance',
-    goal: l==='ko'?'발표·면접에서 압박이 큰 순간에 무너지지 않고 실력 발휘 (압박형)':'perform under pressure without collapsing (pressure type)',
-    breakdown_type:'choking',
-    // 실데이터 프로파일 우선, 없으면 예시 blockers.
+    dept:'learning-disability',
+    goal: l==='ko'?'공부한 내용을 오래 기억하고 시험·실전에서 꺼내 쓰기 (인출형)':'retain and retrieve what was studied (retrieval type)',
+    breakdown_type:'retrieval',
+    // 실데이터 symptom_vector 우선, 없으면 예시 blockers.
     blockers:(aiSrc.symptom_vector&&Object.keys(aiSrc.symptom_vector).length)
       ? aiSrc.symptom_vector
-      : {performance_anxiety:0.58, social_anxiety:0.22, arousal_regulation:0.20},
+      : {retrieval:0.45, shallow_encoding:0.32, working_memory:0.23},
     qeeg: (typeof qeegData!=='undefined' && qeegData) ? qeegData : null,
     target_areas: Array.from(selected||[]),
   };
 
-  const sys = `You are a clinical decision-support assistant for a Peak Performance practice (BCN/PhD wellness-coaching scope, NOT medical diagnosis). Based on performance psychology (Flow, IZOF, Masters reinvestment, Eysenck ACT) and neurofeedback evidence (SMR, Sitaram 2017), write a concise clinical opinion. Respond ONLY with valid JSON, no markdown, no preamble:
-{"opinion":"2-3 sentence diagnostic opinion on what blocks peak performance and why","recommended_areas":["arousal","external_focus","exposure","post_event"],"order_rationale":"1 sentence on training order","evidence":"1 sentence citing the framework"}
+  const sys = `You are a clinical decision-support assistant for a Learning-efficiency practice (BCN/PhD wellness-coaching scope, NOT medical diagnosis). Based on learning science (Roediger & Karpicke retrieval practice, Cepeda spacing, Dunlosky 2013 strategies, Engle working memory), write a concise clinical opinion. Respond ONLY with valid JSON, no markdown, no preamble:
+{"opinion":"2-3 sentence diagnostic opinion on what blocks learning and why","recommended_areas":["retrieval","spacing","elaboration","working_memory"],"order_rationale":"1 sentence on training order","evidence":"1 sentence citing the framework"}
 Write in ${l==='ko'?'Korean':'English'}.`;
 
   try{
-    // 백엔드(Flask /api/peak_report)가 Anthropic 호출 + Supabase 저장 (정적 배포에서 작동)
-    const res = await fetch("/api/peak_report",{
+    // 백엔드(Flask /api/learning_report)가 Anthropic 호출 + Supabase 저장 (정적 배포에서 작동)
+    const res = await fetch("/api/learning_report",{
       method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify({ case: caseData, lang: l })
     });
@@ -580,7 +580,7 @@ function interpQEEG(){
   const l=getLang(); const d=qeegData.vals, hand=qeegData.hand; const rows=[];
   const cond=c=>c?` <span style="font-size:10px;color:var(--ink-sub)">(${c})</span>`:'';
 
-  const hb=pick(d,'hibeta'); if(hb){const hi=hb.v>16; rows.push(['Fz 高베타'+cond(hb.cond),hb.v+' μV²', hi?(l==='ko'?'↑ 과각성 (압박 과활성)':'↑ hyper-arousal'):(l==='ko'?'정상권':'normal'), hi?'arousal':null]);}
+  const hb=pick(d,'hibeta'); if(hb){const hi=hb.v>16; rows.push(['Fz 高베타'+cond(hb.cond),hb.v+' μV²', hi?(l==='ko'?'↑ 과각성 (학습 중 각성 변동)':'↑ hyper-arousal'):(l==='ko'?'정상권':'normal'), hi?'arousal':null]);}
   const tb=pick(d,'tbr'); if(tb){const hi=tb.v>3.5; rows.push(['Theta/Beta'+cond(tb.cond),String(tb.v), hi?(l==='ko'?'↑ 주의 결손 경향 (ADHD형)':'↑ attention-deficit'):(l==='ko'?'정상권 → 기저 주의 양호':'normal → baseline OK'), hi?'attention':null]);}
   const sm=pick(d,'smr'); if(sm){const lo=sm.v<5; rows.push(['SMR'+cond(sm.cond),sm.v+' μV', lo?(l==='ko'?'↓ 낮음 (SMR 증강 타겟)':'↓ low (SMR-up target)'):(l==='ko'?'적정':'adequate'), lo?'smr':null]);}
 
@@ -604,7 +604,7 @@ function interpQEEG(){
   }
 
   if(d.rmssd!==undefined){const lo=d.rmssd<30; rows.push(['HRV RMSSD',d.rmssd+' ms', lo?(l==='ko'?'↓ 자율신경 조절 저하':'↓ low autonomic reg.'):(l==='ko'?'양호':'good'), lo?'hrv':null]);}
-  if(d.coherence!==undefined){const lo=d.coherence<0.5; rows.push(['HRV 코히어런스',String(d.coherence), lo?(l==='ko'?'↓ 각성 조절 저하 (IZOF 초과 일치)':'↓ low regulation'):(l==='ko'?'양호':'good'), lo?'hrv':null]);}
+  if(d.coherence!==undefined){const lo=d.coherence<0.5; rows.push(['HRV 코히어런스',String(d.coherence), lo?(l==='ko'?'↓ 각성 조절 저하 (인지부하 영향)':'↓ low regulation'):(l==='ko'?'양호':'good'), lo?'hrv':null]);}
   return rows;
 }
 function buildQEEG(){
@@ -614,8 +614,8 @@ function buildQEEG(){
   rows.forEach(r=>html+=`<tr><td><b>${r[0]}</b></td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`);
   document.getElementById('qeegTable').innerHTML=html;
   const flags=rows.filter(r=>r[3]).map(r=>r[3]);
-  const msg = (flags.includes('arousal')||flags.includes('hrv')||flags.includes('reactivity'))
-    ? (l==='ko'?`<b>객관 소견 (${hd}):</b> 각성 과활성·자율신경 조절 저하 패턴 — 압박 상황의 과각성과 일치. 각성 조절(HRV·SMR) 훈련이 객관 지표상 우선.`:`<b>Objective (${hd}):</b> hyper-arousal + low autonomic regulation, consistent with pressure over-arousal. Arousal regulation (HRV·SMR) is the objective priority.`)
+  const msg = (flags.includes('attention')||flags.includes('smr')||flags.includes('arousal')||flags.includes('hrv'))
+    ? (l==='ko'?`<b>객관 소견 (${hd}):</b> TBR↑·자율 변동 — 학습 중 주의·각성 안정이 약함. 학습 환경에서 주의 안정(SMR NF)·집중 환경이 전략 효과를 받쳐줌. 학습 핵심은 여전히 인출·분산 전략.`:`<b>Objective (${hd}):</b> elevated TBR + autonomic variability — weak attention/arousal stability during study. SMR NF + a focus environment support strategy effectiveness; the core remains retrieval/spacing strategy.`)
     : (l==='ko'?`<b>객관 소견 (${hd}):</b> 두드러진 이상은 제한적. 설문·과제 수행 맥락과 통합 권장.`:`<b>Objective (${hd}):</b> limited standout; integrate with survey context.`);
   document.getElementById('qeegSummary').innerHTML=msg+(l==='ko'?'<br><span style="font-size:12px;color:var(--ink-sub)">＊ EC/EO 조건 표기. 손잡이 보정 적용(전두 비대칭).</span>':'<br><span style="font-size:12px;color:var(--ink-sub)">＊ EC/EO labeled; handedness-corrected (frontal asymmetry).</span>');
 }
@@ -623,17 +623,17 @@ function buildQEEG(){
 /* 통합 (MSDI) — 설문 vs 객관 수렴/불일치 */
 function buildInteg(){
   const l=getLang(); const d=qeegData.vals;
-  const survey={arousal_high:true, attention_ok:true, mood_low:false};
-  const hb=pick(d,'hibeta'), tb=pick(d,'tbr'), asy=pick(d,'asym');
+  const survey={retention_weak:true, attention_unstable:true, wm_load:true};
+  const tb=pick(d,'tbr'), sm=pick(d,'smr');
   const obj={
-    arousal_high: (hb&&hb.v>16)||(d.coherence!==undefined&&d.coherence<0.5)||(d.rmssd!==undefined&&d.rmssd<30),
-    attention_ok: !tb||tb.v<=3.5,
-    mood_low: asy&&asy.v<-0.05&&qeegData.hand==='right', // 손잡이 보정: 우세손만 단순 적용
+    retention_weak: (tb&&tb.v>3.5)||(sm&&sm.v<5),
+    attention_unstable: (sm&&sm.v<5)||(d.coherence!==undefined&&d.coherence<0.5)||(d.rmssd!==undefined&&d.rmssd<30),
+    wm_load: !!(tb&&tb.v>3.5),
   };
   const dims=[
-    ['각성 과활성 / Arousal','arousal_high'],
-    ['기저 주의 보존 / Baseline attention','attention_ok'],
-    ['기분 저하 / Low mood','mood_low'],
+    ['파지 약화 / Weak retention','retention_weak'],
+    ['학습 중 주의 불안정 / Attention instability','attention_unstable'],
+    ['작업기억 부하 / WM load','wm_load'],
   ];
   let html=`<tr><th>${l==='ko'?'차원':'Dimension'}</th><th>${l==='ko'?'설문(주관)':'Survey'}</th><th>${l==='ko'?'QEEG/HRV(객관)':'Objective'}</th><th>${l==='ko'?'판정':'Verdict'}</th></tr>`;
   let conv=0,total=0;
@@ -647,8 +647,8 @@ function buildInteg(){
   document.getElementById('convTable').innerHTML=html;
   const rate=Math.round(conv/total*100);
   document.getElementById('integSummary').innerHTML = l==='ko'
-    ? `<b>AI 통합 소견:</b> 설문(주관)과 QEEG/HRV(객관)가 <b>각성 과활성</b> 차원에서 수렴 — 압박형 진단의 신뢰도가 두 채널 모두에서 확인됩니다. 기저 주의는 양쪽 정상 → ADHD형 아닌 <b>압박 특이적 과각성</b> 확정. 훈련은 각성 조절(HRV·SMR)부터.`
-    : `<b>AI integrated:</b> survey and QEEG/HRV converge on <b>arousal over-activation</b>; pressure-type confirmed across channels. Baseline attention normal on both → confirmed <b>pressure-specific hyper-arousal</b>, not ADHD.`;
+    ? `<b>AI 통합 소견:</b> 설문(주관)과 QEEG/HRV(객관)가 <b>파지 약화·학습 중 주의 불안정</b> 차원에서 수렴 — 인출형 학습 패턴의 신뢰도가 두 채널 모두에서 확인됩니다. 훈련은 인출연습·분산복습부터, 학습 중 주의 안정(SMR)으로 보조.`
+    : `<b>AI integrated:</b> survey and QEEG/HRV converge on <b>weak retention / unstable attention during study</b>; the retrieval-type pattern is confirmed across channels. Start with retrieval practice + spaced review, supported by SMR attention stability.`;
   document.getElementById('integConfidence').innerHTML = l==='ko'
     ? `<b>채널 수렴도: ${rate}%</b> — 수렴이 높을수록 진단 신뢰도↑. 불일치 차원은 임상가 추가 탐색 권장. (손잡이·EC/EO 조건 반영.)`
     : `<b>Channel convergence: ${rate}%</b> — higher = higher confidence. Discordant dims warrant follow-up. (Handedness & EC/EO applied.)`;
@@ -657,24 +657,15 @@ function buildInteg(){
 // 초기: QEEG 미입력 상태 안내
 clearQEEG();
 
-/* ===== RP3: ?cid= 실데이터 로드 (dept=peak — assessment 프로파일+pre-session → Fischer) ===== */
-const REPORT_DEPT='peak';
-const SYMPTOM_LABEL_KO={inattention:'주의력결핍',distractibility:'산만성',executive_dysfunction:'실행기능 저하',anxiety_somatic:'신체 불안',anxiety_cognitive:'인지 불안',low_mood:'우울',low_motivation:'동기 저하',social_withdrawal:'사회적 위축',
-  lvl_focus:'집중 유지',lvl_composure:'압박 속 침착함',lvl_confidence:'자신감',lvl_consistency:'일관성',lvl_energy:'에너지·동기',lvl_recovery:'실수 후 회복'};
-function renderBlockerLive(rows, srcKo, srcEn){
+/* ===== RP3: ?cid= 실데이터 로드 (dept=learning-disability — assessment 하위척도+pre-session → Fischer) ===== */
+const SYMPTOM_LABEL_KO={inattention:'주의력결핍',distractibility:'산만성',executive_dysfunction:'실행기능 저하',anxiety_somatic:'신체 불안',anxiety_cognitive:'인지 불안',low_mood:'우울',low_motivation:'동기 저하',social_withdrawal:'사회적 위축',history:'읽기 학습 이력',current:'현재 읽기',family:'가족력',rehearsal:'시연',elaboration:'정교화',organization:'조직화',critical_thinking:'비판적 사고',metacognition:'메타인지'};
+function renderBlockerLive(sv){
   const l=getLang(); const live=document.getElementById('blockerLive'); const demo=document.getElementById('blockerDemo');
-  if(!rows||!Object.keys(rows).length){ return; }
-  const trs=Object.entries(rows).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
-    `<tr><td><b>${l==='ko'?(SYMPTOM_LABEL_KO[k]||k):k}</b></td><td class="num">${Number(v).toFixed(2)}</td><td>${l==='ko'?srcKo:srcEn}</td></tr>`).join('');
-  live.innerHTML=`<table><tr><th>${l==='ko'?'영역':'Dimension'}</th><th>${l==='ko'?'값':'Value'}</th><th>${l==='ko'?'출처':'Source'}</th></tr>${trs}</table>`;
+  if(!sv||!Object.keys(sv).length){ return; }
+  const rows=Object.entries(sv).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+    `<tr><td><b>${l==='ko'?(SYMPTOM_LABEL_KO[k]||k):k}</b></td><td class="num">${Number(v).toFixed(2)}</td><td>${l==='ko'?'assessment 하위척도 (0-1)':'assessment subscale (0-1)'}</td></tr>`).join('');
+  live.innerHTML=`<table><tr><th>${l==='ko'?'증상(엔진 입력)':'Symptom (engine input)'}</th><th>${l==='ko'?'값':'Value'}</th><th>${l==='ko'?'출처':'Source'}</th></tr>${rows}</table>`;
   live.style.display='block'; if(demo) demo.style.display='none';
-}
-// peak은 S1 symptom 매핑 없음 — assessment.raw 프로파일(자기평정 0.25-0.9, 높을수록 강함)을 표로
-function blockerRowsFromRaw(raw){
-  if(!raw) return null;
-  if(raw.profile) return raw.profile;
-  if(raw.subscales){ const o={}; Object.entries(raw.subscales).forEach(([k,v])=>{ o[k]=v&&v.norm!=null?v.norm:0; }); return o; }
-  return null;
 }
 function fillEngineFromLevels(lv){
   if(!lv||!lv.cognitive_levels) return;
@@ -689,12 +680,15 @@ async function loadReportSource(){
   let pw=null; try{ pw=sessionStorage.getItem('admin_pw'); }catch(e){}
   if(!pw) return;  // 게이트 미통과 — 호출 안 함 (게이트가 admin_pw 세팅)
   try{
-    const res=await fetch('/api/v1/report/source?cid='+encodeURIComponent(cid)+'&dept='+REPORT_DEPT,{headers:{'X-Admin-Password':pw}});
+    const res=await fetch('/api/v1/report/source?cid='+encodeURIComponent(cid)+'&dept=learning-disability',{headers:{'X-Admin-Password':pw}});
     if(!res.ok){ console.warn('report/source', res.status); return; }
     const src=await res.json();
     window.REPORT_SOURCE=src;
-    if(src.symptom_vector) renderBlockerLive(src.symptom_vector,'assessment 점수 × S1 계수','assessment × S1 coefficient');
-    else { const rows=blockerRowsFromRaw(src.assessment&&src.assessment.raw); if(rows) renderBlockerLive(rows,'assessment 자기평정 프로파일 (0.25-0.9, 높을수록 강함)','assessment self-rating profile (0.25-0.9, higher=stronger)'); }
+    if(src.symptom_vector) renderBlockerLive(src.symptom_vector);
+    else if(src.assessment&&src.assessment.raw&&src.assessment.raw.subscales){
+      const rows={}; Object.entries(src.assessment.raw.subscales).forEach(([k,v])=>{ rows[k]=v&&v.norm!=null?v.norm:0; });
+      renderBlockerLive(rows);
+    }
     if(src.levels) fillEngineFromLevels(src.levels);
     if(src.engine_patient_id){ const e=document.getElementById('eng_pid'); if(e){ e.value=src.engine_patient_id; e.readOnly=true; } }
     if(Array.isArray(src.warnings) && src.warnings.length){

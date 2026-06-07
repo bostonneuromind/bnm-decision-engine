@@ -110,6 +110,34 @@
 </head>
 <body>
 
+<!-- 관리자 게이트 (학생 데이터 화면 — 관리자 전용). 통과 시 admin_pw 세팅 → report/source 호출. learning report.html 패턴. -->
+<div id="bnmGate" style="position:fixed;inset:0;z-index:9999;background:#faf7f2;display:flex;align-items:center;justify-content:center;padding:20px;font-family:'Noto Sans KR',system-ui,sans-serif">
+  <div style="max-width:380px;width:100%;background:#fff;border:1px solid #e2dccf;border-radius:18px;padding:30px;box-shadow:0 8px 30px rgba(0,0,0,.08)">
+    <h2 style="font-size:19px;font-weight:800;margin:0 0 6px;color:#2a2018">Attention 진단 보고서</h2>
+    <p style="font-size:13px;color:#6b6256;margin:0 0 16px">관리자 전용 — 학생 데이터 / Clinicians only</p>
+    <input id="bnmGatePw" type="password" placeholder="Password" style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:10px;font-size:15px;box-sizing:border-box;outline:none;font-family:inherit">
+    <button id="bnmGateBtn" style="width:100%;margin-top:10px;padding:13px;background:#2a2018;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit">들어가기 / Enter</button>
+    <div id="bnmGateErr" style="color:#b54;font-size:13px;margin-top:8px"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var PW='bnm1#', KEY='bnmAdminOK';
+  function unlock(){ var g=document.getElementById('bnmGate'); if(g) g.parentNode.removeChild(g); }
+  try{ if(sessionStorage.getItem(KEY)==='1'){ document.addEventListener('DOMContentLoaded',unlock); return; } }catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.getElementById('bnmGateBtn'), inp=document.getElementById('bnmGatePw'), err=document.getElementById('bnmGateErr');
+    function go(){
+      if(inp.value===PW){ try{ sessionStorage.setItem(KEY,'1'); sessionStorage.setItem('admin_pw',PW); }catch(e){} location.reload(); }
+      else { err.textContent='Wrong password'; }
+    }
+    btn.addEventListener('click',go);
+    inp.addEventListener('keypress',function(e){ if(e.key==='Enter') go(); });
+    inp.focus();
+  });
+})();
+</script>
+
 <div class="topbar"><span class="pill">
   <button data-l="ko" onclick="setLang('ko')">KO</button>
   <button data-l="en" onclick="setLang('en')">EN</button>
@@ -197,7 +225,9 @@
     <div class="sec">
       <div class="sec-h"><div class="sec-n">2</div><h2><span class="ko-text">무엇이 집중을 막나 — 정밀 진단</span><span class="en-text">What Blocks Attention — Precise Diagnosis</span></h2></div>
       <p class="lead"><span class="ko-text">집행형 → 막는 요인 정밀 측정 (요구분석이 라우팅한 증상만 측정):</span><span class="en-text">Executive type → measured blockers (only symptoms routed by needs-analysis):</span></p>
-      <table>
+      <!-- ?cid= 진입 시 실데이터(assessment→symptom_vector)로 교체, 없으면 아래 예시 표 -->
+      <div id="blockerLive" style="display:none"></div>
+      <table id="blockerDemo">
         <tr><th><span class="ko-text">막는 요인</span><span class="en-text">Blocker</span></th><th><span class="ko-text">기여도</span><span class="en-text">Share</span></th><th><span class="ko-text">기전 (논문 근거)</span><span class="en-text">Mechanism (evidence)</span></th></tr>
         <tr><td><b><span class="ko-text">반응 억제 결손</span><span class="en-text">Inhibitory deficit</span></b></td><td class="num">0.52</td><td><span class="ko-text">우세 반응을 멈추지 못함 → 충동·끼어듦 (집행 통제)</span><span class="en-text">fails to stop prepotent response → impulsivity (executive control)</span></td></tr>
         <tr><td><span class="ko-text">지속주의 변동</span><span class="en-text">Sustained-attention lapses</span></td><td class="num">0.30</td><td><span class="ko-text">각성 변동 → 누락오류·집중 끊김 (vigilance decrement)</span><span class="en-text">arousal fluctuation → omissions/lapses</span></td></tr>
@@ -414,8 +444,14 @@ async function runEngine(){
   const levels={};
   document.querySelectorAll('.eng_lvl').forEach(i=>{ const v=i.value.trim(); if(v!=='') levels[i.dataset.axis]=parseFloat(v); });
   if(Object.keys(levels).length<5){ out.innerHTML=`<div class="callout warn">${l==='ko'?'Fischer 5축 레벨을 모두 입력하세요 (L7~13).':'Enter all 5 Fischer levels.'}</div>`; return; }
-  const symptom_vector={ inattention:0.52, hyperactivity_impulsivity:0.40, executive_dysfunction:0.45 };
+  // symptom_vector: ?cid= 실데이터(assessment→S1 계수) 우선, 없으면 예시.
+  const src=window.REPORT_SOURCE||{};
+  const symptom_vector=(src.symptom_vector&&Object.keys(src.symptom_vector).length)
+    ? src.symptom_vector
+    : { inattention:0.52, hyperactivity_impulsivity:0.40, executive_dysfunction:0.45 };
+  // biomarkers: pre-session 변환(raw, HRV mock 이미 차단됨) + QEEG 입력 병합.
   const biomarkers={};
+  if(src.levels && src.levels.biomarkers){ Object.assign(biomarkers, src.levels.biomarkers); }
   if(typeof qeegData!=='undefined' && qeegData && qeegData.vals){
     const d=qeegData.vals;
     const hb=(d.hibeta_ec!==undefined?d.hibeta_ec:d.hibeta_eo);
@@ -464,11 +500,15 @@ async function generateAIReport(){
   btn.innerHTML = l==='ko'?'분석 중…':'Analyzing…';
 
   // 현재 케이스 데이터 수집 (요구분석 V2 + 막는요인 + QEEG 있으면)
+  const aiSrc=window.REPORT_SOURCE||{};
   const caseData = {
     dept:'attention',
     goal: l==='ko'?'오래 집중하고 방해에 덜 휘둘리며 시작한 일 끝내기 (집행형)':'sustain focus, resist distraction, finish tasks (executive type)',
     breakdown_type:'executive',
-    blockers:{inhibition:0.52, sustained_attention:0.30, working_memory:0.18},
+    // 실데이터 symptom_vector 우선, 없으면 예시 blockers.
+    blockers:(aiSrc.symptom_vector&&Object.keys(aiSrc.symptom_vector).length)
+      ? aiSrc.symptom_vector
+      : {inhibition:0.52, sustained_attention:0.30, working_memory:0.18},
     qeeg: (typeof qeegData!=='undefined' && qeegData) ? qeegData : null,
     target_areas: Array.from(selected||[]),
   };
@@ -616,6 +656,53 @@ function buildInteg(){
 
 // 초기: QEEG 미입력 상태 안내
 clearQEEG();
+
+/* ===== RP3: ?cid= 실데이터 로드 (dept=attention — assessment+pre-session → symptom_vector/Fischer) ===== */
+const REPORT_DEPT='attention';
+const SYMPTOM_LABEL_KO={inattention:'주의력결핍',distractibility:'산만성',executive_dysfunction:'실행기능 저하',anxiety_somatic:'신체 불안',anxiety_cognitive:'인지 불안',low_mood:'우울',low_motivation:'동기 저하',social_withdrawal:'사회적 위축',hyperactivity:'과잉행동/충동'};
+function renderBlockerLive(rows, srcKo, srcEn){
+  const l=getLang(); const live=document.getElementById('blockerLive'); const demo=document.getElementById('blockerDemo');
+  if(!rows||!Object.keys(rows).length){ return; }
+  const trs=Object.entries(rows).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
+    `<tr><td><b>${l==='ko'?(SYMPTOM_LABEL_KO[k]||k):k}</b></td><td class="num">${Number(v).toFixed(2)}</td><td>${l==='ko'?srcKo:srcEn}</td></tr>`).join('');
+  live.innerHTML=`<table><tr><th>${l==='ko'?'증상(엔진 입력)':'Symptom (engine input)'}</th><th>${l==='ko'?'값':'Value'}</th><th>${l==='ko'?'출처':'Source'}</th></tr>${trs}</table>`;
+  live.style.display='block'; if(demo) demo.style.display='none';
+}
+// symptom_vector 없는 축 대비: assessment.raw의 하위척도(norm)/프로파일을 표로
+function blockerRowsFromRaw(raw){
+  if(!raw) return null;
+  if(raw.subscales){ const o={}; Object.entries(raw.subscales).forEach(([k,v])=>{ o[k]=v&&v.norm!=null?v.norm:0; }); return o; }
+  if(raw.profile) return raw.profile;
+  return null;
+}
+function fillEngineFromLevels(lv){
+  if(!lv||!lv.cognitive_levels) return;
+  document.querySelectorAll('.eng_lvl').forEach(i=>{
+    const v=lv.cognitive_levels[i.dataset.axis];
+    if(v!==undefined){ i.value=Number(v).toFixed(1); }
+  });
+}
+async function loadReportSource(){
+  const cid=new URLSearchParams(location.search).get('cid');
+  if(!cid) return;  // cid 없으면 예시 표 유지
+  let pw=null; try{ pw=sessionStorage.getItem('admin_pw'); }catch(e){}
+  if(!pw) return;  // 게이트 미통과 — 호출 안 함 (게이트가 admin_pw 세팅)
+  try{
+    const res=await fetch('/api/v1/report/source?cid='+encodeURIComponent(cid)+'&dept='+REPORT_DEPT,{headers:{'X-Admin-Password':pw}});
+    if(!res.ok){ console.warn('report/source', res.status); return; }
+    const src=await res.json();
+    window.REPORT_SOURCE=src;
+    if(src.symptom_vector) renderBlockerLive(src.symptom_vector,'assessment 점수 × S1 계수','assessment × S1 coefficient');
+    else { const rows=blockerRowsFromRaw(src.assessment&&src.assessment.raw); if(rows) renderBlockerLive(rows,'assessment 하위척도 (0-1)','assessment subscale (0-1)'); }
+    if(src.levels) fillEngineFromLevels(src.levels);
+    if(src.engine_patient_id){ const e=document.getElementById('eng_pid'); if(e){ e.value=src.engine_patient_id; e.readOnly=true; } }
+    if(Array.isArray(src.warnings) && src.warnings.length){
+      const out=document.getElementById('engResult');
+      if(out) out.innerHTML=`<div class="callout warn" style="font-size:12px">${getLang()==='ko'?'데이터 안내':'data notes'}: ${src.warnings.join(', ')}</div>`;
+    }
+  }catch(e){ console.warn('report/source load failed', e); }
+}
+loadReportSource();
 </script>
 </body>
 </html>
