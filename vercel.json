@@ -26,6 +26,7 @@
     { "src": "/api/consent_get", "dest": "/api/consent_get.py" },
     { "src": "/api/consent_sign", "dest": "/api/consent_sign.py" },
     { "src": "/api/(.*)", "dest": "/api/cna.py" },
+    { "src": "/attention(/.*)?", "status": 301, "headers": { "Location": "https://attention.neurocatchers.com$1" } },
     { "src": "/(attention|peak|learning|learning-disability|learning-enhancement)", "status": 301, "headers": { "Location": "/$1/" } },
     { "src": "/(attention|peak|learning)/index.html", "headers": { "cache-control": "no-cache, must-revalidate" }, "continue": true },
     { "src": "/(.*)", "dest": "/public/$1" }
