@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attention — 콘텐츠 관리 사용 매뉴얼 (기밀)</title>
+<script src="/bnm-lang-sync.js"></script>
+<style>
+  :root{--bg:#FAFAFA;--card:#FFFFFF;--ink:#1F2225;--ink-sub:#5C6166;--border:#D9DDE1;--point:#2E5A7A;--warn-bg:#FFFBEB;--warn-ink:#78350F;--ok-bg:#ECFDF5;--ok-ink:#065F46}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Inter',-apple-system,sans-serif;font-size:16.5px;line-height:1.8;min-height:100vh;padding:40px 20px 90px}
+  .container{max-width:860px;margin:0 auto}
+  .ko-text{display:none}.en-text{display:none}
+  body[data-lang=ko] .ko-text{display:inline}
+  body[data-lang=en] .en-text{display:inline}
+  .topbar{position:fixed;top:14px;right:14px;z-index:50;display:flex;background:#fff;border:1px solid var(--border);border-radius:999px;padding:3px}
+  .lang button{border:0;background:transparent;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:800;cursor:pointer;color:var(--ink-sub);font-family:inherit}
+  .lang button.on{background:var(--point);color:#fff}
+  .login{max-width:400px;margin:120px auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:34px}
+  .login h2{font-size:20px;font-weight:800;margin-bottom:16px}
+  .login input{width:100%;padding:13px;border:1px solid var(--border);border-radius:10px;font-size:16px;font-family:inherit;margin-bottom:12px}
+  .login button{width:100%;min-height:42px;padding:14px;background:var(--point);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+  .err{color:#b91c1c;font-size:14px;margin-top:8px}
+  .box{display:none}.box.show{display:block}
+  .back{display:inline-block;color:var(--ink-sub);text-decoration:none;font-weight:700;font-size:14px;margin-bottom:16px}
+  h1{font-size:27px;font-weight:800;margin-bottom:6px}
+  .sub{font-size:15px;color:var(--ink-sub);margin-bottom:8px}
+  .secret{background:#F4F5F6;border:1px solid var(--point);border-radius:10px;padding:10px 16px;margin:14px 0 26px;font-size:13.5px;font-weight:700;color:var(--ink)}
+  .toc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 22px;margin-bottom:30px;font-size:15px}
+  .toc a{color:var(--point);text-decoration:none;font-weight:700;display:inline-block;margin:3px 14px 3px 0}
+  h2{font-size:21px;font-weight:800;color:var(--point);margin:42px 0 6px;padding-top:10px;border-top:2px solid var(--border)}
+  h3{font-size:17px;font-weight:800;margin:24px 0 6px}
+  p{margin:8px 0}
+  .card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 18px;margin:10px 0}
+  .card-t{font-weight:800;margin-bottom:4px}
+  .mono{font-family:Consolas,monospace;font-size:13.5px;background:#F4F5F6;border-radius:8px;padding:7px 11px;margin:6px 0;word-break:break-all}
+  .mono.small{font-size:12.5px;color:var(--ink-sub)}
+  ol.steps{list-style:none;counter-reset:st;margin:12px 0}
+  ol.steps>li{counter-increment:st;position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 18px 14px 56px;margin-bottom:10px}
+  ol.steps>li::before{content:counter(st);position:absolute;left:16px;top:16px;width:26px;height:26px;border-radius:8px;background:var(--point);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .st-row{display:flex;gap:10px;margin:3px 0;align-items:baseline}
+  .st-k{flex:0 0 64px;font-size:12px;font-weight:800;color:#fff;background:var(--point);border-radius:6px;text-align:center;padding:1px 0}
+  .st-k.see{background:#6B7280}
+  .st-k.next{background:#0E7490}
+  .shot{border:2px dashed var(--border);border-radius:12px;padding:14px;margin:10px 0;text-align:center;color:var(--ink-sub);font-size:13.5px;background:#FCFCFC}
+  .warn{background:var(--warn-bg);color:var(--warn-ink);border:1px solid #FDE68A;border-radius:12px;padding:11px 15px;margin:10px 0;font-size:14.5px}
+  .ok{background:var(--ok-bg);color:var(--ok-ink);border:1px solid #A7F3D0;border-radius:12px;padding:11px 15px;margin:10px 0;font-size:14.5px}
+  table{width:100%;border-collapse:collapse;margin:10px 0;background:#fff;font-size:14.5px}
+  th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+  th{background:#F4F5F6}
+  .kbd{font-family:Consolas,monospace;background:#1F2225;color:#fff;border-radius:6px;padding:1px 8px;font-size:13px}
+</style>
+</head>
+<body data-lang="ko">
+<div class="topbar"><span class="lang">
+  <button data-l="ko" onclick="setLang('ko')">KO</button>
+  <button data-l="en" onclick="setLang('en')">EN</button>
+</span></div>
+
+<div class="login" id="loginBox">
+  <h2><span class="ko-text">사용 매뉴얼 (관리자 전용)</span><span class="en-text">User Manual (Admin only)</span></h2>
+  <input type="password" id="pw" placeholder="Password">
+  <button id="goBtn"><span class="ko-text">들어가기</span><span class="en-text">Enter</span></button>
+  <div class="err" id="err"></div>
+</div>
+
+<div class="box" id="manualBox">
+<div class="container">
+  <a class="back" href="https://decision.neurocatchers.com/attention/admin.html">&larr; <span class="ko-text">분과 관리자로</span><span class="en-text">Back to Department Admin</span></a>
+  <h1><span class="ko-text">주의력 (Attention) — 콘텐츠 관리 사용 매뉴얼</span><span class="en-text">Attention — Content Management Manual</span></h1>
+  <p class="sub"><span class="ko-text">임상가용 · 코드 없이 화면에서 전부 — 진단 설문 / 점검 측정 / 훈련 게임 교체</span><span class="en-text">For clinicians · everything on screen, no code — replace diagnosis questionnaires, screening protocol, training games</span></p>
+  <div class="secret"><span class="ko-text">기밀 — 관리자 전용. 이 문서의 비밀번호와 주소를 외부에 공유하지 마세요.</span><span class="en-text">Confidential — admins only. Do not share the passwords or URLs in this document.</span></div>
+
+  <div class="toc">
+    <a href="#sec-a">A. <span class="ko-text">관리자 들어가기</span><span class="en-text">Getting in</span></a>
+    <a href="#sec-b">B. <span class="ko-text">진단 설문 보기/바꾸기</span><span class="en-text">View / edit the questionnaire</span></a>
+    <a href="#sec-c">C. <span class="ko-text">점검/훈련 바꾸기</span><span class="en-text">Screening / training</span></a>
+    <a href="#sec-d">D. <span class="ko-text">원래대로 되돌리기</span><span class="en-text">Restore defaults</span></a>
+    <a href="#sec-e">E. <span class="ko-text">바뀐 거 확인하기</span><span class="en-text">Verify the change</span></a>
+    <a href="#sec-f">F. <span class="ko-text">자주 헤매는 것</span><span class="en-text">Troubleshooting</span></a>
+  </div>
+
+  <h2 id="sec-a">A. <span class="ko-text">관리자 들어가기</span><span class="en-text">Getting into the admin</span></h2>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">브라우저 주소창에 아래 주소를 입력하거나, 분과 홈페이지 오른쪽 위 "관리자"를 클릭합니다.</span><span class="en-text">Type the address below into your browser, or click "Admin" at the top right of the department homepage.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">"분과 관리자" 비밀번호 화면이 나옵니다.</span><span class="en-text">The "Department Admin" password screen appears.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">비밀번호 칸에 <b>bnm1#</b> 을 입력하고 "들어가기"를 누릅니다.</span><span class="en-text">Type <b>bnm1#</b> and press "Enter".</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">(비밀번호 입력 후) 들어가기 버튼.</span><span class="en-text">(After the password) the Enter button.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">관리자 화면이 열립니다 — 위에서부터 "분과", "설문 교체", "사용자 관리", "Engine status" 그룹이 보입니다.</span><span class="en-text">The admin page opens — from the top you see the groups: Department, Questionnaire, Users, Engine status.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">아래 B로 갑니다.</span><span class="en-text">Continue to section B below.</span></span></div>
+      </li>
+  </ol>
+  <div class="mono">https://decision.neurocatchers.com/attention/admin.html</div>
+  <div class="shot"><span class="ko-text">[스크린샷 자리] 비밀번호 화면과, 들어간 뒤의 관리자 화면 (그룹 4개)</span><span class="en-text">[Screenshot placeholder] The password screen, and the admin page after entry (4 groups)</span></div>
+  <div class="warn"><span class="ko-text">"사용자 관리" 영역이 이메일/비밀번호를 따로 묻는 것은 정상입니다 — 그것은 TrackCatcher 구독 관리용 별도 로그인이고, 이 매뉴얼의 설문/점검/훈련 교체와는 무관합니다. 무시하고 지나가면 됩니다.</span><span class="en-text">It is normal for the "Users" area to ask for a separate email/password — that is a separate login for TrackCatcher subscription management and is unrelated to this manual. You can ignore it.</span></div>
+
+  <h2 id="sec-b">B. <span class="ko-text">진단 설문 보기/바꾸기</span><span class="en-text">Viewing / editing the diagnosis questionnaire</span></h2>
+  <p><span class="ko-text">이 분과의 진단 설문:</span><span class="en-text">Questionnaire(s) for this department:</span></p>
+  
+      <div class="card">
+        <div class="card-t"><span class="ko-text">진단 설문 교체</span><span class="en-text">Diagnosis Questionnaire</span> — <span class="ko-text">ASRS (주의력 자가보고, 18문항)</span><span class="en-text">ASRS (attention self-report, 18 items)</span></div>
+        <div class="mono">https://learning.neurocatchers.com/admin-content-config?scope=attention:diagnose</div>
+        <div class="mono small"><span class="ko-text">학생용 진단 화면: </span><span class="en-text">Student assessment page: </span>https://learning.neurocatchers.com/adhd-training/assessment.html?dept=attention</div>
+      </div>
+  <h3>B-1. <span class="ko-text">설문 편집 화면 열기</span><span class="en-text">Open the questionnaire editor</span></h3>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">관리자 화면의 "설문 교체" 그룹에서  "진단 설문 교체" 카드를 클릭합니다.</span><span class="en-text">In the "Questionnaire" group, click the "Diagnosis Questionnaire" card.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">새 화면(learning 관리 화면)이 열리고 <b>비밀번호를 다시 묻습니다</b>. 사이트가 둘이라 두 번 묻는 것 — 정상입니다.</span><span class="en-text">A new page (the learning admin) opens and <b>asks for the password again</b>. Two sites, two prompts — this is normal.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">같은 비밀번호 <b>bnm1#</b> 을 입력하고 로그인합니다.</span><span class="en-text">Enter the same password <b>bnm1#</b> and log in.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">(로그인 후) 화면을 봅니다.</span><span class="en-text">(After login) look at the page.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">위에 드롭다운 2개(타입/분과 — 이미 이 분과 진단으로 선택돼 있음), 그 아래 도구 줄(파일 첨부 / 텍스트 붙여넣기 / 빈 칸 자동번역), 그 아래 문항 카드들이 보입니다.</span><span class="en-text">Two dropdowns at the top (type/department — already set to this department), a tool row (Attach file / Paste text / Auto-translate), then the item cards.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">아래 B-2부터 원하는 작업을 하세요.</span><span class="en-text">Pick the task you need from B-2 onward.</span></span></div>
+      </li>
+  </ol>
+  <div class="shot"><span class="ko-text">[스크린샷 자리] 문항 편집 화면 전체 — 드롭다운 2개, 도구 줄, 문항 카드, 맨 아래 저장 버튼</span><span class="en-text">[Screenshot placeholder] The editor — two dropdowns, tool row, item cards, Save at the bottom</span></div>
+
+  <h3>B-2. <span class="ko-text">문항 카드 읽는 법</span><span class="en-text">Reading an item card</span></h3>
+  <p><span class="ko-text">문항 1개 = 카드 1장입니다. 카드 안에:</span><span class="en-text">One item = one card. Inside each card:</span></p>
+  <table>
+    <tr><th><span class="ko-text">칸</span><span class="en-text">Field</span></th><th><span class="ko-text">뜻</span><span class="en-text">Meaning</span></th></tr>
+    <tr><td><span class="ko-text">한글 문항</span><span class="en-text">Korean item</span></td><td><span class="ko-text">학생에게 한국어 화면에서 보이는 문장</span><span class="en-text">The sentence students see in Korean</span></td></tr>
+    <tr><td><span class="ko-text">영어 문항</span><span class="en-text">English item</span></td><td><span class="ko-text">영어 화면에서 보이는 문장</span><span class="en-text">The sentence in English</span></td></tr>
+    <tr><td><span class="ko-text">하위척도 드롭다운</span><span class="en-text">Subscale dropdown</span></td><td><span class="ko-text">이 문항이 속한 분류 (채점 묶음). 모르면 그대로 두세요.</span><span class="en-text">The scoring group this item belongs to. Leave as-is if unsure.</span></td></tr>
+    <tr><td><span class="ko-text">역채점 체크</span><span class="en-text">Reverse-scored checkbox</span></td><td><span class="ko-text">점수를 거꾸로 계산하는 문항 표시 (해당 설문만). 임의로 바꾸지 마세요.</span><span class="en-text">Marks reverse-scored items (only some scales). Do not toggle casually.</span></td></tr>
+    <tr><td><span class="ko-text">위 / 아래 / 삭제</span><span class="en-text">Up / Down / Delete</span></td><td><span class="ko-text">순서 이동과 삭제 (카드 오른쪽 위)</span><span class="en-text">Reorder and delete (top right of the card)</span></td></tr>
+  </table>
+
+  <h3>B-3. <span class="ko-text">문항 글자 고치기 / 추가 / 삭제 / 순서</span><span class="en-text">Edit text / add / delete / reorder</span></h3>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">고치고 싶은 문항의 한글(또는 영어) 칸을 클릭해 글자를 고칩니다.</span><span class="en-text">Click the Korean (or English) field of the item and edit the text.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">입력 즉시 화면에 반영됩니다 — 하지만 아직 저장 전입니다.</span><span class="en-text">The form updates immediately — but nothing is saved yet.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">다 고쳤으면 B-7 저장으로.</span><span class="en-text">When done, go to B-7 Save.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">"+ 문항 추가" (카드 목록 맨 아래).</span><span class="en-text">"+ Add item" (below the last card).</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">맨 아래 빈 카드가 생깁니다.</span><span class="en-text">An empty card appears at the bottom.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">한글/영어를 입력합니다. 한쪽만 넣고 B-6 자동번역으로 채워도 됩니다.</span><span class="en-text">Type Korean/English. You may fill one side and use auto-translate (B-6) for the other.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">카드 오른쪽 "위"/"아래"로 순서, "삭제"로 제거.</span><span class="en-text">Use "Up"/"Down" to reorder, "Delete" to remove.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">카드가 이동/사라집니다.</span><span class="en-text">The card moves or disappears.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">실수했으면 D(되돌리기) 참고 — 저장 전이라면 그냥 새로고침해도 원래대로입니다.</span><span class="en-text">If you make a mistake, see D — before saving, a refresh also restores the page.</span></span></div>
+      </li>
+  </ol>
+
+  <h3>B-4. <span class="ko-text">파일로 한번에 넣기</span><span class="en-text">Import from a file</span></h3>
+  <p><span class="ko-text">지원: <b>docx / xlsx / csv / txt</b>. <b>PDF는 안 됩니다</b> (추출이 불안정).</span><span class="en-text">Supported: <b>docx / xlsx / csv / txt</b>. <b>PDF is not supported</b> (unreliable extraction).</span></p>
+  <p><span class="ko-text">엑셀(xlsx/csv) 형식 — 한 줄 = 한 문항:</span><span class="en-text">Excel (xlsx/csv) format — one row = one item:</span></p>
+  <table>
+    <tr><th><span class="ko-text">한글</span><span class="en-text">Korean</span></th><th><span class="ko-text">영어 (비워도 됨)</span><span class="en-text">English (may be empty)</span></th><th><span class="ko-text">분류 (비워도 됨)</span><span class="en-text">Subscale (may be empty)</span></th></tr>
+    <tr><td><span class="ko-text">수업 내용을 금방 잊는다</span><span class="en-text">Forgets lesson content quickly (Korean here)</span></td><td>Forgets lesson content quickly</td><td>history</td></tr>
+    <tr><td><span class="ko-text">맞춤법이 자주 틀린다</span><span class="en-text">(Korean sentence)</span></td><td></td><td>current</td></tr>
+  </table>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">도구 줄에서 가져오기 모드를 고릅니다 — "전체 교체"(기존 문항 다 바꿈) 또는 "아래에 추가".</span><span class="en-text">Choose the import mode — "Replace all" or "Append below".</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">드롭다운 값이 바뀝니다.</span><span class="en-text">The dropdown value changes.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">"전체 교체"는 기존 문항이 화면에서 사라지니 주의 (D로 복구 가능).</span><span class="en-text">"Replace all" clears the current items from the form (recoverable via D).</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">"파일 첨부 (docx/xlsx/csv/txt)" 버튼 → 파일 선택.</span><span class="en-text">Click "Attach file (docx/xlsx/csv/txt)" and pick your file.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">문항 카드가 자동으로 만들어지고, 영어(또는 한글)가 비어 있으면 자동번역이 바로 시도됩니다.</span><span class="en-text">Item cards are created automatically; empty Korean/English sides are auto-translated right away.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">카드 내용을 훑어보고 이상한 번역은 직접 고친 뒤 B-7 저장.</span><span class="en-text">Review the cards, fix any odd translations, then Save (B-7).</span></span></div>
+      </li>
+  </ol>
+  <div class="shot"><span class="ko-text">[스크린샷 자리] 파일 첨부 직후 — 새 문항 카드들과 "가져옴/자동번역" 알림 띠</span><span class="en-text">[Screenshot placeholder] Right after import — new cards and the import/translate notice banner</span></div>
+
+  <h3>B-5. <span class="ko-text">텍스트 붙여넣기</span><span class="en-text">Paste text</span></h3>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">"텍스트 붙여넣기" 버튼.</span><span class="en-text">Click "Paste text".</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">큰 입력 칸이 열립니다.</span><span class="en-text">A large text box opens.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">문항을 줄마다 하나씩 붙여넣습니다. "1." "2)" "-" 같은 번호/불릿은 자동으로 지워집니다.</span><span class="en-text">Paste one item per line. Numbering like "1." "2)" "-" is removed automatically.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">"문항으로 변환" 버튼.</span><span class="en-text">Click "Convert to items".</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">줄마다 카드가 생기고, 한글/영어는 자동 감지 — 빈 쪽은 자동번역됩니다.</span><span class="en-text">Each line becomes a card; the language is detected and the missing side is auto-translated.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">검토 후 B-7 저장.</span><span class="en-text">Review, then Save (B-7).</span></span></div>
+      </li>
+  </ol>
+
+  <h3>B-6. <span class="ko-text">자동번역 (한쪽만 넣으면 나머지 채움)</span><span class="en-text">Auto-translate (fill the missing side)</span></h3>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">"빈 칸 자동번역 (한/영)" 버튼.</span><span class="en-text">Click "Auto-translate empty fields (KO/EN)".</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">"자동번역 중 (n칸)..." 표시 후 "n칸 자동번역 완료" 알림이 뜨고 빈 칸이 채워집니다. 이미 차 있는 칸은 절대 건드리지 않습니다.</span><span class="en-text">You see "Translating (n fields)..." then a done notice; only empty fields are filled. Existing text is never changed.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">번역은 초안입니다 — 임상 표현은 꼭 직접 검토하고 고치세요. 그 다음 저장.</span><span class="en-text">Treat it as a draft — review the clinical wording yourself, then Save.</span></span></div>
+      </li>
+  </ol>
+  <div class="warn"><span class="ko-text">"자동번역 사용 불가 — ANTHROPIC_API_KEY..." 안내가 뜨면 번역 기능이 아직 켜지지 않은 것입니다. 손으로 입력하는 것은 그대로 가능합니다 (관리 책임자에게 키 설정을 요청).</span><span class="en-text">If you see "Auto-translate unavailable — ANTHROPIC_API_KEY...", translation is not enabled yet. Manual typing still works (ask the site owner to set the key).</span></div>
+
+  <h3>B-7. <span class="ko-text">저장 — 이걸 눌러야 진짜 반영</span><span class="en-text">Save — nothing applies until you press this</span></h3>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">화면 아래 파란 "저장" 버튼.</span><span class="en-text">The blue "Save" button at the bottom.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">"저장되었습니다." 표시.</span><span class="en-text">"Saved." appears.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">이 순간부터 학생 진단 화면에 새 문항이 나옵니다 (E에서 확인).</span><span class="en-text">From this moment students see the new items (verify in E).</span></span></div>
+      </li>
+  </ol>
+  <div class="ok"><span class="ko-text">저장 전에는 아무것도 바뀌지 않습니다. 마음껏 만지다가 망쳤다 싶으면 새로고침하면 됩니다.</span><span class="en-text">Nothing changes before you Save. Experiment freely — refresh the page to discard.</span></div>
+
+  <h2 id="sec-c">C. <span class="ko-text">점검/훈련 바꾸기 (타입 드롭다운)</span><span class="en-text">Screening / training (the type dropdown)</span></h2>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">설문 편집 화면 맨 위 <b>첫 번째 드롭다운</b>(진단/점검/훈련)에서 "점검" 또는 "훈련"을 선택합니다.</span><span class="en-text">In the <b>first dropdown</b> (Diagnosis/Screening/Training) pick Screening or Training.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">두 번째 드롭다운이 그 타입의 분과 목록으로 바뀝니다.</span><span class="en-text">The second dropdown switches to that type.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">두 번째 드롭다운에서 이 분과를 선택합니다.</span><span class="en-text">Pick this department in the second dropdown.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">(점검) 측정 단계 카드를 봅니다.</span><span class="en-text">(Screening) look at the measurement step cards.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">단계마다 측정 종류(HRV/시간 추정/CPT/N-back/VSR), 시간(초), 이름, 일부는 추가 설정(목표 초, N 단계)이 있습니다.</span><span class="en-text">Each step has a measurement type, duration in seconds, labels, and for some steps extra settings (target seconds, N level).</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">시간/순서/이름을 고치고 저장. 측정 종류는 5가지 안에서만 선택하세요.</span><span class="en-text">Edit duration/order/labels and Save. Keep the type within the 5 supported measurements.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">(훈련) 게임 카드를 봅니다.</span><span class="en-text">(Training) look at the game cards.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">게임마다 id, 이름, 한/영 라벨, 경로가 있습니다.</span><span class="en-text">Each game has an id, title, KO/EN labels, and a path.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">이름/라벨/순서를 고치고 저장. id와 경로는 기존 게임 것만 실제로 작동하니 함부로 바꾸지 마세요.</span><span class="en-text">Edit titles/labels/order and Save. Only existing game ids/paths actually work — do not invent new ones.</span></span></div>
+      </li>
+  </ol>
+  <div class="warn"><span class="ko-text">점검/훈련에는 파일 첨부가 없습니다 (설정·목록이라 표가 아님). 자동번역 버튼은 똑같이 작동합니다.</span><span class="en-text">Screening/Training have no file import (they are settings, not tables). The auto-translate button works the same.</span></div>
+
+  <h2 id="sec-d">D. <span class="ko-text">원래대로 되돌리기</span><span class="en-text">Restoring the defaults</span></h2>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">저장 버튼 옆 "코드 시드로 되돌리기".</span><span class="en-text">Click "Reset to code seed" next to Save.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">폼이 출고 기본값(원래 설문/설정)으로 바뀝니다 — 아직 저장 전.</span><span class="en-text">The form reverts to the factory default — not saved yet.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">정말 되돌리려면 "저장"까지 눌러야 학생 화면도 원래대로 됩니다.</span><span class="en-text">Press "Save" to actually restore what students see.</span></span></div>
+      </li>
+  </ol>
+  <div class="ok"><span class="ko-text">지금까지 저장했던 내용도 서버에 이력으로 남아 있으니, 잘못 저장했어도 복구 요청이 가능합니다.</span><span class="en-text">Every save is kept as history on the server, so even a bad save can be recovered on request.</span></div>
+
+  <h2 id="sec-e">E. <span class="ko-text">바뀐 거 확인하는 법</span><span class="en-text">How to verify the change</span></h2>
+  <ol class="steps">
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">새 탭에서 학생용 진단 화면을 엽니다 (아래 주소).</span><span class="en-text">Open the student assessment page in a new tab (address below).</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">학생 로그인 화면이 먼저 나올 수 있습니다 — 학생 계정으로 로그인하면 설문이 나옵니다.</span><span class="en-text">A student login may appear first — log in with a student account to see the questionnaire.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">문항이 방금 저장한 내용과 같은지 확인합니다.</span><span class="en-text">Check that the items match what you saved.</span></span></div>
+      </li>
+    
+      <li>
+        <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">옛날 화면이 보이면 강력 새로고침을 합니다.</span><span class="en-text">If you still see the old version, force-refresh.</span></span></div>
+        <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">키보드 <span class="kbd">Ctrl + Shift + R</span> (Mac: <span class="kbd">Cmd + Shift + R</span>).</span><span class="en-text">Press <span class="kbd">Ctrl + Shift + R</span> (Mac: <span class="kbd">Cmd + Shift + R</span>).</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">그래도 다르면 F를 확인하세요 (대부분 저장을 안 누른 경우입니다).</span><span class="en-text">If it still differs, see F (usually Save was not pressed).</span></span></div>
+      </li>
+  </ol>
+  <div class="mono"><span class="ko-text">진단 확인: </span><span class="en-text">Assessment: </span>https://learning.neurocatchers.com/adhd-training/assessment.html?dept=attention</div>
+  <div class="mono"><span class="ko-text">점검 확인: </span><span class="en-text">Screening: </span>https://learning.neurocatchers.com/pre-session?dept=attention</div>
+  <div class="mono"><span class="ko-text">훈련 확인: </span><span class="en-text">Training hub: </span>https://learning.neurocatchers.com/adhd-training/index.html?dept=attention</div>
+
+  <h2 id="sec-f">F. <span class="ko-text">자주 헤매는 것</span><span class="en-text">Common pitfalls</span></h2>
+  <table>
+    <tr><th><span class="ko-text">증상</span><span class="en-text">Symptom</span></th><th><span class="ko-text">원인과 해결</span><span class="en-text">Cause and fix</span></th></tr>
+    <tr><td><span class="ko-text">고쳤는데 학생 화면이 그대로</span><span class="en-text">Edited but students see the old version</span></td><td><span class="ko-text">1순위: "저장"을 안 눌렀습니다 — 폼만 바뀐 상태. 2순위: 브라우저 캐시 — Ctrl+Shift+R.</span><span class="en-text">Most likely Save was not pressed. Otherwise browser cache — Ctrl+Shift+R.</span></td></tr>
+    <tr><td><span class="ko-text">비밀번호를 두 번 물어봄</span><span class="en-text">Asked for the password twice</span></td><td><span class="ko-text">정상입니다 — 분과 관리자(decision)와 설문 편집(learning)이 다른 사이트라 각각 묻습니다. 둘 다 bnm1#.</span><span class="en-text">Normal — the admin and the editor are different sites; both use bnm1#.</span></td></tr>
+    <tr><td><span class="ko-text">파일을 넣었는데 문항이 이상함</span><span class="en-text">File import looks wrong</span></td><td><span class="ko-text">엑셀 열 순서(한글|영어|분류)와 줄당 1문항을 확인하세요. PDF는 지원 안 됩니다. 망쳤으면 새로고침(저장 전) 또는 D.</span><span class="en-text">Check the column order (KO|EN|subscale) and one item per line. PDF is unsupported. Refresh (before save) or use D.</span></td></tr>
+    <tr><td><span class="ko-text">자동번역이 안 됨</span><span class="en-text">Auto-translate does nothing</span></td><td><span class="ko-text">빈 칸이 없거나(이미 다 차 있음), 번역 키 미설정 안내가 뜬 경우입니다. 안내가 떴으면 수동 입력으로 진행하세요.</span><span class="en-text">Either no empty fields, or the key-not-set notice appeared. Manual typing always works.</span></td></tr>
+    <tr><td><span class="ko-text">"고급(개발자)" 버튼</span><span class="en-text">The "Advanced (developer)" button</span></td><td><span class="ko-text">개발자용 원본 편집기입니다. 누르지 않아도 모든 작업이 가능합니다 — 열었더라도 수정하지 마세요.</span><span class="en-text">A raw editor for developers. You never need it — if opened, do not edit there.</span></td></tr>
+    <tr><td><span class="ko-text">문항 수가 너무 적어짐/많아짐</span><span class="en-text">Item count suddenly wrong</span></td><td><span class="ko-text">가져오기 모드(전체 교체 vs 추가)를 확인하세요. 잘못 저장했으면 D(시드 되돌리기)+저장.</span><span class="en-text">Check the import mode (Replace vs Append). If saved wrongly, use D + Save.</span></td></tr>
+    <tr><td><span class="ko-text">화면이 영어로 나옴</span><span class="en-text">Page shows English</span></td><td><span class="ko-text">오른쪽 위 KO/EN 토글에서 KO를 누르세요 (학생 화면도 동일).</span><span class="en-text">Use the KO/EN toggle at the top right (same on student pages).</span></td></tr>
+  </table>
+
+  <p style="margin-top:34px;font-size:13px;color:var(--ink-sub);border-top:1px solid var(--border);padding-top:14px">Boston Neuromind LLC · <span class="ko-text">콘텐츠 관리 매뉴얼 · 기밀</span><span class="en-text">Content Management Manual · Confidential</span> · 2026</p>
+</div>
+</div>
+
+<script>
+function applyLang(l){
+  document.body.setAttribute('data-lang', l);
+  document.querySelectorAll('.lang button').forEach(function(b){ b.classList.toggle('on', b.dataset.l === l); });
+}
+function setLang(l){
+  try{ localStorage.setItem('bnm_lang', l); }catch(e){}
+  applyLang(l);
+}
+// bnm-lang-sync v6(4원칙: 기본 en, bnm_lang persist)와 협조 — sync가 DOM-ready에 body를 채우면 pill을 body 상태로 동기
+try{ var s0=localStorage.getItem('bnm_lang'); applyLang(s0==='ko'?'ko':'en'); }catch(e){ applyLang('en'); }
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(function(){
+  applyLang(document.body.getAttribute('data-lang')==='en'?'en':'ko');
+}, 0); });
+// bnm1# 게이트 — 분과 admin.html과 세션(bnmAdminOK) 공유: 관리자에서 오면 바로 열림
+(function(){
+  var pw=document.getElementById('pw'),lb=document.getElementById('loginBox'),mb=document.getElementById('manualBox'),er=document.getElementById('err');
+  function go(){ if(pw.value==='bnm1#'){ try{sessionStorage.setItem('bnmAdminOK','1');}catch(e){} lb.style.display='none'; mb.className='box show'; } else { er.textContent='Wrong password'; } }
+  document.getElementById('goBtn').addEventListener('click',go);
+  pw.addEventListener('keypress',function(e){ if(e.key==='Enter') go(); });
+  try{ if(sessionStorage.getItem('bnmAdminOK')==='1'){ lb.style.display='none'; mb.className='box show'; } }catch(e){}
+  pw.focus();
+})();
+</script>
+</body>
+</html>
