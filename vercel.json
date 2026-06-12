@@ -28,6 +28,9 @@
     { "src": "/api/(.*)", "dest": "/api/cna.py" },
     { "src": "/attention(/.*)?", "status": 301, "headers": { "Location": "https://attention.neurocatchers.com$1" } },
     { "src": "/peak(/.*)?", "status": 301, "headers": { "Location": "https://peak.neurocatchers.com$1" } },
+    { "src": "/learning-disability(/.*)?", "status": 301, "headers": { "Location": "https://learning.neurocatchers.com/learning-disability$1" } },
+    { "src": "/learning-enhancement(/.*)?", "status": 301, "headers": { "Location": "https://learning.neurocatchers.com/learning-enhancement$1" } },
+    { "src": "/learning(/.*)?", "status": 301, "headers": { "Location": "https://learning.neurocatchers.com/learning$1" } },
     { "src": "/(attention|peak|learning|learning-disability|learning-enhancement)", "status": 301, "headers": { "Location": "/$1/" } },
     { "src": "/(attention|peak|learning)/index.html", "headers": { "cache-control": "no-cache, must-revalidate" }, "continue": true },
     { "src": "/(.*)", "dest": "/public/$1" }
