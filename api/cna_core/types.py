@@ -127,6 +127,11 @@ _PHRASES_KO = {
   "rev_no_temporal":"시간 정보 부족 — 발병/경과 미수집","rev_no_symptoms":"증상 호소 정보 없음 — 진단 정보 불완전",
   "rev_hard_diff":"감별 어려움 — {a} vs {b}","rev_adhd_age":"ADHD 의심 — 발병 나이 (<12) 확인 필요",
   "lvl_excellent":"매우 우수","lvl_strong":"우수","lvl_moderate":"보통","lvl_attention":"주의 필요","lvl_clinical":"임상 개입 우선",
+  "prog_difficulty":"난이도 점진 증가","prog_expand":"반복 후 확장","prog_skill":"스킬 누적",
+  "prog_exposure":"점진 노출","prog_activation":"행동 활성화",
+  "proto_area":"선택 영역: {axis}","proto_duration":"기간: {weeks}주 ({per}회/주)",
+  "proto_progression":"진행 방식: {prog}","proto_measure":"주요 측정: {x}",
+  "proto_note":"참고: 시스템 1순위는 {x}였으나 환자 선택 우선.",
 }
 _PHRASES_EN = {
   "co_improve":"co-improvement in {x}","co_stabilize":"secondary stabilization of {x}",
@@ -148,6 +153,11 @@ _PHRASES_EN = {
   "rev_no_temporal":"Insufficient temporal data — onset/course not collected","rev_no_symptoms":"No symptom report — diagnostic information incomplete",
   "rev_hard_diff":"Differentiation difficult — {a} vs {b}","rev_adhd_age":"ADHD suspected — confirm age of onset (<12)",
   "lvl_excellent":"Excellent","lvl_strong":"Strong","lvl_moderate":"Moderate","lvl_attention":"Needs attention","lvl_clinical":"Clinical intervention priority",
+  "prog_difficulty":"Gradual difficulty increase","prog_expand":"Repeat then expand","prog_skill":"Skill accumulation",
+  "prog_exposure":"Gradual exposure","prog_activation":"Behavioral activation",
+  "proto_area":"Selected area: {axis}","proto_duration":"Duration: {weeks} weeks ({per}/week)",
+  "proto_progression":"Progression: {prog}","proto_measure":"Primary measure: {x}",
+  "proto_note":"Note: system top priority was {x}, but patient choice takes precedence.",
 }
 def T(key, **kw):
     m = _PHRASES_EN if _BNM_LANG.get()=="en" else _PHRASES_KO

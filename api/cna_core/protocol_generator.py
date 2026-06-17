@@ -385,29 +385,29 @@ def _build_protocol_rationale(
     report: Optional[ClinicalReport],
 ) -> str:
     """프로토콜 생성 이유."""
-    from cna_core.types import CLINICAL_AXIS_KOREAN
-    
+    from cna_core.types import CLINICAL_AXIS_KOREAN, T
+
     axis_kr = CLINICAL_AXIS_KOREAN[selected_axis]
     progression_kr = {
-        "complexity_ramp": "난이도 점진 증가",
-        "consolidation": "반복 후 확장",
-        "skill_stacking": "스킬 누적",
-        "exposure_gradient": "점진 노출",
-        "behavioral_activation": "행동 활성화",
+        "complexity_ramp": T("prog_difficulty"),
+        "consolidation": T("prog_expand"),
+        "skill_stacking": T("prog_skill"),
+        "exposure_gradient": T("prog_exposure"),
+        "behavioral_activation": T("prog_activation"),
     }.get(template["weekly_progression"], template["weekly_progression"])
-    
+
     parts = [
-        f"선택 영역: {axis_kr}",
-        f"기간: {weeks}주 ({sessions_per_week}회/주)",
-        f"진행 방식: {progression_kr}",
-        f"주요 측정: {', '.join(template['measurement_focus'][:2])}",
+        T("proto_area", axis=axis_kr),
+        T("proto_duration", weeks=weeks, per=sessions_per_week),
+        T("proto_progression", prog=progression_kr),
+        T("proto_measure", x=', '.join(template['measurement_focus'][:2])),
     ]
-    
+
     if report:
         primary = report.primary_recommendation
         if primary != selected_axis:
             parts.append(
-                f"참고: 시스템 1순위는 {CLINICAL_AXIS_KOREAN[primary]}였으나 환자 선택 우선."
+                T("proto_note", x=CLINICAL_AXIS_KOREAN[primary])
             )
     
     return " | ".join(parts)

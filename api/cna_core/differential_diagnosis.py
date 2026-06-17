@@ -26,7 +26,7 @@ import yaml
 import numpy as np
 from pydantic import BaseModel, Field
 
-from cna_core.types import V1State, T
+from cna_core.types import V1State, T, nm
 
 
 CONFIG_PATH = Path(__file__).parent.parent / "config" / "diagnostic_patterns.yaml"
@@ -593,12 +593,12 @@ class DifferentialDiagnosisEngine:
         if comorbidity:
             co_data = self.comorbidity_patterns[comorbidity]
             return co_data["treatment_sequence"], (
-                T("tx_comorbid", name=co_data['name_ko'], r=f"{co_data['coverage_rate']:.0%}")
+                T("tx_comorbid", name=nm(co_data['name_ko'], co_data.get('name_en')), r=f"{co_data['coverage_rate']:.0%}")
             )
 
         pattern = self.primary_patterns[primary]
         return [primary] + secondary, (
-            T("tx_primary", name=pattern['name_ko'], priority=pattern['treatment_priority'])
+            T("tx_primary", name=nm(pattern['name_ko'], pattern.get('name_en')), priority=pattern['treatment_priority'])
         )
     
     def _compute_diagnostic_confidence(self, hypotheses, history):
@@ -646,7 +646,7 @@ class DifferentialDiagnosisEngine:
         if len(hypotheses) > 1:
             gap = top.posterior_probability - hypotheses[1].posterior_probability
             if gap < 0.10:
-                reasons.append(T("rev_hard_diff", a=top.name_ko, b=hypotheses[1].name_ko))
+                reasons.append(T("rev_hard_diff", a=nm(top.name_ko, top.name_en), b=nm(hypotheses[1].name_ko, hypotheses[1].name_en)))
         
         # ADHD 의심인데 발병 나이 확인 안 됨
         adhd_hyp = next((h for h in hypotheses if h.diagnosis_id == "adhd_inattentive"), None)

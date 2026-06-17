@@ -26,7 +26,7 @@ primary_patterns:
   # ADHD - Inattentive type (성인)
   adhd_inattentive:
     name_ko: "ADHD 주의력 결핍 우세형"
-    name_en: "ADHD Inattentive Type"
+    name_en: "ADHD, Predominantly Inattentive Presentation"
     dsm5_code: "F90.0"
     prevalence_adult: 0.045  # ~4.5% adult prevalence
     
@@ -172,7 +172,7 @@ primary_patterns:
   
   peak_performance:
     name_ko: "수행 최적화 영역"
-    name_en: "Peak Performance"
+    name_en: "Peak Performance Optimization"
     dsm5_code: null
     prevalence_adult: null
     
@@ -212,6 +212,7 @@ comorbidity_patterns:
 
   adhd_plus_gad:
     name_ko: "ADHD + 범불안장애"
+    name_en: "ADHD + Generalized Anxiety Disorder"
     primary: "adhd_inattentive"
     secondary: "gad"
     coverage_rate: 0.30   # 성인 ADHD의 ~30%
@@ -232,6 +233,7 @@ comorbidity_patterns:
 
   adhd_plus_mdd:
     name_ko: "ADHD + 주요 우울"
+    name_en: "ADHD + Major Depression"
     primary: "adhd_inattentive"
     secondary: "mdd"
     coverage_rate: 0.30
@@ -250,6 +252,7 @@ comorbidity_patterns:
 
   gad_plus_mdd:
     name_ko: "범불안 + 우울 (혼합)"
+    name_en: "Generalized Anxiety + Depression (Mixed)"
     primary: "gad"
     secondary: "mdd"
     coverage_rate: 0.50   # GAD 환자의 ~50% MDD 공존

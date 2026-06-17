@@ -21,7 +21,7 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 
-from cna_core.types import CognitiveAxis, ClinicalAxis, CLINICAL_AXES, COGNITIVE_AXES, CLINICAL_AXIS_KOREAN, T
+from cna_core.types import CognitiveAxis, ClinicalAxis, CLINICAL_AXES, COGNITIVE_AXES, CLINICAL_AXIS_KOREAN, T, nm
 from cna_core.cognitive_clinical_mapper import CognitiveClinicalMapper
 from cna_core.differential_diagnosis import (
     DifferentialDiagnosisResult,
@@ -255,7 +255,7 @@ class ComorbidityDecomposer:
             role = T("role_possible")
 
         return (
-            T("src_head", name=hyp.name_ko, role=role, p=f"{hyp.posterior_probability:.0%}")
+            T("src_head", name=nm(hyp.name_ko, hyp.name_en), role=role, p=f"{hyp.posterior_probability:.0%}")
             + T("src_tail", clin=clin_kr, c=f"{contribution:.2f}")
         )
     
