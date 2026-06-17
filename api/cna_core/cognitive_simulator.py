@@ -249,7 +249,7 @@ class CognitiveSimulator:
             rationale = (
                 T("rank_overall")
                 + T("rank_effective", a=optimal['axis_ko'], b=f"{target_delta:.1f}")
-                + f"총 {optimal['expected_total_improvement']:+.3f}"
+                + T("rank_total", x=f"{optimal['expected_total_improvement']:+.3f}")
             )
         
         return InterventionRanking(

@@ -132,6 +132,7 @@ _PHRASES_KO = {
   "proto_area":"선택 영역: {axis}","proto_duration":"기간: {weeks}주 ({per}회/주)",
   "proto_progression":"진행 방식: {prog}","proto_measure":"주요 측정: {x}",
   "proto_note":"참고: 시스템 1순위는 {x}였으나 환자 선택 우선.",
+  "rank_total":"총 {x}",
 }
 _PHRASES_EN = {
   "co_improve":"co-improvement in {x}","co_stabilize":"secondary stabilization of {x}",
@@ -158,6 +159,7 @@ _PHRASES_EN = {
   "proto_area":"Selected area: {axis}","proto_duration":"Duration: {weeks} weeks ({per}/week)",
   "proto_progression":"Progression: {prog}","proto_measure":"Primary measure: {x}",
   "proto_note":"Note: system top priority was {x}, but patient choice takes precedence.",
+  "rank_total":"Total {x}",
 }
 def T(key, **kw):
     m = _PHRASES_EN if _BNM_LANG.get()=="en" else _PHRASES_KO
