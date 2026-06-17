@@ -191,6 +191,8 @@ class handler(BaseHTTPRequestHandler):
     # ============================================================
 
     def _handle_full_cycle(self, body):
+        from cna_core.types import set_language
+        set_language(body.get('language', 'ko'))
         orch = get_orchestrator()
         patient_id = body['patient_id']
         ip = self._get_ip()

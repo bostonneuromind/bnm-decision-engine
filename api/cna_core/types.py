@@ -32,12 +32,20 @@ COGNITIVE_AXES: list[CognitiveAxis] = [
     "self_awareness",
 ]
 
-COGNITIVE_AXIS_KOREAN = {
+_COGNITIVE_AXIS_KO = {
     "sustained_attention": "지속 주의력",
     "working_memory": "작업기억",
     "emotional_regulation": "정서 조절",
     "time_awareness": "시간 감각",
     "self_awareness": "자기 인지",
+}
+
+_COGNITIVE_AXIS_EN = {
+    "sustained_attention": "Sustained Attention",
+    "working_memory": "Working Memory",
+    "emotional_regulation": "Emotional Regulation",
+    "time_awareness": "Time Awareness",
+    "self_awareness": "Self-Awareness",
 }
 
 
@@ -61,13 +69,43 @@ CLINICAL_AXES: list[ClinicalAxis] = [
     "depression",
 ]
 
-CLINICAL_AXIS_KOREAN = {
+_CLINICAL_AXIS_KO = {
     "attention": "주의력",
     "learning": "학습 효율",
     "peak_performance": "수행 최적화",
     "anxiety": "불안 관리",
     "depression": "기분 안정",
 }
+
+_CLINICAL_AXIS_EN = {
+    "attention": "Attention",
+    "learning": "Learning Efficiency",
+    "peak_performance": "Peak Performance",
+    "anxiety": "Anxiety Management",
+    "depression": "Mood Stability",
+}
+
+import contextvars as _ctxvars
+from collections.abc import Mapping as _Mapping
+_BNM_LANG = _ctxvars.ContextVar("bnm_lang", default="ko")
+def set_language(language):
+    _BNM_LANG.set("en" if str(language or "ko").lower().startswith("en") else "ko")
+def get_language():
+    return _BNM_LANG.get()
+class _LangMap(_Mapping):
+    __slots__ = ("_ko", "_en")
+    def __init__(self, ko, en):
+        self._ko, self._en = ko, en
+    def _active(self):
+        return self._en if _BNM_LANG.get() == "en" else self._ko
+    def __getitem__(self, key):
+        return self._active()[key]
+    def __iter__(self):
+        return iter(self._active())
+    def __len__(self):
+        return len(self._active())
+COGNITIVE_AXIS_KOREAN = _LangMap(_COGNITIVE_AXIS_KO, _COGNITIVE_AXIS_EN)
+CLINICAL_AXIS_KOREAN  = _LangMap(_CLINICAL_AXIS_KO, _CLINICAL_AXIS_EN)
 
 
 # ============================================================
