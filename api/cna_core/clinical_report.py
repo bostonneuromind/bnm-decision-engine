@@ -19,6 +19,7 @@ from cna_core.types import (
     COGNITIVE_AXES, CLINICAL_AXES,
     COGNITIVE_AXIS_KOREAN, CLINICAL_AXIS_KOREAN,
     ClinicalAxisReport, AxisRelationship, AlternativePath, ClinicalReport,
+    T,
 )
 from cna_core.cognitive_clinical_mapper import CognitiveClinicalMapper
 
@@ -95,15 +96,14 @@ def build_alternative_preview(
             other = r["axis_b"] if r["axis_a"] == axis else r["axis_a"]
             other_kr = CLINICAL_AXIS_KOREAN[other]
             if r["strength"] > 0:
-                collateral_summary.append(f"{other_kr} 동반 개선")
+                collateral_summary.append(T("co_improve", x=other_kr))
             else:
-                collateral_summary.append(f"{other_kr} 부수 안정")
-    
-    return (
-        f"{CLINICAL_AXIS_KOREAN[axis]} 선택 시: "
-        f"현재 {axis_report.interpretation}, "
-        f"부수 효과 — {', '.join(collateral_summary[:2])}"
-    )
+                collateral_summary.append(T("co_stabilize", x=other_kr))
+
+    return T("alt_preview",
+             axis=CLINICAL_AXIS_KOREAN[axis],
+             interp=axis_report.interpretation,
+             coll=', '.join(collateral_summary[:2]))
 
 
 def build_rationale(
@@ -114,8 +114,8 @@ def build_rationale(
     """시스템 추천 이유."""
     primary_report = axes_reports[primary]
     parts = [
-        f"1순위 추천: {primary_report.axis_korean}",
-        f"현재 상태: {primary_report.interpretation}",
+        T("rat_top", x=primary_report.axis_korean),
+        T("rat_current", x=primary_report.interpretation),
     ]
     
     if primary_report.contributing_cognitive_axes:
@@ -124,7 +124,7 @@ def build_rationale(
             key=lambda x: abs(x[1]),
         )
         cog_kr = COGNITIVE_AXIS_KOREAN.get(top_cog[0], top_cog[0])
-        parts.append(f"주요 인지 영향: {cog_kr} (기여도 {top_cog[1]:+.2f})")
+        parts.append(T("rat_cog_impact", x=cog_kr, y=f"{top_cog[1]:+.2f}"))
     
     primary_relationships = [
         r for r in relationships
@@ -135,8 +135,8 @@ def build_rationale(
         top_rel = primary_relationships[0]
         other = top_rel["axis_b"] if top_rel["axis_a"] == primary else top_rel["axis_a"]
         parts.append(
-            f"파급 효과: {CLINICAL_AXIS_KOREAN[primary]} 개선 → "
-            f"{CLINICAL_AXIS_KOREAN[other]} 영향 (강도 {abs(top_rel['strength']):.2f})"
+            T("rat_ripple", x=CLINICAL_AXIS_KOREAN[primary])
+            + T("rat_influence", x=CLINICAL_AXIS_KOREAN[other], y=f"{abs(top_rel['strength']):.2f}")
         )
     
     return " | ".join(parts)
@@ -218,7 +218,7 @@ def generate_clinical_report(
     # 6. 1순위 추천
     if patient_choice:
         primary = patient_choice
-        rationale = f"환자 선택: {CLINICAL_AXIS_KOREAN[patient_choice]}. 환자 자율성 우선."
+        rationale = T("patient_choice", x=CLINICAL_AXIS_KOREAN[patient_choice])
     else:
         primary = min(priority_inputs.items(), key=lambda x: x[1])[0]
         rationale = build_rationale(primary, axes_reports, raw_relationships)

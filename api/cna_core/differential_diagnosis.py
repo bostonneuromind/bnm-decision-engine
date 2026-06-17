@@ -26,7 +26,7 @@ import yaml
 import numpy as np
 from pydantic import BaseModel, Field
 
-from cna_core.types import V1State
+from cna_core.types import V1State, T
 
 
 CONFIG_PATH = Path(__file__).parent.parent / "config" / "diagnostic_patterns.yaml"
@@ -588,17 +588,17 @@ class DifferentialDiagnosisEngine:
     
     def _determine_treatment_priority(self, primary, secondary, comorbidity, hypotheses):
         if not primary:
-            return [], "진단 신뢰도 부족. 추가 평가 필요."
-        
+            return [], T("tx_low_conf")
+
         if comorbidity:
             co_data = self.comorbidity_patterns[comorbidity]
             return co_data["treatment_sequence"], (
-                f"{co_data['name_ko']} 표준. 공존률 {co_data['coverage_rate']:.0%} 임상 패턴."
+                T("tx_comorbid", name=co_data['name_ko'], r=f"{co_data['coverage_rate']:.0%}")
             )
-        
+
         pattern = self.primary_patterns[primary]
         return [primary] + secondary, (
-            f"Primary: {pattern['name_ko']}. {pattern['treatment_priority']}."
+            T("tx_primary", name=pattern['name_ko'], priority=pattern['treatment_priority'])
         )
     
     def _compute_diagnostic_confidence(self, hypotheses, history):
@@ -635,23 +635,23 @@ class DifferentialDiagnosisEngine:
         top = hypotheses[0]
         
         if top.posterior_probability < 0.40:
-            reasons.append("진단 확실성 낮음 — 가장 강한 가설 < 40%")
-        
+            reasons.append(T("rev_low_cert"))
+
         if history.onset_category == "unknown" and history.course == "unknown":
-            reasons.append("시간 정보 부족 — 발병/경과 미수집")
-        
+            reasons.append(T("rev_no_temporal"))
+
         if not symptom_vector:
-            reasons.append("증상 호소 정보 없음 — 진단 정보 불완전")
-        
+            reasons.append(T("rev_no_symptoms"))
+
         if len(hypotheses) > 1:
             gap = top.posterior_probability - hypotheses[1].posterior_probability
             if gap < 0.10:
-                reasons.append(f"감별 어려움 — {top.name_ko} vs {hypotheses[1].name_ko}")
+                reasons.append(T("rev_hard_diff", a=top.name_ko, b=hypotheses[1].name_ko))
         
         # ADHD 의심인데 발병 나이 확인 안 됨
         adhd_hyp = next((h for h in hypotheses if h.diagnosis_id == "adhd_inattentive"), None)
         if adhd_hyp and adhd_hyp.posterior_probability > 0.30:
             if history.onset_age is None:
-                reasons.append("ADHD 의심 — 발병 나이 (<12) 확인 필요")
+                reasons.append(T("rev_adhd_age"))
         
         return len(reasons) > 0, reasons

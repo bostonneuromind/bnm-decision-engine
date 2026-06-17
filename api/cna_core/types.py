@@ -107,6 +107,56 @@ class _LangMap(_Mapping):
 COGNITIVE_AXIS_KOREAN = _LangMap(_COGNITIVE_AXIS_KO, _COGNITIVE_AXIS_EN)
 CLINICAL_AXIS_KOREAN  = _LangMap(_CLINICAL_AXIS_KO, _CLINICAL_AXIS_EN)
 
+_PHRASES_KO = {
+  "co_improve":"{x} 동반 개선","co_stabilize":"{x} 부수 안정",
+  "alt_preview":"{axis} 선택 시: 현재 {interp}, 부수 효과 — {coll}",
+  "rat_top":"1순위 추천: {x}","rat_current":"현재 상태: {x}",
+  "rat_cog_impact":"주요 인지 영향: {x} (기여도 {y})","rat_ripple":"파급 효과: {x} 개선 → ",
+  "rat_influence":"{x} 영향 (강도 {y})","patient_choice":"환자 선택: {x}. 환자 자율성 우선.",
+  "sim_set":"{axis} L{a} → L{b} (Δ{d}) 박으면, ","sim_biggest":"가장 큰 효과 자료: {x} {v}. ",
+  "sim_total":"총 임상 개선: {t}.","rank_target_top":"{x} 개선이 1순위 자료. ",
+  "rank_overall":"전체 임상 5축 종합 개선 자료. ","rank_effective":"가장 효과적: {a} +{b} Level → ",
+  "assume_mapping":"Linear evidence → level change 매핑 (d={d})","assume_avg":"평균 카드 반복 {n}회",
+  "assume_time":"시간이: {weeks}주 (4주 기준 자료 비례)",
+  "assume_carryover":"Carry-over 효과 ❌ (각 카드 독립 가정)","assume_respond":"환자 개인 반응성 ❌ (평균 effect 적용)",
+  "role_primary":"1차","role_coexist":"공존","role_possible":"가능",
+  "src_head":"{name} ({role}, 사후확률 {p}) → ","src_tail":"{clin} 약화의 {c} 기여",
+  "intpri_primary":"Primary 진단 자료 1순위 — {x}","intpri_coexist":"공존 자료 {i}순위 — primary 치료 후 잔존 증상 평가",
+  "tx_low_conf":"진단 신뢰도 부족. 추가 평가 필요.","tx_comorbid":"{name} 표준. 공존률 {r} 임상 패턴.",
+  "tx_primary":"Primary: {name}. {priority}.","rev_low_cert":"진단 확실성 낮음 — 가장 강한 가설 < 40%",
+  "rev_no_temporal":"시간 정보 부족 — 발병/경과 미수집","rev_no_symptoms":"증상 호소 정보 없음 — 진단 정보 불완전",
+  "rev_hard_diff":"감별 어려움 — {a} vs {b}","rev_adhd_age":"ADHD 의심 — 발병 나이 (<12) 확인 필요",
+  "lvl_excellent":"매우 우수","lvl_strong":"우수","lvl_moderate":"보통","lvl_attention":"주의 필요","lvl_clinical":"임상 개입 우선",
+}
+_PHRASES_EN = {
+  "co_improve":"co-improvement in {x}","co_stabilize":"secondary stabilization of {x}",
+  "alt_preview":"If {axis} is selected: currently {interp}; secondary effects — {coll}",
+  "rat_top":"Top recommendation: {x}","rat_current":"Current status: {x}",
+  "rat_cog_impact":"Primary cognitive impact: {x} (contribution {y})","rat_ripple":"Ripple effect: improving {x} → ",
+  "rat_influence":"{x} effect (strength {y})","patient_choice":"Patient choice: {x}. Patient autonomy prioritized.",
+  "sim_set":"Setting {axis} L{a} → L{b} (Δ{d}), ","sim_biggest":"Largest effect: {x} {v}. ",
+  "sim_total":"Total clinical improvement: {t}.","rank_target_top":"Improving {x} is the top priority. ",
+  "rank_overall":"Comprehensive improvement across all 5 clinical axes. ","rank_effective":"Most effective: {a} +{b} levels → ",
+  "assume_mapping":"Linear evidence → level-change mapping (d={d})","assume_avg":"Average card repetition: {n}x",
+  "assume_time":"Timeframe: {weeks} weeks (scaled to a 4-week baseline)",
+  "assume_carryover":"Carry-over effect ❌ (each card assumed independent)","assume_respond":"Individual patient responsiveness ❌ (average effect applied)",
+  "role_primary":"primary","role_coexist":"comorbid","role_possible":"possible",
+  "src_head":"{name} ({role}, posterior {p}) → ","src_tail":"{c} contribution to {clin} deficit",
+  "intpri_primary":"Primary diagnosis, top priority — {x}","intpri_coexist":"Comorbid, priority {i} — assess residual symptoms after primary treatment",
+  "tx_low_conf":"Insufficient diagnostic confidence. Further assessment needed.","tx_comorbid":"{name} standard. Comorbidity rate {r} clinical pattern.",
+  "tx_primary":"Primary: {name}. {priority}.","rev_low_cert":"Low diagnostic certainty — strongest hypothesis < 40%",
+  "rev_no_temporal":"Insufficient temporal data — onset/course not collected","rev_no_symptoms":"No symptom report — diagnostic information incomplete",
+  "rev_hard_diff":"Differentiation difficult — {a} vs {b}","rev_adhd_age":"ADHD suspected — confirm age of onset (<12)",
+  "lvl_excellent":"Excellent","lvl_strong":"Strong","lvl_moderate":"Moderate","lvl_attention":"Needs attention","lvl_clinical":"Clinical intervention priority",
+}
+def T(key, **kw):
+    m = _PHRASES_EN if _BNM_LANG.get()=="en" else _PHRASES_KO
+    s = m.get(key);  s = s if s is not None else _PHRASES_KO.get(key, key)
+    try: return s.format(**kw) if kw else s
+    except Exception: return s
+def nm(ko, en):
+    return en if (_BNM_LANG.get()=="en" and en) else ko
+
 
 # ============================================================
 # Fischer Level (L7-L13, 성인 일반)

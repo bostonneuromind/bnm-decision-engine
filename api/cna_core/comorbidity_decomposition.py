@@ -21,7 +21,7 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 
-from cna_core.types import CognitiveAxis, ClinicalAxis, CLINICAL_AXES, COGNITIVE_AXES, CLINICAL_AXIS_KOREAN
+from cna_core.types import CognitiveAxis, ClinicalAxis, CLINICAL_AXES, COGNITIVE_AXES, CLINICAL_AXIS_KOREAN, T
 from cna_core.cognitive_clinical_mapper import CognitiveClinicalMapper
 from cna_core.differential_diagnosis import (
     DifferentialDiagnosisResult,
@@ -248,15 +248,15 @@ class ComorbidityDecomposer:
         clin_kr = CLINICAL_AXIS_KOREAN[clinical_axis]
         
         if hyp.is_primary:
-            role = "1차"
+            role = T("role_primary")
         elif hyp.is_comorbid:
-            role = "공존"
+            role = T("role_coexist")
         else:
-            role = "가능"
-        
+            role = T("role_possible")
+
         return (
-            f"{hyp.name_ko} ({role}, 사후확률 {hyp.posterior_probability:.0%}) → "
-            f"{clin_kr} 약화의 {contribution:.2f} 기여"
+            T("src_head", name=hyp.name_ko, role=role, p=f"{hyp.posterior_probability:.0%}")
+            + T("src_tail", clin=clin_kr, c=f"{contribution:.2f}")
         )
     
     def _determine_treatment_target(
@@ -311,7 +311,7 @@ class ComorbidityDecomposer:
                 "rank": 1,
                 "source": primary,
                 "target_clinical_axis": top_axis,
-                "rationale": f"Primary 진단 자료 1순위 — {dde_result.treatment_rationale}",
+                "rationale": T("intpri_primary", x=dde_result.treatment_rationale),
             })
         
         # Secondary 진단
@@ -329,7 +329,7 @@ class ComorbidityDecomposer:
                 "rank": i,
                 "source": secondary,
                 "target_clinical_axis": top,
-                "rationale": f"공존 자료 {i}순위 — primary 치료 후 잔존 증상 평가",
+                "rationale": T("intpri_coexist", i=i),
             })
         
         return priorities

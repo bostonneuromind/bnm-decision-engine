@@ -23,6 +23,7 @@ from cna_core.types import (
     CognitiveAxis, ClinicalAxis,
     COGNITIVE_AXES, CLINICAL_AXES,
     COGNITIVE_AXIS_KOREAN, CLINICAL_AXIS_KOREAN,
+    T,
 )
 
 
@@ -288,15 +289,15 @@ class CognitiveClinicalMapper:
         tiers = self.config["severity_tiers"]
         
         if score >= tiers["strong"]:
-            level = "매우 우수"
+            level = T("lvl_excellent")
         elif score >= tiers["good"]:
-            level = "우수"
+            level = T("lvl_strong")
         elif score >= tiers["moderate"]:
-            level = "보통"
+            level = T("lvl_moderate")
         elif score >= tiers["needs_attention"]:
-            level = "주의 필요"
+            level = T("lvl_attention")
         else:
-            level = "임상 개입 우선"
+            level = T("lvl_clinical")
         
         axis_kr = CLINICAL_AXIS_KOREAN[axis]
         return f"{axis_kr}: {level}"

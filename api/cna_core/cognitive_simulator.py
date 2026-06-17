@@ -30,6 +30,7 @@ from cna_core.types import (
     COGNITIVE_AXES, CLINICAL_AXES,
     COGNITIVE_AXIS_KOREAN, CLINICAL_AXIS_KOREAN,
     Card,
+    T,
 )
 from cna_core.cognitive_clinical_mapper import CognitiveClinicalMapper
 
@@ -155,9 +156,9 @@ class CognitiveSimulator:
         axis_ko = COGNITIVE_AXIS_KOREAN[axis]
         prim_ko = CLINICAL_AXIS_KOREAN[primary_beneficiary]
         interpretation = (
-            f"{axis_ko} L{current_level:.1f} → L{target_level:.1f} (Δ{delta:+.1f}) 박으면, "
-            f"가장 큰 효과 자료: {prim_ko} {clinical_deltas[primary_beneficiary]:+.3f}. "
-            f"총 임상 개선: {total_improvement:+.3f}."
+            T("sim_set", axis=axis_ko, a=f"{current_level:.1f}", b=f"{target_level:.1f}", d=f"{delta:+.1f}")
+            + T("sim_biggest", x=prim_ko, v=f"{clinical_deltas[primary_beneficiary]:+.3f}")
+            + T("sim_total", t=f"{total_improvement:+.3f}")
         )
         
         return SingleAxisCounterfactual(
@@ -240,15 +241,15 @@ class CognitiveSimulator:
         if target_clinical_axis:
             target_ko = CLINICAL_AXIS_KOREAN[target_clinical_axis]
             rationale = (
-                f"{target_ko} 개선이 1순위 자료. "
-                f"가장 효과적: {optimal['axis_ko']} +{target_delta:.1f} Level → "
-                f"{target_ko} {optimal['specific_target_improvement']:+.3f}"
+                T("rank_target_top", x=target_ko)
+                + T("rank_effective", a=optimal['axis_ko'], b=f"{target_delta:.1f}")
+                + f"{target_ko} {optimal['specific_target_improvement']:+.3f}"
             )
         else:
             rationale = (
-                f"전체 임상 5축 종합 개선 자료. "
-                f"가장 효과적: {optimal['axis_ko']} +{target_delta:.1f} Level → "
-                f"총 {optimal['expected_total_improvement']:+.3f}"
+                T("rank_overall")
+                + T("rank_effective", a=optimal['axis_ko'], b=f"{target_delta:.1f}")
+                + f"총 {optimal['expected_total_improvement']:+.3f}"
             )
         
         return InterventionRanking(
@@ -340,11 +341,11 @@ class CognitiveSimulator:
         uncertainty = max(0.1, min(0.9, 1.0 - avg_evidence * 0.5 - 0.05 * avg_repetitions))
         
         assumptions = [
-            f"Linear evidence → level change 매핑 (d={avg_evidence:.2f})",
-            f"평균 카드 반복 {avg_repetitions:.1f}회",
-            f"시간이: {weeks}주 (4주 기준 자료 비례)",
-            "Carry-over 효과 ❌ (각 카드 독립 가정)",
-            "환자 개인 반응성 ❌ (평균 effect 적용)",
+            T("assume_mapping", d=f"{avg_evidence:.2f}"),
+            T("assume_avg", n=f"{avg_repetitions:.1f}"),
+            T("assume_time", weeks=weeks),
+            T("assume_carryover"),
+            T("assume_respond"),
         ]
         
         return CardSequenceSimulation(
