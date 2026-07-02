@@ -40,3 +40,12 @@ track/fix-tracknav.ps1
 # archives should not live in repo
 *.zip
 # ---- end BNM attic guard r2 ----
+
+# ---- BNM attic guard r3 2026-07-02 ----
+# working notes kept local (not source)
+*HANDOFF*.md
+*HANDOVER*.md
+*_PLAN.md
+RESTYLE_AUDIT.md
+vercel_backup_*.json
+# ---- end BNM attic guard r3 ----
