@@ -1,3 +1,42 @@
 __pycache__/
 *.pyc
 .env.local
+
+# ---- BNM attic guard 2026-07-02 ----
+# backups
+*.bak
+*.bak2
+*.bak3
+*.bak4
+*.bak5
+*.bak_*
+# scratch screenshots and text
+_*.png
+_*.txt
+# scratch verify scripts
+_*.mjs
+# scratch dirs
+_logo_preview/
+_security_draft/
+dmda_backup_*/
+# local tooling and build output
+node_modules/
+.next/
+.claude/settings.local.json
+# ---- end BNM attic guard ----
+
+# ---- BNM attic guard r2 2026-07-02 ----
+# scratch verify/probe/shot + schema dumps
+tools/*.mjs
+tools/*.sql
+# space-dash backups (near edge functions / lib)
+* backup.ts
+* backup2.ts
+* backup.js
+# gold template drafts kept local
+_gold_template_draft/
+# one-off fix script
+track/fix-tracknav.ps1
+# archives should not live in repo
+*.zip
+# ---- end BNM attic guard r2 ----
