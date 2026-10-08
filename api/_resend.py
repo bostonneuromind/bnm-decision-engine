@@ -9,9 +9,14 @@ try:
 except ImportError:
     HAS_REQUESTS = False
     import urllib.request
+import urllib.error
 
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
-FROM_EMAIL = 'Decision Catcher <noreply@neurocatchers.com>'
+# ★ 2026-10-08 고객 발송 주소 통일 — From/Reply-To = alex@bostonneuromind.com (Resend 도메인 bostonneuromind.com).
+#   도메인 인증 전(Resend 403 "not verified")에는 옛 발신(noreply@neurocatchers.com)으로 1회 재시도해 발송이 끊기지 않게 한다.
+FROM_EMAIL = 'Boston Neuromind <alex@bostonneuromind.com>'
+REPLY_TO = 'alex@bostonneuromind.com'
+FROM_FALLBACK = 'Boston Neuromind <noreply@neurocatchers.com>'
 
 
 def send_email(to, subject, html, reply_to=None, from_addr=None):
@@ -22,34 +27,43 @@ def send_email(to, subject, html, reply_to=None, from_addr=None):
     if not RESEND_API_KEY:
         raise RuntimeError("RESEND_API_KEY not configured")
 
-    payload = {
-        'from': from_addr or FROM_EMAIL,
-        'to': [to] if isinstance(to, str) else to,
-        'subject': subject,
-        'html': html,
-    }
-    if reply_to:
-        payload['reply_to'] = reply_to
-
     headers = {
         'Authorization': f'Bearer {RESEND_API_KEY}',
         'Content-Type': 'application/json',
     }
 
-    try:
+    def _post(sender):
+        payload = {
+            'from': sender,
+            'to': [to] if isinstance(to, str) else to,
+            'subject': subject,
+            'html': html,
+            'reply_to': reply_to or REPLY_TO,
+        }
         if HAS_REQUESTS:
             resp = requests.post('https://api.resend.com/emails', json=payload, headers=headers, timeout=15)
-            print(f"[resend] status={resp.status_code}, body={resp.text[:300]}", flush=True)
-            if resp.status_code >= 400:
-                raise RuntimeError(f"Resend {resp.status_code}: {resp.text}")
-            return resp.json()
-        else:
-            data = json.dumps(payload).encode('utf-8')
-            req = urllib.request.Request('https://api.resend.com/emails', data=data, headers=headers, method='POST')
+            print(f"[resend] from={sender} status={resp.status_code}, body={resp.text[:300]}", flush=True)
+            return resp.status_code, resp.text
+        data = json.dumps(payload).encode('utf-8')
+        req = urllib.request.Request('https://api.resend.com/emails', data=data, headers=headers, method='POST')
+        try:
             with urllib.request.urlopen(req, timeout=15) as resp:
                 body = resp.read().decode('utf-8')
-                print(f"[resend] urllib body={body[:300]}", flush=True)
-                return json.loads(body)
+                print(f"[resend] from={sender} urllib body={body[:300]}", flush=True)
+                return resp.status, body
+        except urllib.error.HTTPError as he:
+            body = he.read().decode('utf-8', 'replace')
+            print(f"[resend] from={sender} urllib HTTPError {he.code} body={body[:300]}", flush=True)
+            return he.code, body
+
+    try:
+        status, body = _post(from_addr or FROM_EMAIL)
+        if status in (403, 422) and 'not verified' in body.lower():
+            print("[resend] bostonneuromind.com not verified yet - retrying with fallback sender", flush=True)
+            status, body = _post(FROM_FALLBACK)
+        if status >= 400:
+            raise RuntimeError(f"Resend {status}: {body}")
+        return json.loads(body)
     except Exception as e:
         print(f"[resend] EXCEPTION {type(e).__name__}: {e}", flush=True)
         print(f"[resend] {traceback.format_exc()}", flush=True)
@@ -197,7 +211,7 @@ def self_consent_email(full_name, email, consent_url, language='ko'):
     return send_email(email, subject, html)
 
 
-BNM_FROM = 'Boston Neuromind <noreply@neurocatchers.com>'
+BNM_FROM = FROM_EMAIL   # ★ 2026-10-08 통일 — consent_request_email도 alex@bostonneuromind.com
 
 
 def consent_request_email(to_email, display_name, consent_url, language='ko'):
