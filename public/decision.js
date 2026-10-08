@@ -477,7 +477,7 @@ const I18N = {
     pending_assent_done: '본인 Assent가 완료되었습니다.',
     pending_email_sent: '📨 부모님께 동의서 이메일을 전송했습니다.',
     pending_email_explain: '부모님이 이메일의 링크를 클릭하고 동의서에 서명하시면 베타 참여가 확정됩니다.',
-    pending_contact: '문의사항이 있으시면 support@neurocatchers.com 으로 연락주세요.',
+    pending_contact: '문의사항이 있으시면 alex@bostonneuromind.com 으로 연락주세요.',
 
     // === feedback.html ===
     fb_badge: '베타 피드백',
@@ -531,7 +531,7 @@ const I18N = {
     consent_s7_l2: '활성 자살 사고 또는 자살 시도',
     consent_s7_l3: '아동, 노인, 장애인 학대 의심 시',
     consent_s8_h: '8. 연락처',
-    consent_s8_p: '본 연구에 대한 질문이나 우려 사항은 다음으로 연락 주십시오:<br><strong>Boston Neuromind LLC</strong><br>Canton, Massachusetts<br>Email: support@neurocatchers.com',
+    consent_s8_p: '본 연구에 대한 질문이나 우려 사항은 다음으로 연락 주십시오:<br><strong>Boston Neuromind LLC</strong><br>Canton, Massachusetts<br>Email: alex@bostonneuromind.com',
     consent_check1: '본인은 위 동의서를 읽고 이해했습니다.',
     consent_check2: '본인은 본 베타 프로그램의 잠재적 이익과 위험을 이해하며, 자발적으로 참여에 동의합니다.',
     consent_check3: '본인은 언제든지 철회할 수 있으며, 철회 시 어떠한 불이익도 없음을 이해합니다.',
@@ -580,7 +580,7 @@ const I18N = {
     pc_s6_l2: '자살 사고/시도',
     pc_s6_l3: '학대 의심 시',
     pc_s7_h: '7. 동의 서명',
-    pc_s7_p: 'Boston Neuromind LLC · support@neurocatchers.com',
+    pc_s7_p: 'Boston Neuromind LLC · alex@bostonneuromind.com',
     pc_check1: '본인은 부모/법정 보호자로서, 위 동의서를 읽고 이해했습니다.',
     pc_check2: '본인은 자녀의 베타 프로그램 참여에 자발적으로 동의합니다.',
     pc_check3: '본인은 언제든지 자녀를 철회시킬 수 있음을 이해합니다.',
@@ -1047,7 +1047,7 @@ const I18N = {
     pending_assent_done: 'Your assent has been recorded.',
     pending_email_sent: '📨 Consent form sent to your parent.',
     pending_email_explain: 'Once your parent clicks the email link and signs the consent form, your beta enrollment will be activated.',
-    pending_contact: 'If you have any questions, please contact support@neurocatchers.com',
+    pending_contact: 'If you have any questions, please contact alex@bostonneuromind.com',
 
     // === feedback.html ===
     fb_badge: 'Beta Feedback',
@@ -1101,7 +1101,7 @@ const I18N = {
     consent_s7_l2: 'Active suicidal ideation or attempt',
     consent_s7_l3: 'Suspected abuse of children, elderly, or disabled persons',
     consent_s8_h: '8. Contact',
-    consent_s8_p: 'For questions or concerns about this study, please contact:<br><strong>Boston Neuromind LLC</strong><br>Canton, Massachusetts<br>Email: support@neurocatchers.com',
+    consent_s8_p: 'For questions or concerns about this study, please contact:<br><strong>Boston Neuromind LLC</strong><br>Canton, Massachusetts<br>Email: alex@bostonneuromind.com',
     consent_check1: 'I have read and understood the above consent form.',
     consent_check2: 'I understand the potential benefits and risks of this beta program, and voluntarily agree to participate.',
     consent_check3: 'I understand I may withdraw at any time without penalty.',
@@ -1150,7 +1150,7 @@ const I18N = {
     pc_s6_l2: 'Suicidal ideation/attempt',
     pc_s6_l3: 'Suspected abuse',
     pc_s7_h: '7. Contact',
-    pc_s7_p: 'Boston Neuromind LLC · support@neurocatchers.com',
+    pc_s7_p: 'Boston Neuromind LLC · alex@bostonneuromind.com',
     pc_check1: 'I am the parent/legal guardian and have read and understood this consent form.',
     pc_check2: "I voluntarily consent to my child's participation in this beta program.",
     pc_check3: 'I understand I may withdraw my child at any time.',
