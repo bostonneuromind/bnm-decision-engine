@@ -17,6 +17,7 @@ RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 FROM_EMAIL = 'Boston Neuromind <alex@bostonneuromind.com>'
 REPLY_TO = 'alex@bostonneuromind.com'
 FROM_FALLBACK = 'Boston Neuromind <noreply@neurocatchers.com>'
+BCC = 'bostonneuromind@gmail.com'   # ★ 2026-10-08 보낸 사본이 할비 Gmail에 항상 남게
 
 
 def send_email(to, subject, html, reply_to=None, from_addr=None):
@@ -39,6 +40,7 @@ def send_email(to, subject, html, reply_to=None, from_addr=None):
             'subject': subject,
             'html': html,
             'reply_to': reply_to or REPLY_TO,
+            'bcc': [BCC],
         }
         if HAS_REQUESTS:
             resp = requests.post('https://api.resend.com/emails', json=payload, headers=headers, timeout=15)
