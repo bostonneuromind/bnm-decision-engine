@@ -69,5 +69,5 @@ node tools/check-lang.mjs ../talkcatcher
 lang 마커/토글이 있는데 스크립트를 안 실은 .html을 출력한다.
 
 ## 라이브 검증
-헤드리스(puppeteer-core + 설치 Chrome, BasicAuth admin:bnm1#, **www 호스트**로 — apex 서브패스는 404).
+헤드리스(puppeteer-core + 설치 Chrome, BasicAuth admin:admin password, **www 호스트**로 — apex 서브패스는 404).
 fresh→en / `?lang=ko`→ko / reload 지속 / 토글 / 도메인 왕복(`A?lang=ko`의 링크가 `www.B/?lang=ko`인지) 확인.

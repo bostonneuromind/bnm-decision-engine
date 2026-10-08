@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+/* BNMAdmin — 관리자 비번 공용 헬퍼 (2026-10-08). 코드에 비번 없음: 세션당 1회 입력(sessionStorage), 서버 admin-verify가 판정, 401/403이면 삭제. */
+window.BNMAdmin = window.BNMAdmin || (function(){
+  var VERIFY = 'https://sepierapapsansprurpr.supabase.co/functions/v1/admin-verify', K = 'bnm_admin_pw';
+  function get(){ try{ return sessionStorage.getItem(K) || ''; }catch(e){ return ''; } }
+  function put(v){ try{ if(v) sessionStorage.setItem(K, v); else sessionStorage.removeItem(K); }catch(e){} }
+  function check(v){
+    v = String(v == null ? '' : v).trim(); if(!v) return false;
+    if(v === get()) return true;
+    try{ var x = new XMLHttpRequest(); x.open('POST', VERIFY, false); x.setRequestHeader('x-admin-password', v); x.send(null); if(x.status === 200){ put(v); return true; } }catch(e){}
+    return false;
+  }
+  function pw(){ var v = get(); if(v) return v; v = (window.prompt('Admin password / 관리자 비밀번호') || '').trim(); check(v); return v; }
+  function onAuthFail(s){ if(s === 401 || s === 403) put(''); }
+  return { check: check, pw: pw, clear: function(){ put(''); }, onAuthFail: onAuthFail };
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learning (Disability / Enhancement) — 콘텐츠 관리 사용 매뉴얼 (기밀)</title>
@@ -86,7 +103,7 @@
       <li>
         <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">브라우저 주소창에 아래 주소를 입력하거나, 분과 홈페이지 오른쪽 위 "관리자"를 클릭합니다.</span><span class="en-text">Type the address below into your browser, or click "Admin" at the top right of the department homepage.</span></span></div>
         <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">"분과 관리자" 비밀번호 화면이 나옵니다.</span><span class="en-text">The "Department Admin" password screen appears.</span></span></div>
-        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">비밀번호 칸에 <b>bnm1#</b> 을 입력하고 "들어가기"를 누릅니다.</span><span class="en-text">Type <b>bnm1#</b> and press "Enter".</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">비밀번호 칸에 <b>admin password</b> 을 입력하고 "들어가기"를 누릅니다.</span><span class="en-text">Type <b>admin password</b> and press "Enter".</span></span></div>
       </li>
     
       <li>
@@ -118,7 +135,7 @@
       <li>
         <div class="st-row"><span class="st-k"><span class="ko-text">클릭</span><span class="en-text">Click</span></span><span><span class="ko-text">관리자 화면의 "설문 교체" 그룹에서 원하는 분과(학습장애 또는 학습향상)의 "진단 설문 교체" 카드를 클릭합니다.</span><span class="en-text">In the "Questionnaire" group, click the card for the section you want (Disability or Enhancement).</span></span></div>
         <div class="st-row"><span class="st-k see"><span class="ko-text">나옴</span><span class="en-text">You see</span></span><span><span class="ko-text">새 화면(learning 관리 화면)이 열리고 <b>비밀번호를 다시 묻습니다</b>. 사이트가 둘이라 두 번 묻는 것 — 정상입니다.</span><span class="en-text">A new page (the learning admin) opens and <b>asks for the password again</b>. Two sites, two prompts — this is normal.</span></span></div>
-        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">같은 비밀번호 <b>bnm1#</b> 을 입력하고 로그인합니다.</span><span class="en-text">Enter the same password <b>bnm1#</b> and log in.</span></span></div>
+        <div class="st-row"><span class="st-k next"><span class="ko-text">다음</span><span class="en-text">Next</span></span><span><span class="ko-text">같은 비밀번호 <b>admin password</b> 을 입력하고 로그인합니다.</span><span class="en-text">Enter the same password <b>admin password</b> and log in.</span></span></div>
       </li>
     
       <li>
@@ -282,7 +299,7 @@
   <table>
     <tr><th><span class="ko-text">증상</span><span class="en-text">Symptom</span></th><th><span class="ko-text">원인과 해결</span><span class="en-text">Cause and fix</span></th></tr>
     <tr><td><span class="ko-text">고쳤는데 학생 화면이 그대로</span><span class="en-text">Edited but students see the old version</span></td><td><span class="ko-text">1순위: "저장"을 안 눌렀습니다 — 폼만 바뀐 상태. 2순위: 브라우저 캐시 — Ctrl+Shift+R.</span><span class="en-text">Most likely Save was not pressed. Otherwise browser cache — Ctrl+Shift+R.</span></td></tr>
-    <tr><td><span class="ko-text">비밀번호를 두 번 물어봄</span><span class="en-text">Asked for the password twice</span></td><td><span class="ko-text">정상입니다 — 분과 관리자(decision)와 설문 편집(learning)이 다른 사이트라 각각 묻습니다. 둘 다 bnm1#.</span><span class="en-text">Normal — the admin and the editor are different sites; both use bnm1#.</span></td></tr>
+    <tr><td><span class="ko-text">비밀번호를 두 번 물어봄</span><span class="en-text">Asked for the password twice</span></td><td><span class="ko-text">정상입니다 — 분과 관리자(decision)와 설문 편집(learning)이 다른 사이트라 각각 묻습니다. 둘 다 admin password.</span><span class="en-text">Normal — the admin and the editor are different sites; both use admin password.</span></td></tr>
     <tr><td><span class="ko-text">파일을 넣었는데 문항이 이상함</span><span class="en-text">File import looks wrong</span></td><td><span class="ko-text">엑셀 열 순서(한글|영어|분류)와 줄당 1문항을 확인하세요. PDF는 지원 안 됩니다. 망쳤으면 새로고침(저장 전) 또는 D.</span><span class="en-text">Check the column order (KO|EN|subscale) and one item per line. PDF is unsupported. Refresh (before save) or use D.</span></td></tr>
     <tr><td><span class="ko-text">자동번역이 안 됨</span><span class="en-text">Auto-translate does nothing</span></td><td><span class="ko-text">빈 칸이 없거나(이미 다 차 있음), 번역 키 미설정 안내가 뜬 경우입니다. 안내가 떴으면 수동 입력으로 진행하세요.</span><span class="en-text">Either no empty fields, or the key-not-set notice appeared. Manual typing always works.</span></td></tr>
     <tr><td><span class="ko-text">"고급(개발자)" 버튼</span><span class="en-text">The "Advanced (developer)" button</span></td><td><span class="ko-text">개발자용 원본 편집기입니다. 누르지 않아도 모든 작업이 가능합니다 — 열었더라도 수정하지 마세요.</span><span class="en-text">A raw editor for developers. You never need it — if opened, do not edit there.</span></td></tr>
@@ -308,10 +325,10 @@ try{ var s0=localStorage.getItem('bnm_lang'); applyLang(s0==='ko'?'ko':'en'); }c
 document.addEventListener('DOMContentLoaded', function(){ setTimeout(function(){
   applyLang(document.body.getAttribute('data-lang')==='en'?'en':'ko');
 }, 0); });
-// bnm1# 게이트 — 분과 admin.html과 세션(bnmAdminOK) 공유: 관리자에서 오면 바로 열림
+// admin password 게이트 — 분과 admin.html과 세션(bnmAdminOK) 공유: 관리자에서 오면 바로 열림
 (function(){
   var pw=document.getElementById('pw'),lb=document.getElementById('loginBox'),mb=document.getElementById('manualBox'),er=document.getElementById('err');
-  function go(){ if(pw.value==='bnm1#'){ try{sessionStorage.setItem('bnmAdminOK','1');}catch(e){} lb.style.display='none'; mb.className='box show'; } else { er.textContent='Wrong password'; } }
+  function go(){ if(BNMAdmin.check(pw.value)){ try{sessionStorage.setItem('bnmAdminOK','1');}catch(e){} lb.style.display='none'; mb.className='box show'; } else { er.textContent='Wrong password'; } }
   document.getElementById('goBtn').addEventListener('click',go);
   pw.addEventListener('keypress',function(e){ if(e.key==='Enter') go(); });
   try{ if(sessionStorage.getItem('bnmAdminOK')==='1'){ lb.style.display='none'; mb.className='box show'; } }catch(e){}

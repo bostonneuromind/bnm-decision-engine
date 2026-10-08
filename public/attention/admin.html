@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+/* BNMAdmin — 관리자 비번 공용 헬퍼 (2026-10-08). 코드에 비번 없음: 세션당 1회 입력(sessionStorage), 서버 admin-verify가 판정, 401/403이면 삭제. */
+window.BNMAdmin = window.BNMAdmin || (function(){
+  var VERIFY = 'https://sepierapapsansprurpr.supabase.co/functions/v1/admin-verify', K = 'bnm_admin_pw';
+  function get(){ try{ return sessionStorage.getItem(K) || ''; }catch(e){ return ''; } }
+  function put(v){ try{ if(v) sessionStorage.setItem(K, v); else sessionStorage.removeItem(K); }catch(e){} }
+  function check(v){
+    v = String(v == null ? '' : v).trim(); if(!v) return false;
+    if(v === get()) return true;
+    try{ var x = new XMLHttpRequest(); x.open('POST', VERIFY, false); x.setRequestHeader('x-admin-password', v); x.send(null); if(x.status === 200){ put(v); return true; } }catch(e){}
+    return false;
+  }
+  function pw(){ var v = get(); if(v) return v; v = (window.prompt('Admin password / 관리자 비밀번호') || '').trim(); check(v); return v; }
+  function onAuthFail(s){ if(s === 401 || s === 403) put(''); }
+  return { check: check, pw: pw, clear: function(){ put(''); }, onAuthFail: onAuthFail };
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>분과 관리자 (기밀)</title>
@@ -70,7 +87,7 @@
       <a class="card" href="https://learning.neurocatchers.com/admin-content-config?scope=attention:diagnose">
         <div class="ic">Q</div>
         <h3><span class="ko-text">진단 설문 교체</span><span class="en-text">Diagnosis Questionnaire</span></h3>
-        <p><span class="ko-text">attention 진단 문항(ASRS) 교체 — 저장 즉시 진단 화면 반영. learning 관리 화면(bnm1# 재입력)</span><span class="en-text">Replace attention diagnosis items — applied to the live assessment immediately. Opens learning admin (re-enter bnm1#).</span></p>
+        <p><span class="ko-text">attention 진단 문항(ASRS) 교체 — 저장 즉시 진단 화면 반영. learning 관리 화면(admin password 재입력)</span><span class="en-text">Replace attention diagnosis items — applied to the live assessment immediately. Opens learning admin (re-enter admin password).</span></p>
         <div class="ar">Open →</div>
       </a>
     </div>
@@ -98,7 +115,7 @@
 function setLang(l){document.body.setAttribute('data-lang',l);}
 function getLang(){return document.body.getAttribute('data-lang')||'ko';}
 var pw=document.getElementById('pw'),lb=document.getElementById('loginBox'),ab=document.getElementById('adminBox'),er=document.getElementById('err');
-function go(){if(pw.value==='bnm1#'){sessionStorage.setItem('bnmAdminOK','1');lb.style.display='none';ab.className='box show';mountUsers();}else{er.textContent='Wrong password';}}
+function go(){if(BNMAdmin.check(pw.value)){sessionStorage.setItem('bnmAdminOK','1');lb.style.display='none';ab.className='box show';mountUsers();}else{er.textContent='Wrong password';}}
 function mountUsers(){ if(window.TCAdmin) window.TCAdmin.init({ botKey:'attention', mount:document.getElementById('adminMount') }); }
 document.getElementById('goBtn').addEventListener('click',go);
 pw.addEventListener('keypress',function(e){if(e.key==='Enter')go();});

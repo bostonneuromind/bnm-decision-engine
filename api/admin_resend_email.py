@@ -11,6 +11,19 @@ from _supabase import select, update, insert
 from _resend import parent_consent_email
 
 
+def _admin_ok(pw):
+    """★ 2026-10-08 관리자 비번 — 코드 하드코딩 제거. admin-verify(env BNM_ADMIN_PASSWORD)가 판정, 실패·오류면 거부."""
+    if not pw:
+        return False
+    import urllib.request
+    try:
+        req = urllib.request.Request('https://sepierapapsansprurpr.supabase.co/functions/v1/admin-verify', data=b'{}', headers={'x-admin-password': pw}, method='POST')
+        with urllib.request.urlopen(req, timeout=8) as r:
+            return r.status == 200
+    except Exception:
+        return False
+
+
 def _resp(h, status, body):
     h.send_response(status)
     h.send_header('Content-Type', 'application/json; charset=utf-8')
@@ -29,7 +42,7 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         admin_pw = self.headers.get('X-Admin-Password', '')
-        if admin_pw != 'bnm1#':
+        if not _admin_ok(admin_pw):
             return _resp(self, 401, {'error': 'Unauthorized'})
 
         try:

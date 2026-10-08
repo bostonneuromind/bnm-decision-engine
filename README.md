@@ -84,7 +84,7 @@ Propagation 5-30분.
 ## 보안 단계
 
 ### Phase 1 (현재 베타): Password
-- 모든 페이지에 `bnm1#` 비밀번호
+- 모든 페이지에 `admin password` 비밀번호
 - sessionStorage 인증
 
 ### Phase 2 (베타 종료 후): Supabase Auth

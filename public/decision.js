@@ -1,3 +1,18 @@
+/* BNMAdmin — 관리자 비번 공용 헬퍼 (2026-10-08). 코드에 비번 없음: 세션당 1회 입력(sessionStorage), 서버 admin-verify가 판정, 401/403이면 삭제. */
+window.BNMAdmin = window.BNMAdmin || (function(){
+  var VERIFY = 'https://sepierapapsansprurpr.supabase.co/functions/v1/admin-verify', K = 'bnm_admin_pw';
+  function get(){ try{ return sessionStorage.getItem(K) || ''; }catch(e){ return ''; } }
+  function put(v){ try{ if(v) sessionStorage.setItem(K, v); else sessionStorage.removeItem(K); }catch(e){} }
+  function check(v){
+    v = String(v == null ? '' : v).trim(); if(!v) return false;
+    if(v === get()) return true;
+    try{ var x = new XMLHttpRequest(); x.open('POST', VERIFY, false); x.setRequestHeader('x-admin-password', v); x.send(null); if(x.status === 200){ put(v); return true; } }catch(e){}
+    return false;
+  }
+  function pw(){ var v = get(); if(v) return v; v = (window.prompt('Admin password / 관리자 비밀번호') || '').trim(); check(v); return v; }
+  function onAuthFail(s){ if(s === 401 || s === 403) put(''); }
+  return { check: check, pw: pw, clear: function(){ put(''); }, onAuthFail: onAuthFail };
+})();
 // ============================================================
 // Decision Catcher - Common JavaScript
 // Boston Neuromind LLC · CNA v7
@@ -6,7 +21,7 @@
 const CONFIG = {
   apiBase: '/api',
   passwordKey: 'decisionOK',
-  password: 'bnm1#',
+  password: null,   // ★ 2026-10-08 코드에 비번 없음 — BNMAdmin.check(서버 admin-verify)
   langKey: 'bnm_lang',
   defaultLang: 'en',
 };
@@ -1194,7 +1209,7 @@ function checkAuth() {
 }
 
 function tryLogin(password, onSuccess, onError) {
-  if (password === CONFIG.password) {
+  if (BNMAdmin.check(password)) {
     sessionStorage.setItem(CONFIG.passwordKey, '1');
     if (onSuccess) onSuccess();
   } else {
