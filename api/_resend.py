@@ -100,7 +100,7 @@ def parent_consent_email(parent_name, parent_email, child_name, child_age, conse
 <p style="font-size:13px;color:#666;margin-top:24px">
 · 본 링크는 7일간 유효합니다.<br>
 · 언제든 자녀의 참여를 철회하실 수 있습니다.<br>
-· 문의: support@neurocatchers.com
+· 문의: alex@bostonneuromind.com
 </p>
 <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
 <p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts</p>
@@ -132,7 +132,7 @@ def parent_consent_email(parent_name, parent_email, child_name, child_age, conse
 <p style="font-size:13px;color:#666;margin-top:24px">
 · This link expires in 7 days.<br>
 · You may withdraw your child at any time.<br>
-· Contact: support@neurocatchers.com
+· Contact: alex@bostonneuromind.com
 </p>
 <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
 <p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts</p>
@@ -171,7 +171,7 @@ def self_consent_email(full_name, email, consent_url, language='ko'):
 <p style="font-size:13px;color:#666;margin-top:24px">
 · 본 링크는 7일간 유효합니다.<br>
 · 언제든 참여를 철회하실 수 있습니다.<br>
-· 문의: support@neurocatchers.com
+· 문의: alex@bostonneuromind.com
 </p>
 <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
 <p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts</p>
@@ -202,7 +202,7 @@ def self_consent_email(full_name, email, consent_url, language='ko'):
 <p style="font-size:13px;color:#666;margin-top:24px">
 · This link expires in 7 days.<br>
 · You may withdraw at any time.<br>
-· Contact: support@neurocatchers.com
+· Contact: alex@bostonneuromind.com
 </p>
 <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
 <p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts</p>
@@ -237,7 +237,7 @@ def consent_request_email(to_email, display_name, consent_url, language='ko'):
 <p style="font-size:13px;color:#666;margin-top:24px">
 · 본 링크는 7일간 유효합니다.<br>
 · 언제든 동의를 철회하실 수 있습니다.<br>
-· 문의: bostonneuromind@gmail.com
+· 문의: alex@bostonneuromind.com
 </p>
 <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
 <p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts · 법률 검토 전 초안</p>
@@ -260,7 +260,7 @@ def consent_request_email(to_email, display_name, consent_url, language='ko'):
 <p style="font-size:13px;color:#666;margin-top:24px">
 · This link expires in 7 days.<br>
 · You may withdraw consent at any time.<br>
-· Contact: bostonneuromind@gmail.com
+· Contact: alex@bostonneuromind.com
 </p>
 <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
 <p style="font-size:11px;color:#999;text-align:center">Boston Neuromind LLC · Canton, Massachusetts · Draft pending legal review</p>
